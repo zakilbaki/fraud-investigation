@@ -21,7 +21,7 @@ Chaque transaction recevra un identifiant stable indépendant de sa position phy
 
 ## Données et stockage prévus
 
-Le prochain lot devra d'abord inspecter le fichier PaySim réellement disponible, vérifier son origine et documenter ses colonnes avant de fixer le schéma. L'import reproductible utilisera Polars pour la lecture et SQLite pour le stockage local. Les tables visées sont `transactions`, `accounts`, `investigation_cases` et `investigation_events`. Les index seront choisis à partir des requêtes réelles par transaction et par compte. Les événements d'enquête garderont leur propre horodatage, distinct du `step` PaySim.
+Le fichier PaySim disponible a été inspecté, sa provenance vérifiée et ses colonnes documentées avant la fixation du schéma. L'import reproductible utilise Polars pour la lecture et SQLite pour le stockage local. Les tables créées sont `transactions`, `accounts`, `investigation_cases` et `investigation_events`. Les index servent les recherches par transaction et par compte. Les événements d'enquête garderont leur propre horodatage, distinct du `step` PaySim.
 
 Les données volumineuses, les bases générées, les secrets et le miroir `sources/` sont exclus de Git. Un petit échantillon publiable ne sera ajouté que si son origine et sa licence le permettent.
 
@@ -36,3 +36,7 @@ Le dépôt, la configuration Python, le paquet vide, les exclusions Git et ce do
 ## Consignes des agents de développement
 
 Avant chaque lot, lire les [consignes de travail et de versionnement](../agent.md). Après chaque changement de code cohérent, terminé et vérifié, créer un commit et le pousser sur le dépôt GitHub existant, sans attendre la fin du lot. Les tests et la documentation associés suivent la même règle ; les données et secrets restent exclus de Git.
+
+## État du lot 3
+
+Le schéma, l'import par lots et les consultations Python sont documentés dans [DATABASE.md](DATABASE.md). Les fichiers SQLite générés restent locaux. Les labels sont dans un fichier d'évaluation séparé. Aucun modèle ML, endpoint HTTP ou agent Copilot Studio n'est inclus.

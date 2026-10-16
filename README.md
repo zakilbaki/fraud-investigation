@@ -27,4 +27,20 @@ shasum -a 256 data/raw/PS_20174392719_1491204439457_log.csv
 UV_CACHE_DIR=.cache/uv .tools/bin/uv run --locked python scripts/audit_paysim.py data/raw/PS_20174392719_1491204439457_log.csv --output data/audit.json
 ```
 
-Le script ne modifie pas le CSV. Il relève les colonnes et leurs types, les valeurs manquantes, les effectifs par `step` et par type, les labels et les valeurs numériques suspectes. Le rapport JSON détaillé reste local dans `data/`, exclu de Git. Les labels sont lus uniquement pour cet audit hors ligne. Aucun outil d'enquête, schéma SQLite, import en base ou modèle ML n'est encore implémenté.
+Le script ne modifie pas le CSV. Il relève les colonnes et leurs types, les valeurs manquantes, les effectifs par `step` et par type, les labels et les valeurs numériques suspectes. Le rapport JSON détaillé reste local dans `data/`, exclu de Git. Les labels sont lus uniquement pour cet audit hors ligne.
+
+## Import SQLite et consultation
+
+Le schéma, la provenance et la séparation des labels sont décrits dans [docs/DATABASE.md](docs/DATABASE.md). Les tests utilisent seulement de petits CSV explicitement synthétiques :
+
+```sh
+UV_CACHE_DIR=.cache/uv .tools/bin/uv run --locked python -m unittest discover -s tests -v
+```
+
+Après réussite des tests, importer le CSV réel avec son empreinte attendue :
+
+```sh
+UV_CACHE_DIR=.cache/uv .tools/bin/uv run --locked python scripts/import_paysim.py data/raw/PS_20174392719_1491204439457_log.csv --expected-sha256 16910f90577b0d981bf8ff289714510bb89bc71bff7d3f220f024e287e4eea6b
+```
+
+La base applicative sera dans `data/app/fraud.sqlite` et les labels dans `data/evaluation/labels.sqlite`. Réexécuter la même commande vérifie l'import et ne crée pas de doublons. Les fonctions `get_transaction` et `get_account_transactions` du module `fraud_investigation.database` offrent les deux consultations en lecture seule. Aucun modèle ML, serveur HTTP ou agent n'est inclus dans ce lot.
