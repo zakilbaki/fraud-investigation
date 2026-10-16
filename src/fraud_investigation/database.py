@@ -73,12 +73,17 @@ oldbalance_dest, newbalance_dest
 """
 
 
+def readonly_sqlite_uri(path: Path | str) -> str:
+    """Encoder le chemin du fichier avant d'ajouter le mode URI SQLite."""
+    return Path(path).resolve().as_uri() + "?mode=ro"
+
+
 def open_readonly(path: Path | str) -> sqlite3.Connection:
     """Ouvrir une base existante sans autoriser sa création ni sa modification."""
     database = Path(path).resolve()
     if not database.is_file():
         raise FileNotFoundError(database)
-    connection = sqlite3.connect(f"file:{database}?mode=ro", uri=True)
+    connection = sqlite3.connect(readonly_sqlite_uri(database), uri=True)
     connection.row_factory = sqlite3.Row
     connection.execute("PRAGMA foreign_keys = ON")
     return connection

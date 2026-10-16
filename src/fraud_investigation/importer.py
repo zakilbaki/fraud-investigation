@@ -7,6 +7,7 @@ import hashlib
 import os
 import re
 import sqlite3
+from contextlib import closing
 from dataclasses import dataclass
 from decimal import Decimal, InvalidOperation
 from pathlib import Path
@@ -15,6 +16,7 @@ import polars as pl
 
 from fraud_investigation.database import (
     APP_SCHEMA, EVALUATION_INDEXES, EVALUATION_SCHEMA, SEARCH_INDEXES,
+    open_readonly, readonly_sqlite_uri,
 )
 
 
@@ -129,7 +131,7 @@ def _verify_existing(
 ) -> ImportResult:
     if not db_path.is_file() or not labels_path.is_file():
         raise RuntimeError("Import incomplet : base applicative ou fichier de labels absent")
-    with sqlite3.connect(f"file:{db_path.resolve()}?mode=ro", uri=True) as app:
+    with closing(open_readonly(db_path)) as app:
         row = app.execute(
             "SELECT source_sha256 FROM transactions WHERE source_line_number = 2"
         ).fetchone()
@@ -140,7 +142,7 @@ def _verify_existing(
         last_line = app.execute("SELECT MAX(source_line_number) FROM transactions").fetchone()[0]
         if transactions != expected_rows or last_line != expected_rows + 1:
             raise RuntimeError("Import incomplet dans la base applicative")
-        app.execute("ATTACH DATABASE ? AS evaluation", (str(labels_path),))
+        app.execute("ATTACH DATABASE ? AS evaluation", (readonly_sqlite_uri(labels_path),))
         try:
             labels = _verify_labels_match(app, transactions)
         finally:

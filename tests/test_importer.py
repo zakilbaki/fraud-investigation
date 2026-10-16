@@ -6,6 +6,7 @@ import csv
 import sqlite3
 import tempfile
 import unittest
+from contextlib import closing
 from pathlib import Path
 
 from fraud_investigation.database import get_account_transactions, get_transaction, open_readonly
@@ -126,6 +127,33 @@ class ImporterTest(unittest.TestCase):
             import_paysim(self.csv, self.database, other_labels, batch_size=2)
         self.assertEqual(self.database.read_bytes(), app_before)
         self.assertEqual(other_labels.read_bytes(), labels_before)
+
+    def test_readonly_and_reimport_with_special_paths(self) -> None:
+        root = Path(self.directory.name) / "dossier avec espace # é"
+        root.mkdir()
+        csv_path = root / "source # é.csv"
+        database = root / "application # é.sqlite"
+        labels = root / "évaluation # labels.sqlite"
+        csv_path.write_bytes(self.csv.read_bytes())
+
+        first = import_paysim(csv_path, database, labels, batch_size=2)
+        database_before = database.read_bytes()
+        labels_before = labels.read_bytes()
+        transaction_id = stable_transaction_id(first.source_sha256, 2).hex()
+        with closing(open_readonly(database)) as app:
+            self.assertEqual(get_transaction(app, transaction_id)["source_line_number"], 2)
+            self.assertEqual(len(get_account_transactions(app, "C1", before_step=3)), 5)
+            with self.assertRaises(sqlite3.OperationalError):
+                app.execute("INSERT INTO accounts(account_id) VALUES (?)", ("NEW",))
+
+        second = import_paysim(csv_path, database, labels, batch_size=2)
+        self.assertEqual(second.status, "already_imported")
+        self.assertEqual(database.read_bytes(), database_before)
+        self.assertEqual(labels.read_bytes(), labels_before)
+        self.assertEqual(
+            {path for path in Path(self.directory.name).rglob("*") if path.is_file()},
+            {self.csv, csv_path, database, labels},
+        )
 
     def test_invalid_amount_leaves_partial_import_visible(self) -> None:
         rows = list(self.rows)

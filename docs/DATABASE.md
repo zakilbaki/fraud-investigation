@@ -27,6 +27,8 @@ Les cinq champs monétaires (`amount` et les soldes) sont conservés en `TEXT` a
 
 Le fichier d'évaluation contient une table `labels` avec `source_line_number`, `transaction_id`, `isFraud` et `isFlaggedFraud`. Une vérification compare les identifiants et les numéros de ligne des deux fichiers dans les deux sens.
 
+Les bases existantes sont ouvertes en lecture seule au moyen d'URI SQLite dont le chemin est encodé avant l'ajout de `mode=ro`. Les espaces, `#` et les caractères accentués des chemins sont ainsi préservés. Le réimport attache également le fichier de labels en lecture seule pour sa vérification.
+
 ## Recherches et ordre
 
 `get_transaction` recherche par `transaction_id` unique. `get_account_transactions` recherche un compte comme expéditeur ou destinataire avec `step < before_step`, puis limite le nombre de résultats entre 1 et 500. Toutes les valeurs passent par des paramètres SQL.
