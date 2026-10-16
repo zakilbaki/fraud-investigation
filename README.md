@@ -1,63 +1,69 @@
 # Fraud Investigation
 
-Prototype local d'enquête sur les transactions synthétiques PaySim. Les fondations et les règles de données sont dans [docs/PROJECT.md](docs/PROJECT.md). Les mesures du CSV téléchargé sont dans [docs/DATA_AUDIT.md](docs/DATA_AUDIT.md).
+Prototype local d'enquête sur les transactions synthétiques PaySim. Le [cadrage](docs/PROJECT.md), l'[audit du CSV](docs/DATA_AUDIT.md) et le [schéma SQLite](docs/DATABASE.md) décrivent les choix et les limites.
 
-## Environnement vérifié
+## Prérequis
 
-Sur ce Mac, Python 3.11 était disponible et `uv` a été installé gratuitement dans `.tools/`, sans `sudo`. Depuis la racine du projet :
+- Git, Python 3.11 et [`uv`](https://docs.astral.sh/uv/getting-started/installation/) disponibles dans le terminal. Le projet accepte Python 3.11 à 3.13 selon `pyproject.toml` ; seule la version 3.11 a été vérifiée.
+- Pour les commandes de téléchargement ci-dessous : un terminal compatible avec `sh` et `curl`. Une connexion à Internet et plusieurs Go d'espace libre sont nécessaires pour le CSV, les deux bases et les fichiers temporaires d'import.
+- Aucun compte du développeur ni service payant n'est requis. L'accès public au téléchargement Kaggle peut évoluer ; si la commande échoue, récupérer le jeu depuis sa [page officielle](https://www.kaggle.com/datasets/ealaxi/paysim1), puis placer son archive dans `data/raw/paysim1.zip`. Ne jamais enregistrer d'identifiants ou de jetons dans le dépôt.
+
+Les commandes suivantes partent de la racine du dépôt et utilisent des chemins relatifs à celle-ci.
+
+## Installation
 
 ```sh
-python3.11 -m pip install --target .tools uv
-UV_CACHE_DIR=.cache/uv UV_PYTHON_DOWNLOADS=never .tools/bin/uv sync --locked --python /opt/homebrew/bin/python3.11
-UV_CACHE_DIR=.cache/uv .tools/bin/uv run --locked python -c 'import fraud_investigation, polars as pl; print(fraud_investigation.__name__, pl.__version__)'
+git clone https://github.com/zakilbaki/fraud-investigation.git
+cd fraud-investigation
+uv sync --locked --python 3.11
+uv run --locked python -c 'import fraud_investigation, polars as pl; print(fraud_investigation.__name__, pl.__version__)'
 ```
 
-`uv.lock` fixe les versions résolues. Les dossiers `.tools/`, `.cache/uv/` et `.venv/` sont locaux et exclus de Git. Le chemin de Python ci-dessus est celui vérifié sur ce Mac ; sur une autre machine, le remplacer par son interpréteur Python 3.11.
+`uv.lock` est versionné pour figer la résolution des dépendances. L'environnement `.venv/` reste local et exclu de Git. Si `uv` manque, utiliser la [procédure officielle adaptée à sa plateforme](https://docs.astral.sh/uv/getting-started/installation/) avant `uv sync`.
 
-## Récupérer et auditer PaySim
-
-Ces commandes ont été exécutées avec succès le 16 octobre 2026. Le téléchargement provient de l'API du [jeu PaySim publié sur Kaggle](https://www.kaggle.com/datasets/ealaxi/paysim1). Aucun compte ni jeton Kaggle n'a été nécessaire lors de cette exécution.
+## Récupération de PaySim
 
 ```sh
 mkdir -p data/raw
 curl -fL --retry 2 --max-time 900 -o data/raw/paysim1.zip https://www.kaggle.com/api/v1/datasets/download/ealaxi/paysim1
-unzip -t data/raw/paysim1.zip
-unzip -n data/raw/paysim1.zip -d data/raw/
-shasum -a 256 data/raw/PS_20174392719_1491204439457_log.csv
-UV_CACHE_DIR=.cache/uv .tools/bin/uv run --locked python scripts/audit_paysim.py data/raw/PS_20174392719_1491204439457_log.csv --output data/audit.json
+uv run --locked python -m zipfile -t data/raw/paysim1.zip
+uv run --locked python -m zipfile -e data/raw/paysim1.zip data/raw/
+uv run --locked python -c 'import hashlib, pathlib; p = pathlib.Path("data/raw/PS_20174392719_1491204439457_log.csv"); h = hashlib.file_digest(p.open("rb"), "sha256"); print(p.stat().st_size, h.hexdigest())'
 ```
 
-Le script ne modifie pas le CSV. Il relève les colonnes et leurs types, les valeurs manquantes, les effectifs par `step` et par type, les labels, les taux de fraude par fenêtres de 168 `step` et les valeurs numériques suspectes. Le rapport JSON détaillé reste local dans `data/`, exclu de Git. Les labels sont lus uniquement pour cet audit hors ligne.
+Pour le fichier audité le 16 octobre 2026, la taille attendue est `493534783` octets et le SHA-256 est `16910f90577b0d981bf8ff289714510bb89bc71bff7d3f220f024e287e4eea6b`. Comparer ces valeurs avant l'import. Si Kaggle distribue une autre version, ne pas lui attribuer cette empreinte : effectuer un nouvel audit et documenter sa provenance. Le CSV brut est conservé sans modification dans `data/raw/`, exclu de Git.
 
-## Import SQLite et consultation
-
-Le schéma, la provenance et la séparation des labels sont décrits dans [docs/DATABASE.md](docs/DATABASE.md). Les tests utilisent seulement de petits CSV explicitement synthétiques :
+## Vérifications et génération des bases
 
 ```sh
-UV_CACHE_DIR=.cache/uv .tools/bin/uv run --locked python -m unittest discover -s tests -v
+uv run --locked python scripts/audit_paysim.py data/raw/PS_20174392719_1491204439457_log.csv --output data/audit.json
+uv run --locked python -m unittest discover -s tests -v
+uv run --locked python scripts/import_paysim.py data/raw/PS_20174392719_1491204439457_log.csv --database data/app/fraud.sqlite --labels data/evaluation/labels.sqlite --expected-sha256 16910f90577b0d981bf8ff289714510bb89bc71bff7d3f220f024e287e4eea6b
 ```
 
-Après réussite des tests, importer le CSV réel avec son empreinte attendue. Cette commande a été exécutée jusqu'au statut `imported`, puis réexécutée jusqu'au statut `already_imported` :
+L'audit lit les labels hors ligne. L'import crée la base applicative `data/app/fraud.sqlite` sans labels et une base distincte `data/evaluation/labels.sqlite`, réservée à l'évaluation. Réexécuter l'import du même CSV doit retourner `already_imported` sans créer de doublons. Les futurs outils d'enquête devront aussi limiter explicitement l'accès à la seule base applicative. Les fichiers générés dans `data/` ne sont pas publiés.
+
+## Consultation depuis Python
+
+Depuis la racine du dépôt, après génération des bases :
 
 ```sh
-UV_CACHE_DIR=.cache/uv .tools/bin/uv run --locked python scripts/import_paysim.py data/raw/PS_20174392719_1491204439457_log.csv --expected-sha256 16910f90577b0d981bf8ff289714510bb89bc71bff7d3f220f024e287e4eea6b
-```
-
-La base applicative se trouve dans `data/app/fraud.sqlite` et les labels dans `data/evaluation/labels.sqlite`. Réexécuter la même commande vérifie l'import et ne crée pas de doublons. Les fonctions `get_transaction` et `get_account_transactions` du module `fraud_investigation.database` offrent les deux consultations en lecture seule :
-
-```python
-from fraud_investigation.database import (
-    get_account_transactions,
-    get_transaction,
-    open_readonly,
-)
+uv run --locked python - <<'PY'
+from fraud_investigation.database import get_account_transactions, get_transaction, open_readonly
 
 with open_readonly("data/app/fraud.sqlite") as database:
-    transaction = get_transaction(database, "c00323c28c68155118c85cb9ee237fe7")
-    historique = get_account_transactions(
-        database, transaction["name_orig"], before_step=transaction["step"] + 1, limit=3
-    )
-    print(transaction["source_line_number"], len(historique))
+    transaction = get_transaction(database, "d83a6871a919fd644c774f3e65fbe41b")
+    print(transaction)
+    if transaction is not None:
+        history = get_account_transactions(
+            database, transaction["name_dest"], before_step=transaction["step"], limit=3
+        )
+        print(history)
+PY
 ```
 
-Le numéro de ligne imprimé est `2`. La requête d'historique exclut tout `step` égal ou supérieur à `before_step`. Aucun modèle ML, serveur HTTP ou agent n'est inclus dans ce lot.
+La transaction d'exemple correspond au CSV et à l'empreinte ci-dessus. `get_transaction` renvoie `None` pour un identifiant inconnu. L'historique ne contient que des `step` strictement antérieurs à la borne et son ordre de restitution est déterministe ; l'ordre des lignes au sein d'un même `step` n'est pas une chronologie réelle. Les scripts acceptent des chemins de fichiers en arguments et peuvent être invoqués depuis un autre dossier avec des chemins explicites.
+
+## Portabilité et historique de vérification
+
+La procédure vise une installation reproductible sur toute machine où les prérequis sont disponibles. Les exécutions effectivement vérifiées ont eu lieu sur macOS Apple Silicon avec Python 3.11.15, `uv` 0.13.1 et Polars 1.44.2. Linux et Windows n'ont pas été testés ; leur compatibilité reste à vérifier. Le téléchargement public, l'audit et l'import complet ont réussi le 16 octobre 2026 sur cette machine. Les effectifs mesurés et les contrôles de cohérence sont conservés dans les documents liés en tête de page.

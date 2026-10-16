@@ -18,4 +18,6 @@ Ces consignes concernent les assistants qui construisent le prototype Fraud Inve
 
 Cette règle Git autorise la sauvegarde et la publication des changements relevant du lot confié. Elle n'autorise pas à commencer un nouveau lot ou à élargir la mission sans instruction de l'utilisateur.
 
+Préserver la reproductibilité : aucun chemin personnel ni dépendance implicite à la machine du développeur. Documenter les prérequis, les paramètres nécessaires et les plateformes réellement vérifiées.
+
 Le fichier AGENTS.md à la racine est généré par l'environnement. Le présent fichier agent.md conserve les consignes propres au projet dans Git ; il doit être lu explicitement, sans supposer un chargement automatique par tous les outils.

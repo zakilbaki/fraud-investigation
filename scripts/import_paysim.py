@@ -11,8 +11,8 @@ from fraud_investigation.importer import import_paysim
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("csv", type=Path)
-    parser.add_argument("--database", type=Path, default=Path("data/app/fraud.sqlite"))
-    parser.add_argument("--labels", type=Path, default=Path("data/evaluation/labels.sqlite"))
+    parser.add_argument("--database", type=Path, required=True, help="Base applicative à créer")
+    parser.add_argument("--labels", type=Path, required=True, help="Base d'évaluation séparée à créer")
     parser.add_argument("--expected-sha256")
     parser.add_argument("--batch-size", type=int, default=20_000)
     args = parser.parse_args()
