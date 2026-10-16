@@ -13,7 +13,7 @@ CREATE TABLE accounts (
 
 CREATE TABLE transactions (
     source_line_number INTEGER PRIMARY KEY CHECK (source_line_number >= 2),
-    transaction_id BLOB NOT NULL UNIQUE CHECK (length(transaction_id) = 16),
+    transaction_id BLOB NOT NULL CHECK (length(transaction_id) = 16),
     source_sha256 BLOB NOT NULL CHECK (length(source_sha256) = 32),
     step INTEGER NOT NULL CHECK (step > 0),
     type TEXT NOT NULL CHECK (length(type) > 0),
@@ -46,19 +46,24 @@ CREATE TABLE investigation_events (
 EVALUATION_SCHEMA = """
 CREATE TABLE labels (
     source_line_number INTEGER PRIMARY KEY CHECK (source_line_number >= 2),
-    transaction_id BLOB NOT NULL UNIQUE CHECK (length(transaction_id) = 16),
+    transaction_id BLOB NOT NULL CHECK (length(transaction_id) = 16),
     isFraud INTEGER NOT NULL CHECK (isFraud IN (0, 1)),
     isFlaggedFraud INTEGER NOT NULL CHECK (isFlaggedFraud IN (0, 1))
 );
 """
 
 SEARCH_INDEXES = """
+CREATE UNIQUE INDEX transactions_id_unique ON transactions(transaction_id);
 CREATE INDEX transactions_orig_step_id
 ON transactions(name_orig, step DESC, transaction_id);
 CREATE INDEX transactions_dest_step_id
 ON transactions(name_dest, step DESC, transaction_id);
 CREATE INDEX investigation_events_case_time
 ON investigation_events(case_id, occurred_at, event_id);
+"""
+
+EVALUATION_INDEXES = """
+CREATE UNIQUE INDEX labels_id_unique ON labels(transaction_id);
 """
 
 TRANSACTION_FIELDS = """

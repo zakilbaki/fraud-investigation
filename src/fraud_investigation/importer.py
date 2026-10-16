@@ -13,7 +13,9 @@ from pathlib import Path
 
 import polars as pl
 
-from fraud_investigation.database import APP_SCHEMA, EVALUATION_SCHEMA, SEARCH_INDEXES
+from fraud_investigation.database import (
+    APP_SCHEMA, EVALUATION_INDEXES, EVALUATION_SCHEMA, SEARCH_INDEXES,
+)
 
 
 COLUMNS = (
@@ -89,9 +91,10 @@ def _validate_row(row: tuple[object, ...], line_number: int) -> tuple[object, ..
 
 def _connect_build(path: Path, schema: str) -> sqlite3.Connection:
     connection = sqlite3.connect(path)
-    connection.execute("PRAGMA foreign_keys = ON")
-    connection.execute("PRAGMA journal_mode = DELETE")
-    connection.execute("PRAGMA synchronous = NORMAL")
+    # Ces fichiers ne seront publiés qu'après validation. Un arrêt laisse .partial.
+    connection.execute("PRAGMA foreign_keys = OFF")
+    connection.execute("PRAGMA journal_mode = OFF")
+    connection.execute("PRAGMA synchronous = OFF")
     connection.executescript(schema)
     return connection
 
@@ -124,6 +127,9 @@ def _verify_existing(
 
 
 def _verify_build(app: sqlite3.Connection, labels_path: Path, expected_rows: int) -> tuple[int, int]:
+    app.execute("PRAGMA foreign_keys = ON")
+    if app.execute("PRAGMA foreign_keys").fetchone()[0] != 1:
+        raise RuntimeError("Activation des clés étrangères impossible")
     transactions = _count(app, "transactions")
     accounts = _count(app, "accounts")
     if transactions != expected_rows:
@@ -199,14 +205,12 @@ def import_paysim(
         for batch in frame.collect_batches(
             chunk_size=batch_size, maintain_order=True, engine="streaming"
         ):
-            accounts: set[str] = set()
             transactions: list[tuple[object, ...]] = []
             labels: list[tuple[object, ...]] = []
             for row in batch.iter_rows():
                 line_number = processed + len(transactions) + 2
                 values = _validate_row(row, line_number)
                 transaction_id = stable_transaction_id(fingerprint, line_number)
-                accounts.update((values[3], values[6]))
                 transactions.append((
                     line_number, transaction_id, source_bytes, int(values[0]),
                     values[1], values[2], values[3], values[4], values[5],
@@ -214,10 +218,6 @@ def import_paysim(
                 ))
                 labels.append((line_number, transaction_id, int(values[9]), int(values[10])))
             with app:
-                app.executemany(
-                    "INSERT OR IGNORE INTO accounts(account_id) VALUES (?)",
-                    ((account_id,) for account_id in sorted(accounts)),
-                )
                 app.executemany("""
                     INSERT INTO transactions (
                         source_line_number, transaction_id, source_sha256, step,
@@ -237,11 +237,22 @@ def import_paysim(
                 f"Numérotation physique incompatible : {processed} enregistrements, "
                 f"{expected_rows} lignes attendues. Vérifier les retours ligne dans les champs CSV."
             )
+        # Le tri unique intervient une fois, après la lecture, plutôt qu'à chaque ligne.
+        with app:
+            app.execute("""
+                INSERT INTO accounts(account_id)
+                SELECT name_orig AS account_id FROM transactions
+                UNION
+                SELECT name_dest AS account_id FROM transactions
+            """)
         app.executescript(SEARCH_INDEXES)
+        evaluation.executescript(EVALUATION_INDEXES)
         transactions_count, accounts_count = _verify_build(app, evaluation_partial, expected_rows)
         with evaluation:
             if evaluation.execute("PRAGMA quick_check").fetchone()[0] != "ok":
                 raise RuntimeError("Contrôle d'intégrité du fichier de labels échoué")
+        app.execute("PRAGMA journal_mode = DELETE")
+        evaluation.execute("PRAGMA journal_mode = DELETE")
         app.close()
         evaluation.close()
         os.replace(evaluation_partial, evaluation_file)

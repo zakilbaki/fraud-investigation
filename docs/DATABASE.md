@@ -6,6 +6,8 @@ L'application lit `data/app/fraud.sqlite`. Les labels résident uniquement dans 
 
 Le CSV PaySim brut n'est jamais modifié. L'import construit d'abord des fichiers `.partial`, vérifie leurs contraintes et leurs effectifs, puis les renomme. Une interruption laisse les fichiers partiels visibles et bloque une nouvelle exécution jusqu'à leur examen. Une seconde exécution avec le même fichier valide les effectifs et ne change ni les transactions ni les enquêtes. Une source différente est refusée.
 
+Pour éviter des écritures dispersées pendant le chargement, les comptes distincts et les index sont construits après la lecture des transactions. Les clés étrangères et l'unicité des identifiants sont vérifiées avant le renommage final. Les fichiers temporaires utilisent des réglages SQLite favorisant la vitesse ; une interruption peut donc les rendre inutilisables, mais n'altère ni le CSV brut ni une base applicative déjà publiée.
+
 ## Provenance et identifiants
 
 `source_sha256` contient les 32 octets de l'empreinte SHA-256 du CSV entier. `source_line_number` désigne la ligne physique du CSV, en commençant à **2** pour la première transaction, après l'en-tête en ligne 1. L'import exige qu'un enregistrement occupe une seule ligne physique ; il refuse un CSV dont le nombre d'enregistrements ne correspond pas au nombre de lignes. Le numéro de ligne sert à retrouver la source, pas à établir un ordre temporel au sein d'un `step`.
