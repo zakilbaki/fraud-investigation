@@ -1,0 +1,16 @@
+[build-system]
+requires = ["hatchling>=1.25,<2"]
+build-backend = "hatchling.build"
+
+[project]
+name = "fraud-investigation"
+version = "0.1.0"
+description = "Fondations locales pour enquêter sur des transactions PaySim"
+readme = "README.md"
+requires-python = ">=3.11,<3.14"
+dependencies = [
+    "polars>=1,<2",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/fraud_investigation"]
