@@ -14,6 +14,18 @@ Ces consignes concernent les assistants qui construisent le prototype Fraud Inve
 - Après chaque push, vérifier que le commit est présent sur GitHub et que la branche locale est synchronisée. Signaler explicitement un push bloqué ou échoué.
 - Fournir dans le bilan les identifiants et liens des commits publiés, avec les vérifications réellement exécutées et les limites restantes.
 
+## Explication des choix techniques et participation
+
+Le projet sert à apprendre et à préparer des entretiens. Construire une fonctionnalité ne suffit pas : l'utilisateur doit comprendre les décisions prises.
+
+- Expliquer chaque choix technique important avant sa mise en œuvre ou au moment de le réaliser, dans les échanges, sans attendre le bilan final. Ne pas laisser cette explication uniquement dans le code ou les fichiers de documentation.
+- Pour chaque choix, préciser en langage simple : le problème à résoudre, la solution retenue, pourquoi elle convient au prototype, une alternative pertinente, les avantages, les limites et la manière de vérifier le résultat. Définir les termes nouveaux et utiliser un petit exemple concret lorsque cela aide.
+- Couvrir aussi les décisions moins visibles : index et clés SQL, types de stockage, import par lots, identifiants et provenance, séparation des labels, variables ML, découpage temporel, métriques, seuils et limites des outils des agents. Adapter les explications aux décisions effectivement prises dans le lot.
+- Distinguer ce qui est prévu, ce qui est implémenté et ce qui est réellement vérifié. Ne pas annoncer de gain de vitesse, de mémoire ou de qualité sans mesure. Par exemple, pour un index, expliquer la recherche visée, les colonnes indexées, son coût et vérifier son utilisation avec le plan de requête lorsque pertinent.
+- Conserver une trace courte des décisions et de leur justification dans le document concerné, par exemple docs/DATABASE.md ou le document du protocole ML. Dans le bilan de chaque lot, inclure les choix techniques expliqués, les vérifications et une formulation simple que l'utilisateur peut reprendre dans ses notes ou en entretien.
+- Pour l'analyse exploratoire, afficher les graphiques produits dans la conversation, expliquer leur lecture et faire participer l'utilisateur à leur interprétation. Procéder par petites étapes et attendre son retour aux points de discussion prévus.
+- Les explications ne doivent pas transformer chaque détail courant en demande d'autorisation. Respecter le lot confié et les moments de validation convenus avec l'utilisateur.
+
 ## Périmètre du travail
 
 Cette règle Git autorise la sauvegarde et la publication des changements relevant du lot confié. Elle n'autorise pas à commencer un nouveau lot ou à élargir la mission sans instruction de l'utilisateur.
