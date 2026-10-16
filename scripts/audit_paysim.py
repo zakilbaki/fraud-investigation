@@ -68,6 +68,21 @@ def audit(path: Path) -> dict[str, object]:
             (~pl.col(name).is_in([0, 1])).sum().alias(f"invalid__{name}")
         )
     summary = collect_rows(frame.select(expressions))[0]
+    temporal_windows = collect_rows(
+        frame.with_columns(
+            (((pl.col("step") - 1) // 168) * 168 + 1).alias("step_start")
+        )
+        .group_by("step_start")
+        .agg(
+            pl.col("step").max().alias("step_end"),
+            pl.len().alias("count"),
+            pl.col("isFraud").sum().alias("fraud_count"),
+            pl.col("isFlaggedFraud").sum().alias("flagged_count"),
+        )
+        .sort("step_start")
+    )
+    for window in temporal_windows:
+        window["fraud_rate"] = window["fraud_count"] / window["count"]
 
     return {
         "source_file": path.name,
@@ -85,6 +100,7 @@ def audit(path: Path) -> dict[str, object]:
                 frame.group_by("step").agg(pl.len().alias("count")).sort("step")
             ),
         },
+        "fraud_by_168_step_window": temporal_windows,
         "types": collect_rows(
             frame.group_by("type").agg(pl.len().alias("count")).sort("type")
         ),

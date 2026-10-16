@@ -41,6 +41,18 @@ Les 11 colonnes ont chacune **0 valeur manquante**, en traitant les champs CSV v
 | 505 à 672 | 232 135 |
 | 673 à 743 | 66 449 |
 
+Fenêtres descriptives de 168 `step` (sept jours simulés), avec une dernière fenêtre plus courte. Les taux correspondent à `isFraud = 1` divisé par l'effectif de la fenêtre ; ils ne définissent aucun découpage d'entraînement ou de test.
+
+| `step` | Transactions | Fraudes | Taux de fraude |
+| --- | ---: | ---: | ---: |
+| 1 à 168 | 1 930 180 | 1 904 | 0,0986 % |
+| 169 à 336 | 2 854 595 | 1 863 | 0,0653 % |
+| 337 à 504 | 1 279 261 | 1 854 | 0,1449 % |
+| 505 à 672 | 232 135 | 1 792 | 0,7720 % |
+| 673 à 743 | 66 449 | 800 | 1,2039 % |
+
+La proportion observée varie selon la fenêtre, tout comme son effectif. Il faudra en tenir compte lors de la conception du futur protocole d'évaluation, sans déduire de cet audit la cause de la variation.
+
 | `type` | Lignes |
 | --- | ---: |
 | `CASH_IN` | 1 399 284 |

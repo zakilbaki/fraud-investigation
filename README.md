@@ -27,7 +27,7 @@ shasum -a 256 data/raw/PS_20174392719_1491204439457_log.csv
 UV_CACHE_DIR=.cache/uv .tools/bin/uv run --locked python scripts/audit_paysim.py data/raw/PS_20174392719_1491204439457_log.csv --output data/audit.json
 ```
 
-Le script ne modifie pas le CSV. Il relève les colonnes et leurs types, les valeurs manquantes, les effectifs par `step` et par type, les labels et les valeurs numériques suspectes. Le rapport JSON détaillé reste local dans `data/`, exclu de Git. Les labels sont lus uniquement pour cet audit hors ligne.
+Le script ne modifie pas le CSV. Il relève les colonnes et leurs types, les valeurs manquantes, les effectifs par `step` et par type, les labels, les taux de fraude par fenêtres de 168 `step` et les valeurs numériques suspectes. Le rapport JSON détaillé reste local dans `data/`, exclu de Git. Les labels sont lus uniquement pour cet audit hors ligne.
 
 ## Import SQLite et consultation
 
