@@ -82,9 +82,13 @@ Pour `amount` et les quatre colonnes de soldes, le contrôle a trouvé **0 valeu
 - Le contrôle des doublons n'a pas été entrepris. Deux lignes identiques ne seraient pas supprimées automatiquement.
 - Les labels ont été lus par un outil d'audit hors ligne. Ils ne doivent jamais être exposés aux futurs agents d'enquête.
 
-## Décisions proposées pour le prochain lot
+## Décisions proposées à l'issue du lot 2
 
 1. Figer l'empreinte du CSV dans la provenance de l'import et conserver un numéro de ligne source pour l'audit, sans l'utiliser comme horodatage.
 2. Concevoir la séparation physique ou logique des labels d'évaluation avant de créer les outils accessibles aux agents.
 3. Étudier les 16 montants nuls et les soldes avant toute règle de nettoyage ou sélection de variables. Conserver les lignes brutes intactes.
-4. Définir le schéma et les index SQLite à partir des requêtes d'enquête prévues. Aucune de ces décisions n'est implémentée dans ce lot.
+4. Définir le schéma et les index SQLite à partir des requêtes d'enquête prévues. Aucune de ces décisions n'était implémentée au lot 2.
+
+## Vérification du stockage au lot 3
+
+L'import complet a retrouvé les 6 362 620 transactions de l'audit et créé 9 073 900 comptes à partir des seuls identifiants d'origine et de destination. Le fichier d'évaluation séparé contient 6 362 620 labels, dont 8 213 `isFraud = 1` et 16 `isFlaggedFraud = 1`. Les 16 montants zéro sont conservés. Les clés étrangères sont valides et la correspondance des identifiants et numéros de ligne entre les deux fichiers ne présente aucune absence. Les deux tables d'enquête sont vides. Voir [DATABASE.md](DATABASE.md) pour le schéma et les règles de provenance.

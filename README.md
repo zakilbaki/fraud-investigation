@@ -37,10 +37,27 @@ Le schéma, la provenance et la séparation des labels sont décrits dans [docs/
 UV_CACHE_DIR=.cache/uv .tools/bin/uv run --locked python -m unittest discover -s tests -v
 ```
 
-Après réussite des tests, importer le CSV réel avec son empreinte attendue :
+Après réussite des tests, importer le CSV réel avec son empreinte attendue. Cette commande a été exécutée jusqu'au statut `imported`, puis réexécutée jusqu'au statut `already_imported` :
 
 ```sh
 UV_CACHE_DIR=.cache/uv .tools/bin/uv run --locked python scripts/import_paysim.py data/raw/PS_20174392719_1491204439457_log.csv --expected-sha256 16910f90577b0d981bf8ff289714510bb89bc71bff7d3f220f024e287e4eea6b
 ```
 
-La base applicative sera dans `data/app/fraud.sqlite` et les labels dans `data/evaluation/labels.sqlite`. Réexécuter la même commande vérifie l'import et ne crée pas de doublons. Les fonctions `get_transaction` et `get_account_transactions` du module `fraud_investigation.database` offrent les deux consultations en lecture seule. Aucun modèle ML, serveur HTTP ou agent n'est inclus dans ce lot.
+La base applicative se trouve dans `data/app/fraud.sqlite` et les labels dans `data/evaluation/labels.sqlite`. Réexécuter la même commande vérifie l'import et ne crée pas de doublons. Les fonctions `get_transaction` et `get_account_transactions` du module `fraud_investigation.database` offrent les deux consultations en lecture seule :
+
+```python
+from fraud_investigation.database import (
+    get_account_transactions,
+    get_transaction,
+    open_readonly,
+)
+
+with open_readonly("data/app/fraud.sqlite") as database:
+    transaction = get_transaction(database, "c00323c28c68155118c85cb9ee237fe7")
+    historique = get_account_transactions(
+        database, transaction["name_orig"], before_step=transaction["step"] + 1, limit=3
+    )
+    print(transaction["source_line_number"], len(historique))
+```
+
+Le numéro de ligne imprimé est `2`. La requête d'historique exclut tout `step` égal ou supérieur à `before_step`. Aucun modèle ML, serveur HTTP ou agent n'est inclus dans ce lot.

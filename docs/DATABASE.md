@@ -32,3 +32,9 @@ Le fichier d'évaluation contient une table `labels` avec `source_line_number`, 
 `get_transaction` recherche par `transaction_id` unique. `get_account_transactions` recherche un compte comme expéditeur ou destinataire avec `step < before_step`, puis limite le nombre de résultats entre 1 et 500. Toutes les valeurs passent par des paramètres SQL.
 
 Les index `transactions_orig_step_id` et `transactions_dest_step_id` portent sur le compte, le `step` décroissant et l'identifiant. L'index unique de `transaction_id` sert à la recherche directe. Les résultats sont triés par `step` décroissant, puis par identifiant croissant pour obtenir un ordre reproductible. Le second critère départage seulement les lignes d'un même `step` ; il ne représente pas leur chronologie réelle. Un compte présent dans les deux rôles sur une même transaction n'apparaît qu'une fois.
+
+## Import complet vérifié
+
+Le CSV dont le SHA-256 est `16910f90577b0d981bf8ff289714510bb89bc71bff7d3f220f024e287e4eea6b` a produit 6 362 620 transactions, 9 073 900 comptes distincts et 6 362 620 labels. Les tables d'enquête sont restées vides. Une seconde exécution a renvoyé `already_imported` avec les mêmes effectifs.
+
+`PRAGMA foreign_key_check` et `PRAGMA quick_check` n'ont signalé aucune erreur. La jointure des identifiants et numéros de ligne entre la base applicative et le fichier de labels a trouvé zéro absence dans les deux sens. La base applicative ne contient aucune colonne `isFraud` ou `isFlaggedFraud`. Les index des deux rôles et l'index unique de transaction sont présents ; `EXPLAIN QUERY PLAN` utilise les deux index par compte avec la borne `step < ?`.
