@@ -103,6 +103,27 @@ def _count(connection: sqlite3.Connection, table: str) -> int:
     return int(connection.execute(f"SELECT COUNT(*) FROM {table}").fetchone()[0])
 
 
+def _verify_labels_match(app: sqlite3.Connection, expected_rows: int) -> int:
+    labels = _count(app, "evaluation.labels")
+    if labels != expected_rows:
+        raise RuntimeError("Effectifs transactions et labels différents")
+    missing_labels = app.execute("""
+        SELECT 1 FROM transactions AS t
+        LEFT JOIN evaluation.labels AS l ON l.transaction_id = t.transaction_id
+        WHERE l.transaction_id IS NULL OR l.source_line_number != t.source_line_number
+        LIMIT 1
+    """).fetchone()
+    missing_transactions = app.execute("""
+        SELECT 1 FROM evaluation.labels AS l
+        LEFT JOIN transactions AS t ON t.transaction_id = l.transaction_id
+        WHERE t.transaction_id IS NULL OR t.source_line_number != l.source_line_number
+        LIMIT 1
+    """).fetchone()
+    if missing_labels or missing_transactions:
+        raise RuntimeError("Identifiants de transactions et de labels incompatibles")
+    return labels
+
+
 def _verify_existing(
     db_path: Path, labels_path: Path, fingerprint: str, expected_rows: int
 ) -> ImportResult:
@@ -119,10 +140,11 @@ def _verify_existing(
         last_line = app.execute("SELECT MAX(source_line_number) FROM transactions").fetchone()[0]
         if transactions != expected_rows or last_line != expected_rows + 1:
             raise RuntimeError("Import incomplet dans la base applicative")
-    with sqlite3.connect(f"file:{labels_path.resolve()}?mode=ro", uri=True) as evaluation:
-        labels = _count(evaluation, "labels")
-        if labels != transactions:
-            raise RuntimeError("Import incomplet dans le fichier de labels")
+        app.execute("ATTACH DATABASE ? AS evaluation", (str(labels_path),))
+        try:
+            labels = _verify_labels_match(app, transactions)
+        finally:
+            app.execute("DETACH DATABASE evaluation")
     return ImportResult("already_imported", fingerprint, transactions, accounts, labels)
 
 
@@ -140,21 +162,7 @@ def _verify_build(app: sqlite3.Connection, labels_path: Path, expected_rows: int
         raise RuntimeError("Contrôle d'intégrité de la base applicative échoué")
     app.execute("ATTACH DATABASE ? AS evaluation", (str(labels_path),))
     try:
-        labels = _count(app, "evaluation.labels")
-        if labels != transactions:
-            raise RuntimeError("Effectifs transactions et labels différents")
-        missing_labels = app.execute("""
-            SELECT COUNT(*) FROM transactions AS t
-            LEFT JOIN evaluation.labels AS l ON l.transaction_id = t.transaction_id
-            WHERE l.transaction_id IS NULL OR l.source_line_number != t.source_line_number
-        """).fetchone()[0]
-        missing_transactions = app.execute("""
-            SELECT COUNT(*) FROM evaluation.labels AS l
-            LEFT JOIN transactions AS t ON t.transaction_id = l.transaction_id
-            WHERE t.transaction_id IS NULL OR t.source_line_number != l.source_line_number
-        """).fetchone()[0]
-        if missing_labels or missing_transactions:
-            raise RuntimeError("Identifiants de transactions et de labels incompatibles")
+        _verify_labels_match(app, transactions)
     finally:
         app.execute("DETACH DATABASE evaluation")
     return transactions, accounts

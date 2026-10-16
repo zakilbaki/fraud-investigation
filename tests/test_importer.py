@@ -107,6 +107,26 @@ class ImporterTest(unittest.TestCase):
         with sqlite3.connect(self.database) as app:
             self.assertEqual(app.execute("SELECT COUNT(*) FROM transactions").fetchone()[0], 6)
 
+    def test_same_count_labels_from_another_source_are_rejected(self) -> None:
+        import_paysim(self.csv, self.database, self.labels, batch_size=2)
+        other_source = Path(self.directory.name) / "other-source.csv"
+        other_database = Path(self.directory.name) / "other-app.sqlite"
+        other_labels = Path(self.directory.name) / "other-labels.sqlite"
+        other_rows = list(self.rows)
+        other_rows[0] = (*other_rows[0][:2], "1.01", *other_rows[0][3:])
+        with other_source.open("w", newline="", encoding="utf-8") as file:
+            writer = csv.writer(file)
+            writer.writerow(HEADER)
+            writer.writerows(other_rows)
+        import_paysim(other_source, other_database, other_labels, batch_size=2)
+
+        app_before = self.database.read_bytes()
+        labels_before = other_labels.read_bytes()
+        with self.assertRaisesRegex(RuntimeError, "Identifiants de transactions et de labels incompatibles"):
+            import_paysim(self.csv, self.database, other_labels, batch_size=2)
+        self.assertEqual(self.database.read_bytes(), app_before)
+        self.assertEqual(other_labels.read_bytes(), labels_before)
+
     def test_invalid_amount_leaves_partial_import_visible(self) -> None:
         rows = list(self.rows)
         rows[-1] = (*rows[-1][:2], "-1", *rows[-1][3:])
