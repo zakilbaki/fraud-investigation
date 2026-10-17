@@ -184,3 +184,32 @@ La ressemblance des courbes n'est pas seulement visuelle : au step individuel, l
 `step` est une information disponible au moment du scoring, mais sa **disponibilité** ne garantit pas son **intérêt sain** comme variable. Sa valeur peut permettre à un modèle de mémoriser le calendrier synthétique des fraudes et de produire un résultat flatteur qui ne se transpose pas à un autre calendrier. Il doit en revanche rester disponible pour décrire les données et construire un futur découpage chronologique. La sélection de `step` comme variable prédictive reste ouverte ; une comparaison avec et sans cette variable, sur un protocole temporel défini avant l'entraînement, sera plus informative qu'une décision fondée sur la seule corrélation avec le label. Aucune de ces comparaisons n'a encore été lancée.
 
 Le notebook vérifie les totaux par step, la fenêtre finale, la présence des deux types, les écarts de nombres de fraudes et le plafond logique du nombre d'appariements par `(step, amount)`. Ces diagnostics utilisent `isFraud` uniquement dans l'EDA hors ligne. Ils n'établissent pas le mécanisme exact du simulateur et ne fixent aucune frontière train/validation/test.
+
+## Lot 4.0, diagnostic limité des comptes candidats
+
+**Hypothèse vérifiée :** pour les fraudes `TRANSFER` et `CASH_OUT` partageant exactement le même `(step, amount)`, la destination du transfert (`nameDest`) pourrait être le compte d'origine du retrait (`nameOrig`). Les labels servent seulement à l'EDA hors ligne. Les identifiants de compte et les montants proviennent du CSV original ; aucun scénario n'est ajouté.
+
+La méthode comporte trois niveaux distincts. D'abord, grouper par `(step, amount)` et retenir les groupes contenant les deux types établit une **correspondance de montant et de step**. Ensuite, une jointure exige en plus `TRANSFER.nameDest = CASH_OUT.nameOrig` pour établir une **identité de compte** observée. Enfin, une **chaîne temporelle** exigerait de démontrer que le transfert a précédé le retrait. Le fichier n'ordonne pas les opérations à l'intérieur d'un step et l'ordre des lignes CSV n'est pas une preuve. Une identité de compte éventuelle dans un même step n'aurait donc pas suffi à prouver une chaîne ordonnée.
+
+| Mesure | Résultat observé |
+| --- | ---: |
+| Groupes frauduleux avec au moins un `TRANSFER` et un `CASH_OUT` de même step et montant | 4 023 |
+| `TRANSFER` ayant au moins un candidat par step et montant | 4 078 sur 4 097 |
+| `CASH_OUT` ayant au moins un candidat par step et montant | 4 075 sur 4 116 |
+| Groupes ambigus par montant, avec plusieurs transactions d'au moins un type | 26 |
+| Transactions dans ces groupes ambigus | 81 `TRANSFER`, 78 `CASH_OUT` |
+| Maximum appariable un-à-un sur step et montant seuls | 4 075 de chaque type |
+| Groupes avec égalité `TRANSFER.nameDest = CASH_OUT.nameOrig` | **0** |
+| Transactions distinctes ayant au moins une telle égalité de compte | **0 `TRANSFER`, 0 `CASH_OUT`** |
+
+Une jointure brute sur `(step, amount)` produirait 4 272 combinaisons de lignes. Ce nombre n'est **pas** un nombre de paires indépendantes : par exemple, au step 160 et au montant 10 000 000, trois transferts et trois retraits produisent neuf combinaisons possibles sans déterminer un appariement. Le calcul compte donc les transactions distinctes et les groupes, puis utilise `min(n_TRANSFER, n_CASH_OUT)` uniquement comme maximum théorique d'un appariement un-à-un sur les montants.
+
+Exemples réellement présents dans le CSV :
+
+| Step | Montant PaySim | Destination du `TRANSFER` | Origine du `CASH_OUT` | Lecture |
+| ---: | ---: | --- | --- | --- |
+| 1 | 181,00 | `C553264065` | `C840083671` | Même step et montant, comptes différents |
+| 1 | 2 806,00 | `C972765878` | `C2101527076` | Même step et montant, comptes différents |
+| 160 | 10 000 000,00 | `C2055653883`, `C1853789265`, `C1270029603` | `C2068007279`, `C525906402`, `C714385617` | Groupe 3 contre 3, aucune égalité recherchée |
+
+La jointure sur les trois critères ne renvoie aucune ligne. Un second contrôle, par intersection des ensembles d'identifiants dans chaque groupe `(step, amount)`, retrouve aussi zéro correspondance. **Aucune chaîne de comptes de cette forme n'est observable dans ces groupes candidats.** Cela ne prouve pas qu'aucun mouvement de fonds n'existe ailleurs : la recherche ne porte ni sur d'autres montants, ni sur des steps différents, ni sur des comptes intermédiaires. Elle ne permet pas non plus d'attribuer une cause à la symétrie des deux courbes. Le notebook a été réexécuté sans entraînement ni modification des données.
