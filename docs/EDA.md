@@ -135,3 +135,40 @@ Le notebook vérifie les effectifs par type et label, l'exclusion des montants n
 Pour les 8 197 fraudes de montant positif (`CASH_OUT` ou `TRANSFER`), **8 008** combinent `oldbalanceOrg ≈ amount` et `newbalanceOrig = 0`, soit **97,69 %**. Le détail est de 4 075/4 100 pour `CASH_OUT` et 3 933/4 097 pour `TRANSFER`. Ce motif est cohérent avec un compte **enregistré comme vidé** dans PaySim. Il ne permet pas de conclure que les fraudeurs choisissent intentionnellement les comptes à solde élevé ni que chaque opération a été effectivement exécutée : la documentation source avertit que des fraudes détectées peuvent être annulées.
 
 Le seul test `newbalanceOrig = 0` est peu discriminant : il concerne aussi 1 981 096/2 233 384 `CASH_OUT` normaux et 507 507/528 812 `TRANSFER` normaux à montant positif. Le graphique précédent repose sur l'égalité avec le solde **avant** transaction, pas sur le seul solde après transaction. Ce dernier reste exclu des variables d'un modèle avant exécution. Les 16 fraudes de montant nul sont séparées de ces calculs.
+
+## Lot 4.0, étape 5 : hypothèse temporelle
+
+### Choix de lecture
+
+Le notebook regroupe les `step` en fenêtres fixes de **48 heures simulées** : 1 à 48, 49 à 96, et ainsi de suite. Cela donne 16 points lisibles, avec une dernière fenêtre de 23 steps (721 à 743). Une alternative de 168 steps réduit le bruit mais masque des creux de volume ; une fenêtre de 24 steps détaille davantage les variations mais multiplie les petits dénominateurs. Ces fenêtres servent à l'EDA seulement : elles ne définissent aucune frontière train/validation/test et ne sont pas choisies selon les performances d'un modèle.
+
+La [figure volume et taux](figures/eda_temps_volume_taux.svg) présente deux panneaux alignés sur les mêmes périodes. Dans le premier, l'axe vertical donne le nombre de transactions ; dans le second, il donne `fraudes / transactions` en pourcentage. Les deux axes verticaux sont logarithmiques pour rendre visibles les amplitudes observées (272 à 1 029 493 transactions et 0,0563 % à 100 % de fraude). Une même distance verticale représente donc un facteur multiplicatif, pas une différence fixe. Sous chaque période figurent le nombre total de transactions et le nombre de fraudes. Toutes les périodes tracées ont des effectifs et des taux positifs ; un zéro ne serait pas représentable sur ces axes.
+
+La [figure par type](figures/eda_temps_taux_par_type.svg) reprend exactement ces fenêtres. Chaque taux utilise les transactions du **même type et de la même période** comme dénominateur. Les nombres `n/f` sous les courbes donnent respectivement transactions et fraudes. Un cercle entouré signale un dénominateur inférieur à 10 000 transactions pour ce type et cette période. Cette borne est un repère descriptif pour attirer l'attention, pas un critère d'incertitude ni de sélection de modèle. Les valeurs exactes sont recalculées et imprimées par le notebook.
+
+### Résultats observés
+
+| Steps | Transactions | Fraudes | Taux global | `CASH_OUT` transactions/fraudes | Taux `CASH_OUT` | `TRANSFER` transactions/fraudes | Taux `TRANSFER` |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| 1 à 48 | 1 029 493 | 580 | 0,0563 % | 369 002/297 | 0,0805 % | 84 955/283 | 0,3331 % |
+| 49 à 96 | 29 310 | 572 | 1,9516 % | 6 492/286 | 4,4054 % | 2 703/286 | 10,5808 % |
+| 97 à 144 | 450 794 | 480 | 0,1065 % | 161 365/240 | 0,1487 % | 37 220/240 | 0,6448 % |
+| 145 à 192 | 870 220 | 550 | 0,0632 % | 310 706/276 | 0,0888 % | 72 395/274 | 0,3785 % |
+| 193 à 240 | 810 864 | 537 | 0,0662 % | 286 767/270 | 0,0942 % | 66 712/267 | 0,4002 % |
+| 241 à 288 | 767 635 | 560 | 0,0730 % | 269 525/280 | 0,1039 % | 61 924/280 | 0,4522 % |
+| 289 à 336 | 826 459 | 488 | 0,0590 % | 290 510/244 | 0,0840 % | 70 671/244 | 0,3453 % |
+| 337 à 384 | 776 876 | 502 | 0,0646 % | 271 763/251 | 0,0924 % | 65 332/251 | 0,3842 % |
+| 385 à 432 | 446 765 | 588 | 0,1316 % | 158 363/294 | 0,1856 % | 37 485/294 | 0,7843 % |
+| 433 à 480 | 31 027 | 492 | 1,5857 % | 9 421/246 | 2,6112 % | 2 944/246 | 8,3560 % |
+| 481 à 528 | 78 030 | 528 | 0,6767 % | 24 299/264 | 1,0865 % | 7 338/264 | 3,5977 % |
+| 529 à 576 | 83 721 | 496 | 0,5924 % | 26 808/248 | 0,9251 % | 7 756/248 | 3,1975 % |
+| 577 à 624 | 71 738 | 512 | 0,7137 % | 23 268/256 | 1,1002 % | 6 593/256 | 3,8829 % |
+| 625 à 672 | 23 239 | 528 | 2,2720 % | 7 063/264 | 3,7378 % | 2 383/264 | 11,0785 % |
+| 673 à 720 | 66 177 | 528 | 0,7979 % | 22 012/264 | 1,1993 % | 6 362/264 | 4,1496 % |
+| 721 à 743 | 272 | 272 | 100 % | 136/136 | 100 % | 136/136 | 100 % |
+
+Le volume global baisse fortement par moments : 29 310 transactions en 49 à 96 contre 1 029 493 en 1 à 48, mais les fraudes étiquetées restent proches (572 contre 580). La hausse du taux à 1,9516 % vient donc surtout d'un dénominateur beaucoup plus petit dans cette comparaison. On retrouve un creux en 433 à 480 et 625 à 672. La fin 721 à 743 constitue un cas extrême : **272 lignes, toutes étiquetées fraude**, réparties également entre `CASH_OUT` et `TRANSFER`. Cette fenêtre est aussi plus courte ; sa valeur de 100 % ne doit pas être extrapolée.
+
+À chaque période, le taux observé de `TRANSFER` dépasse celui de `CASH_OUT`. Cela ne démontre ni une cause liée à la traçabilité ni un risque stable hors de PaySim. Dans plusieurs périodes, les nombres de fraudes des deux types sont exactement égaux ou proches, alors que leurs volumes diffèrent fortement. Ce motif et la période finale méritent une discussion sur la construction du simulateur ; le CSV seul n'en établit pas la cause.
+
+Les contrôles du notebook retrouvent **6 362 620 transactions** et **8 213 fraudes** sur les périodes, ainsi que **8 213 fraudes** pour `CASH_OUT` et `TRANSFER` réunis. Chaque fenêtre commence et finit au step prévu ; les fraudes par type se somment au total de sa période. Les taux sont descriptifs sur l'ensemble du fichier, sans correction d'incertitude ni conclusion causale. Aucun entraînement ni découpage temporel définitif n'a été effectué. La suite dépend des observations de l'utilisateur.

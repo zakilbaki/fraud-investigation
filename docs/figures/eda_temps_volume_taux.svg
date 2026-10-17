@@ -1,0 +1,116 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1000" viewBox="0 0 1800 1000">
+<rect width="100%" height="100%" fill="white"/>
+<text x="55" y="48" font-family="Arial, sans-serif" font-size="29" fill="#183047" text-anchor="start" font-weight="bold">PaySim : volume et taux de fraude par 48 steps</text>
+<text x="55" y="80" font-family="Arial, sans-serif" font-size="17" fill="#4b6072" text-anchor="start" font-weight="normal">Fenêtres fixes de deux jours simulés ; dernière fenêtre de 23 steps</text>
+<line x1="125" y1="370.0" x2="1750" y2="370.0" stroke="#dce4e9"/>
+<text x="110" y="375.0" font-family="Arial, sans-serif" font-size="13" fill="#183047" text-anchor="end" font-weight="normal">10^2</text>
+<line x1="125" y1="321.0" x2="1750" y2="321.0" stroke="#dce4e9"/>
+<text x="110" y="326.0" font-family="Arial, sans-serif" font-size="13" fill="#183047" text-anchor="end" font-weight="normal">10^3</text>
+<line x1="125" y1="272.0" x2="1750" y2="272.0" stroke="#dce4e9"/>
+<text x="110" y="277.0" font-family="Arial, sans-serif" font-size="13" fill="#183047" text-anchor="end" font-weight="normal">10^4</text>
+<line x1="125" y1="223.0" x2="1750" y2="223.0" stroke="#dce4e9"/>
+<text x="110" y="228.0" font-family="Arial, sans-serif" font-size="13" fill="#183047" text-anchor="end" font-weight="normal">10^5</text>
+<line x1="125" y1="174.0" x2="1750" y2="174.0" stroke="#dce4e9"/>
+<text x="110" y="179.0" font-family="Arial, sans-serif" font-size="13" fill="#183047" text-anchor="end" font-weight="normal">10^6</text>
+<text x="55" y="130" font-family="Arial, sans-serif" font-size="21" fill="#183047" text-anchor="start" font-weight="bold">A. Transactions par période</text>
+<text x="55" y="155" font-family="Arial, sans-serif" font-size="14" fill="#4b6072" text-anchor="start" font-weight="normal">Axe vertical : effectif (log)</text>
+<rect x="150.8" y="173.4" width="50" height="196.6" fill="#237087"/>
+<rect x="252.3" y="249.1" width="50" height="120.9" fill="#237087"/>
+<rect x="353.9" y="191.0" width="50" height="179.0" fill="#237087"/>
+<rect x="455.5" y="177.0" width="50" height="193.0" fill="#237087"/>
+<rect x="557.0" y="178.5" width="50" height="191.5" fill="#237087"/>
+<rect x="658.6" y="179.6" width="50" height="190.4" fill="#237087"/>
+<rect x="760.2" y="178.1" width="50" height="191.9" fill="#237087"/>
+<rect x="861.7" y="179.4" width="50" height="190.6" fill="#237087"/>
+<rect x="963.3" y="191.1" width="50" height="178.9" fill="#237087"/>
+<rect x="1064.8" y="247.9" width="50" height="122.1" fill="#237087"/>
+<rect x="1166.4" y="228.3" width="50" height="141.7" fill="#237087"/>
+<rect x="1268.0" y="226.8" width="50" height="143.2" fill="#237087"/>
+<rect x="1369.5" y="230.1" width="50" height="139.9" fill="#237087"/>
+<rect x="1471.1" y="254.1" width="50" height="115.9" fill="#237087"/>
+<rect x="1572.7" y="231.8" width="50" height="138.2" fill="#237087"/>
+<rect x="1674.2" y="348.7" width="50" height="21.3" fill="#ce593b"/>
+<line x1="125" y1="750.0" x2="1750" y2="750.0" stroke="#dce4e9"/>
+<text x="110" y="755.0" font-family="Arial, sans-serif" font-size="13" fill="#183047" text-anchor="end" font-weight="normal">0,01 %</text>
+<line x1="125" y1="688.8" x2="1750" y2="688.8" stroke="#dce4e9"/>
+<text x="110" y="693.75" font-family="Arial, sans-serif" font-size="13" fill="#183047" text-anchor="end" font-weight="normal">0,1 %</text>
+<line x1="125" y1="627.5" x2="1750" y2="627.5" stroke="#dce4e9"/>
+<text x="110" y="632.5" font-family="Arial, sans-serif" font-size="13" fill="#183047" text-anchor="end" font-weight="normal">1 %</text>
+<line x1="125" y1="566.2" x2="1750" y2="566.2" stroke="#dce4e9"/>
+<text x="110" y="571.25" font-family="Arial, sans-serif" font-size="13" fill="#183047" text-anchor="end" font-weight="normal">10 %</text>
+<line x1="125" y1="505.0" x2="1750" y2="505.0" stroke="#dce4e9"/>
+<text x="110" y="510.0" font-family="Arial, sans-serif" font-size="13" fill="#183047" text-anchor="end" font-weight="normal">100 %</text>
+<text x="55" y="455" font-family="Arial, sans-serif" font-size="21" fill="#183047" text-anchor="start" font-weight="bold">B. Taux de fraude par période</text>
+<text x="55" y="480" font-family="Arial, sans-serif" font-size="14" fill="#4b6072" text-anchor="start" font-weight="normal">Axe vertical : fraudes / transactions (log)</text>
+<polyline points="175.8,704.0 277.3,609.7 378.9,687.1 480.5,701.0 582.0,699.7 683.6,697.1 785.2,702.8 886.7,700.4 988.3,681.4 1089.8,615.2 1191.4,637.9 1293.0,641.4 1394.5,636.5 1496.1,605.7 1597.7,633.5 1699.2,505.0" fill="none" stroke="#ce593b" stroke-width="3"/>
+<circle cx="175.8" cy="704.0" r="6" fill="#ce593b"/>
+<circle cx="277.3" cy="609.7" r="6" fill="#ce593b"/>
+<circle cx="378.9" cy="687.1" r="6" fill="#ce593b"/>
+<circle cx="480.5" cy="701.0" r="6" fill="#ce593b"/>
+<circle cx="582.0" cy="699.7" r="6" fill="#ce593b"/>
+<circle cx="683.6" cy="697.1" r="6" fill="#ce593b"/>
+<circle cx="785.2" cy="702.8" r="6" fill="#ce593b"/>
+<circle cx="886.7" cy="700.4" r="6" fill="#ce593b"/>
+<circle cx="988.3" cy="681.4" r="6" fill="#ce593b"/>
+<circle cx="1089.8" cy="615.2" r="6" fill="#ce593b"/>
+<circle cx="1191.4" cy="637.9" r="6" fill="#ce593b"/>
+<circle cx="1293.0" cy="641.4" r="6" fill="#ce593b"/>
+<circle cx="1394.5" cy="636.5" r="6" fill="#ce593b"/>
+<circle cx="1496.1" cy="605.7" r="6" fill="#ce593b"/>
+<circle cx="1597.7" cy="633.5" r="6" fill="#ce593b"/>
+<circle cx="1699.2" cy="505.0" r="6" fill="#ce593b"/>
+<circle cx="1699.2" cy="505.0" r="11" fill="none" stroke="#172d40" stroke-width="2"/>
+<text x="55" y="793" font-family="Arial, sans-serif" font-size="13" fill="#4b6072" text-anchor="start" font-weight="normal">Période</text>
+<text x="55" y="823" font-family="Arial, sans-serif" font-size="13" fill="#4b6072" text-anchor="start" font-weight="normal">n total</text>
+<text x="55" y="846" font-family="Arial, sans-serif" font-size="13" fill="#4b6072" text-anchor="start" font-weight="normal">n fraudes</text>
+<text x="175.78125" y="793" font-family="Arial, sans-serif" font-size="12" fill="#183047" text-anchor="middle" font-weight="normal">1-48</text>
+<text x="175.78125" y="823" font-family="Arial, sans-serif" font-size="12" fill="#183047" text-anchor="middle" font-weight="normal">1 029 493</text>
+<text x="175.78125" y="846" font-family="Arial, sans-serif" font-size="12" fill="#183047" text-anchor="middle" font-weight="normal">580</text>
+<text x="277.34375" y="793" font-family="Arial, sans-serif" font-size="12" fill="#183047" text-anchor="middle" font-weight="normal">49-96</text>
+<text x="277.34375" y="823" font-family="Arial, sans-serif" font-size="12" fill="#183047" text-anchor="middle" font-weight="normal">29 310</text>
+<text x="277.34375" y="846" font-family="Arial, sans-serif" font-size="12" fill="#183047" text-anchor="middle" font-weight="normal">572</text>
+<text x="378.90625" y="793" font-family="Arial, sans-serif" font-size="12" fill="#183047" text-anchor="middle" font-weight="normal">97-144</text>
+<text x="378.90625" y="823" font-family="Arial, sans-serif" font-size="12" fill="#183047" text-anchor="middle" font-weight="normal">450 794</text>
+<text x="378.90625" y="846" font-family="Arial, sans-serif" font-size="12" fill="#183047" text-anchor="middle" font-weight="normal">480</text>
+<text x="480.46875" y="793" font-family="Arial, sans-serif" font-size="12" fill="#183047" text-anchor="middle" font-weight="normal">145-192</text>
+<text x="480.46875" y="823" font-family="Arial, sans-serif" font-size="12" fill="#183047" text-anchor="middle" font-weight="normal">870 220</text>
+<text x="480.46875" y="846" font-family="Arial, sans-serif" font-size="12" fill="#183047" text-anchor="middle" font-weight="normal">550</text>
+<text x="582.03125" y="793" font-family="Arial, sans-serif" font-size="12" fill="#183047" text-anchor="middle" font-weight="normal">193-240</text>
+<text x="582.03125" y="823" font-family="Arial, sans-serif" font-size="12" fill="#183047" text-anchor="middle" font-weight="normal">810 864</text>
+<text x="582.03125" y="846" font-family="Arial, sans-serif" font-size="12" fill="#183047" text-anchor="middle" font-weight="normal">537</text>
+<text x="683.59375" y="793" font-family="Arial, sans-serif" font-size="12" fill="#183047" text-anchor="middle" font-weight="normal">241-288</text>
+<text x="683.59375" y="823" font-family="Arial, sans-serif" font-size="12" fill="#183047" text-anchor="middle" font-weight="normal">767 635</text>
+<text x="683.59375" y="846" font-family="Arial, sans-serif" font-size="12" fill="#183047" text-anchor="middle" font-weight="normal">560</text>
+<text x="785.15625" y="793" font-family="Arial, sans-serif" font-size="12" fill="#183047" text-anchor="middle" font-weight="normal">289-336</text>
+<text x="785.15625" y="823" font-family="Arial, sans-serif" font-size="12" fill="#183047" text-anchor="middle" font-weight="normal">826 459</text>
+<text x="785.15625" y="846" font-family="Arial, sans-serif" font-size="12" fill="#183047" text-anchor="middle" font-weight="normal">488</text>
+<text x="886.71875" y="793" font-family="Arial, sans-serif" font-size="12" fill="#183047" text-anchor="middle" font-weight="normal">337-384</text>
+<text x="886.71875" y="823" font-family="Arial, sans-serif" font-size="12" fill="#183047" text-anchor="middle" font-weight="normal">776 876</text>
+<text x="886.71875" y="846" font-family="Arial, sans-serif" font-size="12" fill="#183047" text-anchor="middle" font-weight="normal">502</text>
+<text x="988.28125" y="793" font-family="Arial, sans-serif" font-size="12" fill="#183047" text-anchor="middle" font-weight="normal">385-432</text>
+<text x="988.28125" y="823" font-family="Arial, sans-serif" font-size="12" fill="#183047" text-anchor="middle" font-weight="normal">446 765</text>
+<text x="988.28125" y="846" font-family="Arial, sans-serif" font-size="12" fill="#183047" text-anchor="middle" font-weight="normal">588</text>
+<text x="1089.84375" y="793" font-family="Arial, sans-serif" font-size="12" fill="#183047" text-anchor="middle" font-weight="normal">433-480</text>
+<text x="1089.84375" y="823" font-family="Arial, sans-serif" font-size="12" fill="#183047" text-anchor="middle" font-weight="normal">31 027</text>
+<text x="1089.84375" y="846" font-family="Arial, sans-serif" font-size="12" fill="#183047" text-anchor="middle" font-weight="normal">492</text>
+<text x="1191.40625" y="793" font-family="Arial, sans-serif" font-size="12" fill="#183047" text-anchor="middle" font-weight="normal">481-528</text>
+<text x="1191.40625" y="823" font-family="Arial, sans-serif" font-size="12" fill="#183047" text-anchor="middle" font-weight="normal">78 030</text>
+<text x="1191.40625" y="846" font-family="Arial, sans-serif" font-size="12" fill="#183047" text-anchor="middle" font-weight="normal">528</text>
+<text x="1292.96875" y="793" font-family="Arial, sans-serif" font-size="12" fill="#183047" text-anchor="middle" font-weight="normal">529-576</text>
+<text x="1292.96875" y="823" font-family="Arial, sans-serif" font-size="12" fill="#183047" text-anchor="middle" font-weight="normal">83 721</text>
+<text x="1292.96875" y="846" font-family="Arial, sans-serif" font-size="12" fill="#183047" text-anchor="middle" font-weight="normal">496</text>
+<text x="1394.53125" y="793" font-family="Arial, sans-serif" font-size="12" fill="#183047" text-anchor="middle" font-weight="normal">577-624</text>
+<text x="1394.53125" y="823" font-family="Arial, sans-serif" font-size="12" fill="#183047" text-anchor="middle" font-weight="normal">71 738</text>
+<text x="1394.53125" y="846" font-family="Arial, sans-serif" font-size="12" fill="#183047" text-anchor="middle" font-weight="normal">512</text>
+<text x="1496.09375" y="793" font-family="Arial, sans-serif" font-size="12" fill="#183047" text-anchor="middle" font-weight="normal">625-672</text>
+<text x="1496.09375" y="823" font-family="Arial, sans-serif" font-size="12" fill="#183047" text-anchor="middle" font-weight="normal">23 239</text>
+<text x="1496.09375" y="846" font-family="Arial, sans-serif" font-size="12" fill="#183047" text-anchor="middle" font-weight="normal">528</text>
+<text x="1597.65625" y="793" font-family="Arial, sans-serif" font-size="12" fill="#183047" text-anchor="middle" font-weight="normal">673-720</text>
+<text x="1597.65625" y="823" font-family="Arial, sans-serif" font-size="12" fill="#183047" text-anchor="middle" font-weight="normal">66 177</text>
+<text x="1597.65625" y="846" font-family="Arial, sans-serif" font-size="12" fill="#183047" text-anchor="middle" font-weight="normal">528</text>
+<text x="1699.21875" y="793" font-family="Arial, sans-serif" font-size="12" fill="#183047" text-anchor="middle" font-weight="normal">721-743</text>
+<text x="1699.21875" y="823" font-family="Arial, sans-serif" font-size="12" fill="#183047" text-anchor="middle" font-weight="normal">272</text>
+<text x="1699.21875" y="846" font-family="Arial, sans-serif" font-size="12" fill="#183047" text-anchor="middle" font-weight="normal">272</text>
+<text x="55" y="905" font-family="Arial, sans-serif" font-size="16" fill="#9a422e" text-anchor="start" font-weight="normal">Cercle entouré et barre orange : moins de 10 000 transactions dans la période.</text>
+<text x="55" y="934" font-family="Arial, sans-serif" font-size="16" fill="#4b6072" text-anchor="start" font-weight="normal">Le taux de la période 721-743 est 272/272 = 100 % ; ce sont 23 steps et 272 lignes seulement.</text>
+</svg>
