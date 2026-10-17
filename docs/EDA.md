@@ -65,3 +65,46 @@ Le tableau donne les effectifs exacts et les deux normalisations. Pour les monta
 | `[7,5 ; 8[` | 297 | 0 | 0,0047 % | 0,0000 % | 297 | 0,0000 % |
 
 Les effectifs de chaque classe et de chaque tranche sont vérifiés par sommation dans le notebook. Les figures SVG et leurs exportations PNG se trouvent dans `docs/figures/`. La sélection des variables, le découpage temporel et l'entraînement restent en attente de la discussion avec l'utilisateur.
+
+## Lot 4.0, étape 3 : hypothèse sur le type de transaction
+
+**Hypothèse testée :** la relation globale entre montant et fraude peut dépendre du mélange des types de transaction. Le notebook conserve les mêmes tranches de `log10(amount)` et compte chaque combinaison `type × tranche`, y compris les montants nuls. Les figures se concentrent sur les cinq tranches allant de 100 000 à environ 31,6 millions d'unités PaySim, qui couvrent les montants discutés avec l'utilisateur. Le calcul et les contrôles couvrent toutes les tranches.
+
+### Résultats observés par type
+
+| Type | Transactions | Fraudes étiquetées | Taux observé |
+| --- | ---: | ---: | ---: |
+| `CASH_IN` | 1 399 284 | 0 | 0 % |
+| `CASH_OUT` | 2 237 500 | 4 116 | 0,1840 % |
+| `DEBIT` | 41 432 | 0 | 0 % |
+| `PAYMENT` | 2 151 495 | 0 | 0 % |
+| `TRANSFER` | 532 909 | 4 097 | 0,7688 % |
+
+Les 8 213 fraudes étiquetées se trouvent uniquement dans `CASH_OUT` et `TRANSFER` dans ce CSV. Cela décrit le jeu de données, pas une règle universelle sur ces opérations. Les 16 montants nuls sont des `CASH_OUT` étiquetés fraude et restent hors des tranches logarithmiques.
+
+La composition change avec le montant. Dans `[5 ; 5,5[`, `CASH_OUT` et `CASH_IN` forment l'essentiel du volume ; dans `[6 ; 6,5[`, `TRANSFER` domine très largement. Cette différence contribue à la variation du taux global par montant. Mais le taux varie **aussi au sein d'un même type** : pour `CASH_OUT`, il passe de 904 / 1 146 832 (0,0788 %) dans `[5 ; 5,5[` à 790 / 1 093 (72,2781 %) dans `[6 ; 6,5[`. Pour `TRANSFER`, il passe de 894 / 126 679 (0,7057 %) à 795 / 108 508 (0,7327 %) entre ces mêmes tranches, puis à 421 / 14 843 (2,8364 %) dans `[6,5 ; 7[`. Le type explique donc une partie du mélange, mais ne suffit pas à expliquer toute la forme observée.
+
+### Effectifs des tranches présentées
+
+| Tranche de `log10(amount)` | Type | Transactions | Fraudes | Taux observé |
+| --- | --- | ---: | ---: | ---: |
+| `[5 ; 5,5[` | `CASH_IN` | 721 076 | 0 | 0 % |
+| `[5 ; 5,5[` | `CASH_OUT` | 1 146 832 | 904 | 0,0788 % |
+| `[5 ; 5,5[` | `DEBIT` | 142 | 0 | 0 % |
+| `[5 ; 5,5[` | `PAYMENT` | 1 036 | 0 | 0 % |
+| `[5 ; 5,5[` | `TRANSFER` | 126 679 | 894 | 0,7057 % |
+| `[5,5 ; 6[` | `CASH_IN` | 180 683 | 0 | 0 % |
+| `[5,5 ; 6[` | `CASH_OUT` | 314 951 | 1 002 | 0,3181 % |
+| `[5,5 ; 6[` | `DEBIT` | 11 | 0 | 0 % |
+| `[5,5 ; 6[` | `TRANSFER` | 215 328 | 1 000 | 0,4644 % |
+| `[6 ; 6,5[` | `CASH_IN` | 119 | 0 | 0 % |
+| `[6 ; 6,5[` | `CASH_OUT` | 1 093 | 790 | 72,2781 % |
+| `[6 ; 6,5[` | `TRANSFER` | 108 508 | 795 | 0,7327 % |
+| `[6,5 ; 7[` | `CASH_OUT` | 413 | 413 | 100 % |
+| `[6,5 ; 7[` | `TRANSFER` | 14 843 | 421 | 2,8364 % |
+| `[7 ; 7,5[` | `CASH_OUT` | 142 | 142 | 100 % |
+| `[7 ; 7,5[` | `TRANSFER` | 5 211 | 145 | 2,7826 % |
+
+Un type absent d'une tranche a zéro transaction dans cette combinaison ; son taux n'est donc pas défini. Les taux de 100 % reposent sur 413 et 142 transactions `CASH_OUT` et pourraient refléter une particularité du simulateur. Cette EDA ne contrôle pas encore les effets du `step`, des soldes ou du mécanisme de génération des labels. Les taux sont descriptifs sur l'ensemble du CSV, sans valeur causale ni garantie de calibration pour de nouvelles transactions.
+
+Le notebook vérifie que les sommes par type et par tranche retrouvent les 6 362 620 transactions et 8 213 fraudes de l'audit, et que les 16 montants nuls sont comptés une seule fois. Aucun modèle n'a été entraîné ; la sélection des variables et le découpage temporel restent ouverts.

@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1260" height="650" viewBox="0 0 1260 650">
+<rect width="100%" height="100%" fill="#ffffff"/>
+<text x="40" y="43" font-family="Arial, sans-serif" font-size="27" fill="#183047" text-anchor="start" font-weight="bold">Composition des types selon le montant</text>
+<text x="40" y="75" font-family="Arial, sans-serif" font-size="17" fill="#4b6072" text-anchor="start" font-weight="normal">Part de chaque type parmi toutes les transactions de la tranche</text>
+<line x1="105" y1="470.0" x2="1210" y2="470.0" stroke="#d8e1e8"/>
+<text x="90" y="475.0" font-family="Arial, sans-serif" font-size="14" fill="#183047" text-anchor="end" font-weight="normal">0 %</text>
+<line x1="105" y1="401.0" x2="1210" y2="401.0" stroke="#d8e1e8"/>
+<text x="90" y="406.0" font-family="Arial, sans-serif" font-size="14" fill="#183047" text-anchor="end" font-weight="normal">20 %</text>
+<line x1="105" y1="332.0" x2="1210" y2="332.0" stroke="#d8e1e8"/>
+<text x="90" y="337.0" font-family="Arial, sans-serif" font-size="14" fill="#183047" text-anchor="end" font-weight="normal">40 %</text>
+<line x1="105" y1="263.0" x2="1210" y2="263.0" stroke="#d8e1e8"/>
+<text x="90" y="268.0" font-family="Arial, sans-serif" font-size="14" fill="#183047" text-anchor="end" font-weight="normal">60 %</text>
+<line x1="105" y1="194.0" x2="1210" y2="194.0" stroke="#d8e1e8"/>
+<text x="90" y="199.0" font-family="Arial, sans-serif" font-size="14" fill="#183047" text-anchor="end" font-weight="normal">80 %</text>
+<line x1="105" y1="125.0" x2="1210" y2="125.0" stroke="#d8e1e8"/>
+<text x="90" y="130.0" font-family="Arial, sans-serif" font-size="14" fill="#183047" text-anchor="end" font-weight="normal">100 %</text>
+<rect x="157.5" y="345.3504445663693" width="116" height="124.64955543363071" fill="#237087"/>
+<rect x="157.5" y="147.10213376825428" width="116" height="198.248310798115" fill="#ce593b"/>
+<rect x="157.5" y="147.07758679002788" width="116" height="0.02454697822639439" fill="#7a8493"/>
+<rect x="157.5" y="146.8984975686015" width="116" height="0.17908922142637035" fill="#a48c5b"/>
+<rect x="157.5" y="124.99999999999999" width="116" height="21.898497568601513" fill="#735caa"/>
+<text x="215.5" y="498" font-family="Arial, sans-serif" font-size="15" fill="#183047" text-anchor="middle" font-weight="normal">100 k–316 k</text>
+<text x="215.5" y="523" font-family="Arial, sans-serif" font-size="13" fill="#4b6072" text-anchor="middle" font-weight="normal">n = 1 995 765</text>
+<rect x="378.5" y="382.3234848580748" width="116" height="87.67651514192522" fill="#237087"/>
+<rect x="378.5" y="229.49335628779153" width="116" height="152.83012857028325" fill="#ce593b"/>
+<rect x="378.5" y="229.48801853234934" width="116" height="0.005337755442189788" fill="#7a8493"/>
+<rect x="378.5" y="229.48801853234934" width="116" height="0.0" fill="#a48c5b"/>
+<rect x="378.5" y="125.00000000000001" width="116" height="104.48801853234933" fill="#735caa"/>
+<text x="436.5" y="498" font-family="Arial, sans-serif" font-size="15" fill="#183047" text-anchor="middle" font-weight="normal">316 k–1 M</text>
+<text x="436.5" y="523" font-family="Arial, sans-serif" font-size="13" fill="#4b6072" text-anchor="middle" font-weight="normal">n = 710 973</text>
+<rect x="599.5" y="469.6258202697776" width="116" height="0.37417973022238427" fill="#237087"/>
+<rect x="599.5" y="466.1890266131972" width="116" height="3.4367936565803863" fill="#ce593b"/>
+<rect x="599.5" y="466.1890266131972" width="116" height="0.0" fill="#7a8493"/>
+<rect x="599.5" y="466.1890266131972" width="116" height="0.0" fill="#a48c5b"/>
+<rect x="599.5" y="124.99999999999994" width="116" height="341.18902661319726" fill="#735caa"/>
+<text x="657.5" y="498" font-family="Arial, sans-serif" font-size="15" fill="#183047" text-anchor="middle" font-weight="normal">1 M–3,16 M</text>
+<text x="657.5" y="523" font-family="Arial, sans-serif" font-size="13" fill="#4b6072" text-anchor="middle" font-weight="normal">n = 109 720</text>
+<rect x="820.5" y="470.0" width="116" height="0.0" fill="#237087"/>
+<rect x="820.5" y="460.66039590980597" width="116" height="9.339604090194022" fill="#ce593b"/>
+<rect x="820.5" y="460.66039590980597" width="116" height="0.0" fill="#7a8493"/>
+<rect x="820.5" y="460.66039590980597" width="116" height="0.0" fill="#a48c5b"/>
+<rect x="820.5" y="125.0" width="116" height="335.66039590980597" fill="#735caa"/>
+<text x="878.5" y="498" font-family="Arial, sans-serif" font-size="15" fill="#183047" text-anchor="middle" font-weight="normal">3,16 M–10 M</text>
+<text x="878.5" y="523" font-family="Arial, sans-serif" font-size="13" fill="#4b6072" text-anchor="middle" font-weight="normal">n = 15 256</text>
+<rect x="1041.5" y="470.0" width="116" height="0.0" fill="#237087"/>
+<rect x="1041.5" y="460.84812254810385" width="116" height="9.151877451896134" fill="#ce593b"/>
+<rect x="1041.5" y="460.84812254810385" width="116" height="0.0" fill="#7a8493"/>
+<rect x="1041.5" y="460.84812254810385" width="116" height="0.0" fill="#a48c5b"/>
+<rect x="1041.5" y="124.99999999999994" width="116" height="335.8481225481039" fill="#735caa"/>
+<text x="1099.5" y="498" font-family="Arial, sans-serif" font-size="15" fill="#183047" text-anchor="middle" font-weight="normal">10 M–31,6 M</text>
+<text x="1099.5" y="523" font-family="Arial, sans-serif" font-size="13" fill="#4b6072" text-anchor="middle" font-weight="normal">n = 5 353</text>
+<rect x="125" y="570" width="17" height="17" fill="#237087"/>
+<text x="148" y="584" font-family="Arial, sans-serif" font-size="14" fill="#183047" text-anchor="start" font-weight="normal">CASH_IN</text>
+<rect x="345" y="570" width="17" height="17" fill="#ce593b"/>
+<text x="368" y="584" font-family="Arial, sans-serif" font-size="14" fill="#183047" text-anchor="start" font-weight="normal">CASH_OUT</text>
+<rect x="565" y="570" width="17" height="17" fill="#7a8493"/>
+<text x="588" y="584" font-family="Arial, sans-serif" font-size="14" fill="#183047" text-anchor="start" font-weight="normal">DEBIT</text>
+<rect x="785" y="570" width="17" height="17" fill="#a48c5b"/>
+<text x="808" y="584" font-family="Arial, sans-serif" font-size="14" fill="#183047" text-anchor="start" font-weight="normal">PAYMENT</text>
+<rect x="1005" y="570" width="17" height="17" fill="#735caa"/>
+<text x="1028" y="584" font-family="Arial, sans-serif" font-size="14" fill="#183047" text-anchor="start" font-weight="normal">TRANSFER</text>
+<text x="40" y="624" font-family="Arial, sans-serif" font-size="14" fill="#4b6072" text-anchor="start" font-weight="normal">Chaque barre totalise 100 %. Les effectifs précis par type et tranche figurent dans le notebook et EDA.md.</text>
+</svg>

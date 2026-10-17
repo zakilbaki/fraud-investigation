@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1320" height="730" viewBox="0 0 1320 730">
+<rect width="100%" height="100%" fill="#ffffff"/>
+<text x="40" y="43" font-family="Arial, sans-serif" font-size="27" fill="#183047" text-anchor="start" font-weight="bold">Taux de fraude à type comparable</text>
+<text x="40" y="75" font-family="Arial, sans-serif" font-size="17" fill="#4b6072" text-anchor="start" font-weight="normal">CASH_OUT et TRANSFER, les seuls types avec fraudes étiquetées</text>
+<circle cx="1040" cy="45" r="7" fill="#ce593b"/>
+<text x="1055" y="50" font-family="Arial, sans-serif" font-size="14" fill="#183047" text-anchor="start" font-weight="normal">CASH_OUT</text>
+<circle cx="1160" cy="45" r="7" fill="#735caa"/>
+<text x="1175" y="50" font-family="Arial, sans-serif" font-size="14" fill="#183047" text-anchor="start" font-weight="normal">TRANSFER</text>
+<line x1="120" y1="480.0" x2="1270" y2="480.0" stroke="#d8e1e8"/>
+<text x="105" y="485.0" font-family="Arial, sans-serif" font-size="14" fill="#183047" text-anchor="end" font-weight="normal">0.01 %</text>
+<line x1="120" y1="396.25" x2="1270" y2="396.25" stroke="#d8e1e8"/>
+<text x="105" y="401.25" font-family="Arial, sans-serif" font-size="14" fill="#183047" text-anchor="end" font-weight="normal">0.1 %</text>
+<line x1="120" y1="312.5" x2="1270" y2="312.5" stroke="#d8e1e8"/>
+<text x="105" y="317.5" font-family="Arial, sans-serif" font-size="14" fill="#183047" text-anchor="end" font-weight="normal">1 %</text>
+<line x1="120" y1="228.75" x2="1270" y2="228.75" stroke="#d8e1e8"/>
+<text x="105" y="233.75" font-family="Arial, sans-serif" font-size="14" fill="#183047" text-anchor="end" font-weight="normal">10 %</text>
+<line x1="120" y1="145.0" x2="1270" y2="145.0" stroke="#d8e1e8"/>
+<text x="105" y="150.0" font-family="Arial, sans-serif" font-size="14" fill="#183047" text-anchor="end" font-weight="normal">100 %</text>
+<circle cx="220.0" cy="404.90400241060274" r="8" fill="#ce593b"/>
+<text x="220.0" y="389.90400241060274" font-family="Arial, sans-serif" font-size="14" fill="#183047" text-anchor="middle" font-weight="bold">0,08%</text>
+<circle cx="250.0" cy="325.176995262392" r="8" fill="#735caa"/>
+<text x="250.0" y="310.176995262392" font-family="Arial, sans-serif" font-size="14" fill="#183047" text-anchor="middle" font-weight="bold">0,71%</text>
+<text x="235.0" y="512" font-family="Arial, sans-serif" font-size="15" fill="#183047" text-anchor="middle" font-weight="normal">100 k–316 k</text>
+<text x="235.0" y="560" font-family="Arial, sans-serif" font-size="13" fill="#ce593b" text-anchor="middle" font-weight="normal">904 / 1 146 832</text>
+<text x="235.0" y="590" font-family="Arial, sans-serif" font-size="13" fill="#735caa" text-anchor="middle" font-weight="normal">894 / 126 679</text>
+<circle cx="450.0" cy="354.15517886953455" r="8" fill="#ce593b"/>
+<text x="450.0" y="339.15517886953455" font-family="Arial, sans-serif" font-size="14" fill="#183047" text-anchor="middle" font-weight="bold">0,32%</text>
+<circle cx="480.0" cy="340.3971674296374" r="8" fill="#735caa"/>
+<text x="480.0" y="325.3971674296374" font-family="Arial, sans-serif" font-size="14" fill="#183047" text-anchor="middle" font-weight="bold">0,46%</text>
+<text x="465.0" y="512" font-family="Arial, sans-serif" font-size="15" fill="#183047" text-anchor="middle" font-weight="normal">316 k–1 M</text>
+<text x="465.0" y="560" font-family="Arial, sans-serif" font-size="13" fill="#ce593b" text-anchor="middle" font-weight="normal">1 002 / 314 951</text>
+<text x="465.0" y="590" font-family="Arial, sans-serif" font-size="13" fill="#735caa" text-anchor="middle" font-weight="normal">1 000 / 215 328</text>
+<circle cx="680.0" cy="156.80816966771317" r="8" fill="#ce593b"/>
+<text x="680.0" y="141.80816966771317" font-family="Arial, sans-serif" font-size="14" fill="#183047" text-anchor="middle" font-weight="bold">72,28%</text>
+<circle cx="710.0" cy="323.8141752675722" r="8" fill="#735caa"/>
+<text x="710.0" y="308.8141752675722" font-family="Arial, sans-serif" font-size="14" fill="#183047" text-anchor="middle" font-weight="bold">0,73%</text>
+<text x="695.0" y="512" font-family="Arial, sans-serif" font-size="15" fill="#183047" text-anchor="middle" font-weight="normal">1 M–3,16 M</text>
+<text x="695.0" y="560" font-family="Arial, sans-serif" font-size="13" fill="#ce593b" text-anchor="middle" font-weight="normal">790 / 1 093</text>
+<text x="695.0" y="590" font-family="Arial, sans-serif" font-size="13" fill="#735caa" text-anchor="middle" font-weight="normal">795 / 108 508</text>
+<circle cx="910.0" cy="145.0" r="8" fill="#ce593b"/>
+<text x="910.0" y="130.0" font-family="Arial, sans-serif" font-size="14" fill="#183047" text-anchor="middle" font-weight="bold">100,00%</text>
+<circle cx="940.0" cy="274.5813157977377" r="8" fill="#735caa"/>
+<text x="940.0" y="259.5813157977377" font-family="Arial, sans-serif" font-size="14" fill="#183047" text-anchor="middle" font-weight="bold">2,84%</text>
+<text x="925.0" y="512" font-family="Arial, sans-serif" font-size="15" fill="#183047" text-anchor="middle" font-weight="normal">3,16 M–10 M</text>
+<text x="925.0" y="560" font-family="Arial, sans-serif" font-size="13" fill="#ce593b" text-anchor="middle" font-weight="normal">413 / 413</text>
+<text x="925.0" y="590" font-family="Arial, sans-serif" font-size="13" fill="#735caa" text-anchor="middle" font-weight="normal">421 / 14 843</text>
+<circle cx="1140.0" cy="145.0" r="8" fill="#ce593b"/>
+<text x="1140.0" y="130.0" font-family="Arial, sans-serif" font-size="14" fill="#183047" text-anchor="middle" font-weight="bold">100,00%</text>
+<circle cx="1170.0" cy="275.2775696905371" r="8" fill="#735caa"/>
+<text x="1170.0" y="260.2775696905371" font-family="Arial, sans-serif" font-size="14" fill="#183047" text-anchor="middle" font-weight="bold">2,78%</text>
+<text x="1155.0" y="512" font-family="Arial, sans-serif" font-size="15" fill="#183047" text-anchor="middle" font-weight="normal">10 M–31,6 M</text>
+<text x="1155.0" y="560" font-family="Arial, sans-serif" font-size="13" fill="#ce593b" text-anchor="middle" font-weight="normal">142 / 142</text>
+<text x="1155.0" y="590" font-family="Arial, sans-serif" font-size="13" fill="#735caa" text-anchor="middle" font-weight="normal">145 / 5 211</text>
+<text x="40" y="560" font-family="Arial, sans-serif" font-size="14" fill="#ce593b" text-anchor="start" font-weight="normal">CASH_OUT</text>
+<text x="40" y="590" font-family="Arial, sans-serif" font-size="14" fill="#735caa" text-anchor="start" font-weight="normal">TRANSFER</text>
+<text x="40" y="650" font-family="Arial, sans-serif" font-size="14" fill="#4b6072" text-anchor="start" font-weight="normal">Axe vertical logarithmique pour montrer les taux de 0,01 % à 100 %. Chaque ratio indique fraudes / transactions du type et de la tranche.</text>
+<text x="40" y="680" font-family="Arial, sans-serif" font-size="14" fill="#9a422e" text-anchor="start" font-weight="normal">Les autres types ont 0 fraude étiquetée dans ce fichier ; zéro montant : 16 CASH_OUT frauduleux, affichés séparément.</text>
+</svg>
