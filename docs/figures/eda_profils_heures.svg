@@ -1,0 +1,163 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1900" height="1060" viewBox="0 0 1900 1060">
+<rect width="100%" height="100%" fill="white"/>
+<text x="45" y="45" font-family="Arial, sans-serif" font-size="29" fill="#183047" text-anchor="start" font-weight="bold">PaySim : profils par heure simulée</text>
+<text x="45" y="75" font-family="Arial, sans-serif" font-size="17" fill="#4b6072" text-anchor="start" font-weight="normal">Hypothèse : step 1 = lundi 00 h ; toutes les journées sont regroupées</text>
+<text x="45" y="112" font-family="Arial, sans-serif" font-size="20" fill="#183047" text-anchor="start" font-weight="bold">A. Transactions totales</text>
+<text x="360" y="112" font-family="Arial, sans-serif" font-size="14" fill="#4b6072" text-anchor="start" font-weight="normal">Axe vertical : nombre de transactions (log)</text>
+<line x1="125" y1="345.0" x2="1850" y2="345.0" stroke="#dce4e9"/>
+<text x="113" y="350.0" font-family="Arial, sans-serif" font-size="13" fill="#183047" text-anchor="end" font-weight="normal">10^3</text>
+<line x1="125" y1="278.3" x2="1850" y2="278.3" stroke="#dce4e9"/>
+<text x="113" y="283.33333333333337" font-family="Arial, sans-serif" font-size="13" fill="#183047" text-anchor="end" font-weight="normal">10^4</text>
+<line x1="125" y1="211.7" x2="1850" y2="211.7" stroke="#dce4e9"/>
+<text x="113" y="216.66666666666669" font-family="Arial, sans-serif" font-size="13" fill="#183047" text-anchor="end" font-weight="normal">10^5</text>
+<line x1="125" y1="145.0" x2="1850" y2="145.0" stroke="#dce4e9"/>
+<text x="113" y="150.0" font-family="Arial, sans-serif" font-size="13" fill="#183047" text-anchor="end" font-weight="normal">10^6</text>
+<rect x="137.9" y="249.5" width="46" height="95.5" fill="#237087"/>
+<rect x="209.8" y="281.3" width="46" height="63.7" fill="#237087"/>
+<rect x="281.7" y="324.8" width="46" height="20.2" fill="#237087"/>
+<rect x="353.6" y="338.7" width="46" height="6.3" fill="#237087"/>
+<rect x="425.4" y="330.7" width="46" height="14.3" fill="#237087"/>
+<rect x="497.3" y="309.4" width="46" height="35.6" fill="#237087"/>
+<rect x="569.2" y="281.4" width="46" height="63.6" fill="#237087"/>
+<rect x="641.1" y="249.7" width="46" height="95.3" fill="#237087"/>
+<rect x="712.9" y="181.5" width="46" height="163.5" fill="#237087"/>
+<rect x="784.8" y="169.7" width="46" height="175.3" fill="#237087"/>
+<rect x="856.7" y="168.4" width="46" height="176.6" fill="#237087"/>
+<rect x="928.6" y="166.0" width="46" height="179.0" fill="#237087"/>
+<rect x="1000.4" y="167.0" width="46" height="178.0" fill="#237087"/>
+<rect x="1072.3" y="168.8" width="46" height="176.2" fill="#237087"/>
+<rect x="1144.2" y="170.3" width="46" height="174.7" fill="#237087"/>
+<rect x="1216.1" y="168.7" width="46" height="176.3" fill="#237087"/>
+<rect x="1287.9" y="168.8" width="46" height="176.2" fill="#237087"/>
+<rect x="1359.8" y="160.7" width="46" height="184.3" fill="#237087"/>
+<rect x="1431.7" y="157.6" width="46" height="187.4" fill="#237087"/>
+<rect x="1503.6" y="162.1" width="46" height="182.9" fill="#237087"/>
+<rect x="1575.4" y="185.4" width="46" height="159.6" fill="#237087"/>
+<rect x="1647.3" y="192.4" width="46" height="152.6" fill="#237087"/>
+<rect x="1719.2" y="201.7" width="46" height="143.3" fill="#237087"/>
+<rect x="1791.1" y="221.3" width="46" height="123.7" fill="#237087"/>
+<text x="45" y="397" font-family="Arial, sans-serif" font-size="20" fill="#183047" text-anchor="start" font-weight="bold">B. Fraudes étiquetées</text>
+<text x="360" y="397" font-family="Arial, sans-serif" font-size="14" fill="#4b6072" text-anchor="start" font-weight="normal">Axe vertical : nombre de fraudes (linéaire)</text>
+<line x1="125" y1="630.0" x2="1850" y2="630.0" stroke="#dce4e9"/>
+<text x="113" y="635.0" font-family="Arial, sans-serif" font-size="13" fill="#183047" text-anchor="end" font-weight="normal">0</text>
+<line x1="125" y1="580.0" x2="1850" y2="580.0" stroke="#dce4e9"/>
+<text x="113" y="585.0" font-family="Arial, sans-serif" font-size="13" fill="#183047" text-anchor="end" font-weight="normal">100</text>
+<line x1="125" y1="530.0" x2="1850" y2="530.0" stroke="#dce4e9"/>
+<text x="113" y="535.0" font-family="Arial, sans-serif" font-size="13" fill="#183047" text-anchor="end" font-weight="normal">200</text>
+<line x1="125" y1="480.0" x2="1850" y2="480.0" stroke="#dce4e9"/>
+<text x="113" y="485.0" font-family="Arial, sans-serif" font-size="13" fill="#183047" text-anchor="end" font-weight="normal">300</text>
+<line x1="125" y1="430.0" x2="1850" y2="430.0" stroke="#dce4e9"/>
+<text x="113" y="435.0" font-family="Arial, sans-serif" font-size="13" fill="#183047" text-anchor="end" font-weight="normal">400</text>
+<rect x="143.9" y="451.0" width="34" height="179.0" fill="#ce593b"/>
+<rect x="215.8" y="444.0" width="34" height="186.0" fill="#ce593b"/>
+<rect x="287.7" y="467.0" width="34" height="163.0" fill="#ce593b"/>
+<rect x="359.6" y="493.0" width="34" height="137.0" fill="#ce593b"/>
+<rect x="431.4" y="447.0" width="34" height="183.0" fill="#ce593b"/>
+<rect x="503.3" y="451.0" width="34" height="179.0" fill="#ce593b"/>
+<rect x="575.2" y="466.0" width="34" height="164.0" fill="#ce593b"/>
+<rect x="647.1" y="446.0" width="34" height="184.0" fill="#ce593b"/>
+<rect x="718.9" y="459.5" width="34" height="170.5" fill="#ce593b"/>
+<rect x="790.8" y="442.5" width="34" height="187.5" fill="#ce593b"/>
+<rect x="862.7" y="468.0" width="34" height="162.0" fill="#ce593b"/>
+<rect x="934.6" y="460.5" width="34" height="169.5" fill="#ce593b"/>
+<rect x="1006.4" y="457.0" width="34" height="173.0" fill="#ce593b"/>
+<rect x="1078.3" y="453.5" width="34" height="176.5" fill="#ce593b"/>
+<rect x="1150.2" y="459.5" width="34" height="170.5" fill="#ce593b"/>
+<rect x="1222.1" y="457.5" width="34" height="172.5" fill="#ce593b"/>
+<rect x="1293.9" y="453.5" width="34" height="176.5" fill="#ce593b"/>
+<rect x="1365.8" y="458.5" width="34" height="171.5" fill="#ce593b"/>
+<rect x="1437.7" y="459.0" width="34" height="171.0" fill="#ce593b"/>
+<rect x="1509.6" y="460.0" width="34" height="170.0" fill="#ce593b"/>
+<rect x="1581.4" y="456.5" width="34" height="173.5" fill="#ce593b"/>
+<rect x="1653.3" y="454.5" width="34" height="175.5" fill="#ce593b"/>
+<rect x="1725.2" y="468.5" width="34" height="161.5" fill="#ce593b"/>
+<rect x="1797.1" y="480.0" width="34" height="150.0" fill="#ce593b"/>
+<text x="45" y="682" font-family="Arial, sans-serif" font-size="20" fill="#183047" text-anchor="start" font-weight="bold">C. Taux de fraude dans l&#x27;heure</text>
+<text x="415" y="682" font-family="Arial, sans-serif" font-size="14" fill="#4b6072" text-anchor="start" font-weight="normal">Axe vertical : fraudes / transactions de cette heure (log)</text>
+<line x1="125" y1="915.0" x2="1850" y2="915.0" stroke="#dce4e9"/>
+<text x="113" y="920.0" font-family="Arial, sans-serif" font-size="13" fill="#183047" text-anchor="end" font-weight="normal">0,01 %</text>
+<line x1="125" y1="865.0" x2="1850" y2="865.0" stroke="#dce4e9"/>
+<text x="113" y="870.0" font-family="Arial, sans-serif" font-size="13" fill="#183047" text-anchor="end" font-weight="normal">0,1 %</text>
+<line x1="125" y1="815.0" x2="1850" y2="815.0" stroke="#dce4e9"/>
+<text x="113" y="820.0" font-family="Arial, sans-serif" font-size="13" fill="#183047" text-anchor="end" font-weight="normal">1 %</text>
+<line x1="125" y1="765.0" x2="1850" y2="765.0" stroke="#dce4e9"/>
+<text x="113" y="770.0" font-family="Arial, sans-serif" font-size="13" fill="#183047" text-anchor="end" font-weight="normal">10 %</text>
+<line x1="125" y1="715.0" x2="1850" y2="715.0" stroke="#dce4e9"/>
+<text x="113" y="720.0" font-family="Arial, sans-serif" font-size="13" fill="#183047" text-anchor="end" font-weight="normal">100 %</text>
+<polyline points="160.9,809.0 232.8,784.2 304.7,754.5 376.6,747.8 448.4,747.6 520.3,764.0 592.2,786.9 664.1,808.2 735.9,861.0 807.8,867.8 879.7,871.9 951.6,872.7 1023.4,871.6 1095.3,869.8 1167.2,869.4 1239.1,870.4 1310.9,869.8 1382.8,876.4 1454.7,878.9 1526.6,875.6 1598.4,857.7 1670.3,852.2 1742.2,847.0 1814.1,833.9" fill="none" stroke="#735caa" stroke-width="3"/>
+<circle cx="160.9" cy="809.0" r="5" fill="#735caa"/>
+<circle cx="232.8" cy="784.2" r="5" fill="#735caa"/>
+<circle cx="304.7" cy="754.5" r="5" fill="#735caa"/>
+<circle cx="376.6" cy="747.8" r="5" fill="#735caa"/>
+<circle cx="448.4" cy="747.6" r="5" fill="#735caa"/>
+<circle cx="520.3" cy="764.0" r="5" fill="#735caa"/>
+<circle cx="592.2" cy="786.9" r="5" fill="#735caa"/>
+<circle cx="664.1" cy="808.2" r="5" fill="#735caa"/>
+<circle cx="735.9" cy="861.0" r="5" fill="#735caa"/>
+<circle cx="807.8" cy="867.8" r="5" fill="#735caa"/>
+<circle cx="879.7" cy="871.9" r="5" fill="#735caa"/>
+<circle cx="951.6" cy="872.7" r="5" fill="#735caa"/>
+<circle cx="1023.4" cy="871.6" r="5" fill="#735caa"/>
+<circle cx="1095.3" cy="869.8" r="5" fill="#735caa"/>
+<circle cx="1167.2" cy="869.4" r="5" fill="#735caa"/>
+<circle cx="1239.1" cy="870.4" r="5" fill="#735caa"/>
+<circle cx="1310.9" cy="869.8" r="5" fill="#735caa"/>
+<circle cx="1382.8" cy="876.4" r="5" fill="#735caa"/>
+<circle cx="1454.7" cy="878.9" r="5" fill="#735caa"/>
+<circle cx="1526.6" cy="875.6" r="5" fill="#735caa"/>
+<circle cx="1598.4" cy="857.7" r="5" fill="#735caa"/>
+<circle cx="1670.3" cy="852.2" r="5" fill="#735caa"/>
+<circle cx="1742.2" cy="847.0" r="5" fill="#735caa"/>
+<circle cx="1814.1" cy="833.9" r="5" fill="#735caa"/>
+<text x="45" y="947" font-family="Arial, sans-serif" font-size="14" fill="#4b6072" text-anchor="start" font-weight="normal">Heure</text>
+<text x="45" y="977" font-family="Arial, sans-serif" font-size="14" fill="#4b6072" text-anchor="start" font-weight="normal">Steps observés</text>
+<text x="160.9375" y="947" font-family="Arial, sans-serif" font-size="13" fill="#183047" text-anchor="middle" font-weight="normal">0</text>
+<text x="160.9375" y="977" font-family="Arial, sans-serif" font-size="13" fill="#183047" text-anchor="middle" font-weight="normal">31</text>
+<text x="232.8125" y="947" font-family="Arial, sans-serif" font-size="13" fill="#183047" text-anchor="middle" font-weight="normal">1</text>
+<text x="232.8125" y="977" font-family="Arial, sans-serif" font-size="13" fill="#183047" text-anchor="middle" font-weight="normal">31</text>
+<text x="304.6875" y="947" font-family="Arial, sans-serif" font-size="13" fill="#183047" text-anchor="middle" font-weight="normal">2</text>
+<text x="304.6875" y="977" font-family="Arial, sans-serif" font-size="13" fill="#183047" text-anchor="middle" font-weight="normal">31</text>
+<text x="376.5625" y="947" font-family="Arial, sans-serif" font-size="13" fill="#183047" text-anchor="middle" font-weight="normal">3</text>
+<text x="376.5625" y="977" font-family="Arial, sans-serif" font-size="13" fill="#183047" text-anchor="middle" font-weight="normal">31</text>
+<text x="448.4375" y="947" font-family="Arial, sans-serif" font-size="13" fill="#183047" text-anchor="middle" font-weight="normal">4</text>
+<text x="448.4375" y="977" font-family="Arial, sans-serif" font-size="13" fill="#183047" text-anchor="middle" font-weight="normal">31</text>
+<text x="520.3125" y="947" font-family="Arial, sans-serif" font-size="13" fill="#183047" text-anchor="middle" font-weight="normal">5</text>
+<text x="520.3125" y="977" font-family="Arial, sans-serif" font-size="13" fill="#183047" text-anchor="middle" font-weight="normal">31</text>
+<text x="592.1875" y="947" font-family="Arial, sans-serif" font-size="13" fill="#183047" text-anchor="middle" font-weight="normal">6</text>
+<text x="592.1875" y="977" font-family="Arial, sans-serif" font-size="13" fill="#183047" text-anchor="middle" font-weight="normal">31</text>
+<text x="664.0625" y="947" font-family="Arial, sans-serif" font-size="13" fill="#183047" text-anchor="middle" font-weight="normal">7</text>
+<text x="664.0625" y="977" font-family="Arial, sans-serif" font-size="13" fill="#183047" text-anchor="middle" font-weight="normal">31</text>
+<text x="735.9375" y="947" font-family="Arial, sans-serif" font-size="13" fill="#183047" text-anchor="middle" font-weight="normal">8</text>
+<text x="735.9375" y="977" font-family="Arial, sans-serif" font-size="13" fill="#183047" text-anchor="middle" font-weight="normal">31</text>
+<text x="807.8125" y="947" font-family="Arial, sans-serif" font-size="13" fill="#183047" text-anchor="middle" font-weight="normal">9</text>
+<text x="807.8125" y="977" font-family="Arial, sans-serif" font-size="13" fill="#183047" text-anchor="middle" font-weight="normal">31</text>
+<text x="879.6875" y="947" font-family="Arial, sans-serif" font-size="13" fill="#183047" text-anchor="middle" font-weight="normal">10</text>
+<text x="879.6875" y="977" font-family="Arial, sans-serif" font-size="13" fill="#183047" text-anchor="middle" font-weight="normal">31</text>
+<text x="951.5625" y="947" font-family="Arial, sans-serif" font-size="13" fill="#183047" text-anchor="middle" font-weight="normal">11</text>
+<text x="951.5625" y="977" font-family="Arial, sans-serif" font-size="13" fill="#183047" text-anchor="middle" font-weight="normal">31</text>
+<text x="1023.4375" y="947" font-family="Arial, sans-serif" font-size="13" fill="#183047" text-anchor="middle" font-weight="normal">12</text>
+<text x="1023.4375" y="977" font-family="Arial, sans-serif" font-size="13" fill="#183047" text-anchor="middle" font-weight="normal">31</text>
+<text x="1095.3125" y="947" font-family="Arial, sans-serif" font-size="13" fill="#183047" text-anchor="middle" font-weight="normal">13</text>
+<text x="1095.3125" y="977" font-family="Arial, sans-serif" font-size="13" fill="#183047" text-anchor="middle" font-weight="normal">31</text>
+<text x="1167.1875" y="947" font-family="Arial, sans-serif" font-size="13" fill="#183047" text-anchor="middle" font-weight="normal">14</text>
+<text x="1167.1875" y="977" font-family="Arial, sans-serif" font-size="13" fill="#183047" text-anchor="middle" font-weight="normal">31</text>
+<text x="1239.0625" y="947" font-family="Arial, sans-serif" font-size="13" fill="#183047" text-anchor="middle" font-weight="normal">15</text>
+<text x="1239.0625" y="977" font-family="Arial, sans-serif" font-size="13" fill="#183047" text-anchor="middle" font-weight="normal">31</text>
+<text x="1310.9375" y="947" font-family="Arial, sans-serif" font-size="13" fill="#183047" text-anchor="middle" font-weight="normal">16</text>
+<text x="1310.9375" y="977" font-family="Arial, sans-serif" font-size="13" fill="#183047" text-anchor="middle" font-weight="normal">31</text>
+<text x="1382.8125" y="947" font-family="Arial, sans-serif" font-size="13" fill="#183047" text-anchor="middle" font-weight="normal">17</text>
+<text x="1382.8125" y="977" font-family="Arial, sans-serif" font-size="13" fill="#183047" text-anchor="middle" font-weight="normal">31</text>
+<text x="1454.6875" y="947" font-family="Arial, sans-serif" font-size="13" fill="#183047" text-anchor="middle" font-weight="normal">18</text>
+<text x="1454.6875" y="977" font-family="Arial, sans-serif" font-size="13" fill="#183047" text-anchor="middle" font-weight="normal">31</text>
+<text x="1526.5625" y="947" font-family="Arial, sans-serif" font-size="13" fill="#183047" text-anchor="middle" font-weight="normal">19</text>
+<text x="1526.5625" y="977" font-family="Arial, sans-serif" font-size="13" fill="#183047" text-anchor="middle" font-weight="normal">31</text>
+<text x="1598.4375" y="947" font-family="Arial, sans-serif" font-size="13" fill="#183047" text-anchor="middle" font-weight="normal">20</text>
+<text x="1598.4375" y="977" font-family="Arial, sans-serif" font-size="13" fill="#183047" text-anchor="middle" font-weight="normal">31</text>
+<text x="1670.3125" y="947" font-family="Arial, sans-serif" font-size="13" fill="#183047" text-anchor="middle" font-weight="normal">21</text>
+<text x="1670.3125" y="977" font-family="Arial, sans-serif" font-size="13" fill="#183047" text-anchor="middle" font-weight="normal">31</text>
+<text x="1742.1875" y="947" font-family="Arial, sans-serif" font-size="13" fill="#183047" text-anchor="middle" font-weight="normal">22</text>
+<text x="1742.1875" y="977" font-family="Arial, sans-serif" font-size="13" fill="#183047" text-anchor="middle" font-weight="normal">31</text>
+<text x="1814.0625" y="947" font-family="Arial, sans-serif" font-size="13" fill="#183047" text-anchor="middle" font-weight="normal">23</text>
+<text x="1814.0625" y="977" font-family="Arial, sans-serif" font-size="13" fill="#183047" text-anchor="middle" font-weight="normal">30</text>
+<text x="45" y="1020" font-family="Arial, sans-serif" font-size="16" fill="#4b6072" text-anchor="start" font-weight="normal">Le dernier jour couvre 00 h à 22 h ; 23 h apparaît donc 30 fois, les autres heures 31 fois.</text>
+</svg>

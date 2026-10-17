@@ -214,11 +214,80 @@ Exemples réellement présents dans le CSV :
 
 La jointure sur les trois critères ne renvoie aucune ligne. Un second contrôle, par intersection des ensembles d'identifiants dans chaque groupe `(step, amount)`, retrouve aussi zéro correspondance. **Aucune chaîne de comptes de cette forme n'est observable dans ces groupes candidats.** Cela ne prouve pas qu'aucun mouvement de fonds n'existe ailleurs : la recherche ne porte ni sur d'autres montants, ni sur des steps différents, ni sur des comptes intermédiaires. Elle ne permet pas non plus d'attribuer une cause à la symétrie des deux courbes. Le notebook a été réexécuté sans entraînement ni modification des données.
 
-## Synthèse de clôture du lot 4.0
+## Synthèse provisoire du lot 4.0 avant les profils cycliques
 
 - **Observations établies :** PaySim contient 6 362 620 transactions dont 8 213 fraudes étiquetées (0,1291 %). Elles appartiennent toutes à `CASH_OUT` ou `TRANSFER`. Montants, mélange des types, volumes et taux de fraude changent selon le montant et le `step`. Les soldes d'origine portent une signature presque déterministe pour beaucoup de fraudes simulées. Les fraudes des deux types ont des effectifs presque symétriques par step ; 4 023 groupes partagent exactement step et montant.
 - **Hypothèses non démontrées :** ni l'intention de viser des comptes riches, ni une moindre fraude due à la traçabilité des transferts, ni le mécanisme qui produit la symétrie des deux types ne sont établis. Les correspondances de step et de montant **ne démontrent pas une chaîne financière**. Le CSV ne permet pas de conclure qu'un retrait suit un transfert dans un même step.
 - **Risques pour la modélisation :** classe rare, forte variation temporelle des volumes et des taux, dernière période de 23 steps composée uniquement de 272 fraudes, nombreux autres steps de très faible volume composés uniquement de fraudes, soldes marqués par le simulateur. `step` pourrait servir de raccourci vers son calendrier synthétique. Une métrique ou un seuil obtenus sur une période ne se transposent pas automatiquement à une autre. Les soldes après transaction sont incompatibles avec un score avant exécution.
 - **Limites de l'investigation des comptes :** dans les groupes frauduleux de même step et montant, aucune destination de `TRANSFER` n'est l'origine d'un `CASH_OUT`. Le diagnostic ne recherche ni d'autres montants, ni d'autres steps, ni d'intermédiaires, et ne permet pas de conclure à l'absence de tout autre lien. L'ordre des lignes d'un même step n'est pas une chronologie.
 
-L'EDA a examiné **tout le CSV, labels inclus**, avant de proposer les bornes ML. Le futur test peut rester exclu du développement du modèle, mais il ne constitue pas un jeu entièrement aveugle pour l'analyste. Cette exposition est déclarée dans le [protocole ML proposé](ML_PROTOCOL.md). L'EDA initiale se clôt ici ; aucun modèle n'a été entraîné.
+L'EDA a examiné **tout le CSV, labels inclus**, avant de proposer les bornes ML. Le futur test peut rester exclu du développement du modèle, mais il ne constitue pas un jeu entièrement aveugle pour l'analyste. Cette exposition est déclarée dans le [protocole ML proposé](ML_PROTOCOL.md). L'EDA se poursuit avec les profils horaires et hebdomadaires simulés ; aucun modèle n'a été entraîné.
+
+## Lot 4.0, profils horaires et jours de semaine simulés
+
+### Convention et méthode
+
+**Hypothèse pour cette exploration uniquement :** `step = 1` correspond au lundi à 00 h et chaque step représente une heure. Nous calculons `heure = (step - 1) % 24`, `jour_numero = (step - 1) // 24` puis `jour_semaine = jour_numero % 7`, avec lundi = 0. PaySim ne fournit pas ici de calendrier civil : les libellés « lundi » et « 03 h » sont des positions **simulées**, pas des dates ou heures réelles démontrées.
+
+Le notebook compte d’abord les transactions et les fraudes par step. Il regroupe ensuite ces sommes selon l’heure ou le jour simulé. `Steps observés` indique le nombre d’heures qui alimentent un groupe. Les figures conservent les **effectifs bruts** ; les tableaux divisent aussi chaque effectif par ce nombre de steps pour comparer la charge moyenne par heure simulée observée. Le taux est toujours `somme des fraudes / somme des transactions` du groupe, **pas** la moyenne simple des taux des steps. Un groupe sans transaction aurait un taux non défini ; aucun groupe affiché n’a un dénominateur nul.
+
+### Heures simulées
+
+![Trois panneaux par heure simulée](figures/eda_profils_heures.png)
+
+La [figure SVG reproductible](figures/eda_profils_heures.svg) aligne 24 heures sur les axes horizontaux de trois panneaux. En A, l’axe vertical montre le nombre total de transactions sur une échelle **logarithmique** pour garder visibles les heures de faible volume, de 1 241 à 647 814 transactions. En B, l’effectif des fraudes utilise une échelle **linéaire partant de zéro**. En C, le taux `fraudes de l’heure / toutes les transactions de cette heure` utilise une échelle **logarithmique**, car il s’étend de 0,0528 % à 22,3035 %. Une distance égale sur un axe logarithmique représente un même facteur multiplicatif, pas un même écart absolu. Aucun zéro n’est tracé sur ces axes logarithmiques. Les nombres de steps observés figurent sous l’axe horizontal.
+
+| Heure | Steps observés | Transactions | Fraudes | Taux de fraude | Transactions par step observé | Fraudes par step observé |
+| ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| 00 h | 31 | 27 111 | 358 | 1,3205 % | 874,55 | 11,55 |
+| 01 h | 31 | 9 018 | 372 | 4,1251 % | 290,90 | 12,00 |
+| 02 h | 31 | 2 007 | 326 | 16,2431 % | 64,74 | 10,52 |
+| 03 h | 31 | 1 241 | 274 | 22,0790 % | 40,03 | 8,84 |
+| 04 h | 31 | 1 641 | 366 | 22,3035 % | 52,94 | 11,81 |
+| 05 h | 31 | 3 420 | 358 | 10,4678 % | 110,32 | 11,55 |
+| 06 h | 31 | 8 988 | 328 | 3,6493 % | 289,94 | 10,58 |
+| 07 h | 31 | 26 915 | 368 | 1,3673 % | 868,23 | 11,87 |
+| 08 h | 31 | 283 518 | 341 | 0,1203 % | 9 145,74 | 11,00 |
+| 09 h | 31 | 425 729 | 375 | 0,0881 % | 13 733,19 | 12,10 |
+| 10 h | 31 | 445 992 | 324 | 0,0726 % | 14 386,84 | 10,45 |
+| 11 h | 31 | 483 418 | 339 | 0,0701 % | 15 594,13 | 10,94 |
+| 12 h | 31 | 468 474 | 346 | 0,0739 % | 15 112,06 | 11,16 |
+| 13 h | 31 | 439 653 | 353 | 0,0803 % | 14 182,35 | 11,39 |
+| 14 h | 31 | 416 686 | 341 | 0,0818 % | 13 441,48 | 11,00 |
+| 15 h | 31 | 441 612 | 345 | 0,0781 % | 14 245,55 | 11,13 |
+| 16 h | 31 | 439 941 | 353 | 0,0802 % | 14 191,65 | 11,39 |
+| 17 h | 31 | 580 509 | 343 | 0,0591 % | 18 726,10 | 11,06 |
+| 18 h | 31 | 647 814 | 342 | 0,0528 % | 20 897,23 | 11,03 |
+| 19 h | 31 | 553 728 | 340 | 0,0614 % | 17 862,19 | 10,97 |
+| 20 h | 31 | 247 806 | 347 | 0,1400 % | 7 993,74 | 11,19 |
+| 21 h | 31 | 194 555 | 351 | 0,1804 % | 6 275,97 | 11,32 |
+| 22 h | 31 | 141 257 | 323 | 0,2287 % | 4 556,68 | 10,42 |
+| 23 h | 30 | 71 587 | 300 | 0,4191 % | 2 386,23 | 10,00 |
+
+La plage 03 h à 04 h affiche des taux de 22,0790 % et 22,3035 %, avec seulement 1 241 et 1 641 transactions agrégées, contre 274 et 366 fraudes. À 18 h, 342 fraudes sont comptées sur 647 814 transactions, soit 0,0528 %. Le nombre de fraudes par heure change beaucoup moins que le volume total ; le pic de taux nocturne résulte donc surtout d’un **petit dénominateur** dans ces agrégats. Cela n’établit ni une habitude réelle des fraudeurs ni la cause du calendrier simulé.
+
+Les heures 00 h à 22 h ont chacune 31 steps observés ; 23 h n’en a que 30 parce que la dernière journée s’arrête à 22 h. La dernière journée contribue 272 transactions, toutes étiquetées fraude, réparties sur 00 h à 22 h. Elle peut donc relever les taux de ces heures, en particulier lorsque le volume normal est faible. Elle est conservée dans les calculs.
+
+### Jours de semaine simulés
+
+![Trois panneaux par jour de semaine simulé](figures/eda_profils_jours_simules.png)
+
+La [figure SVG reproductible](figures/eda_profils_jours_simules.svg) utilise trois panneaux alignés sur les jours lundi à dimanche. Les axes verticaux sont **linéaires** et partent de zéro : transactions, fraudes puis pourcentage `fraudes du jour / toutes les transactions de ce jour`. Les nombres de steps et de journées observés figurent sous les panneaux. Les effectifs bruts restent visibles malgré des durées différentes.
+
+| Jour simulé | Jours observés | Steps observés | Transactions | Fraudes | Taux de fraude | Transactions par step observé | Fraudes par step observé |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| Lundi | 5 | 120 | 1 533 501 | 1 315 | 0,0858 % | 12 779,17 | 10,96 |
+| Mardi | 5 | 120 | 1 311 050 | 1 300 | 0,0992 % | 10 925,42 | 10,83 |
+| Mercredi | 5 | 119 | 852 762 | 1 464 | 0,1717 % | 7 166,07 | 12,30 |
+| Jeudi | 4 | 96 | 524 951 | 1 032 | 0,1966 % | 5 468,24 | 10,75 |
+| Vendredi | 4 | 96 | 384 750 | 1 078 | 0,2802 % | 4 007,81 | 11,23 |
+| Samedi | 4 | 96 | 897 893 | 986 | 0,1098 % | 9 353,05 | 10,27 |
+| Dimanche | 4 | 96 | 857 713 | 1 038 | 0,1210 % | 8 934,51 | 10,81 |
+
+Lundi et mardi sont observés sur cinq journées complètes chacun (120 steps) ; mercredi apparaît cinq fois mais sa dernière journée est incomplète (119 steps au total). Jeudi à dimanche ne sont observés que quatre fois chacun (96 steps). Ainsi, les effectifs bruts ne comparent pas des durées identiques. Les moyennes par step corrigent **seulement l’exposition**, pas les changements de volume au fil de la simulation. Vendredi a le taux agrégé le plus élevé, 0,2802 %, avec 1 078 fraudes sur 384 750 transactions ; cela ne démontre pas un « effet vendredi » réel.
+
+Le dernier mercredi simulé contient 23 steps et 272 transactions, toutes frauduleuses. Il représente 272/1 464, soit **18,58 % des fraudes du mercredi**, mais seulement 272/852 762, soit **0,0319 % des transactions du mercredi**. Il peut donc influencer le taux agrégé de ce jour sans justifier de suppression. Les moyennes par step et les taux mélangent aussi des semaines simulées où le volume global change fortement ; un profil hebdomadaire répété n’est pas établi par cette seule agrégation.
+
+### Contrôles et limites
+
+Les regroupements horaires et hebdomadaires retrouvent chacun **743 steps, 6 362 620 transactions et 8 213 fraudes**. Les 23 steps de la dernière journée couvrent 00 h à 22 h ; ses 272 transactions restent incluses. Ces résultats décrivent le fichier sous une convention de calendrier. Ils ne prouvent pas un cycle stable, une cause comportementale, une date civile ni une heure locale réelle. Aucune variable cyclique n’est retenue, aucun découpage temporel n’est validé et aucun modèle n’a été entraîné. Nous attendons les observations de l’utilisateur avant de poursuivre.

@@ -1,6 +1,6 @@
 # Lot 4.1 : protocole ML proposé pour PaySim
 
-**Statut : proposition à discuter avant implémentation.** Aucun modèle, transformation ajustée, seuil ou résultat de prédiction n'a encore été produit. Le [bilan EDA](EDA.md) et l'[audit des données](DATA_AUDIT.md) établissent les faits descriptifs utilisés ici. Le protocole vise une démonstration locale et reproductible sur le CSV PaySim audité, pas une garantie sur des transactions réelles.
+**Statut : proposition en attente, EDA du lot 4.0 encore ouverte.** Les frontières et les variables décrites ci-dessous ne sont pas retenues définitivement. Aucun modèle, transformation ajustée, seuil ou résultat de prédiction n'a encore été produit. Le [bilan EDA](EDA.md) et l'[audit des données](DATA_AUDIT.md) établissent les faits descriptifs utilisés ici. Le protocole vise une démonstration locale et reproductible sur le CSV PaySim audité, pas une garantie sur des transactions réelles.
 
 ## 1. Question et périmètre
 

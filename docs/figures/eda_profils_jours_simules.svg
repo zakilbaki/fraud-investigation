@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="1070" viewBox="0 0 1500 1070">
+<rect width="100%" height="100%" fill="white"/>
+<text x="45" y="45" font-family="Arial, sans-serif" font-size="29" fill="#183047" text-anchor="start" font-weight="bold">PaySim : profils par jour de semaine simulé</text>
+<text x="45" y="75" font-family="Arial, sans-serif" font-size="17" fill="#4b6072" text-anchor="start" font-weight="normal">Hypothèse : step 1 = lundi 00 h ; tous les jours correspondants sont regroupés</text>
+<text x="45" y="112" font-family="Arial, sans-serif" font-size="20" fill="#183047" text-anchor="start" font-weight="bold">A. Transactions totales</text>
+<text x="360" y="112" font-family="Arial, sans-serif" font-size="14" fill="#4b6072" text-anchor="start" font-weight="normal">Axe vertical : nombre de transactions (linéaire)</text>
+<line x1="130" y1="345.0" x2="1450" y2="345.0" stroke="#dce4e9"/>
+<text x="118" y="350.0" font-family="Arial, sans-serif" font-size="13" fill="#183047" text-anchor="end" font-weight="normal">0</text>
+<line x1="130" y1="295.0" x2="1450" y2="295.0" stroke="#dce4e9"/>
+<text x="118" y="300.0" font-family="Arial, sans-serif" font-size="13" fill="#183047" text-anchor="end" font-weight="normal">400 k</text>
+<line x1="130" y1="245.0" x2="1450" y2="245.0" stroke="#dce4e9"/>
+<text x="118" y="250.0" font-family="Arial, sans-serif" font-size="13" fill="#183047" text-anchor="end" font-weight="normal">800 k</text>
+<line x1="130" y1="195.0" x2="1450" y2="195.0" stroke="#dce4e9"/>
+<text x="118" y="200.0" font-family="Arial, sans-serif" font-size="13" fill="#183047" text-anchor="end" font-weight="normal">1,2 M</text>
+<line x1="130" y1="145.0" x2="1450" y2="145.0" stroke="#dce4e9"/>
+<text x="118" y="150.0" font-family="Arial, sans-serif" font-size="13" fill="#183047" text-anchor="end" font-weight="normal">1,6 M</text>
+<rect x="187.3" y="153.3" width="74" height="191.7" fill="#237087"/>
+<rect x="375.9" y="181.1" width="74" height="163.9" fill="#237087"/>
+<rect x="564.4" y="238.4" width="74" height="106.6" fill="#237087"/>
+<rect x="753.0" y="279.4" width="74" height="65.6" fill="#237087"/>
+<rect x="941.6" y="296.9" width="74" height="48.1" fill="#237087"/>
+<rect x="1130.1" y="232.8" width="74" height="112.2" fill="#237087"/>
+<rect x="1318.7" y="237.8" width="74" height="107.2" fill="#237087"/>
+<text x="45" y="397" font-family="Arial, sans-serif" font-size="20" fill="#183047" text-anchor="start" font-weight="bold">B. Fraudes étiquetées</text>
+<text x="360" y="397" font-family="Arial, sans-serif" font-size="14" fill="#4b6072" text-anchor="start" font-weight="normal">Axe vertical : nombre de fraudes (linéaire)</text>
+<line x1="130" y1="630.0" x2="1450" y2="630.0" stroke="#dce4e9"/>
+<text x="118" y="635.0" font-family="Arial, sans-serif" font-size="13" fill="#183047" text-anchor="end" font-weight="normal">0</text>
+<line x1="130" y1="580.0" x2="1450" y2="580.0" stroke="#dce4e9"/>
+<text x="118" y="585.0" font-family="Arial, sans-serif" font-size="13" fill="#183047" text-anchor="end" font-weight="normal">400</text>
+<line x1="130" y1="530.0" x2="1450" y2="530.0" stroke="#dce4e9"/>
+<text x="118" y="535.0" font-family="Arial, sans-serif" font-size="13" fill="#183047" text-anchor="end" font-weight="normal">800</text>
+<line x1="130" y1="480.0" x2="1450" y2="480.0" stroke="#dce4e9"/>
+<text x="118" y="485.0" font-family="Arial, sans-serif" font-size="13" fill="#183047" text-anchor="end" font-weight="normal">1 200</text>
+<line x1="130" y1="430.0" x2="1450" y2="430.0" stroke="#dce4e9"/>
+<text x="118" y="435.0" font-family="Arial, sans-serif" font-size="13" fill="#183047" text-anchor="end" font-weight="normal">1 600</text>
+<rect x="196.3" y="465.6" width="56" height="164.4" fill="#ce593b"/>
+<rect x="384.9" y="467.5" width="56" height="162.5" fill="#ce593b"/>
+<rect x="573.4" y="447.0" width="56" height="183.0" fill="#ce593b"/>
+<rect x="762.0" y="501.0" width="56" height="129.0" fill="#ce593b"/>
+<rect x="950.6" y="495.2" width="56" height="134.8" fill="#ce593b"/>
+<rect x="1139.1" y="506.8" width="56" height="123.2" fill="#ce593b"/>
+<rect x="1327.7" y="500.2" width="56" height="129.8" fill="#ce593b"/>
+<text x="45" y="682" font-family="Arial, sans-serif" font-size="20" fill="#183047" text-anchor="start" font-weight="bold">C. Taux de fraude dans le jour</text>
+<text x="420" y="682" font-family="Arial, sans-serif" font-size="14" fill="#4b6072" text-anchor="start" font-weight="normal">Axe vertical : fraudes / transactions de ce jour (linéaire)</text>
+<line x1="130" y1="915.0" x2="1450" y2="915.0" stroke="#dce4e9"/>
+<text x="118" y="920.0" font-family="Arial, sans-serif" font-size="13" fill="#183047" text-anchor="end" font-weight="normal">0 %</text>
+<line x1="130" y1="848.3" x2="1450" y2="848.3" stroke="#dce4e9"/>
+<text x="118" y="853.3333333333334" font-family="Arial, sans-serif" font-size="13" fill="#183047" text-anchor="end" font-weight="normal">0,1 %</text>
+<line x1="130" y1="781.7" x2="1450" y2="781.7" stroke="#dce4e9"/>
+<text x="118" y="786.6666666666666" font-family="Arial, sans-serif" font-size="13" fill="#183047" text-anchor="end" font-weight="normal">0,2 %</text>
+<line x1="130" y1="715.0" x2="1450" y2="715.0" stroke="#dce4e9"/>
+<text x="118" y="720.0" font-family="Arial, sans-serif" font-size="13" fill="#183047" text-anchor="end" font-weight="normal">0,3 %</text>
+<polyline points="224.3,857.8 412.9,848.9 601.4,800.5 790.0,783.9 978.6,728.2 1167.1,841.8 1355.7,834.3" fill="none" stroke="#735caa" stroke-width="3"/>
+<circle cx="224.3" cy="857.8" r="6" fill="#735caa"/>
+<circle cx="412.9" cy="848.9" r="6" fill="#735caa"/>
+<circle cx="601.4" cy="800.5" r="6" fill="#735caa"/>
+<circle cx="790.0" cy="783.9" r="6" fill="#735caa"/>
+<circle cx="978.6" cy="728.2" r="6" fill="#735caa"/>
+<circle cx="1167.1" cy="841.8" r="6" fill="#735caa"/>
+<circle cx="1355.7" cy="834.3" r="6" fill="#735caa"/>
+<text x="45" y="945" font-family="Arial, sans-serif" font-size="14" fill="#4b6072" text-anchor="start" font-weight="normal">Jour</text>
+<text x="45" y="977" font-family="Arial, sans-serif" font-size="14" fill="#4b6072" text-anchor="start" font-weight="normal">Steps</text>
+<text x="45" y="1005" font-family="Arial, sans-serif" font-size="14" fill="#4b6072" text-anchor="start" font-weight="normal">Jours observés</text>
+<text x="224.28571428571428" y="945" font-family="Arial, sans-serif" font-size="14" fill="#183047" text-anchor="middle" font-weight="normal">Lundi</text>
+<text x="224.28571428571428" y="977" font-family="Arial, sans-serif" font-size="14" fill="#183047" text-anchor="middle" font-weight="normal">120</text>
+<text x="224.28571428571428" y="1005" font-family="Arial, sans-serif" font-size="14" fill="#183047" text-anchor="middle" font-weight="normal">5</text>
+<text x="412.8571428571429" y="945" font-family="Arial, sans-serif" font-size="14" fill="#183047" text-anchor="middle" font-weight="normal">Mardi</text>
+<text x="412.8571428571429" y="977" font-family="Arial, sans-serif" font-size="14" fill="#183047" text-anchor="middle" font-weight="normal">120</text>
+<text x="412.8571428571429" y="1005" font-family="Arial, sans-serif" font-size="14" fill="#183047" text-anchor="middle" font-weight="normal">5</text>
+<text x="601.4285714285714" y="945" font-family="Arial, sans-serif" font-size="14" fill="#183047" text-anchor="middle" font-weight="normal">Mercredi</text>
+<text x="601.4285714285714" y="977" font-family="Arial, sans-serif" font-size="14" fill="#183047" text-anchor="middle" font-weight="normal">119</text>
+<text x="601.4285714285714" y="1005" font-family="Arial, sans-serif" font-size="14" fill="#183047" text-anchor="middle" font-weight="normal">5</text>
+<text x="790.0" y="945" font-family="Arial, sans-serif" font-size="14" fill="#183047" text-anchor="middle" font-weight="normal">Jeudi</text>
+<text x="790.0" y="977" font-family="Arial, sans-serif" font-size="14" fill="#183047" text-anchor="middle" font-weight="normal">96</text>
+<text x="790.0" y="1005" font-family="Arial, sans-serif" font-size="14" fill="#183047" text-anchor="middle" font-weight="normal">4</text>
+<text x="978.5714285714287" y="945" font-family="Arial, sans-serif" font-size="14" fill="#183047" text-anchor="middle" font-weight="normal">Vendredi</text>
+<text x="978.5714285714287" y="977" font-family="Arial, sans-serif" font-size="14" fill="#183047" text-anchor="middle" font-weight="normal">96</text>
+<text x="978.5714285714287" y="1005" font-family="Arial, sans-serif" font-size="14" fill="#183047" text-anchor="middle" font-weight="normal">4</text>
+<text x="1167.142857142857" y="945" font-family="Arial, sans-serif" font-size="14" fill="#183047" text-anchor="middle" font-weight="normal">Samedi</text>
+<text x="1167.142857142857" y="977" font-family="Arial, sans-serif" font-size="14" fill="#183047" text-anchor="middle" font-weight="normal">96</text>
+<text x="1167.142857142857" y="1005" font-family="Arial, sans-serif" font-size="14" fill="#183047" text-anchor="middle" font-weight="normal">4</text>
+<text x="1355.7142857142858" y="945" font-family="Arial, sans-serif" font-size="14" fill="#183047" text-anchor="middle" font-weight="normal">Dimanche</text>
+<text x="1355.7142857142858" y="977" font-family="Arial, sans-serif" font-size="14" fill="#183047" text-anchor="middle" font-weight="normal">96</text>
+<text x="1355.7142857142858" y="1005" font-family="Arial, sans-serif" font-size="14" fill="#183047" text-anchor="middle" font-weight="normal">4</text>
+<text x="45" y="1043" font-family="Arial, sans-serif" font-size="15" fill="#4b6072" text-anchor="start" font-weight="normal">Le cinquième mercredi est incomplet : 23 steps et 272 fraudes sur 272 transactions.</text>
+</svg>
