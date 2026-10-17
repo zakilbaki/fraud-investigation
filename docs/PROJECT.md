@@ -65,3 +65,5 @@ L'hypothèse sur le rôle du type de transaction a été vérifiée par des effe
 ## État du lot 4.0, étape 4
 
 L'hypothèse de l'utilisateur sur les comptes à solde élevé a conduit à comparer le solde d'origine avant transaction au montant, pour `CASH_OUT` et `TRANSFER`. Une quasi-égalité apparaît pour la majorité des fraudes et aucune transaction normale de ces deux types à la précision vérifiée. [EDA.md](EDA.md) documente les effectifs, la limite d'interprétation et la recommandation provisoire d'écarter ce solde du futur modèle de portfolio à cause de la signature du simulateur. La traçabilité des transferts ne peut pas être vérifiée dans le CSV. Aucun modèle n'a été entraîné.
+
+Une vérification complémentaire confirme que 8 008 des 8 197 fraudes de montant positif combinent un solde avant transaction proche du montant et un solde après transaction nul dans le CSV. La même valeur nulle après transaction apparaît aussi souvent dans les transactions normales ; elle ne suffit pas à qualifier une fraude. Les soldes après transaction restent exclus du futur modèle avant exécution.
