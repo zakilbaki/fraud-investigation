@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="600" viewBox="0 0 1080 600">
+<rect width="100%" height="100%" fill="#ffffff"/>
+<text x="40" y="43" font-family="Arial, sans-serif" font-size="27" fill="#183047" text-anchor="start" font-weight="bold">Solde avant transaction ≈ montant</text>
+<text x="40" y="75" font-family="Arial, sans-serif" font-size="16" fill="#4b6072" text-anchor="start" font-weight="normal">Transactions de montant positif, écart inférieur à 0,005 unité</text>
+<line x1="105" y1="420.0" x2="1030" y2="420.0" stroke="#d8e1e8"/>
+<text x="90" y="425.0" font-family="Arial, sans-serif" font-size="14" fill="#183047" text-anchor="end" font-weight="normal">0 %</text>
+<line x1="105" y1="365.0" x2="1030" y2="365.0" stroke="#d8e1e8"/>
+<text x="90" y="370.0" font-family="Arial, sans-serif" font-size="14" fill="#183047" text-anchor="end" font-weight="normal">20 %</text>
+<line x1="105" y1="310.0" x2="1030" y2="310.0" stroke="#d8e1e8"/>
+<text x="90" y="315.0" font-family="Arial, sans-serif" font-size="14" fill="#183047" text-anchor="end" font-weight="normal">40 %</text>
+<line x1="105" y1="255.0" x2="1030" y2="255.0" stroke="#d8e1e8"/>
+<text x="90" y="260.0" font-family="Arial, sans-serif" font-size="14" fill="#183047" text-anchor="end" font-weight="normal">60 %</text>
+<line x1="105" y1="200.0" x2="1030" y2="200.0" stroke="#d8e1e8"/>
+<text x="90" y="205.0" font-family="Arial, sans-serif" font-size="14" fill="#183047" text-anchor="end" font-weight="normal">80 %</text>
+<line x1="105" y1="145.0" x2="1030" y2="145.0" stroke="#d8e1e8"/>
+<text x="90" y="150.0" font-family="Arial, sans-serif" font-size="14" fill="#183047" text-anchor="end" font-weight="normal">100 %</text>
+<rect x="180.625" y="420.0" width="80" height="0.0" fill="#237087"/>
+<text x="220.625" y="407.0" font-family="Arial, sans-serif" font-size="18" fill="#183047" text-anchor="middle" font-weight="bold">0,00 %</text>
+<text x="220.625" y="452" font-family="Arial, sans-serif" font-size="16" fill="#183047" text-anchor="middle" font-weight="normal">CASH_OUT</text>
+<text x="220.625" y="477" font-family="Arial, sans-serif" font-size="15" fill="#183047" text-anchor="middle" font-weight="normal">Normale</text>
+<text x="220.625" y="514" font-family="Arial, sans-serif" font-size="14" fill="#4b6072" text-anchor="middle" font-weight="normal">0 / 2 233 384</text>
+<rect x="411.875" y="146.6768292682927" width="80" height="273.3231707317073" fill="#ce593b"/>
+<text x="451.875" y="133.6768292682927" font-family="Arial, sans-serif" font-size="18" fill="#183047" text-anchor="middle" font-weight="bold">99,39 %</text>
+<text x="451.875" y="452" font-family="Arial, sans-serif" font-size="16" fill="#183047" text-anchor="middle" font-weight="normal">CASH_OUT</text>
+<text x="451.875" y="477" font-family="Arial, sans-serif" font-size="15" fill="#183047" text-anchor="middle" font-weight="normal">Fraude</text>
+<text x="451.875" y="514" font-family="Arial, sans-serif" font-size="14" fill="#4b6072" text-anchor="middle" font-weight="normal">4 075 / 4 100</text>
+<rect x="643.125" y="420.0" width="80" height="0.0" fill="#237087"/>
+<text x="683.125" y="407.0" font-family="Arial, sans-serif" font-size="18" fill="#183047" text-anchor="middle" font-weight="bold">0,00 %</text>
+<text x="683.125" y="452" font-family="Arial, sans-serif" font-size="16" fill="#183047" text-anchor="middle" font-weight="normal">TRANSFER</text>
+<text x="683.125" y="477" font-family="Arial, sans-serif" font-size="15" fill="#183047" text-anchor="middle" font-weight="normal">Normale</text>
+<text x="683.125" y="514" font-family="Arial, sans-serif" font-size="14" fill="#4b6072" text-anchor="middle" font-weight="normal">0 / 528 812</text>
+<rect x="874.375" y="155.33683182816696" width="80" height="264.66316817183304" fill="#ce593b"/>
+<text x="914.375" y="142.33683182816696" font-family="Arial, sans-serif" font-size="18" fill="#183047" text-anchor="middle" font-weight="bold">96,24 %</text>
+<text x="914.375" y="452" font-family="Arial, sans-serif" font-size="16" fill="#183047" text-anchor="middle" font-weight="normal">TRANSFER</text>
+<text x="914.375" y="477" font-family="Arial, sans-serif" font-size="15" fill="#183047" text-anchor="middle" font-weight="normal">Fraude</text>
+<text x="914.375" y="514" font-family="Arial, sans-serif" font-size="14" fill="#4b6072" text-anchor="middle" font-weight="normal">3 943 / 4 097</text>
+<text x="40" y="558" font-family="Arial, sans-serif" font-size="15" fill="#9a422e" text-anchor="start" font-weight="normal">Observation du simulateur, pas preuve que les fraudeurs sélectionnent les soldes élevés.</text>
+</svg>

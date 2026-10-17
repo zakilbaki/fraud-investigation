@@ -108,3 +108,24 @@ La composition change avec le montant. Dans `[5 ; 5,5[`, `CASH_OUT` et `CASH_IN`
 Un type absent d'une tranche a zéro transaction dans cette combinaison ; son taux n'est donc pas défini. Les taux de 100 % reposent sur 413 et 142 transactions `CASH_OUT` et pourraient refléter une particularité du simulateur. Cette EDA ne contrôle pas encore les effets du `step`, des soldes ou du mécanisme de génération des labels. Les taux sont descriptifs sur l'ensemble du CSV, sans valeur causale ni garantie de calibration pour de nouvelles transactions.
 
 Le notebook vérifie que les sommes par type et par tranche retrouvent les 6 362 620 transactions et 8 213 fraudes de l'audit, et que les 16 montants nuls sont comptés une seule fois. Aucun modèle n'a été entraîné ; la sélection des variables et le découpage temporel restent ouverts.
+
+## Lot 4.0, étape 4 : hypothèse sur les soldes et limites d'interprétation
+
+L'utilisateur observe que les tranches élevées sont dominées par `TRANSFER` et que certaines tranches de gros `CASH_OUT` n'ont que des fraudes étiquetées. Il propose que les fraudeurs visent les comptes avec un solde élevé et que les transferts soient moins souvent frauduleux parce qu'ils sont traçables. Ces deux explications portent sur une intention et un mécanisme qui ne sont pas observés dans le CSV.
+
+La formulation « tous les gros `CASH_OUT` » demande une borne : dans `[6 ; 6,5[`, 790 des 1 093 `CASH_OUT` sont frauduleux (72,2781 %) ; dans `[6,5 ; 7[` et `[7 ; 7,5[`, 413/413 et 142/142 le sont. À l'échelle de tous les montants, le taux observé de `TRANSFER` (4 097/532 909, soit 0,7688 %) dépasse celui de `CASH_OUT` (4 116/2 237 500, soit 0,1840 %). Les nombres absolus de fraudes sont proches. La traçabilité ou l'issue d'une enquête ne figurent pas dans les colonnes PaySim et ne peuvent pas expliquer ces taux à partir de ce fichier.
+
+Pour tester la partie observable de l'hypothèse sur les soldes, le notebook compare `oldbalanceOrg`, déclaré comme solde avant transaction, à `amount` pour les transactions **positives** `CASH_OUT` et `TRANSFER`. « Solde ≈ montant » signifie un écart absolu inférieur à 0,005 unité PaySim. Les 16 montants nuls sont exclus de cette égalité pour éviter que `0 = 0` soit pris pour un compte vidé.
+
+| Type | Label | Transactions positives | Solde ≈ montant | Part | Solde ≥ montant | Solde nul |
+| --- | --- | ---: | ---: | ---: | ---: | ---: |
+| `CASH_OUT` | normale | 2 233 384 | 0 | 0 % | 252 286 | 1 025 762 |
+| `CASH_OUT` | fraude | 4 100 | 4 075 | 99,3902 % | 4 076 | 21 |
+| `TRANSFER` | normale | 528 812 | 0 | 0 % | 21 305 | 282 779 |
+| `TRANSFER` | fraude | 4 097 | 3 943 | 96,2412 % | 4 092 | 4 |
+
+Dans `[6 ; 6,5[`, les 790 `CASH_OUT` frauduleux ont tous un solde avant transaction égal au montant à cette précision ; leur solde médian est de 1 670 857,17 unités. Parmi les 303 `CASH_OUT` normaux de cette tranche, aucun n'a cette égalité, 282 ont un solde initial nul et le solde médian est zéro. Dans les deux tranches supérieures affichées, l'égalité concerne également tous les `CASH_OUT` frauduleux (413/413 et 142/142). Ces données montrent de gros soldes **enregistrés** pour ces fraudes ; elles ne prouvent pas que des fraudeurs ont choisi les comptes pour cette raison.
+
+L'égalité quasi systématique entre solde avant transaction et montant pour les fraudes, absente des transactions normales de ces deux types, est un indice fort de **signature du simulateur**. Elle pourrait donner un score artificiellement excellent à un modèle qui utiliserait `oldbalanceOrg` ou une variable dérivée comme `oldbalanceOrg - amount`. La [documentation de l'audit](DATA_AUDIT.md) signale déjà une mise en garde de la fiche Kaggle sur les soldes et les fraudes annulées. Recommandation provisoire pour le modèle de portfolio avant exécution : écarter `oldbalanceOrg` et ses dérivés tant que cette signature n'est pas résolue. La disponibilité temporelle d'un solde ne suffit pas à garantir qu'il constitue une variable saine dans ce jeu synthétique. Les soldes après transaction restent exclus.
+
+Le notebook vérifie les effectifs par type et label, l'exclusion des montants nuls et l'égalité à la précision indiquée. Il ne démontre ni la cause de cette signature, ni un comportement réel des fraudeurs. Aucun modèle n'a été entraîné et aucune performance de prédiction n'est annoncée.
