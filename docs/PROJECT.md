@@ -79,3 +79,9 @@ Le contrôle au step individuel montre que les 23 derniers steps contiennent 272
 ## État du lot 4.0, diagnostic des comptes candidats
 
 Le [diagnostic limité](EDA.md) des fraudes `TRANSFER` et `CASH_OUT` de même step et montant compte 4 023 groupes candidats, dont 26 ambigus par répétition du montant. La vérification exacte `TRANSFER.nameDest = CASH_OUT.nameOrig` trouve zéro groupe et zéro transaction liée ; un contrôle indépendant par ensembles confirme ce résultat. Une correspondance de montant ne démontre donc ni une identité de compte ni l'ordre des opérations dans un step. Le notebook et la documentation sont mis à jour avec des exemples du CSV. Aucun scénario synthétique n'a été créé et aucun modèle n'a été entraîné ; les observations de l'utilisateur sont attendues avant de conclure l'EDA.
+
+## Clôture du lot 4.0 et état du lot 4.1
+
+La [synthèse EDA](EDA.md) distingue les observations, les hypothèses non démontrées, les risques de modélisation et les limites de l'investigation des comptes. L'exploration initiale est clôturée après exposition à l'ensemble du CSV, labels compris. Cette exposition est déclarée dans le [protocole ML proposé](ML_PROTOCOL.md).
+
+Le lot 4.1 documente, sans entraîner de modèle, une première baseline fondée sur `type` et `amount`, avec `log1p(amount)` comme transformation candidate. Les soldes, identifiants, provenance et `step` sont exclus des prédicteurs initiaux ; `step` reste la clé du découpage temporel. Le protocole propose train 1 à 336, validation 337 à 504 et test 505 à 743, en gardant toutes les périodes atypiques. Les effectifs et taux ont été recalculés sur le CSV. La comparaison envisagée est régression logistique, LightGBM puis règle `isFlaggedFraud` comme référence d'évaluation, avec AP, précision, rappel, alertes et faux positifs. Les frontières, le compromis de seuil et le protocole attendent le retour de l'utilisateur avant implémentation. Aucun entraînement ni choix de seuil n'a eu lieu.
