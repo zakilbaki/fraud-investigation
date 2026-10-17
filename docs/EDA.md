@@ -291,3 +291,34 @@ Le dernier mercredi simulé contient 23 steps et 272 transactions, toutes fraudu
 ### Contrôles et limites
 
 Les regroupements horaires et hebdomadaires retrouvent chacun **743 steps, 6 362 620 transactions et 8 213 fraudes**. Les 23 steps de la dernière journée couvrent 00 h à 22 h ; ses 272 transactions restent incluses. Ces résultats décrivent le fichier sous une convention de calendrier. Ils ne prouvent pas un cycle stable, une cause comportementale, une date civile ni une heure locale réelle. Aucune variable cyclique n’est retenue, aucun découpage temporel n’est validé et aucun modèle n’a été entraîné. Nous attendons les observations de l’utilisateur avant de poursuivre.
+
+## Lot 4.0, vérification du cycle hebdomadaire par semaine
+
+Nous gardons la même **convention d'analyse**, sans calendrier civil confirmé : `step = 1` est appelé lundi 00 h, chaque step dure une heure, `jour_numero = (step - 1) // 24`, `position = jour_numero % 7` et `semaine = jour_numero // 7`. Une transaction normale a `isFraud = 0`. Pour chaque journée, le taux vaut `fraudes / (normales + fraudes)` ; il serait non défini si aucune transaction n'était observée, ce qui n'arrive pas ici. Le notebook agrège d'abord par step, puis par journée, sans supprimer de période.
+
+### Journées dans l'ordre chronologique
+
+![Transactions normales, fraudes et taux de fraude pour les 31 journées simulées](figures/eda_jours_chronologiques.png)
+
+La [figure SVG reproductible](figures/eda_jours_chronologiques.svg) place en abscisse les journées 0 à 30, avec position simulée et **nombre d'heures observées** sous chaque jour. Les pointillés délimitent les semaines. Le premier panneau représente `log10(1 + nombre de transactions normales)` pour rendre visibles les creux et la journée à **zéro** transaction normale ; ses graduations indiquent les effectifs d'origine. Le deuxième montre les fraudes en effectifs bruts sur une échelle linéaire partant de zéro. Le troisième donne le taux en pourcentage sur une échelle logarithmique, nécessaire pour voir à la fois les taux proches de 0,05 % et ceux de plusieurs pourcents. Aucun taux journalier n'est nul ; un taux nul ne pourrait pas être placé sur cet axe logarithmique. La bande orange désigne la dernière journée, incomplète.
+
+Les fraudes des journées complètes varient de 216 à 320, soit de **9,0 à 13,33 par heure**, tandis que les transactions normales passent de 760 à 573 984 selon le jour, soit de **31,67 à 23 916 par heure**. Les pics de taux coïncident surtout avec des creux du volume normal : par exemple, le mercredi simulé de S1 compte 760 normales et 310 fraudes, soit 28,97 % de fraudes parmi 1 070 transactions. Ce constat est descriptif ; il ne prouve pas un mécanisme hebdomadaire stable.
+
+### Semaines comparées séparément
+
+![Carte de chaleur des normales et fraudes par heure observée, semaine par position du cycle](figures/eda_semaines_positions_cycle.png)
+
+La [carte SVG reproductible](figures/eda_semaines_positions_cycle.svg) emploie les mêmes sept positions dans chaque semaine. Chaque case contient un **effectif moyen par heure observée** : effectif journalier divisé par 24, ou par 23 pour le dernier mercredi. Le panneau des normales colore `log(1 + moyenne)` pour rendre les fortes variations lisibles, celui des fraudes utilise une couleur linéaire et une palette séparée. Les contours ocre marquent les deux plus petits volumes normaux par heure de chaque semaine **complète**. Les cases grisées de S5 sont absentes, et non égales à zéro. Le contour foncé désigne son mercredi observé 23 heures seulement ; sa valeur `0` est une vraie absence de transactions normales dans les données.
+
+| Semaine complète | Position la plus faible, normales/heure | Deuxième position, normales/heure | Lecture |
+| --- | ---: | ---: | --- |
+| S1 | Mercredi : 31,67 | Vendredi : 397,38 | Creux très marqué dès mercredi. |
+| S2 | Vendredi : 14 561,58 | Mercredi : 16 360,96 | Les sept positions restent élevées ; écart relatif plus modéré. |
+| S3 | Vendredi : 460,17 | Samedi : 812,13 | Forte baisse à partir de jeudi. |
+| S4 | Samedi : 345,75 | Vendredi : 567,21 | Faible volume sur plusieurs positions. |
+
+**Vendredi fait partie des deux plus faibles positions dans les quatre semaines complètes**, mais l'autre position est mercredi en S1 et S2, samedi en S3 et S4. L'hypothèse de **deux positions fixes** n'est donc pas vérifiée. Le niveau général change aussi beaucoup entre semaines : un rang faible en S2 signifie encore 14 562 normales/heure le vendredi, contre 397 en S1. Les fraudes par heure restent relativement régulières dans les 28 journées complètes ; les taux élevés des creux viennent principalement d'un dénominateur plus petit, pas d'une poussée comparable des effectifs de fraude. Cela ne prouve ni un cycle causal ni un « week-end » réel. Les noms des jours n'ont pas été décalés pour faire correspondre les creux à samedi ou dimanche.
+
+La **S5 est partielle** : lundi compte 24 h, 2 276,25 normales/h et 10,83 fraudes/h ; mardi 24 h, 459,13 normales/h et 11,17 fraudes/h ; mercredi 23 h, **0 normale/h** et 11,83 fraudes/h (272 fraudes sur 272 transactions, taux de 100 %). Jeudi à dimanche n'ont aucun step. Cette semaine ne participe pas au classement des semaines complètes. La conserver explique une partie de l'augmentation du taux agrégé du mercredi simulé ; la supprimer aurait modifié les données d'origine selon une anomalie observée.
+
+**Vérifications :** les 31 journées comprennent 30 fois 24 h et une fois 23 h, soit **743 steps**. Les quatre semaines complètes et la semaine partielle retrouvent **6 362 620 transactions**, dont **8 213 fraudes** et **6 354 407 normales**. Le notebook vérifie ces sommes, les durées et les positions minimales. L'EDA a vu toutes les étiquettes du fichier. Aucune variable cyclique ni borne ML définitive n'est retenue, et aucun entraînement n'a été lancé. Nous attendons l'interprétation de l'utilisateur avant la synthèse finale de l'EDA.
