@@ -64,6 +64,16 @@ PY
 
 La transaction d'exemple correspond au CSV et à l'empreinte ci-dessus. `get_transaction` renvoie `None` pour un identifiant inconnu. L'historique ne contient que des `step` strictement antérieurs à la borne et son ordre de restitution est déterministe ; l'ordre des lignes au sein d'un même `step` n'est pas une chronologie réelle. Les scripts acceptent des chemins de fichiers en arguments et peuvent être invoqués depuis un autre dossier avec des chemins explicites.
 
+## Reproduire l'analyse exploratoire
+
+Après l'installation et le téléchargement du CSV ci-dessus, lancer depuis la racine du dépôt :
+
+```sh
+uv run --locked python scripts/run_eda_notebook.py
+```
+
+Cette commande réexécute les cellules Python de [notebooks/eda_paysim.ipynb](notebooks/eda_paysim.ipynb) dans un espace de variables neuf. Elle vérifie l'empreinte du CSV et les contrôles du notebook, puis régénère les figures SVG dans [docs/figures/](docs/figures/). Le [rapport EDA](docs/EDA.md) présente les tableaux, les interprétations et les figures PNG publiées pour la lecture ; les PNG sont des exports des SVG et ne sont pas régénérés par cette commande. Aucun modèle n'est entraîné. Le [protocole ML](docs/ML_PROTOCOL.md) reste une proposition pour le lot suivant. Les labels sont lus uniquement pour cette analyse hors ligne.
+
 ## Portabilité et historique de vérification
 
-La procédure vise une installation reproductible sur toute machine où les prérequis sont disponibles. Les exécutions effectivement vérifiées ont eu lieu sur macOS Apple Silicon avec Python 3.11.15, `uv` 0.13.1 et Polars 1.44.2. Linux et Windows n'ont pas été testés ; leur compatibilité reste à vérifier. Le téléchargement public, l'audit et l'import complet ont réussi le 16 octobre 2026 sur cette machine. Les effectifs mesurés et les contrôles de cohérence sont conservés dans les documents liés en tête de page.
+La procédure vise une installation reproductible sur toute machine où les prérequis sont disponibles. Les exécutions effectivement vérifiées ont eu lieu sur macOS Apple Silicon avec Python 3.11.15, `uv` 0.13.1 et Polars 1.44.2. Linux et Windows n'ont pas été testés ; leur compatibilité reste à vérifier. Le téléchargement public, l'audit et l'import complet ont réussi le 16 octobre 2026 sur cette machine. Les effectifs mesurés et les contrôles de cohérence sont conservés dans les documents liés en tête de page. Le notebook EDA a été réexécuté intégralement lors de la clôture du lot 4.0.
