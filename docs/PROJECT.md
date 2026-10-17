@@ -71,3 +71,7 @@ Une vérification complémentaire confirme que 8 008 des 8 197 fraudes de montan
 ## État du lot 4.0, étape 5
 
 L'[EDA temporelle guidée](EDA.md) regroupe les steps en fenêtres descriptives fixes de 48 heures simulées. Deux figures montrent le volume et le taux de fraude global, puis les taux de `CASH_OUT` et `TRANSFER`, avec leurs effectifs. Des creux de volume et une dernière fenêtre courte de 272 transactions, toutes étiquetées fraude, rendent certains taux élevés délicats à interpréter. Les observations de l'utilisateur sont attendues avant d'approfondir les montants ou les soldes au fil du temps. Aucune frontière train/validation/test n'a été fixée et aucun modèle n'a été entraîné.
+
+## État du lot 4.0, discussion temporelle complémentaire
+
+Le contrôle au step individuel montre que les 23 derniers steps contiennent 272 fraudes sur 272 transactions, mais que 320 steps dans l'ensemble du CSV ne contiennent aussi que des fraudes, avec de très petits effectifs. Les nombres de fraudes `CASH_OUT` et `TRANSFER` sont identiques dans 721 des 743 steps ; 4 075 fraudes de chaque type sont appariables par même step et même montant, sans lien de comptes démontré. [EDA.md](EDA.md) documente ces résultats et les limites d'interprétation. Aucun step n'est exclu et l'usage de `step` comme variable prédictive reste ouvert ; son rôle pour un futur découpage temporel est distinct. Aucun entraînement n'a été effectué.
