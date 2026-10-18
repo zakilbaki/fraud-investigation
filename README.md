@@ -72,7 +72,7 @@ Après l'installation et le téléchargement du CSV ci-dessus, lancer depuis la 
 uv run --locked python scripts/run_eda_notebook.py
 ```
 
-Cette commande réexécute les cellules Python de [notebooks/eda_paysim.ipynb](notebooks/eda_paysim.ipynb) dans un espace de variables neuf. Elle vérifie l'empreinte du CSV et les contrôles du notebook, puis régénère les figures SVG dans [docs/figures/](docs/figures/). Le [rapport EDA](docs/EDA.md) présente les tableaux, les interprétations et les figures PNG publiées pour la lecture ; les PNG sont des exports des SVG et ne sont pas régénérés par cette commande. Aucun modèle n'est entraîné. Le [protocole ML](docs/ML_PROTOCOL.md) reste une proposition pour le lot suivant. Les labels sont lus uniquement pour cette analyse hors ligne.
+Cette commande réexécute les cellules Python de [notebooks/eda_paysim.ipynb](notebooks/eda_paysim.ipynb) dans un espace de variables neuf. Elle vérifie l'empreinte du CSV et les contrôles du notebook, puis régénère les figures SVG dans [docs/figures/](docs/figures/). Le [rapport EDA](docs/EDA.md) présente les tableaux, les interprétations et les figures PNG publiées pour la lecture ; les PNG sont des exports des SVG et ne sont pas régénérés par cette commande. Aucun modèle n'est entraîné. Le [protocole ML proposé](docs/ML_PROTOCOL.md) décrit les étapes à implémenter après le choix du critère de seuil. Les labels sont lus uniquement pour cette analyse hors ligne.
 
 ## Portabilité et historique de vérification
 
