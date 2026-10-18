@@ -1,6 +1,6 @@
 # Lot 4.1 : protocole ML proposé pour PaySim
 
-**Statut : protocole avant implémentation, sans entraînement.** L'[EDA 4.0](EDA.md) est clôturée. Les cinq fenêtres ci-dessous remplacent le découpage unique antérieur. Le choix du critère de seuil reste à faire par l'utilisateur **avant l'implémentation**. Aucun score de modèle ni gain prédictif n'est annoncé. Le travail futur aura deux temps : comparer largement des familles de modèles, puis expliquer leurs écarts avec des diagnostics mesurés et quelques expériences contrôlées. Le budget supplémentaire est de 0 € et l'exécution visée est locale.
+**Statut : lot 4.1 clôturé, protocole fixé avant implémentation et sans entraînement.** L'[EDA 4.0](EDA.md) est clôturée. Les cinq fenêtres ci-dessous remplacent le découpage unique antérieur. L'utilisateur a retenu **F1 maximal sur les steps 433 à 504** pour choisir le seuil final ; l'Average Precision reste la mesure principale de comparaison des modèles. Aucun score de modèle ni gain prédictif n'est annoncé. Le travail futur aura deux temps : comparer largement des familles de modèles, puis expliquer leurs écarts avec des diagnostics mesurés et quelques expériences contrôlées. Le budget supplémentaire est de 0 € et l'exécution visée est locale.
 
 ## 1. Question et frontière des données
 
@@ -106,17 +106,16 @@ Le déroulement final est le suivant :
 
 1. Comparer les candidats de phase 1 sur les cinq fenêtres, puis exécuter au plus le budget de phase 2. Choisir et figer configuration, prétraitements et paramètres sans score du test.
 2. Ajuster à neuf le pipeline retenu sur les steps **1 à 432** seulement, avec transformations apprises sur ces steps. Mesurer ses scores sur **433 à 504**.
-3. Choisir **un seuil** sur 433 à 504 selon **un seul** des critères ci-dessous, à sélectionner par l'utilisateur avant l'implémentation. Figer modèle, seuil, versions et règle de décision.
+3. Choisir **un seuil maximisant F1** sur 433 à 504, selon la règle fixée ci-dessous. Figer modèle, seuil, versions et règle de décision.
 4. Évaluer **une fois** sur le test complet 505 à 743. Rapporter AP, prévalence, précision, rappel, alertes, FP et FN au seuil, avec les limites de la période 721 à 743.
 
 La cinquième validation sert à la fois à sélectionner la configuration et à choisir le seuil : **ce n'est pas une validation imbriquée** et le seuil peut être optimiste. Ne pas réentraîner sur 1 à 504 avec ce même seuil sans un autre protocole : les scores changeraient potentiellement.
 
-| Critère à choisir avant implémentation | Règle sur 433 à 504 | Conséquence |
-| --- | --- | --- |
-| **Statistique : F1 maximal** | Maximiser `F1 = 2TP/(2TP+FP+FN)` sur les seuils correspondant aux scores distincts ; en cas d'égalité, choisir le **seuil le plus haut**, donc le plus petit nombre d'alertes. | Compromis mathématique entre précision et rappel, sans garantie sur la charge. La prévalence de cette validation influence le seuil. |
-| **Plafond d'alertes de démonstration** | Fixer avant les résultats un entier `C ≥ 0` d'alertes sur les 72 steps ; parmi les seuils donnant `alertes ≤ C`, maximiser le rappel, puis choisir le seuil le plus haut. | Rend une charge de démonstration explicite, sans prétendre à une capacité métier. Le même seuil sur 239 steps de test ne garantit pas `C` alertes. |
+**Critère retenu : F1 maximal sur 433 à 504.** Pour chaque seuil associé à un score distinct, calculer `F1 = 2TP/(2TP+FP+FN)` avec les labels de cette validation uniquement. Retenir le F1 maximal ; si plusieurs seuils l'atteignent, choisir le **seuil numérique le plus haut**, donc le plus petit nombre d'alertes. Ajouter le cas zéro alerte avec F1 = 0 lorsque des fraudes existent. L'Average Precision reste la mesure de sélection des modèles, calculée sans seuil sur les cinq fenêtres ; F1 intervient seulement **après** le choix du pipeline pour fixer son seuil final.
 
-Une transaction est alertée si **score ≥ seuil**. Les transactions ayant le même score restent ensemble ; l'ordre des lignes ne les départage jamais. Ajouter un seuil au-dessus du score maximal pour représenter **zéro alerte**. Si tous les scores sont identiques, seuls « tout alerter » et « ne rien alerter » sont possibles. Pour F1, zéro alerte donne F1 = 0 quand des fraudes existent ; le maximum reste défini. Pour un plafond `C` inférieur à la taille du groupe de scores le plus haut, aucune alerte positive n'est admissible : retenir zéro alerte, déclarer le rappel nul et signaler que le critère ne peut produire d'alerte avec ces scores. Ne pas assouplir silencieusement `C`. Une précision sans alerte est **non définie**, pas zéro ; tout autre taux à dénominateur nul est non défini.
+Ce critère est **pédagogique** : il donne une règle explicite combinant précision et rappel, sans capacité d'enquête ni coût financier des faux positifs et faux négatifs définis. La validation 433 à 504 contient 764 fraudes sur 55 620 transactions, soit **1,3736 %**, contre **0,8681 %** dans le test final. Cette différence de prévalence, ainsi que les changements possibles de distribution des scores, peut limiter la transférabilité de la précision, du volume d'alertes et du seuil choisi. Aucun plafond d'alertes métier n'est présumé.
+
+Une transaction est alertée si **score ≥ seuil**. Les transactions ayant le même score restent ensemble ; l'ordre des lignes ne les départage jamais. Le seuil au-dessus du score maximal représente **zéro alerte**. Si tous les scores sont identiques, seuls « tout alerter » et « ne rien alerter » sont possibles ; le F1 maximal reste défini sur cette validation qui contient les deux classes. Une précision sans alerte est **non définie**, pas zéro ; tout autre taux à dénominateur nul est non défini. Le seuil numérique choisi, son F1, son volume d'alertes et les autres métriques seront enregistrés avant toute évaluation du test.
 
 ## 8. Reproductibilité et vérifications de ce lot
 
@@ -124,4 +123,4 @@ Les effectifs ont été **recalculés**, sans modèle, sur le CSV local audité 
 
 La réexécution de l'EDA 4.0 avait réussi avec le **Python local**. La commande générique `uv run --locked` n'avait **pas** été validée dans l'environnement restreint à cause du cache et d'une tentative d'accès réseau. Linux et Windows n'ont pas été testés. Ce lot n'ajoute ni dépendance ML, ni entraînement, ni score, ni seuil. À l'implémentation, figer les versions installées, la graine, les types et noms de colonnes, les bornes, les configurations, les temps et tailles mesurés. Le pipeline final sera enregistré avec `joblib`, accompagné de la source, de ses limites et du seuil. SHAP ne viendra qu'après validation du parcours de prédiction, comme outil d'explication de scores, pas de causalité.
 
-**Décision restante avant l'implémentation :** choisir entre F1 maximal et plafond d'alertes de démonstration ; dans le second cas, fixer aussi `C` avant tout résultat de modèle. Les choix de phase 2 suivront le budget et les règles ci-dessus. Le lot s'arrête ici.
+**Décision de seuil prise :** maximiser F1 sur 433 à 504, avec départage par le seuil le plus haut. Les choix de variantes en phase 2 suivront le budget et les règles ci-dessus, sans consulter le test. Le lot 4.1 s'arrête ici ; l'implémentation et l'entraînement relèvent d'un travail ultérieur.
