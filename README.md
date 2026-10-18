@@ -74,6 +74,18 @@ uv run --locked python scripts/run_eda_notebook.py
 
 Cette commande réexécute les cellules Python de [notebooks/eda_paysim.ipynb](notebooks/eda_paysim.ipynb) dans un espace de variables neuf. Elle vérifie l'empreinte du CSV et les contrôles du notebook, puis régénère les figures SVG dans [docs/figures/](docs/figures/). Le [rapport EDA](docs/EDA.md) présente les tableaux, les interprétations et les figures PNG publiées pour la lecture ; les PNG sont des exports des SVG et ne sont pas régénérés par cette commande. Aucun modèle n'est entraîné. Le [protocole ML](docs/ML_PROTOCOL.md) fixe désormais le critère de seuil avant l'implémentation. Les labels sont lus uniquement pour cette analyse hors ligne.
 
+## Reproduire la première comparaison ML
+
+Après `uv sync --locked` et l'installation du CSV audité, exécuter depuis la racine du dépôt :
+
+```sh
+uv run --locked python -m unittest tests.test_ml_benchmark -v
+uv run --locked python scripts/run_ml_benchmark_all.py
+uv run --locked python scripts/report_ml_benchmark.py
+```
+
+Chaque processus lit seulement les steps 1 à 504. Pour chaque modèle et fenêtre, il apprend sur la première portion du train, choisit le seuil sur sa réserve interne et évalue ensuite la validation extérieure. Le test 505 à 743 reste réservé. Les résultats intermédiaires et journaux sont dans `data/ml_benchmark/`, hors de Git ; une interruption se reprend en relançant la même commande. L'orchestrateur arrête un essai dépassant 30 minutes ou 75 % de la mémoire physique du processus et conserve l'incident dans son état local. Le rapport et les figures publiables sont générés dans [docs/ML_BENCHMARK.md](docs/ML_BENCHMARK.md) et `docs/figures/`. Les onze candidats du protocole sont exécutés par défaut ; l'essai du MLP peut être demandé avec `--models mlp`.
+
 ## Portabilité et historique de vérification
 
 La procédure vise une installation reproductible sur toute machine où les prérequis sont disponibles. Les exécutions effectivement vérifiées ont eu lieu sur macOS Apple Silicon avec Python 3.11.15, `uv` 0.13.1 et Polars 1.44.2. Linux et Windows n'ont pas été testés ; leur compatibilité reste à vérifier. Le téléchargement public, l'audit et l'import complet ont réussi le 16 octobre 2026 sur cette machine. Les effectifs mesurés et les contrôles de cohérence sont conservés dans les documents liés en tête de page. Le notebook EDA a été réexécuté intégralement lors de la clôture du lot 4.0.
