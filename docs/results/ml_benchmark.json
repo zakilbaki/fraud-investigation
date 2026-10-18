@@ -1,0 +1,3916 @@
+{
+  "rows": [
+    {
+      "transactions": 1288139,
+      "frauds": 805,
+      "prevalence": 0.0006249325577441564,
+      "alerts": 1288139,
+      "tp": 805,
+      "fp": 1287334,
+      "fn": 0,
+      "precision": 0.0006249325577441564,
+      "recall": 1.0,
+      "f1": 0.0012490845219032013,
+      "model": "dummy",
+      "fold": 1,
+      "fit_steps": [
+        1,
+        72
+      ],
+      "threshold_steps": [
+        73,
+        144
+      ],
+      "validation_steps": [
+        145,
+        216
+      ],
+      "fit_rows": 1030563,
+      "fit_frauds": 890,
+      "threshold_rows": 479034,
+      "threshold_frauds": 742,
+      "threshold": 0.0008636056213933549,
+      "threshold_f1": 0.0030931101180550922,
+      "fit_seconds": 0.016142167150974274,
+      "threshold_seconds": 0.007101666880771518,
+      "predict_seconds": 0.007499875035136938,
+      "total_seconds": 1.1817928340751678,
+      "fit_rss_bytes": 682852352,
+      "end_rss_bytes": 730185728,
+      "serialized_bytes": 680,
+      "versions": {
+        "python": "3.11.15",
+        "polars": "1.44.2",
+        "numpy": "2.4.6",
+        "scikit_learn": "1.9.1",
+        "lightgbm": "4.7.0",
+        "xgboost": "3.2.0",
+        "catboost": "1.2.10"
+      }
+    },
+    {
+      "transactions": 1160580,
+      "frauds": 842,
+      "prevalence": 0.0007254993193058643,
+      "alerts": 1160580,
+      "tp": 842,
+      "fp": 1159738,
+      "fn": 0,
+      "precision": 0.0007254993193058643,
+      "recall": 1.0,
+      "f1": 0.0014499467032654796,
+      "model": "dummy",
+      "fold": 2,
+      "fit_steps": [
+        1,
+        144
+      ],
+      "threshold_steps": [
+        145,
+        216
+      ],
+      "validation_steps": [
+        217,
+        288
+      ],
+      "fit_rows": 1509597,
+      "fit_frauds": 1632,
+      "threshold_rows": 1288139,
+      "threshold_frauds": 805,
+      "threshold": 0.001081083229497674,
+      "threshold_f1": 0.0012490845219032013,
+      "fit_seconds": 0.02670808299444616,
+      "threshold_seconds": 0.029104917077347636,
+      "predict_seconds": 0.008144458988681436,
+      "total_seconds": 0.39091541711241007,
+      "fit_rss_bytes": 784662528,
+      "end_rss_bytes": 831963136,
+      "serialized_bytes": 680,
+      "versions": {
+        "python": "3.11.15",
+        "polars": "1.44.2",
+        "numpy": "2.4.6",
+        "scikit_learn": "1.9.1",
+        "lightgbm": "4.7.0",
+        "xgboost": "3.2.0",
+        "catboost": "1.2.10"
+      }
+    },
+    {
+      "transactions": 1227741,
+      "frauds": 738,
+      "prevalence": 0.0006011039787707668,
+      "alerts": 1227741,
+      "tp": 738,
+      "fp": 1227003,
+      "fn": 0,
+      "precision": 0.0006011039787707668,
+      "recall": 1.0,
+      "f1": 0.001201485739682974,
+      "model": "dummy",
+      "fold": 3,
+      "fit_steps": [
+        1,
+        216
+      ],
+      "threshold_steps": [
+        217,
+        288
+      ],
+      "validation_steps": [
+        289,
+        360
+      ],
+      "fit_rows": 2797736,
+      "fit_frauds": 2437,
+      "threshold_rows": 1160580,
+      "threshold_frauds": 842,
+      "threshold": 0.0008710614582648255,
+      "threshold_f1": 0.0014499467032654796,
+      "fit_seconds": 0.038877125130966306,
+      "threshold_seconds": 0.014475957956165075,
+      "predict_seconds": 0.006653000134974718,
+      "total_seconds": 0.37284462503157556,
+      "fit_rss_bytes": 819232768,
+      "end_rss_bytes": 847773696,
+      "serialized_bytes": 680,
+      "versions": {
+        "python": "3.11.15",
+        "polars": "1.44.2",
+        "numpy": "2.4.6",
+        "scikit_learn": "1.9.1",
+        "lightgbm": "4.7.0",
+        "xgboost": "3.2.0",
+        "catboost": "1.2.10"
+      }
+    },
+    {
+      "transactions": 822359,
+      "frauds": 840,
+      "prevalence": 0.0010214517017506954,
+      "alerts": 822359,
+      "tp": 840,
+      "fp": 821519,
+      "fn": 0,
+      "precision": 0.0010214517017506954,
+      "recall": 1.0,
+      "f1": 0.002040818805659385,
+      "model": "dummy",
+      "fold": 4,
+      "fit_steps": [
+        1,
+        288
+      ],
+      "threshold_steps": [
+        289,
+        360
+      ],
+      "validation_steps": [
+        361,
+        432
+      ],
+      "fit_rows": 3958316,
+      "fit_frauds": 3279,
+      "threshold_rows": 1227741,
+      "threshold_frauds": 738,
+      "threshold": 0.0008283825748121171,
+      "threshold_f1": 0.001201485739682974,
+      "fit_seconds": 0.05553333298303187,
+      "threshold_seconds": 0.01587312505580485,
+      "predict_seconds": 0.004554291954264045,
+      "total_seconds": 0.39668404194526374,
+      "fit_rss_bytes": 875446272,
+      "end_rss_bytes": 932200448,
+      "serialized_bytes": 680,
+      "versions": {
+        "python": "3.11.15",
+        "polars": "1.44.2",
+        "numpy": "2.4.6",
+        "scikit_learn": "1.9.1",
+        "lightgbm": "4.7.0",
+        "xgboost": "3.2.0",
+        "catboost": "1.2.10"
+      }
+    },
+    {
+      "transactions": 55620,
+      "frauds": 764,
+      "prevalence": 0.01373606616325063,
+      "alerts": 55620,
+      "tp": 764,
+      "fp": 54856,
+      "fn": 0,
+      "precision": 0.01373606616325063,
+      "recall": 1.0,
+      "f1": 0.02709988649262202,
+      "model": "dummy",
+      "fold": 5,
+      "fit_steps": [
+        1,
+        360
+      ],
+      "threshold_steps": [
+        361,
+        432
+      ],
+      "validation_steps": [
+        433,
+        504
+      ],
+      "fit_rows": 5186057,
+      "fit_frauds": 4017,
+      "threshold_rows": 822359,
+      "threshold_frauds": 840,
+      "threshold": 0.00077457690881531,
+      "threshold_f1": 0.002040818805659385,
+      "fit_seconds": 0.07258499995805323,
+      "threshold_seconds": 0.011440417030826211,
+      "predict_seconds": 0.00032658292911946774,
+      "total_seconds": 0.39261112501844764,
+      "fit_rss_bytes": 904757248,
+      "end_rss_bytes": 924794880,
+      "serialized_bytes": 680,
+      "versions": {
+        "python": "3.11.15",
+        "polars": "1.44.2",
+        "numpy": "2.4.6",
+        "scikit_learn": "1.9.1",
+        "lightgbm": "4.7.0",
+        "xgboost": "3.2.0",
+        "catboost": "1.2.10"
+      }
+    },
+    {
+      "transactions": 1288139,
+      "frauds": 805,
+      "prevalence": 0.0006249325577441564,
+      "alerts": 679,
+      "tp": 52,
+      "fp": 627,
+      "fn": 753,
+      "precision": 0.07658321060382917,
+      "recall": 0.06459627329192547,
+      "f1": 0.07008086253369272,
+      "model": "logistic",
+      "fold": 1,
+      "fit_steps": [
+        1,
+        72
+      ],
+      "threshold_steps": [
+        73,
+        144
+      ],
+      "validation_steps": [
+        145,
+        216
+      ],
+      "fit_rows": 1030563,
+      "fit_frauds": 890,
+      "threshold_rows": 479034,
+      "threshold_frauds": 742,
+      "threshold": 0.009211733005940914,
+      "threshold_f1": 0.096,
+      "fit_seconds": 0.12731087510474026,
+      "threshold_seconds": 0.046117791905999184,
+      "predict_seconds": 0.008965374901890755,
+      "total_seconds": 0.5638321251608431,
+      "fit_rss_bytes": 816201728,
+      "end_rss_bytes": 921534464,
+      "serialized_bytes": 1365,
+      "versions": {
+        "python": "3.11.15",
+        "polars": "1.44.2",
+        "numpy": "2.4.6",
+        "scikit_learn": "1.9.1",
+        "lightgbm": "4.7.0",
+        "xgboost": "3.2.0",
+        "catboost": "1.2.10"
+      }
+    },
+    {
+      "transactions": 1160580,
+      "frauds": 842,
+      "prevalence": 0.0007254993193058643,
+      "alerts": 840,
+      "tp": 38,
+      "fp": 802,
+      "fn": 804,
+      "precision": 0.04523809523809524,
+      "recall": 0.04513064133016627,
+      "f1": 0.04518430439952437,
+      "model": "logistic",
+      "fold": 2,
+      "fit_steps": [
+        1,
+        144
+      ],
+      "threshold_steps": [
+        145,
+        216
+      ],
+      "validation_steps": [
+        217,
+        288
+      ],
+      "fit_rows": 1509597,
+      "fit_frauds": 1632,
+      "threshold_rows": 1288139,
+      "threshold_frauds": 805,
+      "threshold": 0.022817036136984825,
+      "threshold_f1": 0.08176100628930817,
+      "fit_seconds": 0.2015306670218706,
+      "threshold_seconds": 0.13695295783691108,
+      "predict_seconds": 0.008134957868605852,
+      "total_seconds": 0.7471635830588639,
+      "fit_rss_bytes": 871874560,
+      "end_rss_bytes": 952336384,
+      "serialized_bytes": 1365,
+      "versions": {
+        "python": "3.11.15",
+        "polars": "1.44.2",
+        "numpy": "2.4.6",
+        "scikit_learn": "1.9.1",
+        "lightgbm": "4.7.0",
+        "xgboost": "3.2.0",
+        "catboost": "1.2.10"
+      }
+    },
+    {
+      "transactions": 1227741,
+      "frauds": 738,
+      "prevalence": 0.0006011039787707668,
+      "alerts": 10818,
+      "tp": 48,
+      "fp": 10770,
+      "fn": 690,
+      "precision": 0.004437049362174155,
+      "recall": 0.06504065040650407,
+      "f1": 0.008307372793354102,
+      "model": "logistic",
+      "fold": 3,
+      "fit_steps": [
+        1,
+        216
+      ],
+      "threshold_steps": [
+        217,
+        288
+      ],
+      "validation_steps": [
+        289,
+        360
+      ],
+      "fit_rows": 2797736,
+      "fit_frauds": 2437,
+      "threshold_rows": 1160580,
+      "threshold_frauds": 842,
+      "threshold": 0.01282117236405611,
+      "threshold_f1": 0.05213764337851929,
+      "fit_seconds": 0.3136509999167174,
+      "threshold_seconds": 0.12151904101483524,
+      "predict_seconds": 0.009168000193312764,
+      "total_seconds": 0.8351082089357078,
+      "fit_rss_bytes": 906444800,
+      "end_rss_bytes": 1032814592,
+      "serialized_bytes": 1365,
+      "versions": {
+        "python": "3.11.15",
+        "polars": "1.44.2",
+        "numpy": "2.4.6",
+        "scikit_learn": "1.9.1",
+        "lightgbm": "4.7.0",
+        "xgboost": "3.2.0",
+        "catboost": "1.2.10"
+      }
+    },
+    {
+      "transactions": 822359,
+      "frauds": 840,
+      "prevalence": 0.0010214517017506954,
+      "alerts": 65096,
+      "tp": 551,
+      "fp": 64545,
+      "fn": 289,
+      "precision": 0.008464421777067715,
+      "recall": 0.655952380952381,
+      "f1": 0.016713176413491872,
+      "model": "logistic",
+      "fold": 4,
+      "fit_steps": [
+        1,
+        288
+      ],
+      "threshold_steps": [
+        289,
+        360
+      ],
+      "validation_steps": [
+        361,
+        432
+      ],
+      "fit_rows": 3958316,
+      "fit_frauds": 3279,
+      "threshold_rows": 1227741,
+      "threshold_frauds": 738,
+      "threshold": 0.0020322438795119524,
+      "threshold_f1": 0.009152059704423824,
+      "fit_seconds": 0.438894750084728,
+      "threshold_seconds": 0.12502983398735523,
+      "predict_seconds": 0.005320874974131584,
+      "total_seconds": 0.9829237919766456,
+      "fit_rss_bytes": 990822400,
+      "end_rss_bytes": 1085751296,
+      "serialized_bytes": 1365,
+      "versions": {
+        "python": "3.11.15",
+        "polars": "1.44.2",
+        "numpy": "2.4.6",
+        "scikit_learn": "1.9.1",
+        "lightgbm": "4.7.0",
+        "xgboost": "3.2.0",
+        "catboost": "1.2.10"
+      }
+    },
+    {
+      "transactions": 55620,
+      "frauds": 764,
+      "prevalence": 0.01373606616325063,
+      "alerts": 24,
+      "tp": 19,
+      "fp": 5,
+      "fn": 745,
+      "precision": 0.7916666666666666,
+      "recall": 0.024869109947643978,
+      "f1": 0.048223350253807105,
+      "model": "logistic",
+      "fold": 5,
+      "fit_steps": [
+        1,
+        360
+      ],
+      "threshold_steps": [
+        361,
+        432
+      ],
+      "validation_steps": [
+        433,
+        504
+      ],
+      "fit_rows": 5186057,
+      "fit_frauds": 4017,
+      "threshold_rows": 822359,
+      "threshold_frauds": 840,
+      "threshold": 0.012744833715260029,
+      "threshold_f1": 0.064343163538874,
+      "fit_seconds": 0.5952099161222577,
+      "threshold_seconds": 0.08163858321495354,
+      "predict_seconds": 0.00040041608735919,
+      "total_seconds": 1.0884260421153158,
+      "fit_rss_bytes": 1071824896,
+      "end_rss_bytes": 1136394240,
+      "serialized_bytes": 1365,
+      "versions": {
+        "python": "3.11.15",
+        "polars": "1.44.2",
+        "numpy": "2.4.6",
+        "scikit_learn": "1.9.1",
+        "lightgbm": "4.7.0",
+        "xgboost": "3.2.0",
+        "catboost": "1.2.10"
+      }
+    },
+    {
+      "transactions": 1288139,
+      "frauds": 805,
+      "prevalence": 0.0006249325577441564,
+      "alerts": 679,
+      "tp": 52,
+      "fp": 627,
+      "fn": 753,
+      "precision": 0.07658321060382917,
+      "recall": 0.06459627329192547,
+      "f1": 0.07008086253369272,
+      "model": "sgd",
+      "fold": 1,
+      "fit_steps": [
+        1,
+        72
+      ],
+      "threshold_steps": [
+        73,
+        144
+      ],
+      "validation_steps": [
+        145,
+        216
+      ],
+      "fit_rows": 1030563,
+      "fit_frauds": 890,
+      "threshold_rows": 479034,
+      "threshold_frauds": 742,
+      "threshold": 0.008115217345346551,
+      "threshold_f1": 0.096,
+      "fit_seconds": 0.4154555001296103,
+      "threshold_seconds": 0.04585895803757012,
+      "predict_seconds": 0.010097875026986003,
+      "total_seconds": 0.8131122079212219,
+      "fit_rss_bytes": 780468224,
+      "end_rss_bytes": 888045568,
+      "serialized_bytes": 1631,
+      "versions": {
+        "python": "3.11.15",
+        "polars": "1.44.2",
+        "numpy": "2.4.6",
+        "scikit_learn": "1.9.1",
+        "lightgbm": "4.7.0",
+        "xgboost": "3.2.0",
+        "catboost": "1.2.10"
+      }
+    },
+    {
+      "transactions": 1160580,
+      "frauds": 842,
+      "prevalence": 0.0007254993193058643,
+      "alerts": 840,
+      "tp": 38,
+      "fp": 802,
+      "fn": 804,
+      "precision": 0.04523809523809524,
+      "recall": 0.04513064133016627,
+      "f1": 0.04518430439952437,
+      "model": "sgd",
+      "fold": 2,
+      "fit_steps": [
+        1,
+        144
+      ],
+      "threshold_steps": [
+        145,
+        216
+      ],
+      "validation_steps": [
+        217,
+        288
+      ],
+      "fit_rows": 1509597,
+      "fit_frauds": 1632,
+      "threshold_rows": 1288139,
+      "threshold_frauds": 805,
+      "threshold": 0.016536578081774125,
+      "threshold_f1": 0.08176100628930817,
+      "fit_seconds": 0.703556917142123,
+      "threshold_seconds": 0.13458783295936882,
+      "predict_seconds": 0.00860308320261538,
+      "total_seconds": 1.2137072500772774,
+      "fit_rss_bytes": 824934400,
+      "end_rss_bytes": 911835136,
+      "serialized_bytes": 1631,
+      "versions": {
+        "python": "3.11.15",
+        "polars": "1.44.2",
+        "numpy": "2.4.6",
+        "scikit_learn": "1.9.1",
+        "lightgbm": "4.7.0",
+        "xgboost": "3.2.0",
+        "catboost": "1.2.10"
+      }
+    },
+    {
+      "transactions": 1227741,
+      "frauds": 738,
+      "prevalence": 0.0006011039787707668,
+      "alerts": 11209,
+      "tp": 58,
+      "fp": 11151,
+      "fn": 680,
+      "precision": 0.005174413417789276,
+      "recall": 0.07859078590785908,
+      "f1": 0.009709550514773584,
+      "model": "sgd",
+      "fold": 3,
+      "fit_steps": [
+        1,
+        216
+      ],
+      "threshold_steps": [
+        217,
+        288
+      ],
+      "validation_steps": [
+        289,
+        360
+      ],
+      "fit_rows": 2797736,
+      "fit_frauds": 2437,
+      "threshold_rows": 1160580,
+      "threshold_frauds": 842,
+      "threshold": 0.013482456088660296,
+      "threshold_f1": 0.07036669970267592,
+      "fit_seconds": 1.3547118329443038,
+      "threshold_seconds": 0.13197208289057016,
+      "predict_seconds": 0.010057374835014343,
+      "total_seconds": 1.8876548749394715,
+      "fit_rss_bytes": 911147008,
+      "end_rss_bytes": 1042939904,
+      "serialized_bytes": 1631,
+      "versions": {
+        "python": "3.11.15",
+        "polars": "1.44.2",
+        "numpy": "2.4.6",
+        "scikit_learn": "1.9.1",
+        "lightgbm": "4.7.0",
+        "xgboost": "3.2.0",
+        "catboost": "1.2.10"
+      }
+    },
+    {
+      "transactions": 822359,
+      "frauds": 840,
+      "prevalence": 0.0010214517017506954,
+      "alerts": 3454,
+      "tp": 118,
+      "fp": 3336,
+      "fn": 722,
+      "precision": 0.034163288940359006,
+      "recall": 0.14047619047619048,
+      "f1": 0.05496040987424313,
+      "model": "sgd",
+      "fold": 4,
+      "fit_steps": [
+        1,
+        288
+      ],
+      "threshold_steps": [
+        289,
+        360
+      ],
+      "validation_steps": [
+        361,
+        432
+      ],
+      "fit_rows": 3958316,
+      "fit_frauds": 3279,
+      "threshold_rows": 1227741,
+      "threshold_frauds": 738,
+      "threshold": 0.009882131366533807,
+      "threshold_f1": 0.01067378252168112,
+      "fit_seconds": 2.0508047498296946,
+      "threshold_seconds": 0.1340487499255687,
+      "predict_seconds": 0.006451791152358055,
+      "total_seconds": 2.6135266670025885,
+      "fit_rss_bytes": 997965824,
+      "end_rss_bytes": 1112932352,
+      "serialized_bytes": 1631,
+      "versions": {
+        "python": "3.11.15",
+        "polars": "1.44.2",
+        "numpy": "2.4.6",
+        "scikit_learn": "1.9.1",
+        "lightgbm": "4.7.0",
+        "xgboost": "3.2.0",
+        "catboost": "1.2.10"
+      }
+    },
+    {
+      "transactions": 55620,
+      "frauds": 764,
+      "prevalence": 0.01373606616325063,
+      "alerts": 201,
+      "tp": 58,
+      "fp": 143,
+      "fn": 706,
+      "precision": 0.2885572139303483,
+      "recall": 0.07591623036649214,
+      "f1": 0.12020725388601036,
+      "model": "sgd",
+      "fold": 5,
+      "fit_steps": [
+        1,
+        360
+      ],
+      "threshold_steps": [
+        361,
+        432
+      ],
+      "validation_steps": [
+        433,
+        504
+      ],
+      "fit_rows": 5186057,
+      "fit_frauds": 4017,
+      "threshold_rows": 822359,
+      "threshold_frauds": 840,
+      "threshold": 0.008028564237695374,
+      "threshold_f1": 0.06695464362850972,
+      "fit_seconds": 2.66215558280237,
+      "threshold_seconds": 0.08354987506754696,
+      "predict_seconds": 0.0004330840893089771,
+      "total_seconds": 3.180618291022256,
+      "fit_rss_bytes": 1076527104,
+      "end_rss_bytes": 1138917376,
+      "serialized_bytes": 1631,
+      "versions": {
+        "python": "3.11.15",
+        "polars": "1.44.2",
+        "numpy": "2.4.6",
+        "scikit_learn": "1.9.1",
+        "lightgbm": "4.7.0",
+        "xgboost": "3.2.0",
+        "catboost": "1.2.10"
+      }
+    },
+    {
+      "transactions": 1288139,
+      "frauds": 805,
+      "prevalence": 0.0006249325577441564,
+      "alerts": 564750,
+      "tp": 805,
+      "fp": 563945,
+      "fn": 0,
+      "precision": 0.0014254094732182381,
+      "recall": 1.0,
+      "f1": 0.0028467611461307917,
+      "model": "gaussian_nb",
+      "fold": 1,
+      "fit_steps": [
+        1,
+        72
+      ],
+      "threshold_steps": [
+        73,
+        144
+      ],
+      "validation_steps": [
+        145,
+        216
+      ],
+      "fit_rows": 1030563,
+      "fit_frauds": 890,
+      "threshold_rows": 479034,
+      "threshold_frauds": 742,
+      "threshold": 1.0,
+      "threshold_f1": 0.007131426813972599,
+      "fit_seconds": 0.05969549994915724,
+      "threshold_seconds": 0.038804749958217144,
+      "predict_seconds": 0.07958950009196997,
+      "total_seconds": 0.5350887088570744,
+      "fit_rss_bytes": 879706112,
+      "end_rss_bytes": 1083686912,
+      "serialized_bytes": 1321,
+      "versions": {
+        "python": "3.11.15",
+        "polars": "1.44.2",
+        "numpy": "2.4.6",
+        "scikit_learn": "1.9.1",
+        "lightgbm": "4.7.0",
+        "xgboost": "3.2.0",
+        "catboost": "1.2.10"
+      }
+    },
+    {
+      "transactions": 1160580,
+      "frauds": 842,
+      "prevalence": 0.0007254993193058643,
+      "alerts": 503279,
+      "tp": 842,
+      "fp": 502437,
+      "fn": 0,
+      "precision": 0.0016730282805362433,
+      "recall": 1.0,
+      "f1": 0.0033404678638660162,
+      "model": "gaussian_nb",
+      "fold": 2,
+      "fit_steps": [
+        1,
+        144
+      ],
+      "threshold_steps": [
+        145,
+        216
+      ],
+      "validation_steps": [
+        217,
+        288
+      ],
+      "fit_rows": 1509597,
+      "fit_frauds": 1632,
+      "threshold_rows": 1288139,
+      "threshold_frauds": 805,
+      "threshold": 1.0,
+      "threshold_f1": 0.0028467712133080367,
+      "fit_seconds": 0.08503704098984599,
+      "threshold_seconds": 0.10958470893092453,
+      "predict_seconds": 0.07026441604830325,
+      "total_seconds": 0.66088154213503,
+      "fit_rss_bytes": 882491392,
+      "end_rss_bytes": 999882752,
+      "serialized_bytes": 1321,
+      "versions": {
+        "python": "3.11.15",
+        "polars": "1.44.2",
+        "numpy": "2.4.6",
+        "scikit_learn": "1.9.1",
+        "lightgbm": "4.7.0",
+        "xgboost": "3.2.0",
+        "catboost": "1.2.10"
+      }
+    },
+    {
+      "transactions": 1227741,
+      "frauds": 738,
+      "prevalence": 0.0006011039787707668,
+      "alerts": 535132,
+      "tp": 738,
+      "fp": 534394,
+      "fn": 0,
+      "precision": 0.0013790989886607416,
+      "recall": 1.0,
+      "f1": 0.0027543993879112472,
+      "model": "gaussian_nb",
+      "fold": 3,
+      "fit_steps": [
+        1,
+        216
+      ],
+      "threshold_steps": [
+        217,
+        288
+      ],
+      "validation_steps": [
+        289,
+        360
+      ],
+      "fit_rows": 2797736,
+      "fit_frauds": 2437,
+      "threshold_rows": 1160580,
+      "threshold_frauds": 842,
+      "threshold": 0.9999995231628418,
+      "threshold_f1": 0.0033404678638660162,
+      "fit_seconds": 0.15410704095847905,
+      "threshold_seconds": 0.09366279188543558,
+      "predict_seconds": 0.07601441699080169,
+      "total_seconds": 0.7205802081152797,
+      "fit_rss_bytes": 1053458432,
+      "end_rss_bytes": 1285439488,
+      "serialized_bytes": 1321,
+      "versions": {
+        "python": "3.11.15",
+        "polars": "1.44.2",
+        "numpy": "2.4.6",
+        "scikit_learn": "1.9.1",
+        "lightgbm": "4.7.0",
+        "xgboost": "3.2.0",
+        "catboost": "1.2.10"
+      }
+    },
+    {
+      "transactions": 822359,
+      "frauds": 840,
+      "prevalence": 0.0010214517017506954,
+      "alerts": 358982,
+      "tp": 837,
+      "fp": 358145,
+      "fn": 3,
+      "precision": 0.0023315932275155857,
+      "recall": 0.9964285714285714,
+      "f1": 0.004652300304039219,
+      "model": "gaussian_nb",
+      "fold": 4,
+      "fit_steps": [
+        1,
+        288
+      ],
+      "threshold_steps": [
+        289,
+        360
+      ],
+      "validation_steps": [
+        361,
+        432
+      ],
+      "fit_rows": 3958316,
+      "fit_frauds": 3279,
+      "threshold_rows": 1227741,
+      "threshold_frauds": 738,
+      "threshold": 1.0,
+      "threshold_f1": 0.002754455929638207,
+      "fit_seconds": 0.22013379191048443,
+      "threshold_seconds": 0.11076329089701176,
+      "predict_seconds": 0.05409187520854175,
+      "total_seconds": 0.8218204998411238,
+      "fit_rss_bytes": 1185972224,
+      "end_rss_bytes": 1375223808,
+      "serialized_bytes": 1321,
+      "versions": {
+        "python": "3.11.15",
+        "polars": "1.44.2",
+        "numpy": "2.4.6",
+        "scikit_learn": "1.9.1",
+        "lightgbm": "4.7.0",
+        "xgboost": "3.2.0",
+        "catboost": "1.2.10"
+      }
+    },
+    {
+      "transactions": 55620,
+      "frauds": 764,
+      "prevalence": 0.01373606616325063,
+      "alerts": 22473,
+      "tp": 764,
+      "fp": 21709,
+      "fn": 0,
+      "precision": 0.033996351176967914,
+      "recall": 1.0,
+      "f1": 0.06575719757283642,
+      "model": "gaussian_nb",
+      "fold": 5,
+      "fit_steps": [
+        1,
+        360
+      ],
+      "threshold_steps": [
+        361,
+        432
+      ],
+      "validation_steps": [
+        433,
+        504
+      ],
+      "fit_rows": 5186057,
+      "fit_frauds": 4017,
+      "threshold_rows": 822359,
+      "threshold_frauds": 840,
+      "threshold": 0.9999995231628418,
+      "threshold_f1": 0.004668845461215234,
+      "fit_seconds": 0.2868424579501152,
+      "threshold_seconds": 0.06449900008738041,
+      "predict_seconds": 0.0034196667838841677,
+      "total_seconds": 0.78849450009875,
+      "fit_rss_bytes": 1325219840,
+      "end_rss_bytes": 1371406336,
+      "serialized_bytes": 1321,
+      "versions": {
+        "python": "3.11.15",
+        "polars": "1.44.2",
+        "numpy": "2.4.6",
+        "scikit_learn": "1.9.1",
+        "lightgbm": "4.7.0",
+        "xgboost": "3.2.0",
+        "catboost": "1.2.10"
+      }
+    },
+    {
+      "transactions": 1288139,
+      "frauds": 805,
+      "prevalence": 0.0006249325577441564,
+      "alerts": 494,
+      "tp": 168,
+      "fp": 326,
+      "fn": 637,
+      "precision": 0.340080971659919,
+      "recall": 0.20869565217391303,
+      "f1": 0.2586605080831409,
+      "model": "decision_tree",
+      "fold": 1,
+      "fit_steps": [
+        1,
+        72
+      ],
+      "threshold_steps": [
+        73,
+        144
+      ],
+      "validation_steps": [
+        145,
+        216
+      ],
+      "fit_rows": 1030563,
+      "fit_frauds": 890,
+      "threshold_rows": 479034,
+      "threshold_frauds": 742,
+      "threshold": 0.6,
+      "threshold_f1": 0.32553407934893186,
+      "fit_seconds": 0.8754487081896514,
+      "threshold_seconds": 0.01845408300869167,
+      "predict_seconds": 0.015715167159214616,
+      "total_seconds": 1.2531625831034034,
+      "fit_rss_bytes": 812204032,
+      "end_rss_bytes": 906133504,
+      "serialized_bytes": 6922,
+      "versions": {
+        "python": "3.11.15",
+        "polars": "1.44.2",
+        "numpy": "2.4.6",
+        "scikit_learn": "1.9.1",
+        "lightgbm": "4.7.0",
+        "xgboost": "3.2.0",
+        "catboost": "1.2.10"
+      }
+    },
+    {
+      "transactions": 1160580,
+      "frauds": 842,
+      "prevalence": 0.0007254993193058643,
+      "alerts": 1022,
+      "tp": 159,
+      "fp": 863,
+      "fn": 683,
+      "precision": 0.15557729941291584,
+      "recall": 0.18883610451306412,
+      "f1": 0.17060085836909872,
+      "model": "decision_tree",
+      "fold": 2,
+      "fit_steps": [
+        1,
+        144
+      ],
+      "threshold_steps": [
+        145,
+        216
+      ],
+      "validation_steps": [
+        217,
+        288
+      ],
+      "fit_rows": 1509597,
+      "fit_frauds": 1632,
+      "threshold_rows": 1288139,
+      "threshold_frauds": 805,
+      "threshold": 0.4,
+      "threshold_f1": 0.272419627749577,
+      "fit_seconds": 1.2750273749697953,
+      "threshold_seconds": 0.047905500046908855,
+      "predict_seconds": 0.013583583058789372,
+      "total_seconds": 1.6933037501294166,
+      "fit_rss_bytes": 842285056,
+      "end_rss_bytes": 854917120,
+      "serialized_bytes": 7722,
+      "versions": {
+        "python": "3.11.15",
+        "polars": "1.44.2",
+        "numpy": "2.4.6",
+        "scikit_learn": "1.9.1",
+        "lightgbm": "4.7.0",
+        "xgboost": "3.2.0",
+        "catboost": "1.2.10"
+      }
+    },
+    {
+      "transactions": 1227741,
+      "frauds": 738,
+      "prevalence": 0.0006011039787707668,
+      "alerts": 10188,
+      "tp": 155,
+      "fp": 10033,
+      "fn": 583,
+      "precision": 0.015213977228111504,
+      "recall": 0.21002710027100271,
+      "f1": 0.028372688998718653,
+      "model": "decision_tree",
+      "fold": 3,
+      "fit_steps": [
+        1,
+        216
+      ],
+      "threshold_steps": [
+        217,
+        288
+      ],
+      "validation_steps": [
+        289,
+        360
+      ],
+      "fit_rows": 2797736,
+      "fit_frauds": 2437,
+      "threshold_rows": 1160580,
+      "threshold_frauds": 842,
+      "threshold": 0.16363636363636364,
+      "threshold_f1": 0.16553727008712488,
+      "fit_seconds": 2.734751584008336,
+      "threshold_seconds": 0.043453084072098136,
+      "predict_seconds": 0.01575549994595349,
+      "total_seconds": 3.189798834035173,
+      "fit_rss_bytes": 953958400,
+      "end_rss_bytes": 1047134208,
+      "serialized_bytes": 7882,
+      "versions": {
+        "python": "3.11.15",
+        "polars": "1.44.2",
+        "numpy": "2.4.6",
+        "scikit_learn": "1.9.1",
+        "lightgbm": "4.7.0",
+        "xgboost": "3.2.0",
+        "catboost": "1.2.10"
+      }
+    },
+    {
+      "transactions": 822359,
+      "frauds": 840,
+      "prevalence": 0.0010214517017506954,
+      "alerts": 147,
+      "tp": 133,
+      "fp": 14,
+      "fn": 707,
+      "precision": 0.9047619047619048,
+      "recall": 0.15833333333333333,
+      "f1": 0.2695035460992908,
+      "model": "decision_tree",
+      "fold": 4,
+      "fit_steps": [
+        1,
+        288
+      ],
+      "threshold_steps": [
+        289,
+        360
+      ],
+      "validation_steps": [
+        361,
+        432
+      ],
+      "fit_rows": 3958316,
+      "fit_frauds": 3279,
+      "threshold_rows": 1227741,
+      "threshold_frauds": 738,
+      "threshold": 0.5723684210526315,
+      "threshold_f1": 0.23444976076555024,
+      "fit_seconds": 4.8263737498782575,
+      "threshold_seconds": 0.048582624876871705,
+      "predict_seconds": 0.010791792068630457,
+      "total_seconds": 5.3316396658774465,
+      "fit_rss_bytes": 654065664,
+      "end_rss_bytes": 620658688,
+      "serialized_bytes": 11402,
+      "versions": {
+        "python": "3.11.15",
+        "polars": "1.44.2",
+        "numpy": "2.4.6",
+        "scikit_learn": "1.9.1",
+        "lightgbm": "4.7.0",
+        "xgboost": "3.2.0",
+        "catboost": "1.2.10"
+      }
+    },
+    {
+      "transactions": 55620,
+      "frauds": 764,
+      "prevalence": 0.01373606616325063,
+      "alerts": 147,
+      "tp": 147,
+      "fp": 0,
+      "fn": 617,
+      "precision": 1.0,
+      "recall": 0.19240837696335078,
+      "f1": 0.3227222832052689,
+      "model": "decision_tree",
+      "fold": 5,
+      "fit_steps": [
+        1,
+        360
+      ],
+      "threshold_steps": [
+        361,
+        432
+      ],
+      "validation_steps": [
+        433,
+        504
+      ],
+      "fit_rows": 5186057,
+      "fit_frauds": 4017,
+      "threshold_rows": 822359,
+      "threshold_frauds": 840,
+      "threshold": 0.10365853658536585,
+      "threshold_f1": 0.316776007497657,
+      "fit_seconds": 5.382174416910857,
+      "threshold_seconds": 0.04619475011713803,
+      "predict_seconds": 0.0008835410699248314,
+      "total_seconds": 5.842324166093022,
+      "fit_rss_bytes": 491520000,
+      "end_rss_bytes": 581189632,
+      "serialized_bytes": 13802,
+      "versions": {
+        "python": "3.11.15",
+        "polars": "1.44.2",
+        "numpy": "2.4.6",
+        "scikit_learn": "1.9.1",
+        "lightgbm": "4.7.0",
+        "xgboost": "3.2.0",
+        "catboost": "1.2.10"
+      }
+    },
+    {
+      "transactions": 1288139,
+      "frauds": 805,
+      "prevalence": 0.0006249325577441564,
+      "alerts": 575,
+      "tp": 180,
+      "fp": 395,
+      "fn": 625,
+      "precision": 0.3130434782608696,
+      "recall": 0.2236024844720497,
+      "f1": 0.2608695652173913,
+      "model": "random_forest",
+      "fold": 1,
+      "fit_steps": [
+        1,
+        72
+      ],
+      "threshold_steps": [
+        73,
+        144
+      ],
+      "validation_steps": [
+        145,
+        216
+      ],
+      "fit_rows": 1030563,
+      "fit_frauds": 890,
+      "threshold_rows": 479034,
+      "threshold_frauds": 742,
+      "threshold": 0.34003063567605607,
+      "threshold_f1": 0.335609756097561,
+      "fit_seconds": 13.514468915993348,
+      "threshold_seconds": 0.25168379209935665,
+      "predict_seconds": 0.6368654579855502,
+      "total_seconds": 14.761383750010282,
+      "fit_rss_bytes": 1543045120,
+      "end_rss_bytes": 1692401664,
+      "serialized_bytes": 1533578,
+      "versions": {
+        "python": "3.11.15",
+        "polars": "1.44.2",
+        "numpy": "2.4.6",
+        "scikit_learn": "1.9.1",
+        "lightgbm": "4.7.0",
+        "xgboost": "3.2.0",
+        "catboost": "1.2.10"
+      }
+    },
+    {
+      "transactions": 1160580,
+      "frauds": 842,
+      "prevalence": 0.0007254993193058643,
+      "alerts": 1036,
+      "tp": 164,
+      "fp": 872,
+      "fn": 678,
+      "precision": 0.1583011583011583,
+      "recall": 0.19477434679334918,
+      "f1": 0.17465388711395102,
+      "model": "random_forest",
+      "fold": 2,
+      "fit_steps": [
+        1,
+        144
+      ],
+      "threshold_steps": [
+        145,
+        216
+      ],
+      "validation_steps": [
+        217,
+        288
+      ],
+      "fit_rows": 1509597,
+      "fit_frauds": 1632,
+      "threshold_rows": 1288139,
+      "threshold_frauds": 805,
+      "threshold": 0.575880663756354,
+      "threshold_f1": 0.28620689655172415,
+      "fit_seconds": 21.596102874958888,
+      "threshold_seconds": 0.6496047081891447,
+      "predict_seconds": 0.5263934580143541,
+      "total_seconds": 23.173812916036695,
+      "fit_rss_bytes": 1107525632,
+      "end_rss_bytes": 1159069696,
+      "serialized_bytes": 1635658,
+      "versions": {
+        "python": "3.11.15",
+        "polars": "1.44.2",
+        "numpy": "2.4.6",
+        "scikit_learn": "1.9.1",
+        "lightgbm": "4.7.0",
+        "xgboost": "3.2.0",
+        "catboost": "1.2.10"
+      }
+    },
+    {
+      "transactions": 1227741,
+      "frauds": 738,
+      "prevalence": 0.0006011039787707668,
+      "alerts": 86,
+      "tp": 86,
+      "fp": 0,
+      "fn": 652,
+      "precision": 1.0,
+      "recall": 0.11653116531165311,
+      "f1": 0.2087378640776699,
+      "model": "random_forest",
+      "fold": 3,
+      "fit_steps": [
+        1,
+        216
+      ],
+      "threshold_steps": [
+        217,
+        288
+      ],
+      "validation_steps": [
+        289,
+        360
+      ],
+      "fit_rows": 2797736,
+      "fit_frauds": 2437,
+      "threshold_rows": 1160580,
+      "threshold_frauds": 842,
+      "threshold": 0.6822023058977479,
+      "threshold_f1": 0.2157676348547718,
+      "fit_seconds": 45.66032191715203,
+      "threshold_seconds": 0.571712541859597,
+      "predict_seconds": 0.576074541779235,
+      "total_seconds": 47.18481329199858,
+      "fit_rss_bytes": 1197850624,
+      "end_rss_bytes": 1163657216,
+      "serialized_bytes": 1802218,
+      "versions": {
+        "python": "3.11.15",
+        "polars": "1.44.2",
+        "numpy": "2.4.6",
+        "scikit_learn": "1.9.1",
+        "lightgbm": "4.7.0",
+        "xgboost": "3.2.0",
+        "catboost": "1.2.10"
+      }
+    },
+    {
+      "transactions": 822359,
+      "frauds": 840,
+      "prevalence": 0.0010214517017506954,
+      "alerts": 152,
+      "tp": 137,
+      "fp": 15,
+      "fn": 703,
+      "precision": 0.9013157894736842,
+      "recall": 0.1630952380952381,
+      "f1": 0.2762096774193548,
+      "model": "random_forest",
+      "fold": 4,
+      "fit_steps": [
+        1,
+        288
+      ],
+      "threshold_steps": [
+        289,
+        360
+      ],
+      "validation_steps": [
+        361,
+        432
+      ],
+      "fit_rows": 3958316,
+      "fit_frauds": 3279,
+      "threshold_rows": 1227741,
+      "threshold_frauds": 738,
+      "threshold": 0.412838163298432,
+      "threshold_f1": 0.24076281287246723,
+      "fit_seconds": 66.27040179190226,
+      "threshold_seconds": 0.5842937908601016,
+      "predict_seconds": 0.3816585831809789,
+      "total_seconds": 68.26661308296025,
+      "fit_rss_bytes": 1258618880,
+      "end_rss_bytes": 1204731904,
+      "serialized_bytes": 2231978,
+      "versions": {
+        "python": "3.11.15",
+        "polars": "1.44.2",
+        "numpy": "2.4.6",
+        "scikit_learn": "1.9.1",
+        "lightgbm": "4.7.0",
+        "xgboost": "3.2.0",
+        "catboost": "1.2.10"
+      }
+    },
+    {
+      "transactions": 55620,
+      "frauds": 764,
+      "prevalence": 0.01373606616325063,
+      "alerts": 146,
+      "tp": 146,
+      "fp": 0,
+      "fn": 618,
+      "precision": 1.0,
+      "recall": 0.19109947643979058,
+      "f1": 0.3208791208791209,
+      "model": "random_forest",
+      "fold": 5,
+      "fit_steps": [
+        1,
+        360
+      ],
+      "threshold_steps": [
+        361,
+        432
+      ],
+      "validation_steps": [
+        433,
+        504
+      ],
+      "fit_rows": 5186057,
+      "fit_frauds": 4017,
+      "threshold_rows": 822359,
+      "threshold_frauds": 840,
+      "threshold": 0.0993011753824611,
+      "threshold_f1": 0.3197729422894986,
+      "fit_seconds": 94.18607395794243,
+      "threshold_seconds": 0.41707879211753607,
+      "predict_seconds": 0.025795625057071447,
+      "total_seconds": 95.40083233313635,
+      "fit_rss_bytes": 998572032,
+      "end_rss_bytes": 923844608,
+      "serialized_bytes": 3410058,
+      "versions": {
+        "python": "3.11.15",
+        "polars": "1.44.2",
+        "numpy": "2.4.6",
+        "scikit_learn": "1.9.1",
+        "lightgbm": "4.7.0",
+        "xgboost": "3.2.0",
+        "catboost": "1.2.10"
+      }
+    },
+    {
+      "transactions": 1288139,
+      "frauds": 805,
+      "prevalence": 0.0006249325577441564,
+      "alerts": 453,
+      "tp": 172,
+      "fp": 281,
+      "fn": 633,
+      "precision": 0.37969094922737306,
+      "recall": 0.21366459627329193,
+      "f1": 0.27344992050874406,
+      "model": "extra_trees",
+      "fold": 1,
+      "fit_steps": [
+        1,
+        72
+      ],
+      "threshold_steps": [
+        73,
+        144
+      ],
+      "validation_steps": [
+        145,
+        216
+      ],
+      "fit_rows": 1030563,
+      "fit_frauds": 890,
+      "threshold_rows": 479034,
+      "threshold_frauds": 742,
+      "threshold": 0.053549221696676516,
+      "threshold_f1": 0.3309203722854188,
+      "fit_seconds": 2.1249429588206112,
+      "threshold_seconds": 0.2087530829012394,
+      "predict_seconds": 0.4939075419679284,
+      "total_seconds": 3.8526812919881195,
+      "fit_rss_bytes": 1145815040,
+      "end_rss_bytes": 1294991360,
+      "serialized_bytes": 1087658,
+      "versions": {
+        "python": "3.11.15",
+        "polars": "1.44.2",
+        "numpy": "2.4.6",
+        "scikit_learn": "1.9.1",
+        "lightgbm": "4.7.0",
+        "xgboost": "3.2.0",
+        "catboost": "1.2.10"
+      }
+    },
+    {
+      "transactions": 1160580,
+      "frauds": 842,
+      "prevalence": 0.0007254993193058643,
+      "alerts": 950,
+      "tp": 160,
+      "fp": 790,
+      "fn": 682,
+      "precision": 0.16842105263157894,
+      "recall": 0.19002375296912113,
+      "f1": 0.17857142857142858,
+      "model": "extra_trees",
+      "fold": 2,
+      "fit_steps": [
+        1,
+        144
+      ],
+      "threshold_steps": [
+        145,
+        216
+      ],
+      "validation_steps": [
+        217,
+        288
+      ],
+      "fit_rows": 1509597,
+      "fit_frauds": 1632,
+      "threshold_rows": 1288139,
+      "threshold_frauds": 805,
+      "threshold": 0.09922214975462412,
+      "threshold_f1": 0.29783393501805056,
+      "fit_seconds": 3.579590791836381,
+      "threshold_seconds": 0.6407419580500573,
+      "predict_seconds": 0.5287614581175148,
+      "total_seconds": 5.127026959089562,
+      "fit_rss_bytes": 1037500416,
+      "end_rss_bytes": 1078837248,
+      "serialized_bytes": 1528138,
+      "versions": {
+        "python": "3.11.15",
+        "polars": "1.44.2",
+        "numpy": "2.4.6",
+        "scikit_learn": "1.9.1",
+        "lightgbm": "4.7.0",
+        "xgboost": "3.2.0",
+        "catboost": "1.2.10"
+      }
+    },
+    {
+      "transactions": 1227741,
+      "frauds": 738,
+      "prevalence": 0.0006011039787707668,
+      "alerts": 77,
+      "tp": 77,
+      "fp": 0,
+      "fn": 661,
+      "precision": 1.0,
+      "recall": 0.1043360433604336,
+      "f1": 0.18895705521472392,
+      "model": "extra_trees",
+      "fold": 3,
+      "fit_steps": [
+        1,
+        216
+      ],
+      "threshold_steps": [
+        217,
+        288
+      ],
+      "validation_steps": [
+        289,
+        360
+      ],
+      "fit_rows": 2797736,
+      "fit_frauds": 2437,
+      "threshold_rows": 1160580,
+      "threshold_frauds": 842,
+      "threshold": 0.2958735644698627,
+      "threshold_f1": 0.19661733615221988,
+      "fit_seconds": 8.405581749975681,
+      "threshold_seconds": 0.6414255839772522,
+      "predict_seconds": 0.5959599160123616,
+      "total_seconds": 10.025462416931987,
+      "fit_rss_bytes": 795197440,
+      "end_rss_bytes": 793001984,
+      "serialized_bytes": 2529258,
+      "versions": {
+        "python": "3.11.15",
+        "polars": "1.44.2",
+        "numpy": "2.4.6",
+        "scikit_learn": "1.9.1",
+        "lightgbm": "4.7.0",
+        "xgboost": "3.2.0",
+        "catboost": "1.2.10"
+      }
+    },
+    {
+      "transactions": 822359,
+      "frauds": 840,
+      "prevalence": 0.0010214517017506954,
+      "alerts": 201,
+      "tp": 165,
+      "fp": 36,
+      "fn": 675,
+      "precision": 0.8208955223880597,
+      "recall": 0.19642857142857142,
+      "f1": 0.3170028818443804,
+      "model": "extra_trees",
+      "fold": 4,
+      "fit_steps": [
+        1,
+        288
+      ],
+      "threshold_steps": [
+        289,
+        360
+      ],
+      "validation_steps": [
+        361,
+        432
+      ],
+      "fit_rows": 3958316,
+      "fit_frauds": 3279,
+      "threshold_rows": 1227741,
+      "threshold_frauds": 738,
+      "threshold": 0.06533197094240789,
+      "threshold_f1": 0.2742857142857143,
+      "fit_seconds": 10.295251499861479,
+      "threshold_seconds": 0.6141970830503851,
+      "predict_seconds": 0.3667919170111418,
+      "total_seconds": 11.688737833872437,
+      "fit_rss_bytes": 1401651200,
+      "end_rss_bytes": 1326039040,
+      "serialized_bytes": 1631658,
+      "versions": {
+        "python": "3.11.15",
+        "polars": "1.44.2",
+        "numpy": "2.4.6",
+        "scikit_learn": "1.9.1",
+        "lightgbm": "4.7.0",
+        "xgboost": "3.2.0",
+        "catboost": "1.2.10"
+      }
+    },
+    {
+      "transactions": 55620,
+      "frauds": 764,
+      "prevalence": 0.01373606616325063,
+      "alerts": 152,
+      "tp": 152,
+      "fp": 0,
+      "fn": 612,
+      "precision": 1.0,
+      "recall": 0.19895287958115182,
+      "f1": 0.3318777292576419,
+      "model": "extra_trees",
+      "fold": 5,
+      "fit_steps": [
+        1,
+        360
+      ],
+      "threshold_steps": [
+        361,
+        432
+      ],
+      "validation_steps": [
+        433,
+        504
+      ],
+      "fit_rows": 5186057,
+      "fit_frauds": 4017,
+      "threshold_rows": 822359,
+      "threshold_frauds": 840,
+      "threshold": 0.05196848047223529,
+      "threshold_f1": 0.32149532710280376,
+      "fit_seconds": 14.484308541053906,
+      "threshold_seconds": 0.463524374878034,
+      "predict_seconds": 0.0261245418805629,
+      "total_seconds": 15.376230750000104,
+      "fit_rss_bytes": 1591918592,
+      "end_rss_bytes": 1442234368,
+      "serialized_bytes": 2190058,
+      "versions": {
+        "python": "3.11.15",
+        "polars": "1.44.2",
+        "numpy": "2.4.6",
+        "scikit_learn": "1.9.1",
+        "lightgbm": "4.7.0",
+        "xgboost": "3.2.0",
+        "catboost": "1.2.10"
+      }
+    },
+    {
+      "transactions": 1288139,
+      "frauds": 805,
+      "prevalence": 0.0006249325577441564,
+      "alerts": 224,
+      "tp": 133,
+      "fp": 91,
+      "fn": 672,
+      "precision": 0.59375,
+      "recall": 0.16521739130434782,
+      "f1": 0.2585034013605442,
+      "model": "hist_gradient_boosting",
+      "fold": 1,
+      "fit_steps": [
+        1,
+        72
+      ],
+      "threshold_steps": [
+        73,
+        144
+      ],
+      "validation_steps": [
+        145,
+        216
+      ],
+      "fit_rows": 1030563,
+      "fit_frauds": 890,
+      "threshold_rows": 479034,
+      "threshold_frauds": 742,
+      "threshold": 0.8317064030139062,
+      "threshold_f1": 0.28698553948832034,
+      "fit_seconds": 2.3029149589128792,
+      "threshold_seconds": 0.5066645841579884,
+      "predict_seconds": 1.2688851659186184,
+      "total_seconds": 4.440174957970157,
+      "fit_rss_bytes": 1028603904,
+      "end_rss_bytes": 1142194176,
+      "serialized_bytes": 365681,
+      "versions": {
+        "python": "3.11.15",
+        "polars": "1.44.2",
+        "numpy": "2.4.6",
+        "scikit_learn": "1.9.1",
+        "lightgbm": "4.7.0",
+        "xgboost": "3.2.0",
+        "catboost": "1.2.10"
+      }
+    },
+    {
+      "transactions": 1160580,
+      "frauds": 842,
+      "prevalence": 0.0007254993193058643,
+      "alerts": 6851,
+      "tp": 121,
+      "fp": 6730,
+      "fn": 721,
+      "precision": 0.01766165523281273,
+      "recall": 0.14370546318289787,
+      "f1": 0.03145716885480307,
+      "model": "hist_gradient_boosting",
+      "fold": 2,
+      "fit_steps": [
+        1,
+        144
+      ],
+      "threshold_steps": [
+        145,
+        216
+      ],
+      "validation_steps": [
+        217,
+        288
+      ],
+      "fit_rows": 1509597,
+      "fit_frauds": 1632,
+      "threshold_rows": 1288139,
+      "threshold_frauds": 805,
+      "threshold": 0.0294602753292145,
+      "threshold_f1": 0.032468473691839396,
+      "fit_seconds": 3.039518083911389,
+      "threshold_seconds": 1.2276580419857055,
+      "predict_seconds": 0.9975376669317484,
+      "total_seconds": 5.651608542073518,
+      "fit_rss_bytes": 1185366016,
+      "end_rss_bytes": 1195900928,
+      "serialized_bytes": 365681,
+      "versions": {
+        "python": "3.11.15",
+        "polars": "1.44.2",
+        "numpy": "2.4.6",
+        "scikit_learn": "1.9.1",
+        "lightgbm": "4.7.0",
+        "xgboost": "3.2.0",
+        "catboost": "1.2.10"
+      }
+    },
+    {
+      "transactions": 1227741,
+      "frauds": 738,
+      "prevalence": 0.0006011039787707668,
+      "alerts": 23873,
+      "tp": 94,
+      "fp": 23779,
+      "fn": 644,
+      "precision": 0.003937502618020358,
+      "recall": 0.12737127371273713,
+      "f1": 0.00763886067205721,
+      "model": "hist_gradient_boosting",
+      "fold": 3,
+      "fit_steps": [
+        1,
+        216
+      ],
+      "threshold_steps": [
+        217,
+        288
+      ],
+      "validation_steps": [
+        289,
+        360
+      ],
+      "fit_rows": 2797736,
+      "fit_frauds": 2437,
+      "threshold_rows": 1160580,
+      "threshold_frauds": 842,
+      "threshold": 0.03300337291104691,
+      "threshold_f1": 0.03123618682775895,
+      "fit_seconds": 6.43817974999547,
+      "threshold_seconds": 1.340690208831802,
+      "predict_seconds": 1.3448584589641541,
+      "total_seconds": 9.541434125043452,
+      "fit_rss_bytes": 1080983552,
+      "end_rss_bytes": 1092976640,
+      "serialized_bytes": 365681,
+      "versions": {
+        "python": "3.11.15",
+        "polars": "1.44.2",
+        "numpy": "2.4.6",
+        "scikit_learn": "1.9.1",
+        "lightgbm": "4.7.0",
+        "xgboost": "3.2.0",
+        "catboost": "1.2.10"
+      }
+    },
+    {
+      "transactions": 822359,
+      "frauds": 840,
+      "prevalence": 0.0010214517017506954,
+      "alerts": 129,
+      "tp": 9,
+      "fp": 120,
+      "fn": 831,
+      "precision": 0.06976744186046512,
+      "recall": 0.010714285714285714,
+      "f1": 0.018575851393188854,
+      "model": "hist_gradient_boosting",
+      "fold": 4,
+      "fit_steps": [
+        1,
+        288
+      ],
+      "threshold_steps": [
+        289,
+        360
+      ],
+      "validation_steps": [
+        361,
+        432
+      ],
+      "fit_rows": 3958316,
+      "fit_frauds": 3279,
+      "threshold_rows": 1227741,
+      "threshold_frauds": 738,
+      "threshold": 0.04785192587720177,
+      "threshold_f1": 0.023133543638275498,
+      "fit_seconds": 9.411866000154987,
+      "threshold_seconds": 1.1877098749391735,
+      "predict_seconds": 0.7661665000487119,
+      "total_seconds": 12.000440291827545,
+      "fit_rss_bytes": 775389184,
+      "end_rss_bytes": 895418368,
+      "serialized_bytes": 365681,
+      "versions": {
+        "python": "3.11.15",
+        "polars": "1.44.2",
+        "numpy": "2.4.6",
+        "scikit_learn": "1.9.1",
+        "lightgbm": "4.7.0",
+        "xgboost": "3.2.0",
+        "catboost": "1.2.10"
+      }
+    },
+    {
+      "transactions": 55620,
+      "frauds": 764,
+      "prevalence": 0.01373606616325063,
+      "alerts": 387,
+      "tp": 80,
+      "fp": 307,
+      "fn": 684,
+      "precision": 0.20671834625322996,
+      "recall": 0.10471204188481675,
+      "f1": 0.13900955690703737,
+      "model": "hist_gradient_boosting",
+      "fold": 5,
+      "fit_steps": [
+        1,
+        360
+      ],
+      "threshold_steps": [
+        361,
+        432
+      ],
+      "validation_steps": [
+        433,
+        504
+      ],
+      "fit_rows": 5186057,
+      "fit_frauds": 4017,
+      "threshold_rows": 822359,
+      "threshold_frauds": 840,
+      "threshold": 0.02125319914767308,
+      "threshold_f1": 0.040215010949631695,
+      "fit_seconds": 10.489600415807217,
+      "threshold_seconds": 0.7485828748904169,
+      "predict_seconds": 0.04861350008286536,
+      "total_seconds": 11.697668458102271,
+      "fit_rss_bytes": 1281064960,
+      "end_rss_bytes": 1317896192,
+      "serialized_bytes": 365681,
+      "versions": {
+        "python": "3.11.15",
+        "polars": "1.44.2",
+        "numpy": "2.4.6",
+        "scikit_learn": "1.9.1",
+        "lightgbm": "4.7.0",
+        "xgboost": "3.2.0",
+        "catboost": "1.2.10"
+      }
+    },
+    {
+      "transactions": 1288139,
+      "frauds": 805,
+      "prevalence": 0.0006249325577441564,
+      "alerts": 278,
+      "tp": 136,
+      "fp": 142,
+      "fn": 669,
+      "precision": 0.4892086330935252,
+      "recall": 0.168944099378882,
+      "f1": 0.25115420129270544,
+      "model": "lightgbm",
+      "fold": 1,
+      "fit_steps": [
+        1,
+        72
+      ],
+      "threshold_steps": [
+        73,
+        144
+      ],
+      "validation_steps": [
+        145,
+        216
+      ],
+      "fit_rows": 1030563,
+      "fit_frauds": 890,
+      "threshold_rows": 479034,
+      "threshold_frauds": 742,
+      "threshold": 0.5250248299119517,
+      "threshold_f1": 0.28540540540540543,
+      "fit_seconds": 0.6981984579470009,
+      "threshold_seconds": 0.41856362484395504,
+      "predict_seconds": 1.0495237079448998,
+      "total_seconds": 2.5166154999751598,
+      "fit_rss_bytes": 855572480,
+      "end_rss_bytes": 950222848,
+      "serialized_bytes": 358599,
+      "versions": {
+        "python": "3.11.15",
+        "polars": "1.44.2",
+        "numpy": "2.4.6",
+        "scikit_learn": "1.9.1",
+        "lightgbm": "4.7.0",
+        "xgboost": "3.2.0",
+        "catboost": "1.2.10"
+      }
+    },
+    {
+      "transactions": 1160580,
+      "frauds": 842,
+      "prevalence": 0.0007254993193058643,
+      "alerts": 198,
+      "tp": 129,
+      "fp": 69,
+      "fn": 713,
+      "precision": 0.6515151515151515,
+      "recall": 0.15320665083135393,
+      "f1": 0.24807692307692308,
+      "model": "lightgbm",
+      "fold": 2,
+      "fit_steps": [
+        1,
+        144
+      ],
+      "threshold_steps": [
+        145,
+        216
+      ],
+      "validation_steps": [
+        217,
+        288
+      ],
+      "fit_rows": 1509597,
+      "fit_frauds": 1632,
+      "threshold_rows": 1288139,
+      "threshold_frauds": 805,
+      "threshold": 0.6245213523964961,
+      "threshold_f1": 0.25806451612903225,
+      "fit_seconds": 0.9854982090182602,
+      "threshold_seconds": 1.0749312499538064,
+      "predict_seconds": 0.9046662088949233,
+      "total_seconds": 3.3189806670416147,
+      "fit_rss_bytes": 883408896,
+      "end_rss_bytes": 904691712,
+      "serialized_bytes": 359815,
+      "versions": {
+        "python": "3.11.15",
+        "polars": "1.44.2",
+        "numpy": "2.4.6",
+        "scikit_learn": "1.9.1",
+        "lightgbm": "4.7.0",
+        "xgboost": "3.2.0",
+        "catboost": "1.2.10"
+      }
+    },
+    {
+      "transactions": 1227741,
+      "frauds": 738,
+      "prevalence": 0.0006011039787707668,
+      "alerts": 23811,
+      "tp": 94,
+      "fp": 23717,
+      "fn": 644,
+      "precision": 0.003947755239175171,
+      "recall": 0.12737127371273713,
+      "f1": 0.007658153081591918,
+      "model": "lightgbm",
+      "fold": 3,
+      "fit_steps": [
+        1,
+        216
+      ],
+      "threshold_steps": [
+        217,
+        288
+      ],
+      "validation_steps": [
+        289,
+        360
+      ],
+      "fit_rows": 2797736,
+      "fit_frauds": 2437,
+      "threshold_rows": 1160580,
+      "threshold_frauds": 842,
+      "threshold": 0.03438569497032845,
+      "threshold_f1": 0.031849977675249296,
+      "fit_seconds": 1.7824079999700189,
+      "threshold_seconds": 0.9148520829621702,
+      "predict_seconds": 0.8749667499214411,
+      "total_seconds": 3.9416795421857387,
+      "fit_rss_bytes": 1040252928,
+      "end_rss_bytes": 1103806464,
+      "serialized_bytes": 361047,
+      "versions": {
+        "python": "3.11.15",
+        "polars": "1.44.2",
+        "numpy": "2.4.6",
+        "scikit_learn": "1.9.1",
+        "lightgbm": "4.7.0",
+        "xgboost": "3.2.0",
+        "catboost": "1.2.10"
+      }
+    },
+    {
+      "transactions": 822359,
+      "frauds": 840,
+      "prevalence": 0.0010214517017506954,
+      "alerts": 193,
+      "tp": 8,
+      "fp": 185,
+      "fn": 832,
+      "precision": 0.04145077720207254,
+      "recall": 0.009523809523809525,
+      "f1": 0.015488867376573089,
+      "model": "lightgbm",
+      "fold": 4,
+      "fit_steps": [
+        1,
+        288
+      ],
+      "threshold_steps": [
+        289,
+        360
+      ],
+      "validation_steps": [
+        361,
+        432
+      ],
+      "fit_rows": 3958316,
+      "fit_frauds": 3279,
+      "threshold_rows": 1227741,
+      "threshold_frauds": 738,
+      "threshold": 0.04554549229252066,
+      "threshold_f1": 0.026515151515151516,
+      "fit_seconds": 2.709410957992077,
+      "threshold_seconds": 0.907426959136501,
+      "predict_seconds": 0.5668249160517007,
+      "total_seconds": 4.57604695786722,
+      "fit_rss_bytes": 1158447104,
+      "end_rss_bytes": 1165705216,
+      "serialized_bytes": 362103,
+      "versions": {
+        "python": "3.11.15",
+        "polars": "1.44.2",
+        "numpy": "2.4.6",
+        "scikit_learn": "1.9.1",
+        "lightgbm": "4.7.0",
+        "xgboost": "3.2.0",
+        "catboost": "1.2.10"
+      }
+    },
+    {
+      "transactions": 55620,
+      "frauds": 764,
+      "prevalence": 0.01373606616325063,
+      "alerts": 399,
+      "tp": 82,
+      "fp": 317,
+      "fn": 682,
+      "precision": 0.20551378446115287,
+      "recall": 0.10732984293193717,
+      "f1": 0.1410146173688736,
+      "model": "lightgbm",
+      "fold": 5,
+      "fit_steps": [
+        1,
+        360
+      ],
+      "threshold_steps": [
+        361,
+        432
+      ],
+      "validation_steps": [
+        433,
+        504
+      ],
+      "fit_rows": 5186057,
+      "fit_frauds": 4017,
+      "threshold_rows": 822359,
+      "threshold_frauds": 840,
+      "threshold": 0.021286014214430177,
+      "threshold_f1": 0.039905175819834056,
+      "fit_seconds": 3.413475540932268,
+      "threshold_seconds": 0.6109647499397397,
+      "predict_seconds": 0.03587062517181039,
+      "total_seconds": 4.443859749939293,
+      "fit_rss_bytes": 1255358464,
+      "end_rss_bytes": 1291993088,
+      "serialized_bytes": 362855,
+      "versions": {
+        "python": "3.11.15",
+        "polars": "1.44.2",
+        "numpy": "2.4.6",
+        "scikit_learn": "1.9.1",
+        "lightgbm": "4.7.0",
+        "xgboost": "3.2.0",
+        "catboost": "1.2.10"
+      }
+    },
+    {
+      "transactions": 1288139,
+      "frauds": 805,
+      "prevalence": 0.0006249325577441564,
+      "alerts": 307,
+      "tp": 143,
+      "fp": 164,
+      "fn": 662,
+      "precision": 0.46579804560260585,
+      "recall": 0.17763975155279504,
+      "f1": 0.25719424460431656,
+      "model": "xgboost",
+      "fold": 1,
+      "fit_steps": [
+        1,
+        72
+      ],
+      "threshold_steps": [
+        73,
+        144
+      ],
+      "validation_steps": [
+        145,
+        216
+      ],
+      "fit_rows": 1030563,
+      "fit_frauds": 890,
+      "threshold_rows": 479034,
+      "threshold_frauds": 742,
+      "threshold": 0.2334960550069809,
+      "threshold_f1": 0.2975557917109458,
+      "fit_seconds": 0.6816430001053959,
+      "threshold_seconds": 0.11028541694395244,
+      "predict_seconds": 0.2293879589997232,
+      "total_seconds": 1.3553742081858218,
+      "fit_rss_bytes": 861552640,
+      "end_rss_bytes": 948764672,
+      "serialized_bytes": 144402,
+      "versions": {
+        "python": "3.11.15",
+        "polars": "1.44.2",
+        "numpy": "2.4.6",
+        "scikit_learn": "1.9.1",
+        "lightgbm": "4.7.0",
+        "xgboost": "3.2.0",
+        "catboost": "1.2.10"
+      }
+    },
+    {
+      "transactions": 1160580,
+      "frauds": 842,
+      "prevalence": 0.0007254993193058643,
+      "alerts": 198,
+      "tp": 129,
+      "fp": 69,
+      "fn": 713,
+      "precision": 0.6515151515151515,
+      "recall": 0.15320665083135393,
+      "f1": 0.24807692307692308,
+      "model": "xgboost",
+      "fold": 2,
+      "fit_steps": [
+        1,
+        144
+      ],
+      "threshold_steps": [
+        145,
+        216
+      ],
+      "validation_steps": [
+        217,
+        288
+      ],
+      "fit_rows": 1509597,
+      "fit_frauds": 1632,
+      "threshold_rows": 1288139,
+      "threshold_frauds": 805,
+      "threshold": 0.4249868392944336,
+      "threshold_f1": 0.2583170254403131,
+      "fit_seconds": 1.0479754579719156,
+      "threshold_seconds": 0.2959420830011368,
+      "predict_seconds": 0.1779352081939578,
+      "total_seconds": 1.8749792089220136,
+      "fit_rss_bytes": 923779072,
+      "end_rss_bytes": 950714368,
+      "serialized_bytes": 149774,
+      "versions": {
+        "python": "3.11.15",
+        "polars": "1.44.2",
+        "numpy": "2.4.6",
+        "scikit_learn": "1.9.1",
+        "lightgbm": "4.7.0",
+        "xgboost": "3.2.0",
+        "catboost": "1.2.10"
+      }
+    },
+    {
+      "transactions": 1227741,
+      "frauds": 738,
+      "prevalence": 0.0006011039787707668,
+      "alerts": 115,
+      "tp": 112,
+      "fp": 3,
+      "fn": 626,
+      "precision": 0.9739130434782609,
+      "recall": 0.15176151761517614,
+      "f1": 0.26260257913247365,
+      "model": "xgboost",
+      "fold": 3,
+      "fit_steps": [
+        1,
+        216
+      ],
+      "threshold_steps": [
+        217,
+        288
+      ],
+      "validation_steps": [
+        289,
+        360
+      ],
+      "fit_rows": 2797736,
+      "fit_frauds": 2437,
+      "threshold_rows": 1160580,
+      "threshold_frauds": 842,
+      "threshold": 0.31014829874038696,
+      "threshold_f1": 0.25213270142180094,
+      "fit_seconds": 2.0465057499241084,
+      "threshold_seconds": 0.27520216698758304,
+      "predict_seconds": 0.2070518748369068,
+      "total_seconds": 2.8951613751705736,
+      "fit_rss_bytes": 1061486592,
+      "end_rss_bytes": 1129955328,
+      "serialized_bytes": 160246,
+      "versions": {
+        "python": "3.11.15",
+        "polars": "1.44.2",
+        "numpy": "2.4.6",
+        "scikit_learn": "1.9.1",
+        "lightgbm": "4.7.0",
+        "xgboost": "3.2.0",
+        "catboost": "1.2.10"
+      }
+    },
+    {
+      "transactions": 822359,
+      "frauds": 840,
+      "prevalence": 0.0010214517017506954,
+      "alerts": 222,
+      "tp": 170,
+      "fp": 52,
+      "fn": 670,
+      "precision": 0.7657657657657657,
+      "recall": 0.20238095238095238,
+      "f1": 0.32015065913371,
+      "model": "xgboost",
+      "fold": 4,
+      "fit_steps": [
+        1,
+        288
+      ],
+      "threshold_steps": [
+        289,
+        360
+      ],
+      "validation_steps": [
+        361,
+        432
+      ],
+      "fit_rows": 3958316,
+      "fit_frauds": 3279,
+      "threshold_rows": 1227741,
+      "threshold_frauds": 738,
+      "threshold": 0.13257761299610138,
+      "threshold_f1": 0.27624309392265195,
+      "fit_seconds": 2.9679919579066336,
+      "threshold_seconds": 0.2914315420202911,
+      "predict_seconds": 0.14439183310605586,
+      "total_seconds": 3.7865849169902503,
+      "fit_rss_bytes": 1209548800,
+      "end_rss_bytes": 1246658560,
+      "serialized_bytes": 161946,
+      "versions": {
+        "python": "3.11.15",
+        "polars": "1.44.2",
+        "numpy": "2.4.6",
+        "scikit_learn": "1.9.1",
+        "lightgbm": "4.7.0",
+        "xgboost": "3.2.0",
+        "catboost": "1.2.10"
+      }
+    },
+    {
+      "transactions": 55620,
+      "frauds": 764,
+      "prevalence": 0.01373606616325063,
+      "alerts": 146,
+      "tp": 146,
+      "fp": 0,
+      "fn": 618,
+      "precision": 1.0,
+      "recall": 0.19109947643979058,
+      "f1": 0.3208791208791209,
+      "model": "xgboost",
+      "fold": 5,
+      "fit_steps": [
+        1,
+        360
+      ],
+      "threshold_steps": [
+        361,
+        432
+      ],
+      "validation_steps": [
+        433,
+        504
+      ],
+      "fit_rows": 5186057,
+      "fit_frauds": 4017,
+      "threshold_rows": 822359,
+      "threshold_frauds": 840,
+      "threshold": 0.1482209414243698,
+      "threshold_f1": 0.32037914691943126,
+      "fit_seconds": 4.176682832883671,
+      "threshold_seconds": 0.18941087485291064,
+      "predict_seconds": 0.008559792069718242,
+      "total_seconds": 4.767494417028502,
+      "fit_rss_bytes": 1336066048,
+      "end_rss_bytes": 1344602112,
+      "serialized_bytes": 186288,
+      "versions": {
+        "python": "3.11.15",
+        "polars": "1.44.2",
+        "numpy": "2.4.6",
+        "scikit_learn": "1.9.1",
+        "lightgbm": "4.7.0",
+        "xgboost": "3.2.0",
+        "catboost": "1.2.10"
+      }
+    },
+    {
+      "transactions": 1288139,
+      "frauds": 805,
+      "prevalence": 0.0006249325577441564,
+      "alerts": 301,
+      "tp": 142,
+      "fp": 159,
+      "fn": 663,
+      "precision": 0.4717607973421927,
+      "recall": 0.1763975155279503,
+      "f1": 0.25678119349005424,
+      "model": "catboost",
+      "fold": 1,
+      "fit_steps": [
+        1,
+        72
+      ],
+      "threshold_steps": [
+        73,
+        144
+      ],
+      "validation_steps": [
+        145,
+        216
+      ],
+      "fit_rows": 1030563,
+      "fit_frauds": 890,
+      "threshold_rows": 479034,
+      "threshold_frauds": 742,
+      "threshold": 0.2765386925659025,
+      "threshold_f1": 0.29732620320855613,
+      "fit_seconds": 4.247155792079866,
+      "threshold_seconds": 0.07253987505100667,
+      "predict_seconds": 0.11471837502904236,
+      "total_seconds": 4.9556342081632465,
+      "fit_rss_bytes": 1181843456,
+      "end_rss_bytes": 1294336000,
+      "serialized_bytes": 106949,
+      "versions": {
+        "python": "3.11.15",
+        "polars": "1.44.2",
+        "numpy": "2.4.6",
+        "scikit_learn": "1.9.1",
+        "lightgbm": "4.7.0",
+        "xgboost": "3.2.0",
+        "catboost": "1.2.10"
+      }
+    },
+    {
+      "transactions": 1160580,
+      "frauds": 842,
+      "prevalence": 0.0007254993193058643,
+      "alerts": 197,
+      "tp": 128,
+      "fp": 69,
+      "fn": 714,
+      "precision": 0.649746192893401,
+      "recall": 0.15201900237529692,
+      "f1": 0.24639076034648702,
+      "model": "catboost",
+      "fold": 2,
+      "fit_steps": [
+        1,
+        144
+      ],
+      "threshold_steps": [
+        145,
+        216
+      ],
+      "validation_steps": [
+        217,
+        288
+      ],
+      "fit_rows": 1509597,
+      "fit_frauds": 1632,
+      "threshold_rows": 1288139,
+      "threshold_frauds": 805,
+      "threshold": 0.4638573480646699,
+      "threshold_f1": 0.25882352941176473,
+      "fit_seconds": 6.214943958912045,
+      "threshold_seconds": 0.19317258312366903,
+      "predict_seconds": 0.10319195897318423,
+      "total_seconds": 6.825216667028144,
+      "fit_rss_bytes": 1356578816,
+      "end_rss_bytes": 1463369728,
+      "serialized_bytes": 107525,
+      "versions": {
+        "python": "3.11.15",
+        "polars": "1.44.2",
+        "numpy": "2.4.6",
+        "scikit_learn": "1.9.1",
+        "lightgbm": "4.7.0",
+        "xgboost": "3.2.0",
+        "catboost": "1.2.10"
+      }
+    },
+    {
+      "transactions": 1227741,
+      "frauds": 738,
+      "prevalence": 0.0006011039787707668,
+      "alerts": 115,
+      "tp": 112,
+      "fp": 3,
+      "fn": 626,
+      "precision": 0.9739130434782609,
+      "recall": 0.15176151761517614,
+      "f1": 0.26260257913247365,
+      "model": "catboost",
+      "fold": 3,
+      "fit_steps": [
+        1,
+        216
+      ],
+      "threshold_steps": [
+        217,
+        288
+      ],
+      "validation_steps": [
+        289,
+        360
+      ],
+      "fit_rows": 2797736,
+      "fit_frauds": 2437,
+      "threshold_rows": 1160580,
+      "threshold_frauds": 842,
+      "threshold": 0.33382858255689457,
+      "threshold_f1": 0.2523719165085389,
+      "fit_seconds": 11.49273670790717,
+      "threshold_seconds": 0.17835874995216727,
+      "predict_seconds": 0.11135441693477333,
+      "total_seconds": 12.101630249992013,
+      "fit_rss_bytes": 1786019840,
+      "end_rss_bytes": 1890861056,
+      "serialized_bytes": 108029,
+      "versions": {
+        "python": "3.11.15",
+        "polars": "1.44.2",
+        "numpy": "2.4.6",
+        "scikit_learn": "1.9.1",
+        "lightgbm": "4.7.0",
+        "xgboost": "3.2.0",
+        "catboost": "1.2.10"
+      }
+    },
+    {
+      "transactions": 822359,
+      "frauds": 840,
+      "prevalence": 0.0010214517017506954,
+      "alerts": 227,
+      "tp": 171,
+      "fp": 56,
+      "fn": 669,
+      "precision": 0.7533039647577092,
+      "recall": 0.20357142857142857,
+      "f1": 0.32052483598875353,
+      "model": "catboost",
+      "fold": 4,
+      "fit_steps": [
+        1,
+        288
+      ],
+      "threshold_steps": [
+        289,
+        360
+      ],
+      "validation_steps": [
+        361,
+        432
+      ],
+      "fit_rows": 3958316,
+      "fit_frauds": 3279,
+      "threshold_rows": 1227741,
+      "threshold_frauds": 738,
+      "threshold": 0.13879610028426015,
+      "threshold_f1": 0.2741228070175439,
+      "fit_seconds": 17.201057333033532,
+      "threshold_seconds": 0.19192237500101328,
+      "predict_seconds": 0.07662162487395108,
+      "total_seconds": 17.82331437501125,
+      "fit_rss_bytes": 2230697984,
+      "end_rss_bytes": 2340831232,
+      "serialized_bytes": 111701,
+      "versions": {
+        "python": "3.11.15",
+        "polars": "1.44.2",
+        "numpy": "2.4.6",
+        "scikit_learn": "1.9.1",
+        "lightgbm": "4.7.0",
+        "xgboost": "3.2.0",
+        "catboost": "1.2.10"
+      }
+    },
+    {
+      "transactions": 55620,
+      "frauds": 764,
+      "prevalence": 0.01373606616325063,
+      "alerts": 146,
+      "tp": 146,
+      "fp": 0,
+      "fn": 618,
+      "precision": 1.0,
+      "recall": 0.19109947643979058,
+      "f1": 0.3208791208791209,
+      "model": "catboost",
+      "fold": 5,
+      "fit_steps": [
+        1,
+        360
+      ],
+      "threshold_steps": [
+        361,
+        432
+      ],
+      "validation_steps": [
+        433,
+        504
+      ],
+      "fit_rows": 5186057,
+      "fit_frauds": 4017,
+      "threshold_rows": 822359,
+      "threshold_frauds": 840,
+      "threshold": 0.1706968712628441,
+      "threshold_f1": 0.32037914691943126,
+      "fit_seconds": 25.818193458020687,
+      "threshold_seconds": 0.24795387499034405,
+      "predict_seconds": 0.017800125060603023,
+      "total_seconds": 26.57146937516518,
+      "fit_rss_bytes": 1732182016,
+      "end_rss_bytes": 1841135616,
+      "serialized_bytes": 109357,
+      "versions": {
+        "python": "3.11.15",
+        "polars": "1.44.2",
+        "numpy": "2.4.6",
+        "scikit_learn": "1.9.1",
+        "lightgbm": "4.7.0",
+        "xgboost": "3.2.0",
+        "catboost": "1.2.10"
+      }
+    },
+    {
+      "transactions": 1288139,
+      "frauds": 805,
+      "prevalence": 0.0006249325577441564,
+      "alerts": 436,
+      "tp": 173,
+      "fp": 263,
+      "fn": 632,
+      "precision": 0.3967889908256881,
+      "recall": 0.21490683229813665,
+      "f1": 0.27880741337630943,
+      "model": "mlp",
+      "fold": 1,
+      "fit_steps": [
+        1,
+        72
+      ],
+      "threshold_steps": [
+        73,
+        144
+      ],
+      "validation_steps": [
+        145,
+        216
+      ],
+      "fit_rows": 1030563,
+      "fit_frauds": 890,
+      "threshold_rows": 479034,
+      "threshold_frauds": 742,
+      "threshold": 0.14217332005500793,
+      "threshold_f1": 0.3381742738589212,
+      "fit_seconds": 9.642759584123269,
+      "threshold_seconds": 0.09577383403666317,
+      "predict_seconds": 0.05239579197950661,
+      "total_seconds": 11.016168375033885,
+      "fit_rss_bytes": 758743040,
+      "end_rss_bytes": 943423488,
+      "serialized_bytes": 10594,
+      "versions": {
+        "python": "3.11.15",
+        "polars": "1.44.2",
+        "numpy": "2.4.6",
+        "scikit_learn": "1.9.1",
+        "lightgbm": "4.7.0",
+        "xgboost": "3.2.0",
+        "catboost": "1.2.10"
+      }
+    },
+    {
+      "transactions": 1160580,
+      "frauds": 842,
+      "prevalence": 0.0007254993193058643,
+      "alerts": 910,
+      "tp": 157,
+      "fp": 753,
+      "fn": 685,
+      "precision": 0.17252747252747253,
+      "recall": 0.18646080760095013,
+      "f1": 0.17922374429223745,
+      "model": "mlp",
+      "fold": 2,
+      "fit_steps": [
+        1,
+        144
+      ],
+      "threshold_steps": [
+        145,
+        216
+      ],
+      "validation_steps": [
+        217,
+        288
+      ],
+      "fit_rows": 1509597,
+      "fit_frauds": 1632,
+      "threshold_rows": 1288139,
+      "threshold_frauds": 805,
+      "threshold": 0.2524600327014923,
+      "threshold_f1": 0.30269266480965645,
+      "fit_seconds": 12.471283291932195,
+      "threshold_seconds": 0.19538558297790587,
+      "predict_seconds": 0.02993287518620491,
+      "total_seconds": 13.281855040928349,
+      "fit_rss_bytes": 870023168,
+      "end_rss_bytes": 1019412480,
+      "serialized_bytes": 10578,
+      "versions": {
+        "python": "3.11.15",
+        "polars": "1.44.2",
+        "numpy": "2.4.6",
+        "scikit_learn": "1.9.1",
+        "lightgbm": "4.7.0",
+        "xgboost": "3.2.0",
+        "catboost": "1.2.10"
+      }
+    },
+    {
+      "transactions": 1227741,
+      "frauds": 738,
+      "prevalence": 0.0006011039787707668,
+      "alerts": 9713,
+      "tp": 159,
+      "fp": 9554,
+      "fn": 579,
+      "precision": 0.016369813651806855,
+      "recall": 0.21544715447154472,
+      "f1": 0.0304277102669601,
+      "model": "mlp",
+      "fold": 3,
+      "fit_steps": [
+        1,
+        216
+      ],
+      "threshold_steps": [
+        217,
+        288
+      ],
+      "validation_steps": [
+        289,
+        360
+      ],
+      "fit_rows": 2797736,
+      "fit_frauds": 2437,
+      "threshold_rows": 1160580,
+      "threshold_frauds": 842,
+      "threshold": 0.1264079511165619,
+      "threshold_f1": 0.18302658486707565,
+      "fit_seconds": 20.54472150001675,
+      "threshold_seconds": 0.13893683394417167,
+      "predict_seconds": 0.032937249867245555,
+      "total_seconds": 21.16953591699712,
+      "fit_rss_bytes": 982056960,
+      "end_rss_bytes": 1246314496,
+      "serialized_bytes": 10546,
+      "versions": {
+        "python": "3.11.15",
+        "polars": "1.44.2",
+        "numpy": "2.4.6",
+        "scikit_learn": "1.9.1",
+        "lightgbm": "4.7.0",
+        "xgboost": "3.2.0",
+        "catboost": "1.2.10"
+      }
+    },
+    {
+      "transactions": 822359,
+      "frauds": 840,
+      "prevalence": 0.0010214517017506954,
+      "alerts": 161,
+      "tp": 144,
+      "fp": 17,
+      "fn": 696,
+      "precision": 0.8944099378881988,
+      "recall": 0.17142857142857143,
+      "f1": 0.28771228771228774,
+      "model": "mlp",
+      "fold": 4,
+      "fit_steps": [
+        1,
+        288
+      ],
+      "threshold_steps": [
+        289,
+        360
+      ],
+      "validation_steps": [
+        361,
+        432
+      ],
+      "fit_rows": 3958316,
+      "fit_frauds": 3279,
+      "threshold_rows": 1227741,
+      "threshold_frauds": 738,
+      "threshold": 0.20676136016845703,
+      "threshold_f1": 0.2491186839012926,
+      "fit_seconds": 24.79502062499523,
+      "threshold_seconds": 0.14023541612550616,
+      "predict_seconds": 0.018312582978978753,
+      "total_seconds": 26.36674249987118,
+      "fit_rss_bytes": 1014661120,
+      "end_rss_bytes": 1087750144,
+      "serialized_bytes": 10546,
+      "versions": {
+        "python": "3.11.15",
+        "polars": "1.44.2",
+        "numpy": "2.4.6",
+        "scikit_learn": "1.9.1",
+        "lightgbm": "4.7.0",
+        "xgboost": "3.2.0",
+        "catboost": "1.2.10"
+      }
+    },
+    {
+      "transactions": 55620,
+      "frauds": 764,
+      "prevalence": 0.01373606616325063,
+      "alerts": 142,
+      "tp": 142,
+      "fp": 0,
+      "fn": 622,
+      "precision": 1.0,
+      "recall": 0.18586387434554974,
+      "f1": 0.31346578366445915,
+      "model": "mlp",
+      "fold": 5,
+      "fit_steps": [
+        1,
+        360
+      ],
+      "threshold_steps": [
+        361,
+        432
+      ],
+      "validation_steps": [
+        433,
+        504
+      ],
+      "fit_rows": 5186057,
+      "fit_frauds": 4017,
+      "threshold_rows": 822359,
+      "threshold_frauds": 840,
+      "threshold": 0.07815652340650558,
+      "threshold_f1": 0.3169082125603865,
+      "fit_seconds": 31.65493795904331,
+      "threshold_seconds": 0.09501879196614027,
+      "predict_seconds": 0.0011874591000378132,
+      "total_seconds": 32.18717125011608,
+      "fit_rss_bytes": 1235943424,
+      "end_rss_bytes": 1288142848,
+      "serialized_bytes": 10546,
+      "versions": {
+        "python": "3.11.15",
+        "polars": "1.44.2",
+        "numpy": "2.4.6",
+        "scikit_learn": "1.9.1",
+        "lightgbm": "4.7.0",
+        "xgboost": "3.2.0",
+        "catboost": "1.2.10"
+      }
+    },
+    {
+      "transactions": 1288139,
+      "frauds": 805,
+      "prevalence": 0.0006249325577441564,
+      "alerts": 374,
+      "tp": 173,
+      "fp": 201,
+      "fn": 632,
+      "precision": 0.4625668449197861,
+      "recall": 0.21490683229813665,
+      "f1": 0.29346904156064463,
+      "model": "knn",
+      "fold": 1,
+      "fit_steps": [
+        1,
+        72
+      ],
+      "threshold_steps": [
+        73,
+        144
+      ],
+      "validation_steps": [
+        145,
+        216
+      ],
+      "fit_rows": 1030563,
+      "fit_frauds": 890,
+      "threshold_rows": 479034,
+      "threshold_frauds": 742,
+      "threshold": 0.28,
+      "threshold_f1": 0.3411016949152542,
+      "fit_seconds": 0.3582912089768797,
+      "threshold_seconds": 8.269829833880067,
+      "predict_seconds": 22.84806800005026,
+      "total_seconds": 31.886115957982838,
+      "fit_rss_bytes": 874561536,
+      "end_rss_bytes": 1072218112,
+      "serialized_bytes": 99080048,
+      "versions": {
+        "python": "3.11.15",
+        "polars": "1.44.2",
+        "numpy": "2.4.6",
+        "scikit_learn": "1.9.1",
+        "lightgbm": "4.7.0",
+        "xgboost": "3.2.0",
+        "catboost": "1.2.10"
+      }
+    },
+    {
+      "transactions": 1160580,
+      "frauds": 842,
+      "prevalence": 0.0007254993193058643,
+      "alerts": 933,
+      "tp": 160,
+      "fp": 773,
+      "fn": 682,
+      "precision": 0.1714898177920686,
+      "recall": 0.19002375296912113,
+      "f1": 0.18028169014084508,
+      "model": "knn",
+      "fold": 2,
+      "fit_steps": [
+        1,
+        144
+      ],
+      "threshold_steps": [
+        145,
+        216
+      ],
+      "validation_steps": [
+        217,
+        288
+      ],
+      "fit_rows": 1509597,
+      "fit_frauds": 1632,
+      "threshold_rows": 1288139,
+      "threshold_frauds": 805,
+      "threshold": 0.44,
+      "threshold_f1": 0.30347349177330896,
+      "fit_seconds": 0.6437087911181152,
+      "threshold_seconds": 35.427317209076136,
+      "predict_seconds": 31.88260441692546,
+      "total_seconds": 69.16954566701315,
+      "fit_rss_bytes": 857882624,
+      "end_rss_bytes": 974667776,
+      "serialized_bytes": 141235040,
+      "versions": {
+        "python": "3.11.15",
+        "polars": "1.44.2",
+        "numpy": "2.4.6",
+        "scikit_learn": "1.9.1",
+        "lightgbm": "4.7.0",
+        "xgboost": "3.2.0",
+        "catboost": "1.2.10"
+      }
+    },
+    {
+      "transactions": 1227741,
+      "frauds": 738,
+      "prevalence": 0.0006011039787707668,
+      "alerts": 8424,
+      "tp": 154,
+      "fp": 8270,
+      "fn": 584,
+      "precision": 0.01828110161443495,
+      "recall": 0.2086720867208672,
+      "f1": 0.0336171141672124,
+      "model": "knn",
+      "fold": 3,
+      "fit_steps": [
+        1,
+        216
+      ],
+      "threshold_steps": [
+        217,
+        288
+      ],
+      "validation_steps": [
+        289,
+        360
+      ],
+      "fit_rows": 2797736,
+      "fit_frauds": 2437,
+      "threshold_rows": 1160580,
+      "threshold_frauds": 842,
+      "threshold": 0.2,
+      "threshold_f1": 0.18330605564648117,
+      "fit_seconds": 1.2532097499351948,
+      "threshold_seconds": 44.26003654091619,
+      "predict_seconds": 46.93159233289771,
+      "total_seconds": 93.56129679107107,
+      "fit_rss_bytes": 1033748480,
+      "end_rss_bytes": 1263845376,
+      "serialized_bytes": 262979872,
+      "versions": {
+        "python": "3.11.15",
+        "polars": "1.44.2",
+        "numpy": "2.4.6",
+        "scikit_learn": "1.9.1",
+        "lightgbm": "4.7.0",
+        "xgboost": "3.2.0",
+        "catboost": "1.2.10"
+      }
+    },
+    {
+      "transactions": 822359,
+      "frauds": 840,
+      "prevalence": 0.0010214517017506954,
+      "alerts": 276,
+      "tp": 166,
+      "fp": 110,
+      "fn": 674,
+      "precision": 0.6014492753623188,
+      "recall": 0.1976190476190476,
+      "f1": 0.2974910394265233,
+      "model": "knn",
+      "fold": 4,
+      "fit_steps": [
+        1,
+        288
+      ],
+      "threshold_steps": [
+        289,
+        360
+      ],
+      "validation_steps": [
+        361,
+        432
+      ],
+      "fit_rows": 3958316,
+      "fit_frauds": 3279,
+      "threshold_rows": 1227741,
+      "threshold_frauds": 738,
+      "threshold": 0.4,
+      "threshold_f1": 0.05550098231827112,
+      "fit_seconds": 1.715617208974436,
+      "threshold_seconds": 45.03907220787369,
+      "predict_seconds": 34.870603792136535,
+      "total_seconds": 82.79461799981073,
+      "fit_rss_bytes": 1205960704,
+      "end_rss_bytes": 1471201280,
+      "serialized_bytes": 381888128,
+      "versions": {
+        "python": "3.11.15",
+        "polars": "1.44.2",
+        "numpy": "2.4.6",
+        "scikit_learn": "1.9.1",
+        "lightgbm": "4.7.0",
+        "xgboost": "3.2.0",
+        "catboost": "1.2.10"
+      }
+    },
+    {
+      "transactions": 55620,
+      "frauds": 764,
+      "prevalence": 0.01373606616325063,
+      "alerts": 149,
+      "tp": 149,
+      "fp": 0,
+      "fn": 615,
+      "precision": 1.0,
+      "recall": 0.1950261780104712,
+      "f1": 0.3263964950711939,
+      "model": "knn",
+      "fold": 5,
+      "fit_steps": [
+        1,
+        360
+      ],
+      "threshold_steps": [
+        361,
+        432
+      ],
+      "validation_steps": [
+        433,
+        504
+      ],
+      "fit_rows": 5186057,
+      "fit_frauds": 4017,
+      "threshold_rows": 822359,
+      "threshold_frauds": 840,
+      "threshold": 0.24,
+      "threshold_f1": 0.33665158371040727,
+      "fit_seconds": 2.6944493751507252,
+      "threshold_seconds": 47.31025304202922,
+      "predict_seconds": 3.0270801668521017,
+      "total_seconds": 54.43943912512623,
+      "fit_rss_bytes": 829833216,
+      "end_rss_bytes": 1394737152,
+      "serialized_bytes": 489929344,
+      "versions": {
+        "python": "3.11.15",
+        "polars": "1.44.2",
+        "numpy": "2.4.6",
+        "scikit_learn": "1.9.1",
+        "lightgbm": "4.7.0",
+        "xgboost": "3.2.0",
+        "catboost": "1.2.10"
+      }
+    }
+  ],
+  "summary": [
+    {
+      "model": "xgboost",
+      "precision_mean": 0.7713984012723568,
+      "recall_mean": 0.17521766976401362,
+      "f1_mean": 0.28178070536530886,
+      "f1_min": 0.24807692307692308,
+      "f1_std": 0.035739260509197804,
+      "fit_seconds_median": 2.0465057499241084,
+      "fit_seconds_total": 10.920798998791724,
+      "predict_seconds_total": 0.7673266672063619,
+      "alert_total": 988,
+      "fp_total": 288,
+      "fn_total": 3289,
+      "model_size_bytes_fold_5": 186288,
+      "peak_rss_bytes": 1334968320
+    },
+    {
+      "model": "catboost",
+      "precision_mean": 0.7697447996943128,
+      "recall_mean": 0.1749697881059285,
+      "f1_mean": 0.2814356979673779,
+      "f1_min": 0.24639076034648702,
+      "f1_std": 0.0363126112086865,
+      "fit_seconds_median": 11.49273670790717,
+      "fit_seconds_total": 64.9740872499533,
+      "predict_seconds_total": 0.423686500871554,
+      "alert_total": 986,
+      "fp_total": 287,
+      "fn_total": 3290,
+      "model_size_bytes_fold_5": 109357,
+      "peak_rss_bytes": 2684698624
+    },
+    {
+      "model": "extra_trees",
+      "precision_mean": 0.6738015048494024,
+      "recall_mean": 0.180681168722514,
+      "f1_mean": 0.2579718030793838,
+      "f1_min": 0.17857142857142858,
+      "f1_std": 0.07115788993219332,
+      "fit_seconds_median": 8.405581749975681,
+      "fit_seconds_total": 38.88967554154806,
+      "predict_seconds_total": 2.0115453749895096,
+      "alert_total": 1833,
+      "fp_total": 1107,
+      "fn_total": 3263,
+      "model_size_bytes_fold_5": 2190058,
+      "peak_rss_bytes": 2090057728
+    },
+    {
+      "model": "random_forest",
+      "precision_mean": 0.6745320852071424,
+      "recall_mean": 0.17782054222241614,
+      "f1_mean": 0.24827002294149758,
+      "f1_min": 0.17465388711395102,
+      "f1_std": 0.05743165699297329,
+      "fit_seconds_median": 45.66032191715203,
+      "fit_seconds_total": 241.22736945794895,
+      "predict_seconds_total": 2.1467876660171896,
+      "alert_total": 1995,
+      "fp_total": 1282,
+      "fn_total": 3276,
+      "model_size_bytes_fold_5": 3410058,
+      "peak_rss_bytes": 2054864896
+    },
+    {
+      "model": "knn",
+      "precision_mean": 0.4507574079377217,
+      "recall_mean": 0.20124957952352876,
+      "f1_mean": 0.22625107607328385,
+      "f1_min": 0.0336171141672124,
+      "f1_std": 0.12128841652414006,
+      "fit_seconds_median": 1.2532097499351948,
+      "fit_seconds_total": 6.665276334155351,
+      "predict_seconds_total": 139.55994870886207,
+      "alert_total": 10156,
+      "fp_total": 9354,
+      "fn_total": 3187,
+      "model_size_bytes_fold_5": 489929344,
+      "peak_rss_bytes": 1761755136
+    },
+    {
+      "model": "mlp",
+      "precision_mean": 0.49601924297863326,
+      "recall_mean": 0.19482144802895054,
+      "f1_mean": 0.21792738786245078,
+      "f1_min": 0.0304277102669601,
+      "f1_std": 0.11657400648307509,
+      "fit_seconds_median": 20.54472150001675,
+      "fit_seconds_total": 99.10872296011075,
+      "predict_seconds_total": 0.13476595911197364,
+      "alert_total": 11362,
+      "fp_total": 10587,
+      "fn_total": 3214,
+      "model_size_bytes_fold_5": 10546,
+      "peak_rss_bytes": 1288175616
+    },
+    {
+      "model": "decision_tree",
+      "precision_mean": 0.4831268306125702,
+      "recall_mean": 0.19166011345093278,
+      "f1_mean": 0.2099719769511036,
+      "f1_min": 0.028372688998718653,
+      "f1_std": 0.11527748990225753,
+      "fit_seconds_median": 2.734751584008336,
+      "fit_seconds_total": 15.093775833956897,
+      "predict_seconds_total": 0.056729583302512765,
+      "alert_total": 11998,
+      "fp_total": 11236,
+      "fn_total": 3227,
+      "model_size_bytes_fold_5": 13802,
+      "peak_rss_bytes": 1193934848
+    },
+    {
+      "model": "lightgbm",
+      "precision_mean": 0.27832722030221546,
+      "recall_mean": 0.11327513527574395,
+      "f1_mean": 0.13267855243933344,
+      "f1_min": 0.007658153081591918,
+      "f1_std": 0.11914935568040817,
+      "fit_seconds_median": 1.7824079999700189,
+      "fit_seconds_total": 9.588991165859625,
+      "predict_seconds_total": 3.4318522079847753,
+      "alert_total": 24879,
+      "fp_total": 24430,
+      "fn_total": 3540,
+      "model_size_bytes_fold_5": 362855,
+      "peak_rss_bytes": 1255407616
+    },
+    {
+      "model": "hist_gradient_boosting",
+      "precision_mean": 0.17836698919290564,
+      "recall_mean": 0.11034409115981705,
+      "f1_mean": 0.09103696783752614,
+      "f1_min": 0.00763886067205721,
+      "f1_std": 0.10735686491896566,
+      "fit_seconds_median": 6.43817974999547,
+      "fit_seconds_total": 31.682079208781943,
+      "predict_seconds_total": 4.426061291946098,
+      "alert_total": 31464,
+      "fp_total": 31027,
+      "fn_total": 3552,
+      "model_size_bytes_fold_5": 365681,
+      "peak_rss_bytes": 1640054784
+    },
+    {
+      "model": "sgd",
+      "precision_mean": 0.08994324442608419,
+      "recall_mean": 0.08094202427452668,
+      "f1_mean": 0.06002847624164884,
+      "f1_min": 0.009709550514773584,
+      "f1_std": 0.04031303997971288,
+      "fit_seconds_median": 1.3547118329443038,
+      "fit_seconds_total": 7.186684582848102,
+      "predict_seconds_total": 0.03564320830628276,
+      "alert_total": 16383,
+      "fp_total": 16059,
+      "fn_total": 3665,
+      "model_size_bytes_fold_5": 1631,
+      "peak_rss_bytes": 1076527104
+    },
+    {
+      "model": "logistic",
+      "precision_mean": 0.18527788872956658,
+      "recall_mean": 0.17111781118572414,
+      "f1_mean": 0.03770181327877403,
+      "f1_min": 0.008307372793354102,
+      "f1_std": 0.02509805397463677,
+      "fit_seconds_median": 0.3136509999167174,
+      "fit_seconds_total": 1.676597208250314,
+      "predict_seconds_total": 0.031989624025300145,
+      "alert_total": 77457,
+      "fp_total": 76749,
+      "fn_total": 3281,
+      "model_size_bytes_fold_5": 1365,
+      "peak_rss_bytes": 1136656384
+    },
+    {
+      "model": "gaussian_nb",
+      "precision_mean": 0.008161096229379744,
+      "recall_mean": 0.9992857142857143,
+      "f1_mean": 0.015870225254956738,
+      "f1_min": 0.0027543993879112472,
+      "f1_std": 0.027897948728792952,
+      "fit_seconds_median": 0.15410704095847905,
+      "fit_seconds_total": 0.8058158317580819,
+      "predict_seconds_total": 0.2833798751235008,
+      "alert_total": 1984616,
+      "fp_total": 1980630,
+      "fn_total": 3,
+      "model_size_bytes_fold_5": 1321,
+      "peak_rss_bytes": 889880576
+    },
+    {
+      "model": "dummy",
+      "precision_mean": 0.0033418107441644225,
+      "recall_mean": 1.0,
+      "f1_mean": 0.006608244452626612,
+      "f1_min": 0.001201485739682974,
+      "f1_std": 0.01146004407877658,
+      "fit_seconds_median": 0.038877125130966306,
+      "fit_seconds_total": 0.20984570821747184,
+      "predict_seconds_total": 0.027178209042176604,
+      "alert_total": 4554439,
+      "fp_total": 4550450,
+      "fn_total": 0,
+      "model_size_bytes_fold_5": 680,
+      "peak_rss_bytes": 770719744
+    }
+  ],
+  "phase1_rule_choice": "xgboost",
+  "selection_trace": [
+    "F1 moyen à moins de 0,005 du meilleur : xgboost, catboost",
+    "F1 minimum à moins de 0,005 du meilleur : xgboost, catboost",
+    "Écart-type à moins de 0,005 du meilleur : xgboost, catboost",
+    "Temps médian à moins de 20 % du plus court : xgboost",
+    "Taille à moins de 20 % de la plus petite : xgboost"
+  ],
+  "flag_reference": [
+    {
+      "transactions": 1288139,
+      "frauds": 805,
+      "prevalence": 0.0006249325577441564,
+      "alerts": 1,
+      "tp": 1,
+      "fp": 0,
+      "fn": 804,
+      "precision": 1.0,
+      "recall": 0.0012422360248447205,
+      "f1": 0.0024813895781637717,
+      "fold": 1
+    },
+    {
+      "transactions": 1160580,
+      "frauds": 842,
+      "prevalence": 0.0007254993193058643,
+      "alerts": 2,
+      "tp": 2,
+      "fp": 0,
+      "fn": 840,
+      "precision": 1.0,
+      "recall": 0.0023752969121140144,
+      "f1": 0.004739336492890996,
+      "fold": 2
+    },
+    {
+      "transactions": 1227741,
+      "frauds": 738,
+      "prevalence": 0.0006011039787707668,
+      "alerts": 0,
+      "tp": 0,
+      "fp": 0,
+      "fn": 738,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "fold": 3
+    },
+    {
+      "transactions": 822359,
+      "frauds": 840,
+      "prevalence": 0.0010214517017506954,
+      "alerts": 3,
+      "tp": 3,
+      "fp": 0,
+      "fn": 837,
+      "precision": 1.0,
+      "recall": 0.0035714285714285713,
+      "f1": 0.0071174377224199285,
+      "fold": 4
+    },
+    {
+      "transactions": 55620,
+      "frauds": 764,
+      "prevalence": 0.01373606616325063,
+      "alerts": 0,
+      "tp": 0,
+      "fp": 0,
+      "fn": 764,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "fold": 5
+    }
+  ],
+  "status": {
+    "dummy_fold_1": {
+      "state": "ok",
+      "exit_code": 0,
+      "reason": null,
+      "elapsed_seconds": 3.02,
+      "peak_rss_bytes": 614006784
+    },
+    "dummy_fold_2": {
+      "state": "ok",
+      "exit_code": 0,
+      "reason": null,
+      "elapsed_seconds": 2.01,
+      "peak_rss_bytes": 307871744
+    },
+    "dummy_fold_3": {
+      "state": "ok",
+      "exit_code": 0,
+      "reason": null,
+      "elapsed_seconds": 2.02,
+      "peak_rss_bytes": 749780992
+    },
+    "dummy_fold_4": {
+      "state": "ok",
+      "exit_code": 0,
+      "reason": null,
+      "elapsed_seconds": 2.02,
+      "peak_rss_bytes": 377520128
+    },
+    "dummy_fold_5": {
+      "state": "ok",
+      "exit_code": 0,
+      "reason": null,
+      "elapsed_seconds": 2.02,
+      "peak_rss_bytes": 770719744
+    },
+    "logistic_fold_1": {
+      "state": "ok",
+      "exit_code": 0,
+      "reason": null,
+      "elapsed_seconds": 2.02,
+      "peak_rss_bytes": 379863040
+    },
+    "logistic_fold_2": {
+      "state": "ok",
+      "exit_code": 0,
+      "reason": null,
+      "elapsed_seconds": 2.01,
+      "peak_rss_bytes": 317849600
+    },
+    "logistic_fold_3": {
+      "state": "ok",
+      "exit_code": 0,
+      "reason": null,
+      "elapsed_seconds": 2.01,
+      "peak_rss_bytes": 715685888
+    },
+    "logistic_fold_4": {
+      "state": "ok",
+      "exit_code": 0,
+      "reason": null,
+      "elapsed_seconds": 2.02,
+      "peak_rss_bytes": 860684288
+    },
+    "logistic_fold_5": {
+      "state": "ok",
+      "exit_code": 0,
+      "reason": null,
+      "elapsed_seconds": 3.02,
+      "peak_rss_bytes": 1136656384
+    },
+    "sgd_fold_1": {
+      "state": "ok",
+      "exit_code": 0,
+      "reason": null,
+      "elapsed_seconds": 2.02,
+      "peak_rss_bytes": 880754688
+    },
+    "sgd_fold_2": {
+      "state": "ok",
+      "exit_code": 0,
+      "reason": null,
+      "elapsed_seconds": 3.02,
+      "peak_rss_bytes": 852164608
+    },
+    "sgd_fold_3": {
+      "state": "ok",
+      "exit_code": 0,
+      "reason": null,
+      "elapsed_seconds": 3.02,
+      "peak_rss_bytes": 911147008
+    },
+    "sgd_fold_4": {
+      "state": "ok",
+      "exit_code": 0,
+      "reason": null,
+      "elapsed_seconds": 4.02,
+      "peak_rss_bytes": 997965824
+    },
+    "sgd_fold_5": {
+      "state": "ok",
+      "exit_code": 0,
+      "reason": null,
+      "elapsed_seconds": 5.03,
+      "peak_rss_bytes": 1076527104
+    },
+    "gaussian_nb_fold_1": {
+      "state": "ok",
+      "exit_code": 0,
+      "reason": null,
+      "elapsed_seconds": 2.02,
+      "peak_rss_bytes": 889880576
+    },
+    "gaussian_nb_fold_2": {
+      "state": "ok",
+      "exit_code": 0,
+      "reason": null,
+      "elapsed_seconds": 2.02,
+      "peak_rss_bytes": 329023488
+    },
+    "gaussian_nb_fold_3": {
+      "state": "ok",
+      "exit_code": 0,
+      "reason": null,
+      "elapsed_seconds": 2.01,
+      "peak_rss_bytes": 803520512
+    },
+    "gaussian_nb_fold_4": {
+      "state": "ok",
+      "exit_code": 0,
+      "reason": null,
+      "elapsed_seconds": 2.02,
+      "peak_rss_bytes": 204652544
+    },
+    "gaussian_nb_fold_5": {
+      "state": "ok",
+      "exit_code": 0,
+      "reason": null,
+      "elapsed_seconds": 2.01,
+      "peak_rss_bytes": 803127296
+    },
+    "decision_tree_fold_1": {
+      "state": "ok",
+      "exit_code": 0,
+      "reason": null,
+      "elapsed_seconds": 3.02,
+      "peak_rss_bytes": 812187648
+    },
+    "decision_tree_fold_2": {
+      "state": "ok",
+      "exit_code": 0,
+      "reason": null,
+      "elapsed_seconds": 3.02,
+      "peak_rss_bytes": 842285056
+    },
+    "decision_tree_fold_3": {
+      "state": "ok",
+      "exit_code": 0,
+      "reason": null,
+      "elapsed_seconds": 5.03,
+      "peak_rss_bytes": 953958400
+    },
+    "decision_tree_fold_4": {
+      "state": "ok",
+      "exit_code": 0,
+      "reason": null,
+      "elapsed_seconds": 7.04,
+      "peak_rss_bytes": 1036550144
+    },
+    "decision_tree_fold_5": {
+      "state": "ok",
+      "exit_code": 0,
+      "reason": null,
+      "elapsed_seconds": 7.04,
+      "peak_rss_bytes": 1193934848
+    },
+    "random_forest_fold_1": {
+      "state": "ok",
+      "exit_code": 0,
+      "reason": null,
+      "elapsed_seconds": 16.07,
+      "peak_rss_bytes": 1692172288
+    },
+    "random_forest_fold_2": {
+      "state": "ok",
+      "exit_code": 0,
+      "reason": null,
+      "elapsed_seconds": 25.09,
+      "peak_rss_bytes": 1276952576
+    },
+    "random_forest_fold_3": {
+      "state": "ok",
+      "exit_code": 0,
+      "reason": null,
+      "elapsed_seconds": 48.2,
+      "peak_rss_bytes": 1589968896
+    },
+    "random_forest_fold_4": {
+      "state": "ok",
+      "exit_code": 0,
+      "reason": null,
+      "elapsed_seconds": 70.25,
+      "peak_rss_bytes": 1857912832
+    },
+    "random_forest_fold_5": {
+      "state": "ok",
+      "exit_code": 0,
+      "reason": null,
+      "elapsed_seconds": 97.38,
+      "peak_rss_bytes": 2054864896
+    },
+    "extra_trees_fold_1": {
+      "state": "ok",
+      "exit_code": 0,
+      "reason": null,
+      "elapsed_seconds": 6.03,
+      "peak_rss_bytes": 1294827520
+    },
+    "extra_trees_fold_2": {
+      "state": "ok",
+      "exit_code": 0,
+      "reason": null,
+      "elapsed_seconds": 7.02,
+      "peak_rss_bytes": 1144127488
+    },
+    "extra_trees_fold_3": {
+      "state": "ok",
+      "exit_code": 0,
+      "reason": null,
+      "elapsed_seconds": 12.03,
+      "peak_rss_bytes": 1442594816
+    },
+    "extra_trees_fold_4": {
+      "state": "ok",
+      "exit_code": 0,
+      "reason": null,
+      "elapsed_seconds": 13.05,
+      "peak_rss_bytes": 1780613120
+    },
+    "extra_trees_fold_5": {
+      "state": "ok",
+      "exit_code": 0,
+      "reason": null,
+      "elapsed_seconds": 17.07,
+      "peak_rss_bytes": 2090057728
+    },
+    "hist_gradient_boosting_fold_1": {
+      "state": "ok",
+      "exit_code": 0,
+      "reason": null,
+      "elapsed_seconds": 6.03,
+      "peak_rss_bytes": 1141997568
+    },
+    "hist_gradient_boosting_fold_2": {
+      "state": "ok",
+      "exit_code": 0,
+      "reason": null,
+      "elapsed_seconds": 7.02,
+      "peak_rss_bytes": 1195704320
+    },
+    "hist_gradient_boosting_fold_3": {
+      "state": "ok",
+      "exit_code": 0,
+      "reason": null,
+      "elapsed_seconds": 11.05,
+      "peak_rss_bytes": 1215119360
+    },
+    "hist_gradient_boosting_fold_4": {
+      "state": "ok",
+      "exit_code": 0,
+      "reason": null,
+      "elapsed_seconds": 14.06,
+      "peak_rss_bytes": 1257570304
+    },
+    "hist_gradient_boosting_fold_5": {
+      "state": "ok",
+      "exit_code": 0,
+      "reason": null,
+      "elapsed_seconds": 13.06,
+      "peak_rss_bytes": 1640054784
+    },
+    "lightgbm_fold_1": {
+      "state": "ok",
+      "exit_code": 0,
+      "reason": null,
+      "elapsed_seconds": 4.02,
+      "peak_rss_bytes": 936181760
+    },
+    "lightgbm_fold_2": {
+      "state": "ok",
+      "exit_code": 0,
+      "reason": null,
+      "elapsed_seconds": 5.03,
+      "peak_rss_bytes": 906559488
+    },
+    "lightgbm_fold_3": {
+      "state": "ok",
+      "exit_code": 0,
+      "reason": null,
+      "elapsed_seconds": 5.03,
+      "peak_rss_bytes": 1103806464
+    },
+    "lightgbm_fold_4": {
+      "state": "ok",
+      "exit_code": 0,
+      "reason": null,
+      "elapsed_seconds": 6.03,
+      "peak_rss_bytes": 1165656064
+    },
+    "lightgbm_fold_5": {
+      "state": "ok",
+      "exit_code": 0,
+      "reason": null,
+      "elapsed_seconds": 6.03,
+      "peak_rss_bytes": 1255407616
+    },
+    "xgboost_fold_1": {
+      "state": "ok",
+      "exit_code": 0,
+      "reason": null,
+      "elapsed_seconds": 3.02,
+      "peak_rss_bytes": 871399424
+    },
+    "xgboost_fold_2": {
+      "state": "ok",
+      "exit_code": 0,
+      "reason": null,
+      "elapsed_seconds": 3.02,
+      "peak_rss_bytes": 923090944
+    },
+    "xgboost_fold_3": {
+      "state": "ok",
+      "exit_code": 0,
+      "reason": null,
+      "elapsed_seconds": 4.02,
+      "peak_rss_bytes": 1060864000
+    },
+    "xgboost_fold_4": {
+      "state": "ok",
+      "exit_code": 0,
+      "reason": null,
+      "elapsed_seconds": 5.02,
+      "peak_rss_bytes": 1208975360
+    },
+    "xgboost_fold_5": {
+      "state": "ok",
+      "exit_code": 0,
+      "reason": null,
+      "elapsed_seconds": 6.03,
+      "peak_rss_bytes": 1334968320
+    },
+    "catboost_fold_1": {
+      "state": "ok",
+      "exit_code": 0,
+      "reason": null,
+      "elapsed_seconds": 6.03,
+      "peak_rss_bytes": 1180188672
+    },
+    "catboost_fold_2": {
+      "state": "ok",
+      "exit_code": 0,
+      "reason": null,
+      "elapsed_seconds": 8.04,
+      "peak_rss_bytes": 1355022336
+    },
+    "catboost_fold_3": {
+      "state": "ok",
+      "exit_code": 0,
+      "reason": null,
+      "elapsed_seconds": 14.07,
+      "peak_rss_bytes": 1891106816
+    },
+    "catboost_fold_4": {
+      "state": "ok",
+      "exit_code": 0,
+      "reason": null,
+      "elapsed_seconds": 20.09,
+      "peak_rss_bytes": 2345959424
+    },
+    "catboost_fold_5": {
+      "state": "ok",
+      "exit_code": 0,
+      "reason": null,
+      "elapsed_seconds": 28.2,
+      "peak_rss_bytes": 2684698624
+    },
+    "mlp_fold_1": {
+      "state": "ok",
+      "exit_code": 0,
+      "reason": null,
+      "elapsed_seconds": 13.12,
+      "peak_rss_bytes": 758611968
+    },
+    "mlp_fold_2": {
+      "state": "ok",
+      "exit_code": 0,
+      "reason": null,
+      "elapsed_seconds": 15.12,
+      "peak_rss_bytes": 870170624
+    },
+    "mlp_fold_3": {
+      "state": "ok",
+      "exit_code": 0,
+      "reason": null,
+      "elapsed_seconds": 23.19,
+      "peak_rss_bytes": 1112129536
+    },
+    "mlp_fold_4": {
+      "state": "ok",
+      "exit_code": 0,
+      "reason": null,
+      "elapsed_seconds": 28.13,
+      "peak_rss_bytes": 1014808576
+    },
+    "mlp_fold_5": {
+      "state": "ok",
+      "exit_code": 0,
+      "reason": null,
+      "elapsed_seconds": 34.13,
+      "peak_rss_bytes": 1288175616
+    },
+    "knn_fold_1": {
+      "state": "ok",
+      "exit_code": 0,
+      "reason": null,
+      "elapsed_seconds": 33.12,
+      "peak_rss_bytes": 1742389248
+    },
+    "knn_fold_2": {
+      "state": "ok",
+      "exit_code": 0,
+      "reason": null,
+      "elapsed_seconds": 71.28,
+      "peak_rss_bytes": 1647345664
+    },
+    "knn_fold_3": {
+      "state": "ok",
+      "exit_code": 0,
+      "reason": null,
+      "elapsed_seconds": 95.36,
+      "peak_rss_bytes": 1761755136
+    },
+    "knn_fold_4": {
+      "state": "ok",
+      "exit_code": 0,
+      "reason": null,
+      "elapsed_seconds": 84.31,
+      "peak_rss_bytes": 1748860928
+    },
+    "knn_fold_5": {
+      "state": "ok",
+      "exit_code": 0,
+      "reason": null,
+      "elapsed_seconds": 56.24,
+      "peak_rss_bytes": 1324466176
+    }
+  },
+  "feasibility": [
+    {
+      "model": "knn",
+      "fit_rows": 10000,
+      "fit_frauds": 50,
+      "query_rows": 100,
+      "fit_seconds": 0.002608583075925708,
+      "predict_100_seconds": 0.02237620810046792
+    },
+    {
+      "model": "svc_rbf",
+      "fit_rows": 10000,
+      "fit_frauds": 50,
+      "query_rows": 100,
+      "fit_seconds": 0.05579150002449751,
+      "predict_100_seconds": 0.001525667030364275
+    },
+    {
+      "model": "knn",
+      "fit_rows": 20000,
+      "fit_frauds": 50,
+      "query_rows": 100,
+      "fit_seconds": 0.003512999974191189,
+      "predict_100_seconds": 0.013805583119392395
+    },
+    {
+      "model": "svc_rbf",
+      "fit_rows": 20000,
+      "fit_frauds": 50,
+      "query_rows": 100,
+      "fit_seconds": 0.11747304210439324,
+      "predict_100_seconds": 0.0009281670209020376
+    },
+    {
+      "model": "knn",
+      "fit_rows": 1030563,
+      "fit_frauds": 890,
+      "query_rows": 1000,
+      "fit_seconds": 0.3482808340340853,
+      "predict_1000_seconds": 0.026634042151272297
+    }
+  ],
+  "svc_trial": {
+    "model": "svc_rbf",
+    "fold": 1,
+    "state": "interrupted_for_feasibility",
+    "minimum_elapsed_seconds_observed": 200,
+    "result_available": false,
+    "note": "Essai sur la première fenêtre complète interrompu volontairement après au moins 200 secondes ; aucun score publié."
+  }
+}

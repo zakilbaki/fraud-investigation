@@ -29,7 +29,9 @@ from sklearn.ensemble import (
 from sklearn.linear_model import LogisticRegression, SGDClassifier
 from sklearn.naive_bayes import GaussianNB
 from sklearn.neural_network import MLPClassifier
+from sklearn.neighbors import KNeighborsClassifier
 from sklearn.preprocessing import StandardScaler
+from sklearn.svm import SVC
 from sklearn.tree import DecisionTreeClassifier
 from xgboost import XGBClassifier
 
@@ -42,10 +44,17 @@ FOLDS = (
     (288, 360, 432),
     (360, 432, 504),
 )
+EXPECTED_COUNTS = (
+    ((1_030_563, 890), (479_034, 742), (1_288_139, 805)),
+    ((1_509_597, 1_632), (1_288_139, 805), (1_160_580, 842)),
+    ((2_797_736, 2_437), (1_160_580, 842), (1_227_741, 738)),
+    ((3_958_316, 3_279), (1_227_741, 738), (822_359, 840)),
+    ((5_186_057, 4_017), (822_359, 840), (55_620, 764)),
+)
 MODELS = (
     "dummy", "logistic", "sgd", "gaussian_nb", "decision_tree",
     "random_forest", "extra_trees", "hist_gradient_boosting",
-    "lightgbm", "xgboost", "catboost", "mlp",
+    "lightgbm", "xgboost", "catboost", "mlp", "knn", "svc_rbf",
 )
 
 
@@ -80,7 +89,7 @@ class Features:
         self.scaler = None
 
     def fit(self, kind: np.ndarray, amount: np.ndarray):
-        if self.name in {"logistic", "sgd", "gaussian_nb", "mlp"}:
+        if self.name in {"logistic", "sgd", "gaussian_nb", "mlp", "knn", "svc_rbf"}:
             self.scaler = StandardScaler().fit(np.log1p(amount).reshape(-1, 1))
         return self
 
@@ -123,6 +132,10 @@ def candidate(name: str):
         return CatBoostClassifier(iterations=100, depth=6, learning_rate=0.1, loss_function="Logloss", task_type="CPU", thread_count=4, random_seed=42, allow_writing_files=False, verbose=False, cat_features=["type"])
     if name == "mlp":
         return MLPClassifier(hidden_layer_sizes=(16,), max_iter=30, **common)
+    if name == "knn":
+        return KNeighborsClassifier(n_neighbors=25, n_jobs=4)
+    if name == "svc_rbf":
+        return SVC(C=1, gamma="scale")
     raise ValueError(name)
 
 
@@ -173,6 +186,7 @@ def run_one(csv_path: Path, name: str, fold: int):
     reserve = (step > fit_end) & (step <= threshold_end)
     validation = (step > threshold_end) & (step <= val_end)
     assert int(fit.sum() + reserve.sum() + validation.sum()) == int((step <= val_end).sum())
+    assert tuple((int(mask.sum()), int(label[mask].sum())) for mask in (fit, reserve, validation)) == EXPECTED_COUNTS[fold - 1]
     assert label[fit].min() == 0 and label[fit].max() == 1
     assert label[reserve].min() == 0 and label[reserve].max() == 1
     assert label[validation].min() == 0 and label[validation].max() == 1

@@ -3,6 +3,8 @@
 import argparse
 from pathlib import Path
 
+from threadpoolctl import threadpool_limits
+
 from fraud_investigation.ml_benchmark import MODELS, run_one, write_result
 
 
@@ -17,7 +19,8 @@ def main():
     if destination.exists():
         print(f"Déjà présent : {destination}", flush=True)
         return
-    result = run_one(args.csv, args.model, args.fold)
+    with threadpool_limits(limits=4):
+        result = run_one(args.csv, args.model, args.fold)
     write_result(destination, result)
     print(f"{args.model} fenêtre {args.fold}: F1={result['f1']:.6f}, "
           f"précision={result['precision']:.6f}, rappel={result['recall']:.6f}, "

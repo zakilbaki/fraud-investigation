@@ -2,6 +2,7 @@
 
 import argparse
 import json
+import os
 import subprocess
 import sys
 import time
@@ -16,7 +17,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--csv", type=Path, default=Path("data/raw/PS_20174392719_1491204439457_log.csv"))
     parser.add_argument("--output", type=Path, default=Path("data/ml_benchmark"))
-    parser.add_argument("--models", nargs="+", choices=MODELS, default=MODELS[:-1])
+    parser.add_argument("--models", nargs="+", choices=MODELS, default=MODELS[:11])
     parser.add_argument("--folds", nargs="+", type=int, choices=range(1, 6), default=range(1, 6))
     parser.add_argument("--max-seconds", type=int, default=1800)
     args = parser.parse_args()
@@ -37,8 +38,12 @@ def main():
                        "--fold", str(fold), "--csv", str(args.csv), "--output", str(args.output)]
             print(f"Début {key}", flush=True)
             start = time.monotonic()
+            environment = os.environ.copy()
+            environment.update({key: "4" for key in (
+                "OMP_NUM_THREADS", "OPENBLAS_NUM_THREADS", "MKL_NUM_THREADS",
+                "VECLIB_MAXIMUM_THREADS", "NUMEXPR_NUM_THREADS")})
             with (args.output / f"{key}.log").open("w") as log:
-                process = subprocess.Popen(command, stdout=log, stderr=subprocess.STDOUT)
+                process = subprocess.Popen(command, stdout=log, stderr=subprocess.STDOUT, env=environment)
                 child = psutil.Process(process.pid)
                 peak = 0
                 reason = None
