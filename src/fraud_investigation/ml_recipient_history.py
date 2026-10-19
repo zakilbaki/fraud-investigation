@@ -47,3 +47,21 @@ def recipient_step_coverage(grouped: pl.DataFrame) -> pl.DataFrame:
     ).sort("step")
     assert sum(result[label] for label, _ in BUCKETS).sum() == result["rows"].sum()
     return result
+
+
+def counts_for_rows(frame: pl.DataFrame) -> pl.Series:
+    """Rattacher le compteur vérifié à chaque ligne dans son ordre original."""
+    if not {"step", "nameDest"}.issubset(frame.columns):
+        raise ValueError("step et nameDest requis")
+    grouped = recipient_step_history(frame.select("step", "nameDest"))
+    joined = (frame.select("step", "nameDest")
+              .with_row_index("row_index")
+              .join(grouped.select("step", "nameDest", "prior_count"),
+                    on=["step", "nameDest"], how="left", validate="m:1")
+              .sort("row_index"))
+    assert joined.height == frame.height
+    assert joined["prior_count"].null_count() == 0
+    assert (joined["row_index"].min() == 0
+            and joined["row_index"].max() == frame.height - 1
+            and joined["row_index"].is_sorted())
+    return joined["prior_count"]
