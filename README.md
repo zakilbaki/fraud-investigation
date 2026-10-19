@@ -167,6 +167,17 @@ uv run --locked python scripts/inspect_ml_sender_history.py
 
 Le script lit seulement `step` et `nameOrig` jusqu'au step 504. Il produit des [agrégats de couverture](docs/results/ml_sender_history_coverage.json) sans identifiants ni labels ; le [rapport F préalable](docs/ML_SENDER_HISTORY_COVERAGE.md) explique leur lecture. Ces commandes n'entraînent aucun modèle F et ne lancent pas G.
 
+## Mesurer la couverture de l'historique G avant entraînement
+
+Avec le même CSV audité, depuis la racine du dépôt :
+
+```sh
+uv run --locked python -m unittest tests.test_ml_recipient_history -v
+uv run --locked python scripts/inspect_ml_recipient_history.py
+```
+
+Le script lit seulement `step` et `nameDest` jusqu'au step 504 pour produire les [agrégats G](docs/results/ml_recipient_history_coverage.json), la [figure](docs/figures/ml_recipient_history_distribution.png) et le [rapport de couverture](docs/ML_RECIPIENT_HISTORY_COVERAGE.md). Il ne lit aucun label, ne calcule aucun score et n'entraîne aucun modèle. F est mis de côté, avec son diagnostic conservé.
+
 ## Portabilité et historique de vérification
 
 La procédure vise une installation reproductible sur toute machine où les prérequis sont disponibles. Les exécutions effectivement vérifiées ont eu lieu sur macOS Apple Silicon avec Python 3.11.15, `uv` 0.13.1 et Polars 1.44.2. Linux et Windows n'ont pas été testés ; leur compatibilité reste à vérifier. Le téléchargement public, l'audit et l'import complet ont réussi le 16 octobre 2026 sur cette machine. Les effectifs mesurés et les contrôles de cohérence sont conservés dans les documents liés en tête de page. Le notebook EDA a été réexécuté intégralement lors de la clôture du lot 4.0. Pour le lot 4.2, `uv run --locked` a réussi avec un cache temporaire explicitement accessible dans l'environnement restreint ; la commande avec le cache par défaut n'a pas été revérifiée.

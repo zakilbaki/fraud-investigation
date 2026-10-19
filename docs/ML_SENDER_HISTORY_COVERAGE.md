@@ -46,4 +46,4 @@ uv run --locked python -m unittest tests.test_ml_sender_history -v
 uv run --locked python scripts/inspect_ml_sender_history.py
 ```
 
-La faible couverture justifie une discussion avant les entraînements F. Aucun modèle final n'est choisi et G n'a pas commencé.
+**Décision après discussion : F est mis de côté, sans entraîner de modèle.** Sa faible couverture limite le nombre de lignes auxquelles le compteur peut apporter une information distincte, mais elle ne démontre pas que cette variable est inutile pour ces lignes. Le diagnostic et ses données agrégées restent publiés. Aucun modèle final n'est choisi.

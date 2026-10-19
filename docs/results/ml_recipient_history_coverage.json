@@ -1,0 +1,419 @@
+{
+  "experiment": "G_recipient_history_coverage_only",
+  "source_sha256": "16910f90577b0d981bf8ff289714510bb89bc71bff7d3f220f024e287e4eea6b",
+  "source_columns": [
+    "step",
+    "nameDest"
+  ],
+  "max_step": 504,
+  "definition": "Nombre de transactions avec nameDest égal et step strictement inférieur",
+  "overall": {
+    "steps": [
+      1,
+      504
+    ],
+    "transactions": 6064036,
+    "nonzero_transactions": 3427028,
+    "sum_prior": 30485842,
+    "max_prior": 112,
+    "distribution": {
+      "count_0": 2637008,
+      "count_1": 434877,
+      "count_2_4": 929973,
+      "count_5_9": 898395,
+      "count_10_19": 778890,
+      "count_20_49": 377510,
+      "count_50_99": 7353,
+      "count_100_499": 30,
+      "count_500_999": 0,
+      "count_1000_plus": 0
+    },
+    "nonzero_rate": 0.5651397847901959,
+    "mean_prior": 5.02731876921575
+  },
+  "windows": [
+    {
+      "fold": 1,
+      "fit": {
+        "steps": [
+          1,
+          72
+        ],
+        "transactions": 1030563,
+        "nonzero_transactions": 556672,
+        "sum_prior": 4415464,
+        "max_prior": 95,
+        "distribution": {
+          "count_0": 473891,
+          "count_1": 75370,
+          "count_2_4": 159473,
+          "count_5_9": 152562,
+          "count_10_19": 125823,
+          "count_20_49": 42473,
+          "count_50_99": 971,
+          "count_100_499": 0,
+          "count_500_999": 0,
+          "count_1000_plus": 0
+        },
+        "nonzero_rate": 0.5401629982834625,
+        "mean_prior": 4.284516327483133
+      },
+      "threshold": {
+        "steps": [
+          73,
+          144
+        ],
+        "transactions": 479034,
+        "nonzero_transactions": 271195,
+        "sum_prior": 2406467,
+        "max_prior": 97,
+        "distribution": {
+          "count_0": 207839,
+          "count_1": 33484,
+          "count_2_4": 71694,
+          "count_5_9": 71319,
+          "count_10_19": 64648,
+          "count_20_49": 29733,
+          "count_50_99": 317,
+          "count_100_499": 0,
+          "count_500_999": 0,
+          "count_1000_plus": 0
+        },
+        "nonzero_rate": 0.5661289177803663,
+        "mean_prior": 5.023582877207046
+      },
+      "validation": {
+        "steps": [
+          145,
+          216
+        ],
+        "transactions": 1288139,
+        "nonzero_transactions": 736208,
+        "sum_prior": 6574588,
+        "max_prior": 102,
+        "distribution": {
+          "count_0": 551931,
+          "count_1": 92516,
+          "count_2_4": 199362,
+          "count_5_9": 191915,
+          "count_10_19": 167235,
+          "count_20_49": 84089,
+          "count_50_99": 1086,
+          "count_100_499": 5,
+          "count_500_999": 0,
+          "count_1000_plus": 0
+        },
+        "nonzero_rate": 0.5715283831946708,
+        "mean_prior": 5.103942975098184
+      }
+    },
+    {
+      "fold": 2,
+      "fit": {
+        "steps": [
+          1,
+          144
+        ],
+        "transactions": 1509597,
+        "nonzero_transactions": 827867,
+        "sum_prior": 6821931,
+        "max_prior": 97,
+        "distribution": {
+          "count_0": 681730,
+          "count_1": 108854,
+          "count_2_4": 231167,
+          "count_5_9": 223881,
+          "count_10_19": 190471,
+          "count_20_49": 72206,
+          "count_50_99": 1288,
+          "count_100_499": 0,
+          "count_500_999": 0,
+          "count_1000_plus": 0
+        },
+        "nonzero_rate": 0.5484026531584257,
+        "mean_prior": 4.519041174565133
+      },
+      "threshold": {
+        "steps": [
+          145,
+          216
+        ],
+        "transactions": 1288139,
+        "nonzero_transactions": 736208,
+        "sum_prior": 6574588,
+        "max_prior": 102,
+        "distribution": {
+          "count_0": 551931,
+          "count_1": 92516,
+          "count_2_4": 199362,
+          "count_5_9": 191915,
+          "count_10_19": 167235,
+          "count_20_49": 84089,
+          "count_50_99": 1086,
+          "count_100_499": 5,
+          "count_500_999": 0,
+          "count_1000_plus": 0
+        },
+        "nonzero_rate": 0.5715283831946708,
+        "mean_prior": 5.103942975098184
+      },
+      "validation": {
+        "steps": [
+          217,
+          288
+        ],
+        "transactions": 1160580,
+        "nonzero_transactions": 657610,
+        "sum_prior": 5954816,
+        "max_prior": 105,
+        "distribution": {
+          "count_0": 502970,
+          "count_1": 82402,
+          "count_2_4": 176877,
+          "count_5_9": 171933,
+          "count_10_19": 148788,
+          "count_20_49": 76190,
+          "count_50_99": 1414,
+          "count_100_499": 6,
+          "count_500_999": 0,
+          "count_1000_plus": 0
+        },
+        "nonzero_rate": 0.5666218614830516,
+        "mean_prior": 5.130896620655189
+      }
+    },
+    {
+      "fold": 3,
+      "fit": {
+        "steps": [
+          1,
+          216
+        ],
+        "transactions": 2797736,
+        "nonzero_transactions": 1564075,
+        "sum_prior": 13396519,
+        "max_prior": 102,
+        "distribution": {
+          "count_0": 1233661,
+          "count_1": 201370,
+          "count_2_4": 430529,
+          "count_5_9": 415796,
+          "count_10_19": 357706,
+          "count_20_49": 156295,
+          "count_50_99": 2374,
+          "count_100_499": 5,
+          "count_500_999": 0,
+          "count_1000_plus": 0
+        },
+        "nonzero_rate": 0.5590502463420423,
+        "mean_prior": 4.788342788597638
+      },
+      "threshold": {
+        "steps": [
+          217,
+          288
+        ],
+        "transactions": 1160580,
+        "nonzero_transactions": 657610,
+        "sum_prior": 5954816,
+        "max_prior": 105,
+        "distribution": {
+          "count_0": 502970,
+          "count_1": 82402,
+          "count_2_4": 176877,
+          "count_5_9": 171933,
+          "count_10_19": 148788,
+          "count_20_49": 76190,
+          "count_50_99": 1414,
+          "count_100_499": 6,
+          "count_500_999": 0,
+          "count_1000_plus": 0
+        },
+        "nonzero_rate": 0.5666218614830516,
+        "mean_prior": 5.130896620655189
+      },
+      "validation": {
+        "steps": [
+          289,
+          360
+        ],
+        "transactions": 1227741,
+        "nonzero_transactions": 704381,
+        "sum_prior": 6532175,
+        "max_prior": 109,
+        "distribution": {
+          "count_0": 523360,
+          "count_1": 87917,
+          "count_2_4": 187415,
+          "count_5_9": 181568,
+          "count_10_19": 159833,
+          "count_20_49": 85573,
+          "count_50_99": 2064,
+          "count_100_499": 11,
+          "count_500_999": 0,
+          "count_1000_plus": 0
+        },
+        "nonzero_rate": 0.5737211675752459,
+        "mean_prior": 5.320482903153026
+      }
+    },
+    {
+      "fold": 4,
+      "fit": {
+        "steps": [
+          1,
+          288
+        ],
+        "transactions": 3958316,
+        "nonzero_transactions": 2221685,
+        "sum_prior": 19351335,
+        "max_prior": 105,
+        "distribution": {
+          "count_0": 1736631,
+          "count_1": 283772,
+          "count_2_4": 607406,
+          "count_5_9": 587729,
+          "count_10_19": 506494,
+          "count_20_49": 232485,
+          "count_50_99": 3788,
+          "count_100_499": 11,
+          "count_500_999": 0,
+          "count_1000_plus": 0
+        },
+        "nonzero_rate": 0.5612702472465564,
+        "mean_prior": 4.888779723498579
+      },
+      "threshold": {
+        "steps": [
+          289,
+          360
+        ],
+        "transactions": 1227741,
+        "nonzero_transactions": 704381,
+        "sum_prior": 6532175,
+        "max_prior": 109,
+        "distribution": {
+          "count_0": 523360,
+          "count_1": 87917,
+          "count_2_4": 187415,
+          "count_5_9": 181568,
+          "count_10_19": 159833,
+          "count_20_49": 85573,
+          "count_50_99": 2064,
+          "count_100_499": 11,
+          "count_500_999": 0,
+          "count_1000_plus": 0
+        },
+        "nonzero_rate": 0.5737211675752459,
+        "mean_prior": 5.320482903153026
+      },
+      "validation": {
+        "steps": [
+          361,
+          432
+        ],
+        "transactions": 822359,
+        "nonzero_transactions": 470688,
+        "sum_prior": 4323545,
+        "max_prior": 112,
+        "distribution": {
+          "count_0": 351671,
+          "count_1": 59317,
+          "count_2_4": 127079,
+          "count_5_9": 121228,
+          "count_10_19": 105742,
+          "count_20_49": 55920,
+          "count_50_99": 1395,
+          "count_100_499": 7,
+          "count_500_999": 0,
+          "count_1000_plus": 0
+        },
+        "nonzero_rate": 0.5723631649924181,
+        "mean_prior": 5.257490949816321
+      }
+    },
+    {
+      "fold": 5,
+      "fit": {
+        "steps": [
+          1,
+          360
+        ],
+        "transactions": 5186057,
+        "nonzero_transactions": 2926066,
+        "sum_prior": 25883510,
+        "max_prior": 109,
+        "distribution": {
+          "count_0": 2259991,
+          "count_1": 371689,
+          "count_2_4": 794821,
+          "count_5_9": 769297,
+          "count_10_19": 666327,
+          "count_20_49": 318058,
+          "count_50_99": 5852,
+          "count_100_499": 22,
+          "count_500_999": 0,
+          "count_1000_plus": 0
+        },
+        "nonzero_rate": 0.5642178633979534,
+        "mean_prior": 4.990980623622147
+      },
+      "threshold": {
+        "steps": [
+          361,
+          432
+        ],
+        "transactions": 822359,
+        "nonzero_transactions": 470688,
+        "sum_prior": 4323545,
+        "max_prior": 112,
+        "distribution": {
+          "count_0": 351671,
+          "count_1": 59317,
+          "count_2_4": 127079,
+          "count_5_9": 121228,
+          "count_10_19": 105742,
+          "count_20_49": 55920,
+          "count_50_99": 1395,
+          "count_100_499": 7,
+          "count_500_999": 0,
+          "count_1000_plus": 0
+        },
+        "nonzero_rate": 0.5723631649924181,
+        "mean_prior": 5.257490949816321
+      },
+      "validation": {
+        "steps": [
+          433,
+          504
+        ],
+        "transactions": 55620,
+        "nonzero_transactions": 30274,
+        "sum_prior": 278787,
+        "max_prior": 108,
+        "distribution": {
+          "count_0": 25346,
+          "count_1": 3871,
+          "count_2_4": 8073,
+          "count_5_9": 7870,
+          "count_10_19": 6821,
+          "count_20_49": 3532,
+          "count_50_99": 106,
+          "count_100_499": 1,
+          "count_500_999": 0,
+          "count_1000_plus": 0
+        },
+        "nonzero_rate": 0.5443006112909026,
+        "mean_prior": 5.01235167206041
+      }
+    }
+  ],
+  "runtime": {
+    "python": "3.11.15",
+    "polars": "1.44.2",
+    "matplotlib": "3.11.2",
+    "seconds": 2.269049583002925,
+    "rss_after_read_bytes": 581320704,
+    "rss_after_group_bytes": 1609302016
+  }
+}
