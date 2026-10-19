@@ -132,6 +132,18 @@ uv run --locked python scripts/report_ml_feature_balance_dest.py
 
 C ajoute uniquement `oldbalanceDest` à `type + amount` pour XGBoost, CatBoost, Extra Trees et Random Forest, sur les cinq fenêtres. Les résultats intermédiaires et journaux restent dans `data/ml_feature_balance_dest/`, hors de Git. La commande reprend les fenêtres déjà terminées. Le [rapport C](docs/ML_FEATURE_BALANCE_DEST.md), les [agrégats](docs/results/ml_feature_balance_dest.json) et trois figures comparent C à la référence vérifiée, sans relancer les autres expériences ni le test final. Les quatre ajouts référence, A, B et C restent séparés.
 
+## Reproduire l'expérience D du lot 4.3
+
+Après l'installation et le téléchargement du même CSV audité, exécuter depuis la racine du dépôt. Les résultats agrégés déjà publiés de la référence, de A, B et C servent à la comparaison ; il n'est pas nécessaire de les réentraîner :
+
+```sh
+uv run --locked python -m unittest tests.test_ml_feature_balance_org_hour tests.test_ml_feature_hour tests.test_ml_feature_balance_org tests.test_ml_benchmark -v
+uv run --locked python scripts/run_ml_feature_balance_org_hour_all.py
+uv run --locked python scripts/report_ml_feature_balance_org_hour.py
+```
+
+D conserve les colonnes de B, `type + amount + oldbalanceOrg`, et ajoute seulement l'heure cyclique de A pour XGBoost, CatBoost, Extra Trees et Random Forest. Chaque seuil est choisi dans la réserve interne de sa fenêtre. Les résultats intermédiaires et journaux restent dans `data/ml_feature_balance_org_hour/`, hors de Git ; la commande reprend les fenêtres terminées. Le [rapport D](docs/ML_FEATURE_BALANCE_ORG_HOUR.md), les [agrégats](docs/results/ml_feature_balance_org_hour.json) et trois figures comparent D aux vingt résultats B publiés, sans réentraîner B ni consulter le test final.
+
 ## Portabilité et historique de vérification
 
 La procédure vise une installation reproductible sur toute machine où les prérequis sont disponibles. Les exécutions effectivement vérifiées ont eu lieu sur macOS Apple Silicon avec Python 3.11.15, `uv` 0.13.1 et Polars 1.44.2. Linux et Windows n'ont pas été testés ; leur compatibilité reste à vérifier. Le téléchargement public, l'audit et l'import complet ont réussi le 16 octobre 2026 sur cette machine. Les effectifs mesurés et les contrôles de cohérence sont conservés dans les documents liés en tête de page. Le notebook EDA a été réexécuté intégralement lors de la clôture du lot 4.0. Pour le lot 4.2, `uv run --locked` a réussi avec un cache temporaire explicitement accessible dans l'environnement restreint ; la commande avec le cache par défaut n'a pas été revérifiée.
