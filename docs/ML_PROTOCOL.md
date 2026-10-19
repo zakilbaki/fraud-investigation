@@ -2,13 +2,13 @@
 
 ## Amendement du lot 4.3 : ajouts contrôlés de variables
 
-Le benchmark `type + amount` du lot 4.2 et ses résultats restent la **référence historique**. La décision de poursuivre par les diagnostics descriptifs et le budget de deux variantes par candidat de la section 5 est remplacée, **pour cette étape uniquement**, par trois expériences définies à l'avance. On retient les cinq premiers candidats selon leur F1 moyen initial : XGBoost, CatBoost, Extra Trees, Random Forest et KNN. Cette présélection pratique ne prouve pas qu'ils resteraient les meilleurs avec d'autres informations. Aucun hyperparamètre ne sera ajusté en même temps que les variables.
+Le benchmark `type + amount` du lot 4.2 et ses résultats restent la **référence historique**. La décision de poursuivre par les diagnostics descriptifs et le budget de deux variantes par candidat de la section 5 est remplacée, **pour cette étape uniquement**, par trois expériences définies à l'avance. Les cinq premiers candidats initiaux étaient XGBoost, CatBoost, Extra Trees, Random Forest et KNN. KNN a ensuite été retiré des nouvelles exécutions pour son coût, avant la fin de B. Cette présélection pratique ne prouve pas qu'ils resteraient les meilleurs avec d'autres informations. Aucun hyperparamètre n'est ajusté en même temps que les variables.
 
 | Expérience | Entrées par rapport à la référence | Statut |
 | --- | --- | --- |
-| A | `type`, `amount`, heure simulée `h = (step - 1) % 24` codée par `sin(2πh/24)` et `cos(2πh/24)` | Première expérience à exécuter, puis discussion avec l'utilisateur. Les deux colonnes codent une seule information cyclique, sans heure civile confirmée. |
-| B | `type`, `amount`, `oldbalanceOrg` seul | Prévue après discussion de A ; analyse de sensibilité au simulateur. |
-| C | `type`, `amount`, `oldbalanceDest` seul | Prévue après discussion de B ; analyse de sensibilité au simulateur. |
+| A | `type`, `amount`, heure simulée `h = (step - 1) % 24` codée par `sin(2πh/24)` et `cos(2πh/24)` | [Terminée](ML_FEATURE_HOUR.md) sur les cinq candidats initiaux. Les deux colonnes codent une seule information cyclique, sans heure civile confirmée. |
+| B | `type`, `amount`, `oldbalanceOrg` seul | [Terminée](ML_FEATURE_BALANCE_ORG.md) sur quatre candidats complets, avec trois fenêtres KNN historiques partielles. |
+| C | `type`, `amount`, `oldbalanceDest` seul | [Terminée](ML_FEATURE_BALANCE_DEST.md) sur quatre candidats, analyse de sensibilité au simulateur. |
 
 **Décision initiale pour l'expérience B, avant ses résultats.** L'utilisateur a autorisé B seule après A. Elle ajoute uniquement `oldbalanceOrg` à `type + amount` ; ni heure simulée, ni ratio, ni autre solde ne sont transmis. Le prétraitement défini dans le paragraphe suivant est maintenu sans réglage supplémentaire. Sur les steps 1 à 504 du CSV audité, le contrôle préalable a trouvé **6 064 036 soldes initiaux d'émetteur, aucun nul manquant et aucune valeur négative**. Le zéro numérique est conservé. Cinq modèles étaient initialement prévus ; les 25 résultats de référence déjà vérifiés restent conservés. L'expérience C attendra une autre discussion.
 

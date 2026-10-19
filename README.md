@@ -120,6 +120,18 @@ uv run --locked python scripts/report_ml_feature_balance_org.py
 
 B ajoute uniquement `oldbalanceOrg` à la référence `type + amount`. La commande exécute les **quatre modèles encore retenus** sur les cinq fenêtres : XGBoost, CatBoost, Extra Trees et Random Forest. Trois fenêtres KNN achevées avant son retrait restent conservées dans le [rapport B](docs/ML_FEATURE_BALANCE_ORG.md), sans moyenne sur cinq fenêtres. Les résultats intermédiaires et journaux restent dans `data/ml_feature_balance_org/`, hors de Git ; la commande reprend les fenêtres terminées. Les [agrégats structurés](docs/results/ml_feature_balance_org.json) et trois figures comparent les quatre modèles complets à la référence, sans réexécuter celle-ci. Le test final et l'expérience C ne sont pas lancés par ces commandes. La présence du solde dans PaySim ne prouve pas qu'il serait effectivement disponible avant une transaction réelle.
 
+## Reproduire l'expérience C du lot 4.3
+
+Après le benchmark de référence et avec le même CSV audité, exécuter depuis la racine du dépôt :
+
+```sh
+uv run --locked python -m unittest tests.test_ml_feature_balance_dest tests.test_ml_benchmark -v
+uv run --locked python scripts/run_ml_feature_balance_dest_all.py
+uv run --locked python scripts/report_ml_feature_balance_dest.py
+```
+
+C ajoute uniquement `oldbalanceDest` à `type + amount` pour XGBoost, CatBoost, Extra Trees et Random Forest, sur les cinq fenêtres. Les résultats intermédiaires et journaux restent dans `data/ml_feature_balance_dest/`, hors de Git. La commande reprend les fenêtres déjà terminées. Le [rapport C](docs/ML_FEATURE_BALANCE_DEST.md), les [agrégats](docs/results/ml_feature_balance_dest.json) et trois figures comparent C à la référence vérifiée, sans relancer les autres expériences ni le test final. Les quatre ajouts référence, A, B et C restent séparés.
+
 ## Portabilité et historique de vérification
 
 La procédure vise une installation reproductible sur toute machine où les prérequis sont disponibles. Les exécutions effectivement vérifiées ont eu lieu sur macOS Apple Silicon avec Python 3.11.15, `uv` 0.13.1 et Polars 1.44.2. Linux et Windows n'ont pas été testés ; leur compatibilité reste à vérifier. Le téléchargement public, l'audit et l'import complet ont réussi le 16 octobre 2026 sur cette machine. Les effectifs mesurés et les contrôles de cohérence sont conservés dans les documents liés en tête de page. Le notebook EDA a été réexécuté intégralement lors de la clôture du lot 4.0. Pour le lot 4.2, `uv run --locked` a réussi avec un cache temporaire explicitement accessible dans l'environnement restreint ; la commande avec le cache par défaut n'a pas été revérifiée.
