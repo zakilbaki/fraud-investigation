@@ -21,7 +21,8 @@ from fraud_investigation.ml_benchmark import (
 )
 
 
-MODELS = ("xgboost", "catboost", "extra_trees", "random_forest", "knn")
+MODELS = ("xgboost", "catboost", "extra_trees", "random_forest")
+SUPPORTED_FEATURE_MODELS = (*MODELS, "knn")  # lecture des trois résultats KNN historiques
 EXPERIMENT = "B_oldbalanceOrg"
 SOURCE_COLUMNS = ("step", "type", "amount", "oldbalanceOrg", "isFraud")
 
@@ -53,7 +54,7 @@ class BalanceFeatures:
     """Prétraitement initial inchangé, puis ajout du seul solde émetteur."""
 
     def __init__(self, name):
-        if name not in MODELS:
+        if name not in SUPPORTED_FEATURE_MODELS:
             raise ValueError(name)
         self.name = name
         self.reference = Features(name)

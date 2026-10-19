@@ -5,12 +5,13 @@ import unittest
 import numpy as np
 
 from fraud_investigation.ml_benchmark import FOLDS, TYPES, Features
-from fraud_investigation.ml_feature_balance_org import BalanceFeatures, SOURCE_COLUMNS
+from fraud_investigation.ml_feature_balance_org import BalanceFeatures, MODELS, SOURCE_COLUMNS
 
 
 class BalanceOrgExperimentTests(unittest.TestCase):
     def test_source_projection_and_chronology(self):
         self.assertEqual(SOURCE_COLUMNS, ("step", "type", "amount", "oldbalanceOrg", "isFraud"))
+        self.assertEqual(MODELS, ("xgboost", "catboost", "extra_trees", "random_forest"))
         for fit_end, reserve_end, val_end in FOLDS:
             self.assertEqual(reserve_end - fit_end, 72)
             self.assertEqual(val_end - reserve_end, 72)
