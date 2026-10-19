@@ -1,0 +1,338 @@
+{
+  "experiment": "F_sender_history_coverage_only",
+  "source_sha256": "16910f90577b0d981bf8ff289714510bb89bc71bff7d3f220f024e287e4eea6b",
+  "source_columns": [
+    "step",
+    "nameOrig"
+  ],
+  "max_step": 504,
+  "definition": "Nombre de transactions avec nameOrig égal et step strictement inférieur",
+  "overall": {
+    "steps": [
+      1,
+      504
+    ],
+    "transactions": 6064036,
+    "nonzero_transactions": 8438,
+    "sum_prior": 8451,
+    "max_prior": 2,
+    "distribution": {
+      "count_0": 6055598,
+      "count_1": 8425,
+      "count_2_4": 13,
+      "count_5_9": 0,
+      "count_10_plus": 0
+    },
+    "nonzero_rate": 0.0013914825043914647,
+    "mean_prior": 0.001393626291136794
+  },
+  "windows": [
+    {
+      "fold": 1,
+      "fit": {
+        "steps": [
+          1,
+          72
+        ],
+        "transactions": 1030563,
+        "nonzero_transactions": 240,
+        "sum_prior": 240,
+        "max_prior": 1,
+        "distribution": {
+          "count_0": 1030323,
+          "count_1": 240,
+          "count_2_4": 0,
+          "count_5_9": 0,
+          "count_10_plus": 0
+        },
+        "nonzero_rate": 0.0002328824147577586,
+        "mean_prior": 0.0002328824147577586
+      },
+      "threshold": {
+        "steps": [
+          73,
+          144
+        ],
+        "transactions": 479034,
+        "nonzero_transactions": 277,
+        "sum_prior": 278,
+        "max_prior": 2,
+        "distribution": {
+          "count_0": 478757,
+          "count_1": 276,
+          "count_2_4": 1,
+          "count_5_9": 0,
+          "count_10_plus": 0
+        },
+        "nonzero_rate": 0.0005782470555325927,
+        "mean_prior": 0.0005803345900291002
+      },
+      "validation": {
+        "steps": [
+          145,
+          216
+        ],
+        "transactions": 1288139,
+        "nonzero_transactions": 1305,
+        "sum_prior": 1307,
+        "max_prior": 2,
+        "distribution": {
+          "count_0": 1286834,
+          "count_1": 1303,
+          "count_2_4": 2,
+          "count_5_9": 0,
+          "count_10_plus": 0
+        },
+        "nonzero_rate": 0.0010130894259082288,
+        "mean_prior": 0.001014642053380885
+      }
+    },
+    {
+      "fold": 2,
+      "fit": {
+        "steps": [
+          1,
+          144
+        ],
+        "transactions": 1509597,
+        "nonzero_transactions": 517,
+        "sum_prior": 518,
+        "max_prior": 2,
+        "distribution": {
+          "count_0": 1509080,
+          "count_1": 516,
+          "count_2_4": 1,
+          "count_5_9": 0,
+          "count_10_plus": 0
+        },
+        "nonzero_rate": 0.0003424755083641528,
+        "mean_prior": 0.0003431379368135999
+      },
+      "threshold": {
+        "steps": [
+          145,
+          216
+        ],
+        "transactions": 1288139,
+        "nonzero_transactions": 1305,
+        "sum_prior": 1307,
+        "max_prior": 2,
+        "distribution": {
+          "count_0": 1286834,
+          "count_1": 1303,
+          "count_2_4": 2,
+          "count_5_9": 0,
+          "count_10_plus": 0
+        },
+        "nonzero_rate": 0.0010130894259082288,
+        "mean_prior": 0.001014642053380885
+      },
+      "validation": {
+        "steps": [
+          217,
+          288
+        ],
+        "transactions": 1160580,
+        "nonzero_transactions": 1805,
+        "sum_prior": 1806,
+        "max_prior": 2,
+        "distribution": {
+          "count_0": 1158775,
+          "count_1": 1804,
+          "count_2_4": 1,
+          "count_5_9": 0,
+          "count_10_plus": 0
+        },
+        "nonzero_rate": 0.001555256854331455,
+        "mean_prior": 0.001556118492477899
+      }
+    },
+    {
+      "fold": 3,
+      "fit": {
+        "steps": [
+          1,
+          216
+        ],
+        "transactions": 2797736,
+        "nonzero_transactions": 1822,
+        "sum_prior": 1825,
+        "max_prior": 2,
+        "distribution": {
+          "count_0": 2795914,
+          "count_1": 1819,
+          "count_2_4": 3,
+          "count_5_9": 0,
+          "count_10_plus": 0
+        },
+        "nonzero_rate": 0.0006512408604671777,
+        "mean_prior": 0.0006523131560661906
+      },
+      "threshold": {
+        "steps": [
+          217,
+          288
+        ],
+        "transactions": 1160580,
+        "nonzero_transactions": 1805,
+        "sum_prior": 1806,
+        "max_prior": 2,
+        "distribution": {
+          "count_0": 1158775,
+          "count_1": 1804,
+          "count_2_4": 1,
+          "count_5_9": 0,
+          "count_10_plus": 0
+        },
+        "nonzero_rate": 0.001555256854331455,
+        "mean_prior": 0.001556118492477899
+      },
+      "validation": {
+        "steps": [
+          289,
+          360
+        ],
+        "transactions": 1227741,
+        "nonzero_transactions": 2610,
+        "sum_prior": 2615,
+        "max_prior": 2,
+        "distribution": {
+          "count_0": 1225131,
+          "count_1": 2605,
+          "count_2_4": 5,
+          "count_5_9": 0,
+          "count_10_plus": 0
+        },
+        "nonzero_rate": 0.002125855534677102,
+        "mean_prior": 0.002129928054858476
+      }
+    },
+    {
+      "fold": 4,
+      "fit": {
+        "steps": [
+          1,
+          288
+        ],
+        "transactions": 3958316,
+        "nonzero_transactions": 3627,
+        "sum_prior": 3631,
+        "max_prior": 2,
+        "distribution": {
+          "count_0": 3954689,
+          "count_1": 3623,
+          "count_2_4": 4,
+          "count_5_9": 0,
+          "count_10_plus": 0
+        },
+        "nonzero_rate": 0.000916298749266102,
+        "mean_prior": 0.0009173092800069525
+      },
+      "threshold": {
+        "steps": [
+          289,
+          360
+        ],
+        "transactions": 1227741,
+        "nonzero_transactions": 2610,
+        "sum_prior": 2615,
+        "max_prior": 2,
+        "distribution": {
+          "count_0": 1225131,
+          "count_1": 2605,
+          "count_2_4": 5,
+          "count_5_9": 0,
+          "count_10_plus": 0
+        },
+        "nonzero_rate": 0.002125855534677102,
+        "mean_prior": 0.002129928054858476
+      },
+      "validation": {
+        "steps": [
+          361,
+          432
+        ],
+        "transactions": 822359,
+        "nonzero_transactions": 2060,
+        "sum_prior": 2064,
+        "max_prior": 2,
+        "distribution": {
+          "count_0": 820299,
+          "count_1": 2056,
+          "count_2_4": 4,
+          "count_5_9": 0,
+          "count_10_plus": 0
+        },
+        "nonzero_rate": 0.0025049886971505145,
+        "mean_prior": 0.002509852752873137
+      }
+    },
+    {
+      "fold": 5,
+      "fit": {
+        "steps": [
+          1,
+          360
+        ],
+        "transactions": 5186057,
+        "nonzero_transactions": 6237,
+        "sum_prior": 6246,
+        "max_prior": 2,
+        "distribution": {
+          "count_0": 5179820,
+          "count_1": 6228,
+          "count_2_4": 9,
+          "count_5_9": 0,
+          "count_10_plus": 0
+        },
+        "nonzero_rate": 0.0012026477919544656,
+        "mean_prior": 0.0012043832144536784
+      },
+      "threshold": {
+        "steps": [
+          361,
+          432
+        ],
+        "transactions": 822359,
+        "nonzero_transactions": 2060,
+        "sum_prior": 2064,
+        "max_prior": 2,
+        "distribution": {
+          "count_0": 820299,
+          "count_1": 2056,
+          "count_2_4": 4,
+          "count_5_9": 0,
+          "count_10_plus": 0
+        },
+        "nonzero_rate": 0.0025049886971505145,
+        "mean_prior": 0.002509852752873137
+      },
+      "validation": {
+        "steps": [
+          433,
+          504
+        ],
+        "transactions": 55620,
+        "nonzero_transactions": 141,
+        "sum_prior": 141,
+        "max_prior": 1,
+        "distribution": {
+          "count_0": 55479,
+          "count_1": 141,
+          "count_2_4": 0,
+          "count_5_9": 0,
+          "count_10_plus": 0
+        },
+        "nonzero_rate": 0.002535059331175836,
+        "mean_prior": 0.002535059331175836
+      }
+    }
+  ],
+  "runtime": {
+    "python": "3.11.15",
+    "polars": "1.44.2",
+    "seconds": 3.3491144159343094,
+    "rss_after_read_bytes": 594345984,
+    "rss_after_group_bytes": 2051915776
+  }
+}

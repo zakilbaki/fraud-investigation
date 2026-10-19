@@ -156,6 +156,17 @@ uv run --locked python scripts/report_ml_feature_balance_share.py
 
 E ajoute seulement `part_solde` à D pour XGBoost et CatBoost. Le ratio vaut `amount / oldbalanceOrg` quand le solde est positif et reste manquant sinon. Les fichiers intermédiaires sont dans `data/ml_feature_balance_share/`, hors de Git ; la commande reprend les fenêtres terminées. Les [résultats E](docs/ML_FEATURE_BALANCE_SHARE.md) comparent les cinq validations de chaque modèle aux agrégats D, sans consulter le test final. F et G ne sont pas lancées par ces commandes.
 
+## Mesurer la couverture de l'historique F avant entraînement
+
+Avec le même CSV audité, depuis la racine du dépôt :
+
+```sh
+uv run --locked python -m unittest tests.test_ml_sender_history -v
+uv run --locked python scripts/inspect_ml_sender_history.py
+```
+
+Le script lit seulement `step` et `nameOrig` jusqu'au step 504. Il produit des [agrégats de couverture](docs/results/ml_sender_history_coverage.json) sans identifiants ni labels ; le [rapport F préalable](docs/ML_SENDER_HISTORY_COVERAGE.md) explique leur lecture. Ces commandes n'entraînent aucun modèle F et ne lancent pas G.
+
 ## Portabilité et historique de vérification
 
 La procédure vise une installation reproductible sur toute machine où les prérequis sont disponibles. Les exécutions effectivement vérifiées ont eu lieu sur macOS Apple Silicon avec Python 3.11.15, `uv` 0.13.1 et Polars 1.44.2. Linux et Windows n'ont pas été testés ; leur compatibilité reste à vérifier. Le téléchargement public, l'audit et l'import complet ont réussi le 16 octobre 2026 sur cette machine. Les effectifs mesurés et les contrôles de cohérence sont conservés dans les documents liés en tête de page. Le notebook EDA a été réexécuté intégralement lors de la clôture du lot 4.0. Pour le lot 4.2, `uv run --locked` a réussi avec un cache temporaire explicitement accessible dans l'environnement restreint ; la commande avec le cache par défaut n'a pas été revérifiée.
