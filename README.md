@@ -190,6 +190,18 @@ uv run --locked python scripts/report_ml_feature_recipient_history.py
 
 G ajoute à D uniquement le nombre de réceptions du même `nameDest` aux steps strictement antérieurs. Les résultats intermédiaires et journaux restent dans `data/ml_feature_recipient_history/`, hors de Git ; l'orchestrateur reprend les fenêtres déjà terminées. Le [rapport G](docs/ML_FEATURE_RECIPIENT_HISTORY.md), les [agrégats](docs/results/ml_feature_recipient_history.json) et trois figures comparent G à D sans réentraîner D ni lire les steps du test final pour l'évaluation. F reste sans entraînement et le ratio de E n'est pas ajouté.
 
+## Reproduire l'expérience H du lot 4.4
+
+Avec le même CSV audité et les résultats E et G publiés, depuis la racine du dépôt :
+
+```sh
+uv run --locked python -m unittest tests.test_ml_feature_ratio_recipient_history tests.test_ml_feature_balance_share tests.test_ml_recipient_history -v
+uv run --locked python scripts/run_ml_feature_ratio_recipient_history_all.py
+uv run --locked python scripts/report_ml_feature_ratio_recipient_history.py
+```
+
+H combine uniquement les entrées de E avec le compteur destinataire strictement antérieur de G, pour XGBoost et CatBoost. Les journaux et résultats intermédiaires restent dans `data/ml_feature_ratio_recipient_history/`, hors de Git ; l'orchestrateur reprend les fenêtres achevées. Le [rapport H](docs/ML_FEATURE_RATIO_RECIPIENT_HISTORY.md), les [agrégats](docs/results/ml_feature_ratio_recipient_history.json) et trois figures comparent H à E et G sans les réentraîner. Le test final n'est pas évalué.
+
 ## Portabilité et historique de vérification
 
 La procédure vise une installation reproductible sur toute machine où les prérequis sont disponibles. Les exécutions effectivement vérifiées ont eu lieu sur macOS Apple Silicon avec Python 3.11.15, `uv` 0.13.1 et Polars 1.44.2. Linux et Windows n'ont pas été testés ; leur compatibilité reste à vérifier. Le téléchargement public, l'audit et l'import complet ont réussi le 16 octobre 2026 sur cette machine. Les effectifs mesurés et les contrôles de cohérence sont conservés dans les documents liés en tête de page. Le notebook EDA a été réexécuté intégralement lors de la clôture du lot 4.0. Pour le lot 4.2, `uv run --locked` a réussi avec un cache temporaire explicitement accessible dans l'environnement restreint ; la commande avec le cache par défaut n'a pas été revérifiée.
