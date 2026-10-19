@@ -178,6 +178,18 @@ uv run --locked python scripts/inspect_ml_recipient_history.py
 
 Le script lit seulement `step` et `nameDest` jusqu'au step 504 pour produire les [agrégats G](docs/results/ml_recipient_history_coverage.json), la [figure](docs/figures/ml_recipient_history_distribution.png) et le [rapport de couverture](docs/ML_RECIPIENT_HISTORY_COVERAGE.md). Il ne lit aucun label, ne calcule aucun score et n'entraîne aucun modèle. F est mis de côté, avec son diagnostic conservé.
 
+## Reproduire l'expérience G du lot 4.4
+
+Avec le même CSV audité et les résultats D publiés, depuis la racine du dépôt :
+
+```sh
+uv run --locked python -m unittest tests.test_ml_recipient_history tests.test_ml_feature_recipient_history -v
+uv run --locked python scripts/run_ml_feature_recipient_history_all.py
+uv run --locked python scripts/report_ml_feature_recipient_history.py
+```
+
+G ajoute à D uniquement le nombre de réceptions du même `nameDest` aux steps strictement antérieurs. Les résultats intermédiaires et journaux restent dans `data/ml_feature_recipient_history/`, hors de Git ; l'orchestrateur reprend les fenêtres déjà terminées. Le [rapport G](docs/ML_FEATURE_RECIPIENT_HISTORY.md), les [agrégats](docs/results/ml_feature_recipient_history.json) et trois figures comparent G à D sans réentraîner D ni lire les steps du test final pour l'évaluation. F reste sans entraînement et le ratio de E n'est pas ajouté.
+
 ## Portabilité et historique de vérification
 
 La procédure vise une installation reproductible sur toute machine où les prérequis sont disponibles. Les exécutions effectivement vérifiées ont eu lieu sur macOS Apple Silicon avec Python 3.11.15, `uv` 0.13.1 et Polars 1.44.2. Linux et Windows n'ont pas été testés ; leur compatibilité reste à vérifier. Le téléchargement public, l'audit et l'import complet ont réussi le 16 octobre 2026 sur cette machine. Les effectifs mesurés et les contrôles de cohérence sont conservés dans les documents liés en tête de page. Le notebook EDA a été réexécuté intégralement lors de la clôture du lot 4.0. Pour le lot 4.2, `uv run --locked` a réussi avec un cache temporaire explicitement accessible dans l'environnement restreint ; la commande avec le cache par défaut n'a pas été revérifiée.
