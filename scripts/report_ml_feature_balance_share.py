@@ -1,5 +1,6 @@
 """Vérifier les résultats E et publier la comparaison agrégée avec D."""
 
+import hashlib
 import json
 import os
 import statistics
@@ -20,6 +21,10 @@ def show(value):
 
 
 def main():
+    csv_path = Path("data/raw/PS_20174392719_1491204439457_log.csv")
+    with csv_path.open("rb") as csv_file:
+        source_sha256 = hashlib.file_digest(csv_file, "sha256").hexdigest()
+    assert source_sha256 == "16910f90577b0d981bf8ff289714510bb89bc71bff7d3f220f024e287e4eea6b"
     local = Path("data/ml_feature_balance_share")
     source = json.loads(Path("docs/results/ml_feature_balance_org_hour.json").read_text())
     previous = {(r["model"], r["fold"]): r for r in source["rows"]}
@@ -84,7 +89,8 @@ def main():
         summary.append(item)
     assert len(rows) == 10
     Path("docs/results/ml_feature_balance_share.json").write_text(json.dumps({
-        "experiment": EXPERIMENT, "comparison_source": "ml_feature_balance_org_hour.json",
+        "experiment": EXPERIMENT, "source_sha256": source_sha256,
+        "comparison_source": "ml_feature_balance_org_hour.json",
         "rows": rows, "summary": summary, "deltas": deltas, "status": status,
     }, ensure_ascii=False, indent=2, allow_nan=False) + "\n")
 
@@ -156,12 +162,12 @@ def main():
               "## Résultats par fenêtre", "",
               "La précision sans alerte serait notée `n.d.`. Le seuil est choisi par F1 maximal dans la réserve interne, "
               "avec regroupement des scores identiques et choix du seuil le plus élevé en cas d'égalité.", "",
-              "| Modèle | Fenêtre | Transactions | Fraudes | Seuil E | P E | R E | F1 E | ΔF1 | TP | FP | FN | TN | Alertes | Ajustement | Seuil | Prédiction | Total | Pic RSS | Ratio manquant en validation | Ratio > 1 en validation |",
-              "| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |"]
+              "| Modèle | Fenêtre | Transactions | Fraudes | Seuil E | P E | R E | F1 E | ΔP | ΔR | ΔF1 | TP | FP | FN | TN | Alertes | Ajustement | Seuil | Prédiction | Total | Pic RSS | Ratio manquant en validation | Ratio > 1 en validation |",
+              "| " + " | ".join(["---"] + ["---:"] * 22) + " |"]
     dm = {(d["model"], d["fold"]): d for d in deltas}
     for r in rows:
         peak = status[f"{r['model']}_fold_{r['fold']}"]["peak_rss_bytes"] / 2**30
-        lines.append(f"| {r['model']} | {r['fold']} | {r['transactions']:,} | {r['frauds']:,} | {r['threshold']:.6g} | {show(r['precision'])} | {show(r['recall'])} | {show(r['f1'])} | {show(dm[r['model'],r['fold']]['delta_f1'])} | {r['tp']:,} | {r['fp']:,} | {r['fn']:,} | {r['tn']:,} | {r['alerts']:,} | {r['fit_seconds']:.1f} s | {r['threshold_seconds']:.1f} s | {r['predict_seconds']:.1f} s | {r['total_seconds']:.1f} s | {peak:.2f} Gio | {r['ratio_undefined_rows']['validation']:,} | {r['ratio_above_one_rows']['validation']:,} |")
+        lines.append(f"| {r['model']} | {r['fold']} | {r['transactions']:,} | {r['frauds']:,} | {r['threshold']:.6g} | {show(r['precision'])} | {show(r['recall'])} | {show(r['f1'])} | {show(dm[r['model'],r['fold']]['delta_precision'])} | {show(dm[r['model'],r['fold']]['delta_recall'])} | {show(dm[r['model'],r['fold']]['delta_f1'])} | {r['tp']:,} | {r['fp']:,} | {r['fn']:,} | {r['tn']:,} | {r['alerts']:,} | {r['fit_seconds']:.1f} s | {r['threshold_seconds']:.1f} s | {r['predict_seconds']:.1f} s | {r['total_seconds']:.1f} s | {peak:.2f} Gio | {r['ratio_undefined_rows']['validation']:,} | {r['ratio_above_one_rows']['validation']:,} |")
     lines += ["", "## Régularité, coût et interprétation", "",
               "| Modèle | F1 minimum D → E | Écart-type descriptif D → E | Ajustement D → E | Temps total D → E | Pic RSS D → E |",
               "| --- | ---: | ---: | ---: | ---: | ---: |"]

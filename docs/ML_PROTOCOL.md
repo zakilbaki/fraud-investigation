@@ -8,7 +8,7 @@ La référence est D : `type`, `amount`, `oldbalanceOrg`, `hour_sin`, `hour_cos`
 
 | Expérience | Seul ajout à D | Définition et traitement fixé avant les scores | Statut |
 | --- | --- | --- | --- |
-| E | `part_solde` | `amount / oldbalanceOrg` si le solde est strictement positif, `NaN` sinon. Ratio brut `float32`, non plafonné même au-dessus de 1. XGBoost et CatBoost traitent ce `NaN` numérique nativement ; aucune imputation ni indicateur ajouté. | À exécuter maintenant, puis discussion. |
+| E | `part_solde` | `amount / oldbalanceOrg` si le solde est strictement positif, `NaN` sinon. Ratio brut `float32`, non plafonné même au-dessus de 1. XGBoost et CatBoost traitent ce `NaN` numérique nativement ; aucune imputation ni indicateur ajouté. | [Exécutée et vérifiée](ML_FEATURE_BALANCE_SHARE.md), discussion attendue. |
 | F | `nb_sorties_anterieures` | Nombre de transactions de step strictement inférieur dont `nameOrig` est égal au compte émetteur actuel ; zéro sans historique. | Après discussion de E et contrôle préalable de couverture. |
 | G | `nb_entrees_anterieures` | Nombre de transactions de step strictement inférieur dont `nameDest` est égal au compte destinataire actuel ; zéro sans historique. | Après discussion de F et contrôle préalable de couverture. |
 
