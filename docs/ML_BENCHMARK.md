@@ -40,7 +40,7 @@ Les petits panneaux utilisent la même échelle de F1. Les numéros 1 à 5 suive
 
 ## Détail par modèle et fenêtre
 
-`P` = précision, `R` = rappel. `FP` = normales alertées ; `FN` = fraudes manquées. La précision est reportée à 0 par convention si aucune alerte n'est émise.
+`P` = précision, `R` = rappel. `FP` = normales alertées ; `FN` = fraudes manquées ; `TN` = normales sans alerte. Sans alerte, la précision est non définie (`n.d.`). Les 65 lignes de modèles ont une précision définie ; `isFlaggedFraud` n'en a pas aux fenêtres 3 et 5.
 
 | Modèle | Fenêtre | Transactions | Fraudes | Prévalence | Seuil interne | P | R | F1 | Alertes | FP | FN | Ajustement | Choix du seuil | Prédiction | Total |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
@@ -118,9 +118,9 @@ Cette règle fournie par le simulateur n'est jamais une entrée des modèles ni 
 | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
 | 1 | 1.0000 | 0.0012 | 0.0025 | 1 | 0 | 804 |
 | 2 | 1.0000 | 0.0024 | 0.0047 | 2 | 0 | 840 |
-| 3 | 0.0000 | 0.0000 | 0.0000 | 0 | 0 | 738 |
+| 3 | n.d. | 0.0000 | 0.0000 | 0 | 0 | 738 |
 | 4 | 1.0000 | 0.0036 | 0.0071 | 3 | 0 | 837 |
-| 5 | 0.0000 | 0.0000 | 0.0000 | 0 | 0 | 764 |
+| 5 | n.d. | 0.0000 | 0.0000 | 0 | 0 | 764 |
 
 ## Faisabilité et limites
 

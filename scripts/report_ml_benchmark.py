@@ -51,6 +51,10 @@ def selection(summary):
     return winner["model"], trace
 
 
+def display_metric(value):
+    return "n.d." if value is None else f"{value:.4f}"
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--input", type=Path, default=Path("data/ml_benchmark"))
@@ -62,7 +66,12 @@ def main():
         for fold in range(1, 6):
             path = args.input / f"{name}_fold_{fold}.json"
             if path.exists():
-                rows.append(json.loads(path.read_text()))
+                row = json.loads(path.read_text())
+                row["tn"] = row["transactions"] - row["tp"] - row["fp"] - row["fn"]
+                assert row["tn"] >= 0 and row["tn"] + row["fp"] == row["transactions"] - row["frauds"]
+                if row["alerts"] == 0:
+                    row["precision"] = None
+                rows.append(row)
     if not rows:
         raise SystemExit("Aucun résultat complet disponible")
     status_path = args.input / "status.json"
@@ -78,7 +87,9 @@ def main():
         values.sort(key=lambda r: r["fold"])
         summary.append({
             "model": name,
-            "precision_mean": statistics.mean(r["precision"] for r in values),
+            "precision_mean": (statistics.mean(r["precision"] for r in values)
+                               if all(r["precision"] is not None for r in values) else None),
+            "precision_defined_windows": sum(r["precision"] is not None for r in values),
             "recall_mean": statistics.mean(r["recall"] for r in values),
             "f1_mean": statistics.mean(r["f1"] for r in values),
             "f1_min": min(r["f1"] for r in values),
@@ -123,7 +134,7 @@ def main():
             ("Précision", "Rappel", "F1"), ("#2a6f9e", "#de8733", "#398657"),
             (1, 1, max(0.35, max(r["f1_mean"] for r in summary) * 1.1)),
         ):
-            ax.barh(positions, [r[key] for r in summary], color=color)
+            ax.barh(positions, [np.nan if r[key] is None else r[key] for r in summary], color=color)
             ax.set_yticks(positions, labels)
             ax.set_xlim(0, xmax)
             ax.set_title(title)
@@ -170,7 +181,7 @@ def main():
         "| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |",
     ]
     for r in summary:
-        lines.append(f"| {r['model']} | {r['precision_mean']:.4f} | {r['recall_mean']:.4f} | {r['f1_mean']:.4f} | {r['f1_min']:.4f} | {r['f1_std']:.4f} | {r['fit_seconds_median']:.1f} s | {r['fp_total']:,} | {r['fn_total']:,} |")
+        lines.append(f"| {r['model']} | {display_metric(r['precision_mean'])} | {r['recall_mean']:.4f} | {r['f1_mean']:.4f} | {r['f1_min']:.4f} | {r['f1_std']:.4f} | {r['fit_seconds_median']:.1f} s | {r['fp_total']:,} | {r['fn_total']:,} |")
     lines += ["", f"**Choix provisoire selon la règle préannoncée de phase 1 : `{winner}`.** "
               "Il ne clôt pas l'analyse des résultats ni les expériences d'approfondissement.", ""]
     lines += [f"- {item}" for item in trace]
@@ -182,20 +193,21 @@ def main():
               "Les petits panneaux utilisent la même échelle de F1. Les numéros 1 à 5 suivent "
               "l'ordre chronologique ; leurs prévalences sont indiquées dans le titre.", "",
               "## Détail par modèle et fenêtre", "",
-              "`P` = précision, `R` = rappel. `FP` = normales alertées ; `FN` = fraudes manquées. "
-              "La précision est reportée à 0 par convention si aucune alerte n'est émise.", "",
+              "`P` = précision, `R` = rappel. `FP` = normales alertées ; `FN` = fraudes manquées ; "
+              "`TN` = normales sans alerte. Sans alerte, la précision est non définie (`n.d.`). "
+              "Les 65 lignes de modèles ont une précision définie ; `isFlaggedFraud` n'en a pas aux fenêtres 3 et 5.", "",
               "| Modèle | Fenêtre | Transactions | Fraudes | Prévalence | Seuil interne | P | R | F1 | Alertes | FP | FN | Ajustement | Choix du seuil | Prédiction | Total |",
               "| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |"]
     for name in MODELS:
         for r in sorted(by_model[name], key=lambda x: x["fold"]):
-            lines.append(f"| {name} | {r['fold']} | {r['transactions']:,} | {r['frauds']:,} | {r['prevalence']*100:.3f} % | {r['threshold']:.6g} | {r['precision']:.4f} | {r['recall']:.4f} | {r['f1']:.4f} | {r['alerts']:,} | {r['fp']:,} | {r['fn']:,} | {r['fit_seconds']:.1f} s | {r['threshold_seconds']:.1f} s | {r['predict_seconds']:.1f} s | {r['total_seconds']:.1f} s |")
+            lines.append(f"| {name} | {r['fold']} | {r['transactions']:,} | {r['frauds']:,} | {r['prevalence']*100:.3f} % | {r['threshold']:.6g} | {display_metric(r['precision'])} | {r['recall']:.4f} | {r['f1']:.4f} | {r['alerts']:,} | {r['fp']:,} | {r['fn']:,} | {r['fit_seconds']:.1f} s | {r['threshold_seconds']:.1f} s | {r['predict_seconds']:.1f} s | {r['total_seconds']:.1f} s |")
     lines += ["", "## Référence PaySim `isFlaggedFraud`", "",
               "Cette règle fournie par le simulateur n'est jamais une entrée des modèles ni un candidat à sélectionner. "
               "Elle est évaluée directement sur les mêmes validations extérieures, sans seuil ajusté.", "",
               "| Fenêtre | Précision | Rappel | F1 | Alertes | FP | FN |",
               "| ---: | ---: | ---: | ---: | ---: | ---: | ---: |"]
     for r in flag_rows:
-        lines.append(f"| {r['fold']} | {r['precision']:.4f} | {r['recall']:.4f} | {r['f1']:.4f} | {r['alerts']:,} | {r['fp']:,} | {r['fn']:,} |")
+        lines.append(f"| {r['fold']} | {display_metric(r['precision'])} | {r['recall']:.4f} | {r['f1']:.4f} | {r['alerts']:,} | {r['fp']:,} | {r['fn']:,} |")
     lines += ["", "## Faisabilité et limites", "",
               "Les temps ont été mesurés sur macOS Apple Silicon avec Python 3.11 et au plus quatre fils par modèle. "
               "La mémoire ci-dessous est le pic RSS échantillonné chaque seconde par l'orchestrateur : "
@@ -241,7 +253,7 @@ def main():
         top = next(item for item in summary if item["model"] == winner)
         lines += ["## Lecture provisoire", "",
                   f"`{winner}` obtient un F1 moyen de **{top['f1_mean']:.4f}**, "
-                  f"avec une précision moyenne de **{top['precision_mean']:.4f}** et "
+                  f"avec une précision moyenne de **{display_metric(top['precision_mean'])}** et "
                   f"un rappel moyen de **{top['recall_mean']:.4f}**. "
                   f"Ses cinq validations totalisent **{top['fp_total']:,} faux positifs** "
                   f"et **{top['fn_total']:,} fraudes manquées**. Ces effectifs sont additionnés "

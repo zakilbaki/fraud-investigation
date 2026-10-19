@@ -166,11 +166,12 @@ def metrics(y: np.ndarray, score: np.ndarray, threshold: float):
     fn = int(np.count_nonzero(~predicted & (y == 1)))
     count = int(len(y))
     frauds = int(y.sum())
-    assert tp + fn == frauds and fp + tp <= count
+    tn = count - tp - fp - fn
+    assert tp + fn == frauds and tn >= 0 and tn + fp == count - frauds
     return {
         "transactions": count, "frauds": frauds, "prevalence": frauds / count,
-        "alerts": tp + fp, "tp": tp, "fp": fp, "fn": fn,
-        "precision": tp / (tp + fp) if tp + fp else 0.0,
+        "alerts": tp + fp, "tp": tp, "fp": fp, "fn": fn, "tn": tn,
+        "precision": tp / (tp + fp) if tp + fp else None,
         "recall": tp / frauds if frauds else None,
         "f1": 2 * tp / (2 * tp + fp + fn) if (2 * tp + fp + fn) else 0.0,
     }

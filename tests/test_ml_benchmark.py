@@ -24,8 +24,8 @@ class BenchmarkRulesTest(unittest.TestCase):
 
     def test_no_alert_convention(self):
         result = metrics(np.array([0, 1]), np.array([0.1, 0.2]), 0.3)
-        self.assertEqual((result["precision"], result["recall"], result["f1"]), (0, 0, 0))
-        self.assertEqual((result["fp"], result["fn"]), (0, 1))
+        self.assertEqual((result["precision"], result["recall"], result["f1"]), (None, 0, 0))
+        self.assertEqual((result["fp"], result["fn"], result["tn"]), (0, 1, 1))
 
     def test_selection_prefers_regular_candidate_when_means_close(self):
         rows = [

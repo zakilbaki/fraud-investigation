@@ -86,6 +86,16 @@ uv run --locked python scripts/report_ml_benchmark.py
 
 Chaque processus lit seulement les steps 1 à 504. Pour chaque modèle et fenêtre, il apprend sur la première portion du train, choisit le seuil sur sa réserve interne et évalue ensuite la validation extérieure. Le test 505 à 743 reste réservé. Les résultats intermédiaires et journaux sont dans `data/ml_benchmark/`, hors de Git ; une interruption se reprend en relançant la même commande. L'orchestrateur arrête une fenêtre dépassant 30 minutes ou dont la mémoire résidente dépasse 75 % de la RAM physique, puis conserve l'incident dans son état local. Le [rapport de comparaison](docs/ML_BENCHMARK.md), le [protocole](docs/ML_PROTOCOL.md) et les figures dans `docs/figures/` décrivent les résultats publiés. Les onze candidats obligatoires du protocole sont exécutés par défaut ; les candidats supplémentaires faisables peuvent être demandés avec `--models mlp knn`. Le SVM à noyau a été interrompu lors du contrôle de coût sans score comparable.
 
+## Relire les premiers diagnostics ML
+
+Après la comparaison, cette commande audite les agrégats publiés et régénère la figure des cinq modèles commentés dans [docs/ML_DIAGNOSTICS.md](docs/ML_DIAGNOSTICS.md), sans réentraîner ni lire le test final :
+
+```sh
+uv run --locked python scripts/diagnose_ml_results.py
+```
+
+Les prédictions transaction par transaction n'ont pas été conservées pendant le lot 4.2. Les étapes suivantes de diagnostic devront rejouer uniquement les configurations figées nécessaires et garder ces prédictions hors de Git.
+
 ## Portabilité et historique de vérification
 
 La procédure vise une installation reproductible sur toute machine où les prérequis sont disponibles. Les exécutions effectivement vérifiées ont eu lieu sur macOS Apple Silicon avec Python 3.11.15, `uv` 0.13.1 et Polars 1.44.2. Linux et Windows n'ont pas été testés ; leur compatibilité reste à vérifier. Le téléchargement public, l'audit et l'import complet ont réussi le 16 octobre 2026 sur cette machine. Les effectifs mesurés et les contrôles de cohérence sont conservés dans les documents liés en tête de page. Le notebook EDA a été réexécuté intégralement lors de la clôture du lot 4.0. Pour le lot 4.2, `uv run --locked` a réussi avec un cache temporaire explicitement accessible dans l'environnement restreint ; la commande avec le cache par défaut n'a pas été revérifiée.
