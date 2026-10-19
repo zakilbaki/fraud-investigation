@@ -1,5 +1,25 @@
 # Lot 4.1 : protocole ML proposé pour PaySim
 
+## Lot 4.4 : expériences E, F et G, plan fixé avant les scores
+
+Le protocole d'optimisation des hyperparamètres publié dans le commit `6810dff` a été interrompu avant tout code, entraînement ou score de réglage. Il est conservé dans l'historique Git, mais ne s'applique plus. Aucun de ses essais ne doit être interprété comme une comparaison achevée.
+
+La référence est D : `type`, `amount`, `oldbalanceOrg`, `hour_sin`, `hour_cos`. Seuls XGBoost et CatBoost sont repris, avec les paramètres, graines et prétraitements de D. Les résultats D déjà vérifiés sont réutilisés. Les cinq triples chronologiques de la section 2 et le choix du seuil par F1 maximal dans la réserve interne restent identiques. Les scores identiques sont groupés ; si plusieurs seuils donnent le même F1 maximal, retenir le plus haut. Une précision sans alerte est non définie. Ni rééquilibrage, ni calibration, ni réglage de paramètres. Les steps 505 à 743 restent hors de toute expérience.
+
+| Expérience | Seul ajout à D | Définition et traitement fixé avant les scores | Statut |
+| --- | --- | --- | --- |
+| E | `part_solde` | `amount / oldbalanceOrg` si le solde est strictement positif, `NaN` sinon. Ratio brut `float32`, non plafonné même au-dessus de 1. XGBoost et CatBoost traitent ce `NaN` numérique nativement ; aucune imputation ni indicateur ajouté. | À exécuter maintenant, puis discussion. |
+| F | `nb_sorties_anterieures` | Nombre de transactions de step strictement inférieur dont `nameOrig` est égal au compte émetteur actuel ; zéro sans historique. | Après discussion de E et contrôle préalable de couverture. |
+| G | `nb_entrees_anterieures` | Nombre de transactions de step strictement inférieur dont `nameDest` est égal au compte destinataire actuel ; zéro sans historique. | Après discussion de F et contrôle préalable de couverture. |
+
+Chaque expérience repart séparément de D. E ne fournit aucune information brute nouvelle : elle expose une relation entre montant et solde. Elle peut accentuer une signature propre au simulateur. La disponibilité réelle du solde avant transaction demeure une hypothèse opérationnelle. F et G n'utilisent les identifiants que pour construire un compteur, jamais comme prédicteurs bruts. Pour un step donné, lire les compteurs avant de les mettre à jour pour toutes ses transactions. Conserver les lignes originales, y compris doublons apparents. En réserve et validation, les steps précédents peuvent progressivement enrichir l'historique sans label, sans réentraînement et sans changement du seuil. Aucun ordre des lignes ne fournit une chronologie au sein d'un step. Avant F et G, mesurer la part de valeurs non nulles et la distribution des compteurs par fenêtre ; si la couverture est presque nulle, en discuter avant l'entraînement concerné.
+
+Pour chaque modèle et fenêtre : ajuster le modèle et tout prétraitement appris sur la seule portion d'apprentissage, choisir le seuil sur la réserve interne, puis publier précision, rappel, F1, seuil, TP, FP, FN, TN, alertes, temps et pic RSS sur la validation extérieure. Donner les cinq résultats, les moyennes arithmétiques et écarts à D par fenêtre, ainsi que la dispersion des F1. Les effectifs cumulés ne sont pas des moyennes de métriques. Conserver versions, paramètres, empreinte de source et vérifications. Après E, attendre les observations de l'utilisateur avant F ; après F, attendre de nouveau avant G. Aucun modèle final n'est annoncé.
+
+### Ancien plan interrompu, conservé pour traçabilité
+
+Le texte ci-dessous documente la proposition antérieure et **ne s'applique plus**.
+
 ## Lot 4.4 : optimisation limitée de D, fixée avant les nouveaux scores
 
 La variante D reste la référence de cette étape. Seuls XGBoost et CatBoost conservent les entrées et les prétraitements de D : `type`, `amount`, `oldbalanceOrg`, `hour_sin`, `hour_cos`. Le solde et le montant sont bruts en `float32` ; l'heure est calculée par la fonction déterministe de A. Aucune autre variable, pondération, rééchantillonnage, calibration ou arrêt anticipé n'est autorisé. Les cinq triples apprentissage, réserve de seuil et validation extérieure de la section 2 restent inchangés. Le modèle apprend uniquement sur la première portion ; le seuil maximise F1 dans la réserve interne, avec scores égaux groupés et seuil le plus haut en cas d'égalité, puis la validation extérieure sert à la mesure. Une précision sans alerte reste non définie. Le test 505 à 743 est exclu.
