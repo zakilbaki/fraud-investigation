@@ -144,6 +144,18 @@ uv run --locked python scripts/report_ml_feature_balance_org_hour.py
 
 D conserve les colonnes de B, `type + amount + oldbalanceOrg`, et ajoute seulement l'heure cyclique de A pour XGBoost, CatBoost, Extra Trees et Random Forest. Chaque seuil est choisi dans la réserve interne de sa fenêtre. Les résultats intermédiaires et journaux restent dans `data/ml_feature_balance_org_hour/`, hors de Git ; la commande reprend les fenêtres terminées. Le [rapport D](docs/ML_FEATURE_BALANCE_ORG_HOUR.md), les [agrégats](docs/results/ml_feature_balance_org_hour.json) et trois figures comparent D aux vingt résultats B publiés, sans réentraîner B ni consulter le test final.
 
+## Reproduire l'expérience E du lot 4.4
+
+Avec le CSV audité et les agrégats D déjà publiés, lancer depuis la racine du dépôt :
+
+```sh
+uv run --locked python -m unittest tests.test_ml_feature_balance_share -v
+uv run --locked python scripts/run_ml_feature_balance_share_all.py
+uv run --locked python scripts/report_ml_feature_balance_share.py
+```
+
+E ajoute seulement `part_solde` à D pour XGBoost et CatBoost. Le ratio vaut `amount / oldbalanceOrg` quand le solde est positif et reste manquant sinon. Les fichiers intermédiaires sont dans `data/ml_feature_balance_share/`, hors de Git ; la commande reprend les fenêtres terminées. Les [résultats E](docs/ML_FEATURE_BALANCE_SHARE.md) comparent les cinq validations de chaque modèle aux agrégats D, sans consulter le test final. F et G ne sont pas lancées par ces commandes.
+
 ## Portabilité et historique de vérification
 
 La procédure vise une installation reproductible sur toute machine où les prérequis sont disponibles. Les exécutions effectivement vérifiées ont eu lieu sur macOS Apple Silicon avec Python 3.11.15, `uv` 0.13.1 et Polars 1.44.2. Linux et Windows n'ont pas été testés ; leur compatibilité reste à vérifier. Le téléchargement public, l'audit et l'import complet ont réussi le 16 octobre 2026 sur cette machine. Les effectifs mesurés et les contrôles de cohérence sont conservés dans les documents liés en tête de page. Le notebook EDA a été réexécuté intégralement lors de la clôture du lot 4.0. Pour le lot 4.2, `uv run --locked` a réussi avec un cache temporaire explicitement accessible dans l'environnement restreint ; la commande avec le cache par défaut n'a pas été revérifiée.
