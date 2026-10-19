@@ -1,6 +1,6 @@
 # Lot 4.3 : diagnostics guidés du benchmark
 
-**Étape 1 : vérification et lecture des cinq validations extérieures.** Cette étape ne réentraîne aucun modèle, ne change aucun seuil et ne consulte aucun score du test 505 à 743. Les étapes par type et montant, puis les distributions des scores et des seuils, attendent les observations de l'utilisateur.
+**Étape 1 : vérification et lecture des cinq validations extérieures.** Cette étape n'avait réentraîné aucun modèle, changé aucun seuil ni consulté de score du test 505 à 743. La suite descriptive annoncée alors a été remplacée par les ajouts contrôlés de variables définis dans l'[amendement du protocole](ML_PROTOCOL.md). Le [rapport de l'expérience A](ML_FEATURE_HOUR.md) compare l'ajout de l'heure simulée sur les cinq modèles présélectionnés ; les expériences B et C attendent chacune une discussion avec l'utilisateur.
 
 ## Vérification du lot 4.2
 
@@ -30,4 +30,4 @@ La figure donne, sous chaque fenêtre, le nombre de transactions, le nombre de f
 
 Une **moyenne de métriques** donne le même poids aux cinq fenêtres. Une **métrique sur les effectifs cumulés** donne davantage de poids aux fenêtres plus volumineuses. Pour XGBoost, la précision moyenne est **0,7714**, tandis que la précision recalculée sur `700 TP / (700 TP + 288 FP)` est **0,7085**. Son F1 moyen est **0,2818** et son F1 sur les cases cumulées est **0,2813**. Ces deux lectures répondent à des questions différentes ; le classement suit la moyenne prévue au protocole.
 
-**Hypothèses ouvertes.** La dégradation de LightGBM, les variations de la régression logistique et le rappel limité de XGBoost pourraient tenir à la composition des types, aux montants, au transfert du seuil ou à plusieurs de ces facteurs. Ce premier graphique ne permet pas de les départager. Les diagnostics par type et tranches de montant, puis par scores et seuils, seront préparés seulement après discussion de cette lecture.
+**Hypothèses ouvertes à l'issue de cette première lecture.** La dégradation de LightGBM, les variations de la régression logistique et le rappel limité de XGBoost pourraient tenir à la composition des types, aux montants, au transfert du seuil ou à plusieurs de ces facteurs. Ce premier graphique ne permet pas de les départager. La suite du lot 4.3 mesure d'abord, séparément, l'apport de variables supplémentaires sur les cinq modèles présélectionnés. Elle ne transforme pas ces hypothèses en explications démontrées.

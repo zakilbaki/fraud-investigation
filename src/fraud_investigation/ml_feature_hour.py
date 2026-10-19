@@ -115,7 +115,8 @@ def run_one(csv_path, name: str, fold: int):
         "predict_seconds": predict_seconds, "total_seconds": time.perf_counter() - start,
         "fit_rss_bytes": fit_rss, "end_rss_bytes": psutil.Process().memory_info().rss,
         "serialized_bytes": serialized.tell(), "random_seed": 42,
-        "model_parameters": model.get_params(),
+        "model_parameters": {key: ("NaN" if isinstance(value, float) and np.isnan(value)
+                                  else value) for key, value in model.get_params().items()},
         "versions": {"python": platform.python_version(), "polars": pl.__version__,
                      "numpy": np.__version__, "scikit_learn": sklearn.__version__,
                      "xgboost": xgboost.__version__, "catboost": catboost.__version__},

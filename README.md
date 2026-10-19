@@ -96,6 +96,18 @@ uv run --locked python scripts/diagnose_ml_results.py
 
 Les prédictions transaction par transaction n'ont pas été conservées pendant le lot 4.2. Les étapes suivantes de diagnostic devront rejouer uniquement les configurations figées nécessaires et garder ces prédictions hors de Git.
 
+## Reproduire l'expérience A du lot 4.3
+
+Après le benchmark de référence et avec le même CSV audité, exécuter depuis la racine du dépôt :
+
+```sh
+uv run --locked python -m unittest tests.test_ml_feature_hour tests.test_ml_benchmark -v
+uv run --locked python scripts/run_ml_feature_hour_all.py
+uv run --locked python scripts/report_ml_feature_hour.py
+```
+
+L'expérience ajoute seulement l'heure simulée codée en sinus et cosinus aux cinq modèles présélectionnés. Les 25 ajustements sont enregistrés dans `data/ml_feature_hour/`, exclu de Git, et une interruption reprend les fenêtres déjà terminées. Le script de rapport compare ces résultats aux 25 lignes correspondantes de `docs/results/ml_benchmark.json` et produit [le rapport détaillé](docs/ML_FEATURE_HOUR.md), [les résultats agrégés](docs/results/ml_feature_hour.json) et deux figures. Chaque seuil est choisi dans la réserve interne de sa fenêtre. Le test 505 à 743 n'est pas lu. Les expériences B et C ne font pas partie de cette commande.
+
 ## Portabilité et historique de vérification
 
 La procédure vise une installation reproductible sur toute machine où les prérequis sont disponibles. Les exécutions effectivement vérifiées ont eu lieu sur macOS Apple Silicon avec Python 3.11.15, `uv` 0.13.1 et Polars 1.44.2. Linux et Windows n'ont pas été testés ; leur compatibilité reste à vérifier. Le téléchargement public, l'audit et l'import complet ont réussi le 16 octobre 2026 sur cette machine. Les effectifs mesurés et les contrôles de cohérence sont conservés dans les documents liés en tête de page. Le notebook EDA a été réexécuté intégralement lors de la clôture du lot 4.0. Pour le lot 4.2, `uv run --locked` a réussi avec un cache temporaire explicitement accessible dans l'environnement restreint ; la commande avec le cache par défaut n'a pas été revérifiée.
