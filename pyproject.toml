@@ -10,14 +10,21 @@ readme = "README.md"
 requires-python = ">=3.11,<3.14"
 dependencies = [
     "catboost>=1.2,<2",
+    "fastapi>=0.115,<1",
     "joblib>=1.4,<2",
     "lightgbm>=4,<5",
     "matplotlib>=3.9,<4",
     "polars>=1,<2",
     "psutil>=6,<8",
     "scikit-learn>=1.5,<2",
+    "uvicorn>=0.30,<1",
     "xgboost>=2,<4",
 ]
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/fraud_investigation"]
+
+[dependency-groups]
+dev = [
+    "httpx>=0.27,<1",
+]

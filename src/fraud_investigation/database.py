@@ -111,6 +111,32 @@ def get_transaction(connection: sqlite3.Connection, transaction_id: str) -> dict
     return None if row is None else _transaction_dict(row)
 
 
+def get_scoring_transaction(connection: sqlite3.Connection, transaction_id: str) -> sqlite3.Row | None:
+    """Lire seulement les champs nécessaires au score et à la provenance."""
+    if not isinstance(transaction_id, str) or len(transaction_id) != 32:
+        raise ValueError("transaction_id doit contenir 32 caractères hexadécimaux")
+    try:
+        identifier = bytes.fromhex(transaction_id)
+    except ValueError as exc:
+        raise ValueError("transaction_id doit être hexadécimal") from exc
+    return connection.execute(
+        """SELECT transaction_id, source_sha256, step, type, amount,
+                  oldbalance_org, name_dest
+           FROM transactions WHERE transaction_id = ?""",
+        (identifier,),
+    ).fetchone()
+
+
+def count_prior_receipts(connection: sqlite3.Connection, name_dest: str, step: int) -> int:
+    """Compter les transactions antérieures, sans limite ni ordre intra-step."""
+    if not name_dest or isinstance(step, bool) or not isinstance(step, int) or step <= 0:
+        raise ValueError("Destinataire ou step invalide")
+    return int(connection.execute(
+        "SELECT COUNT(*) FROM transactions WHERE name_dest = ? AND step < ?",
+        (name_dest, step),
+    ).fetchone()[0])
+
+
 def get_account_transactions(
     connection: sqlite3.Connection,
     account_id: str,
