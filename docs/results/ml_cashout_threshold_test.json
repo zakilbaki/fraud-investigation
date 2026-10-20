@@ -1,0 +1,95 @@
+{
+  "status": "post_final_test_exploratory_only",
+  "csv_sha256": "16910f90577b0d981bf8ff289714510bb89bc71bff7d3f220f024e287e4eea6b",
+  "pipeline_sha256": "e5482a4bc5d731246a7834cbf37dc53bb48066a2a6cef681694db1d95a2446ff",
+  "saved_scores_sha256": "921d7637a8222613100bfeb4bdacc8c38a549f5e89cd1e359a567ca7b9bf1330",
+  "saved_scores_reproduced_final_metrics": true,
+  "ordered_steps_and_labels_match_csv": true,
+  "other_type_decisions_unchanged": true,
+  "threshold_steps": [
+    361,
+    432
+  ],
+  "test_steps": [
+    505,
+    743
+  ],
+  "global_threshold": 0.3123179923852385,
+  "cash_out_threshold": 0.28803511270286475,
+  "cash_out": {
+    "global": {
+      "transactions": 96019,
+      "frauds": 1296,
+      "prevalence": 0.013497328653703955,
+      "alerts": 911,
+      "tp": 895,
+      "fp": 16,
+      "fn": 401,
+      "tn": 94707,
+      "precision": 0.9824368825466521,
+      "recall": 0.6905864197530864,
+      "f1": 0.8110557317625736
+    },
+    "variant": {
+      "transactions": 96019,
+      "frauds": 1296,
+      "prevalence": 0.013497328653703955,
+      "alerts": 923,
+      "tp": 905,
+      "fp": 18,
+      "fn": 391,
+      "tn": 94705,
+      "precision": 0.980498374864572,
+      "recall": 0.6983024691358025,
+      "f1": 0.8156827399729608
+    },
+    "delta": {
+      "alerts": 12,
+      "tp": 10,
+      "fp": 2,
+      "fn": -10,
+      "tn": -2,
+      "precision": -0.0019385076820800373,
+      "recall": 0.007716049382716084,
+      "f1": 0.004627008210387196
+    }
+  },
+  "overall": {
+    "global": {
+      "transactions": 298584,
+      "frauds": 2592,
+      "prevalence": 0.008680974198215577,
+      "alerts": 2219,
+      "tp": 2190,
+      "fp": 29,
+      "fn": 402,
+      "tn": 295963,
+      "precision": 0.9869310500225327,
+      "recall": 0.8449074074074074,
+      "f1": 0.9104136354188318
+    },
+    "variant": {
+      "transactions": 298584,
+      "frauds": 2592,
+      "prevalence": 0.008680974198215577,
+      "alerts": 2231,
+      "tp": 2200,
+      "fp": 31,
+      "fn": 392,
+      "tn": 295961,
+      "precision": 0.9861048857014791,
+      "recall": 0.8487654320987654,
+      "f1": 0.9122952519178934
+    },
+    "delta": {
+      "alerts": 12,
+      "tp": 10,
+      "fp": 2,
+      "fn": -10,
+      "tn": -2,
+      "precision": -0.0008261643210535352,
+      "recall": 0.0038580246913579863,
+      "f1": 0.0018816164990616002
+    }
+  }
+}
