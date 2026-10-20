@@ -19,6 +19,8 @@ Trois configurations supplémentaires par modèle donnent **30 ajustements walk-
 
 La sélection inclut les deux références H et les variantes complètes. Appliquer la règle de la section 7 au F1 moyen non arrondi : candidats à moins de 0,005 du meilleur, puis F1 minimum, écart-type descriptif si minima à moins de 0,005, temps médian d'ajustement, taille sérialisée et simplicité selon les tolérances de la section 7. Entre variantes d'une même famille indiscernables au dernier niveau, l'ordre de simplicité fixé est `depth4`, H, `lambda10` ou `l2leaf10`, puis `slow200` ; entre familles, conserver l'ordre XGBoost puis CatBoost de la section 7. Ultime égalité : code de configuration. Ne sélectionner aucun candidat incomplet. Mesurer aussi précision, rappel, F1 et prévalence sur l'apprentissage au seuil choisi sur la réserve. Un écart apprentissage/validation est un signal descriptif, pas une preuve de surapprentissage. Les validations ont déjà servi à plusieurs choix et leurs apprentissages se recouvrent ; la sélection reste exploratoire.
 
+**État après le premier passage :** les [quinze ajustements XGBoost](ML_TUNE_H_XGBOOST.md) sont terminés et vérifiés. La sélection globale reste ouverte ; les variantes CatBoost fixées ci-dessus n'ont pas été exécutées et attendent la discussion avec l'utilisateur.
+
 ## Lot 4.4 : expériences E, F et G, plan fixé avant les scores
 
 Le protocole d'optimisation des hyperparamètres publié dans le commit `6810dff` a été interrompu avant tout code, entraînement ou score de réglage. Il est conservé dans l'historique Git, mais ne s'applique plus. Aucun de ses essais ne doit être interprété comme une comparaison achevée.

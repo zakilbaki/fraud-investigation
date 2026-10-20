@@ -217,3 +217,9 @@ Les dix calculs finissent sous les plafonds existants. La construction de l'hist
 ### Réglages limités de H : protocole préalable
 
 Le [protocole](ML_PROTOCOL.md) fige avant les nouveaux scores trois variantes par famille, profondeur réduite, régularisation renforcée et couple pas réduit avec davantage d'arbres, soit au plus 30 ajustements. H reste la référence avec ses sept entrées et ses cinq fenêtres. XGBoost sera exécuté et discuté avant tout calcul CatBoost. L'ancien plan interrompu sur D demeure historique et ne doit pas être relancé. Le test 505 à 743 reste réservé.
+
+### Réglages XGBoost terminés, retour utilisateur attendu
+
+Les [quinze validations XGBoost](ML_TUNE_H_XGBOOST.md), leurs [résultats agrégés](results/ml_tune_h_xgboost.json) et quatre figures sont publiés. `xgb_depth4` atteint un F1 moyen de **0,9000** contre **0,8948** pour H, avec un minimum de **0,8731** contre **0,8622**. Les cumuls passent de **3 388 TP et 203 FP** pour H à **3 418 TP et 194 FP**. Le F1 de `depth4` baisse toutefois dans deux fenêtres. `lambda10` atteint **0,8953** et `slow200` **0,8988** ; l'ajustement médian de `slow200` est plus long et sa taille sérialisée médiane plus grande. Avec la règle préannoncée, `depth4` est le candidat XGBoost provisoire, pas un modèle final. Les métriques d'apprentissage H n'avaient pas été enregistrées et H n'a pas été réentraînée pour les compléter.
+
+L'empreinte du CSV, les quinze configurations et fenêtres, les colonnes, ratios manquants, historiques strictement antérieurs, matrices de confusion, moyennes, graines, versions, temps et tailles ont été vérifiés sur macOS Apple Silicon avec le Python 3.11 local. Les 35 tests passent. La commande générique `uv run --locked`, Linux et Windows restent non vérifiés pour ce passage. CatBoost n'a pas commencé ; aucun score du test 505 à 743 n'a été consulté.

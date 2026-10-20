@@ -202,6 +202,18 @@ uv run --locked python scripts/report_ml_feature_ratio_recipient_history.py
 
 H combine uniquement les entrées de E avec le compteur destinataire strictement antérieur de G, pour XGBoost et CatBoost. Les journaux et résultats intermédiaires restent dans `data/ml_feature_ratio_recipient_history/`, hors de Git ; l'orchestrateur reprend les fenêtres achevées. Le [rapport H](docs/ML_FEATURE_RATIO_RECIPIENT_HISTORY.md), les [agrégats](docs/results/ml_feature_ratio_recipient_history.json) et trois figures comparent H à E et G sans les réentraîner. Le test final n'est pas évalué.
 
+## Reproduire les réglages limités de H, XGBoost
+
+Le réglage limité de H est figé dans le [protocole](docs/ML_PROTOCOL.md). Seules les trois variantes XGBoost ont été exécutées à ce stade. Pour reproduire ces quinze ajustements avec le CSV audité et les résultats H déjà présents :
+
+```sh
+uv run --locked python -m unittest discover -s tests
+uv run --locked python scripts/run_ml_tune_h_xgboost_all.py
+uv run --locked python scripts/report_ml_tune_h_xgboost.py
+```
+
+Le [rapport XGBoost](docs/ML_TUNE_H_XGBOOST.md), ses [résultats structurés](docs/results/ml_tune_h_xgboost.json) et quatre figures donnent les scores et coûts. Les résultats intermédiaires restent dans `data/ml_tune_h/`, hors Git. Les configurations CatBoost sont fixées mais non exécutées ; le test final reste réservé.
+
 ## Portabilité et historique de vérification
 
 La procédure vise une installation reproductible sur toute machine où les prérequis sont disponibles. Les exécutions effectivement vérifiées ont eu lieu sur macOS Apple Silicon avec Python 3.11.15, `uv` 0.13.1 et Polars 1.44.2. Linux et Windows n'ont pas été testés ; leur compatibilité reste à vérifier. Le téléchargement public, l'audit et l'import complet ont réussi le 16 octobre 2026 sur cette machine. Les effectifs mesurés et les contrôles de cohérence sont conservés dans les documents liés en tête de page. Le notebook EDA a été réexécuté intégralement lors de la clôture du lot 4.0. Pour le lot 4.2, `uv run --locked` a réussi avec un cache temporaire explicitement accessible dans l'environnement restreint ; la commande avec le cache par défaut n'a pas été revérifiée.
