@@ -1,0 +1,45 @@
+{
+  "status": "exploratory_threshold_selected_on_reserve",
+  "csv_sha256": "16910f90577b0d981bf8ff289714510bb89bc71bff7d3f220f024e287e4eea6b",
+  "pipeline_sha256": "e5482a4bc5d731246a7834cbf37dc53bb48066a2a6cef681694db1d95a2446ff",
+  "model_config": "cat_slow200",
+  "fit_steps": [
+    1,
+    360
+  ],
+  "threshold_steps": [
+    361,
+    432
+  ],
+  "reserve_rows": 822359,
+  "reserve_frauds": 840,
+  "cash_out_threshold": 0.28803511270286475,
+  "global_threshold": 0.3123179923852385,
+  "cash_out_reserve_global": {
+    "transactions": 289951,
+    "frauds": 420,
+    "prevalence": 0.0014485206121034244,
+    "alerts": 304,
+    "tp": 287,
+    "fp": 17,
+    "fn": 133,
+    "tn": 289514,
+    "precision": 0.944078947368421,
+    "recall": 0.6833333333333333,
+    "f1": 0.7928176795580111
+  },
+  "cash_out_reserve_variant": {
+    "transactions": 289951,
+    "frauds": 420,
+    "prevalence": 0.0014485206121034244,
+    "alerts": 309,
+    "tp": 289,
+    "fp": 20,
+    "fn": 131,
+    "tn": 289511,
+    "precision": 0.9352750809061489,
+    "recall": 0.6880952380952381,
+    "f1": 0.7928669410150891
+  },
+  "rule": "maximum CASH_OUT F1 at distinct scores <= global threshold; highest threshold on tie"
+}
