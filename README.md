@@ -219,6 +219,16 @@ Les rapports [XGBoost](docs/ML_TUNE_H_XGBOOST.md), [CatBoost](docs/ML_TUNE_H_CAT
 
 ## Portabilité et historique de vérification
 
-Le pipeline final choisi est documenté dans la [décision préalable](docs/ML_FINAL_FREEZE.md) et son [manifeste de gel](docs/results/ml_final_manifest.json). Le modèle binaire reste dans `data/ml_final_catboost/`, hors Git. Sur le CSV audité, la commande de gel est `python scripts/freeze_ml_final.py`. Elle refuse de remplacer un gel existant ; pour une réexécution indépendante, utiliser un nouvel espace de travail et conserver la trace de la première évaluation. L'évaluation unique du test utilise `python scripts/evaluate_ml_final.py` après publication du gel.
+Le pipeline final choisi est documenté dans la [décision préalable](docs/ML_FINAL_FREEZE.md) et son [manifeste de gel](docs/results/ml_final_manifest.json). Le modèle binaire et les prédictions individuelles restent dans `data/ml_final_catboost/`, hors Git. Sur le CSV audité, depuis la racine du dépôt et avec les dépendances installées, la procédure est :
+
+```sh
+python -m unittest discover -s tests
+python scripts/freeze_ml_final.py
+# Publier et vérifier le manifeste avant toute évaluation.
+python scripts/evaluate_ml_final.py
+python scripts/report_ml_final.py
+```
+
+Le gel et l'évaluation refusent de remplacer les artefacts existants. Pour une réexécution indépendante, utiliser un nouvel espace de travail et conserver la trace des tentatives antérieures. Le [rapport final](docs/ML_FINAL_REPORT.md), la [fiche du modèle](docs/ML_MODEL_CARD.md), les [agrégats](docs/results/ml_final_test.json) et quatre figures sont publiés. Ces commandes ont réussi ici avec `.venv/bin/python` sur macOS Apple Silicon ; la commande générique `uv run --locked` n'a pas été vérifiée pour ce lot.
 
 La procédure vise une installation reproductible sur toute machine où les prérequis sont disponibles. Les exécutions effectivement vérifiées ont eu lieu sur macOS Apple Silicon avec Python 3.11.15, `uv` 0.13.1 et Polars 1.44.2. Linux et Windows n'ont pas été testés ; leur compatibilité reste à vérifier. Le téléchargement public, l'audit et l'import complet ont réussi le 16 octobre 2026 sur cette machine. Les effectifs mesurés et les contrôles de cohérence sont conservés dans les documents liés en tête de page. Le notebook EDA a été réexécuté intégralement lors de la clôture du lot 4.0. Pour le lot 4.2, `uv run --locked` a réussi avec un cache temporaire explicitement accessible dans l'environnement restreint ; la commande avec le cache par défaut n'a pas été revérifiée.

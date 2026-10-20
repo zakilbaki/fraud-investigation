@@ -2,6 +2,8 @@
 
 **Lot 4.5 : [décision finale figée avant les scores du test](ML_FINAL_FREEZE.md).** `cat_slow200` avec les variables de H est retenu par le responsable. Ajustement sur 1 à 360, seuil F1 sur 361 à 432, vérification du pipeline sauvegardé, puis test unique sur 505 à 743. La période 433 à 504 ne réajuste rien. Les anciens plans ci-dessous documentent la sélection et restent historiques.
 
+**Statut : [évaluation finale achevée](ML_FINAL_REPORT.md).** Le seuil et les paramètres publiés dans le manifeste antérieur au test restent inchangés. Les résultats et limites sont décrits séparément ; aucun nouveau choix de modèle n'est effectué sur le test.
+
 ## Lot 4.4 : réglages limités de H, figés avant tout nouveau score
 
 L'ancien plan de réglage de D, conservé plus bas comme historique interrompu, reste inapplicable. Le présent plan porte **uniquement sur les sept prédicteurs exacts de H**, sans nouvelle variable : `type`, `amount`, `oldbalanceOrg`, `hour_sin`, `hour_cos`, `part_solde`, `nb_entrees_anterieures`. Les représentations, le ratio manquant si le solde vaut zéro et l'historique strictement antérieur restent ceux de H. Références : H XGBoost et H CatBoost, déjà vérifiées. Aucune pondération, rééchantillonnage, calibration ni arrêt anticipé.

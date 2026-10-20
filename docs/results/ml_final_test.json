@@ -1,0 +1,228 @@
+{
+  "status": "single_final_test",
+  "model_config": "cat_slow200",
+  "pipeline_sha256": "e5482a4bc5d731246a7834cbf37dc53bb48066a2a6cef681694db1d95a2446ff",
+  "csv_sha256": "16910f90577b0d981bf8ff289714510bb89bc71bff7d3f220f024e287e4eea6b",
+  "threshold": 0.3123179923852385,
+  "test_steps": [
+    505,
+    743
+  ],
+  "history_initialization_steps": [
+    1,
+    504
+  ],
+  "history_first_step_verified": true,
+  "history_nonzero_rows": 165689,
+  "overall": {
+    "transactions": 298584,
+    "frauds": 2592,
+    "prevalence": 0.008680974198215577,
+    "alerts": 2219,
+    "tp": 2190,
+    "fp": 29,
+    "fn": 402,
+    "tn": 295963,
+    "precision": 0.9869310500225327,
+    "recall": 0.8449074074074074,
+    "f1": 0.9104136354188318
+  },
+  "by_type": {
+    "CASH_IN": {
+      "transactions": 68121,
+      "frauds": 0,
+      "prevalence": 0.0,
+      "alerts": 0,
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "tn": 68121,
+      "precision": null,
+      "recall": null,
+      "f1": 0.0
+    },
+    "CASH_OUT": {
+      "transactions": 96019,
+      "frauds": 1296,
+      "prevalence": 0.013497328653703955,
+      "alerts": 911,
+      "tp": 895,
+      "fp": 16,
+      "fn": 401,
+      "tn": 94707,
+      "precision": 0.9824368825466521,
+      "recall": 0.6905864197530864,
+      "f1": 0.8110557317625736
+    },
+    "DEBIT": {
+      "transactions": 2441,
+      "frauds": 0,
+      "prevalence": 0.0,
+      "alerts": 0,
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "tn": 2441,
+      "precision": null,
+      "recall": null,
+      "f1": 0.0
+    },
+    "PAYMENT": {
+      "transactions": 103976,
+      "frauds": 0,
+      "prevalence": 0.0,
+      "alerts": 0,
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "tn": 103976,
+      "precision": null,
+      "recall": null,
+      "f1": 0.0
+    },
+    "TRANSFER": {
+      "transactions": 28027,
+      "frauds": 1296,
+      "prevalence": 0.046241124629821245,
+      "alerts": 1308,
+      "tp": 1295,
+      "fp": 13,
+      "fn": 1,
+      "tn": 26718,
+      "precision": 0.9900611620795107,
+      "recall": 0.9992283950617284,
+      "f1": 0.9946236559139785
+    }
+  },
+  "by_amount": {
+    "0": {
+      "transactions": 10,
+      "frauds": 10,
+      "prevalence": 1.0,
+      "alerts": 0,
+      "tp": 0,
+      "fp": 0,
+      "fn": 10,
+      "tn": 0,
+      "precision": null,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "(0, 100000)": {
+      "transactions": 168887,
+      "frauds": 528,
+      "prevalence": 0.00312635075523871,
+      "alerts": 372,
+      "tp": 363,
+      "fp": 9,
+      "fn": 165,
+      "tn": 168350,
+      "precision": 0.9758064516129032,
+      "recall": 0.6875,
+      "f1": 0.8066666666666666
+    },
+    "[100000, 10^5.5)": {
+      "transactions": 92550,
+      "frauds": 566,
+      "prevalence": 0.006115613182063749,
+      "alerts": 413,
+      "tp": 402,
+      "fp": 11,
+      "fn": 164,
+      "tn": 91973,
+      "precision": 0.9733656174334141,
+      "recall": 0.7102473498233216,
+      "f1": 0.8212461695607763
+    },
+    "[10^5.5, 1000000)": {
+      "transactions": 31411,
+      "frauds": 650,
+      "prevalence": 0.02069338766674095,
+      "alerts": 596,
+      "tp": 587,
+      "fp": 9,
+      "fn": 63,
+      "tn": 30752,
+      "precision": 0.9848993288590604,
+      "recall": 0.9030769230769231,
+      "f1": 0.942215088282504
+    },
+    "[1000000, 10^6.5)": {
+      "transactions": 4625,
+      "frauds": 489,
+      "prevalence": 0.10572972972972973,
+      "alerts": 489,
+      "tp": 489,
+      "fp": 0,
+      "fn": 0,
+      "tn": 4136,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    },
+    "[10^6.5, +inf)": {
+      "transactions": 1101,
+      "frauds": 349,
+      "prevalence": 0.3169845594913715,
+      "alerts": 349,
+      "tp": 349,
+      "fp": 0,
+      "fn": 0,
+      "tn": 752,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    }
+  },
+  "amount_bucket_labels": [
+    "0",
+    "(0, 100000)",
+    "[100000, 10^5.5)",
+    "[10^5.5, 1000000)",
+    "[1000000, 10^6.5)",
+    "[10^6.5, +inf)"
+  ],
+  "by_period": {
+    "505-672": {
+      "transactions": 232135,
+      "frauds": 1792,
+      "prevalence": 0.007719645895707239,
+      "alerts": 1539,
+      "tp": 1514,
+      "fp": 25,
+      "fn": 278,
+      "tn": 230318,
+      "precision": 0.9837556855100714,
+      "recall": 0.8448660714285714,
+      "f1": 0.9090363254277994
+    },
+    "673-720": {
+      "transactions": 66177,
+      "frauds": 528,
+      "prevalence": 0.007978602837843964,
+      "alerts": 457,
+      "tp": 453,
+      "fp": 4,
+      "fn": 75,
+      "tn": 65645,
+      "precision": 0.9912472647702407,
+      "recall": 0.8579545454545454,
+      "f1": 0.9197969543147209
+    },
+    "721-743": {
+      "transactions": 272,
+      "frauds": 272,
+      "prevalence": 1.0,
+      "alerts": 223,
+      "tp": 223,
+      "fp": 0,
+      "fn": 49,
+      "tn": 0,
+      "precision": 1.0,
+      "recall": 0.8198529411764706,
+      "f1": 0.901010101010101
+    }
+  },
+  "seconds": 1.399254082934931,
+  "individual_predictions": "data/ml_final_catboost/test_predictions.npz (local, hors Git)"
+}
