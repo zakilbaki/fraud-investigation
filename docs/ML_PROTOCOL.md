@@ -1,5 +1,24 @@
 # Lot 4.1 : protocole ML proposé pour PaySim
 
+## Lot 4.4 : réglages limités de H, figés avant tout nouveau score
+
+L'ancien plan de réglage de D, conservé plus bas comme historique interrompu, reste inapplicable. Le présent plan porte **uniquement sur les sept prédicteurs exacts de H**, sans nouvelle variable : `type`, `amount`, `oldbalanceOrg`, `hour_sin`, `hour_cos`, `part_solde`, `nb_entrees_anterieures`. Les représentations, le ratio manquant si le solde vaut zéro et l'historique strictement antérieur restent ceux de H. Références : H XGBoost et H CatBoost, déjà vérifiées. Aucune pondération, rééchantillonnage, calibration ni arrêt anticipé.
+
+Les paramètres non mentionnés restent exactement ceux de H, construits par `candidate()` dans `src/fraud_investigation/ml_benchmark.py`. XGBoost H : `n_estimators=100`, `max_depth=6`, `min_child_weight=10`, `learning_rate=0.1`, `tree_method="hist"`, `n_jobs=4`, `random_state=42`. CatBoost H : `iterations=100`, `depth=6`, `learning_rate=0.1`, `loss_function="Logloss"`, `task_type="CPU"`, `thread_count=4`, `random_seed=42`, `cat_features=["type"]`, `allow_writing_files=False`, `verbose=False`. Les valeurs implicites des bibliothèques verrouillées sont conservées sauf mention contraire et les dictionnaires complets seront enregistrés dans les résultats.
+
+| Modèle | Code | Modification exacte face à H | Question examinée |
+| --- | --- | --- | --- |
+| XGBoost | `xgb_depth4` | `max_depth=4` au lieu de 6 | Des arbres moins profonds, donc moins d'interactions par arbre, changent-ils qualité et régularité ? |
+| XGBoost | `xgb_lambda10` | `reg_lambda=10` au lieu de la valeur implicite | Une pénalité plus forte sur les poids des feuilles aide-t-elle hors apprentissage ? |
+| XGBoost | `xgb_slow200` | `learning_rate=0.05`, `n_estimators=200` au lieu de 0,1 et 100 | Des pas plus petits avec davantage d'arbres changent-ils qualité et coût ? Le résultat concerne le couple. |
+| CatBoost | `cat_depth4` | `depth=4` au lieu de 6 | Des arbres symétriques moins profonds changent-ils qualité et régularité ? |
+| CatBoost | `cat_l2leaf10` | `l2_leaf_reg=10` au lieu de la valeur implicite | Une pénalité plus forte sur les valeurs des feuilles aide-t-elle ? Ce paramètre n'est pas numériquement équivalent à `reg_lambda`. |
+| CatBoost | `cat_slow200` | `learning_rate=0.05`, `iterations=200` au lieu de 0,1 et 100 | Des pas plus petits avec davantage d'itérations changent-ils qualité et coût ? Le résultat concerne le couple. |
+
+Trois configurations supplémentaires par modèle donnent **30 ajustements walk-forward** au maximum, sous le plafond de 40. Aucune quatrième configuration ne sera ajoutée après les scores. Graine 42, quatre threads par processus, plafond de 30 minutes et de 75 % de la RAM physique par ajustement. Les cinq fenêtres et leurs portions de la section 2 sont inchangées. Chaque modèle apprend uniquement sur la première portion ; le seuil maximise F1 sur la réserve interne avec scores égaux groupés et seuil le plus haut à égalité ; la validation extérieure sert seulement à mesurer. Les historiques de la réserve et de la validation peuvent inclure les steps précédents sans leurs labels. Le test 505 à 743 reste exclu. Exécuter XGBoost, discuter ses résultats, puis seulement CatBoost après retour de l'utilisateur.
+
+La sélection inclut les deux références H et les variantes complètes. Appliquer la règle de la section 7 au F1 moyen non arrondi : candidats à moins de 0,005 du meilleur, puis F1 minimum, écart-type descriptif si minima à moins de 0,005, temps médian d'ajustement, taille sérialisée et simplicité selon les tolérances de la section 7. Entre variantes d'une même famille indiscernables au dernier niveau, l'ordre de simplicité fixé est `depth4`, H, `lambda10` ou `l2leaf10`, puis `slow200` ; entre familles, conserver l'ordre XGBoost puis CatBoost de la section 7. Ultime égalité : code de configuration. Ne sélectionner aucun candidat incomplet. Mesurer aussi précision, rappel, F1 et prévalence sur l'apprentissage au seuil choisi sur la réserve. Un écart apprentissage/validation est un signal descriptif, pas une preuve de surapprentissage. Les validations ont déjà servi à plusieurs choix et leurs apprentissages se recouvrent ; la sélection reste exploratoire.
+
 ## Lot 4.4 : expériences E, F et G, plan fixé avant les scores
 
 Le protocole d'optimisation des hyperparamètres publié dans le commit `6810dff` a été interrompu avant tout code, entraînement ou score de réglage. Il est conservé dans l'historique Git, mais ne s'applique plus. Aucun de ses essais ne doit être interprété comme une comparaison achevée.
