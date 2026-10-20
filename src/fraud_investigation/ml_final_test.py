@@ -110,7 +110,7 @@ def evaluate(csv_path, output_dir):
         for current_step, indices, prior in stepwise_history(names, step, initial):
             assert not seen[indices].any()
             if current_step == TEST_START:
-                assert np.array_equal(prior, np.fromiter((initial[name] for name in names[indices]),
+                assert np.array_equal(prior, np.fromiter((initial.get(name, 0) for name in names[indices]),
                                                          dtype=np.float32, count=len(indices)))
                 first_boundary_checked = True
             x = features.transform(kind[indices], amount[indices], balance[indices],

@@ -32,6 +32,19 @@ class FinalTest(unittest.TestCase):
         with self.assertRaises(ValueError):
             list(stepwise_history(["A"], [504], {}))
 
+    def test_unseen_recipient_at_test_boundary_starts_at_zero(self):
+        initial = {"KNOWN": 2}
+        names = np.array(["NEW", "KNOWN", "NEW"], dtype=object)
+        steps = np.array([505, 505, 506])
+        result = np.empty(len(names), dtype=np.float32)
+        for current_step, indices, prior in stepwise_history(names, steps, initial):
+            if current_step == 505:
+                expected = np.fromiter((initial.get(name, 0) for name in names[indices]),
+                                       dtype=np.float32, count=len(indices))
+                np.testing.assert_array_equal(prior, expected)
+            result[indices] = prior
+        np.testing.assert_array_equal(result, [0, 2, 1])
+
     def test_bucket_boundaries_and_absent_group(self):
         values = np.array([0, 1, 99999.99, 100000, 10**5.5, 1e6, 10**6.5, 1e8])
         np.testing.assert_array_equal(amount_bucket(values), [0, 1, 1, 2, 3, 4, 5, 5])
