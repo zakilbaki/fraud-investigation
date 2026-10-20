@@ -202,17 +202,20 @@ uv run --locked python scripts/report_ml_feature_ratio_recipient_history.py
 
 H combine uniquement les entrées de E avec le compteur destinataire strictement antérieur de G, pour XGBoost et CatBoost. Les journaux et résultats intermédiaires restent dans `data/ml_feature_ratio_recipient_history/`, hors de Git ; l'orchestrateur reprend les fenêtres achevées. Le [rapport H](docs/ML_FEATURE_RATIO_RECIPIENT_HISTORY.md), les [agrégats](docs/results/ml_feature_ratio_recipient_history.json) et trois figures comparent H à E et G sans les réentraîner. Le test final n'est pas évalué.
 
-## Reproduire les réglages limités de H, XGBoost
+## Reproduire les réglages limités de H
 
-Le réglage limité de H est figé dans le [protocole](docs/ML_PROTOCOL.md). Seules les trois variantes XGBoost ont été exécutées à ce stade. Pour reproduire ces quinze ajustements avec le CSV audité et les résultats H déjà présents :
+Le réglage limité de H est figé dans le [protocole](docs/ML_PROTOCOL.md). Les trois variantes XGBoost ont été exécutées avant les trois variantes CatBoost, après discussion. Pour reproduire les trente ajustements avec le CSV audité et les résultats H déjà présents :
 
 ```sh
 uv run --locked python -m unittest discover -s tests
 uv run --locked python scripts/run_ml_tune_h_xgboost_all.py
 uv run --locked python scripts/report_ml_tune_h_xgboost.py
+uv run --locked python scripts/run_ml_tune_h_catboost_all.py
+uv run --locked python scripts/report_ml_tune_h_catboost.py
+uv run --locked python scripts/report_ml_tune_h_selection.py
 ```
 
-Le [rapport XGBoost](docs/ML_TUNE_H_XGBOOST.md), ses [résultats structurés](docs/results/ml_tune_h_xgboost.json) et quatre figures donnent les scores et coûts. Les résultats intermédiaires restent dans `data/ml_tune_h/`, hors Git. Les configurations CatBoost sont fixées mais non exécutées ; le test final reste réservé.
+Les rapports [XGBoost](docs/ML_TUNE_H_XGBOOST.md), [CatBoost](docs/ML_TUNE_H_CATBOOST.md) et de [sélection proposée](docs/ML_TUNE_H_SELECTION.md) donnent les scores et coûts par fenêtre et les comparaisons. Les résultats structurés sont dans `docs/results/` ; les fichiers intermédiaires restent dans `data/ml_tune_h/`, hors Git. La sélection attend discussion et le test final reste réservé. Pour ce passage, les commandes ont été exécutées avec le Python local ; les lignes `uv run --locked` ci-dessus sont des commandes génériques non revérifiées ici.
 
 ## Portabilité et historique de vérification
 

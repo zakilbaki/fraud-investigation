@@ -1,0 +1,2593 @@
+{
+  "experiment": "H_limited_tuning",
+  "status": "catboost_complete_discussion_pending",
+  "source_sha256": "16910f90577b0d981bf8ff289714510bb89bc71bff7d3f220f024e287e4eea6b",
+  "configs": {
+    "xgb_depth4": {
+      "model": "xgboost",
+      "changes": {
+        "max_depth": 4
+      }
+    },
+    "xgb_lambda10": {
+      "model": "xgboost",
+      "changes": {
+        "reg_lambda": 10
+      }
+    },
+    "xgb_slow200": {
+      "model": "xgboost",
+      "changes": {
+        "learning_rate": 0.05,
+        "n_estimators": 200
+      }
+    },
+    "cat_depth4": {
+      "model": "catboost",
+      "changes": {
+        "depth": 4
+      }
+    },
+    "cat_l2leaf10": {
+      "model": "catboost",
+      "changes": {
+        "l2_leaf_reg": 10
+      }
+    },
+    "cat_slow200": {
+      "model": "catboost",
+      "changes": {
+        "learning_rate": 0.05,
+        "iterations": 200
+      }
+    }
+  },
+  "reference_rows": [
+    {
+      "transactions": 1288139,
+      "frauds": 805,
+      "prevalence": 0.0006249325577441564,
+      "alerts": 723,
+      "tp": 674,
+      "fp": 49,
+      "fn": 131,
+      "tn": 1287285,
+      "precision": 0.9322268326417704,
+      "recall": 0.8372670807453416,
+      "f1": 0.8821989528795812,
+      "experiment": "H_ratio_recipient_history",
+      "model": "catboost",
+      "fold": 1,
+      "source_columns": [
+        "step",
+        "type",
+        "amount",
+        "oldbalanceOrg",
+        "nameDest",
+        "isFraud"
+      ],
+      "history_source_columns": [
+        "step",
+        "nameDest"
+      ],
+      "predictor_columns": [
+        "type",
+        "amount",
+        "oldbalanceOrg",
+        "hour_sin",
+        "hour_cos",
+        "part_solde",
+        "nb_entrees_anterieures"
+      ],
+      "label_column": "isFraud",
+      "raw_step_predictor": false,
+      "raw_account_predictor": false,
+      "fit_steps": [
+        1,
+        72
+      ],
+      "threshold_steps": [
+        73,
+        144
+      ],
+      "validation_steps": [
+        145,
+        216
+      ],
+      "fit_rows": 1030563,
+      "fit_frauds": 890,
+      "threshold_rows": 479034,
+      "threshold_frauds": 742,
+      "ratio_undefined_rows": {
+        "fit": 336776,
+        "threshold": 159841,
+        "validation": 425860
+      },
+      "ratio_above_one_rows": {
+        "fit": 308576,
+        "threshold": 149495,
+        "validation": 395077
+      },
+      "history_nonzero_rows": {
+        "fit": 556672,
+        "threshold": 271195,
+        "validation": 736208
+      },
+      "threshold": 0.35313633624710467,
+      "threshold_f1": 0.9003584229390681,
+      "fit_build_seconds": 0.025179583113640547,
+      "threshold_build_seconds": 0.01752525009214878,
+      "validation_build_seconds": 0.03526424989104271,
+      "fit_seconds": 4.438129542162642,
+      "threshold_seconds": 0.0806711670011282,
+      "predict_seconds": 0.11224091704934835,
+      "total_seconds": 7.033276708098128,
+      "fit_rss_bytes": 1651900416,
+      "end_rss_bytes": 1830682624,
+      "serialized_bytes": 118417,
+      "random_seed": 42,
+      "model_parameters": {
+        "iterations": 100,
+        "learning_rate": 0.1,
+        "depth": 6,
+        "loss_function": "Logloss",
+        "thread_count": 4,
+        "random_seed": 42,
+        "verbose": false,
+        "allow_writing_files": false,
+        "task_type": "CPU",
+        "cat_features": [
+          "type"
+        ]
+      },
+      "versions": {
+        "python": "3.11.15",
+        "polars": "1.44.2",
+        "numpy": "2.4.6",
+        "scikit_learn": "1.9.1",
+        "xgboost": "3.2.0",
+        "catboost": "1.2.10"
+      },
+      "read_seconds": 0.19147395784966648,
+      "history_seconds": 1.917810209095478,
+      "history_rss_after_bytes": 917274624
+    },
+    {
+      "transactions": 1160580,
+      "frauds": 842,
+      "prevalence": 0.0007254993193058643,
+      "alerts": 749,
+      "tp": 694,
+      "fp": 55,
+      "fn": 148,
+      "tn": 1159683,
+      "precision": 0.9265687583444593,
+      "recall": 0.8242280285035629,
+      "f1": 0.8724072910119421,
+      "experiment": "H_ratio_recipient_history",
+      "model": "catboost",
+      "fold": 2,
+      "source_columns": [
+        "step",
+        "type",
+        "amount",
+        "oldbalanceOrg",
+        "nameDest",
+        "isFraud"
+      ],
+      "history_source_columns": [
+        "step",
+        "nameDest"
+      ],
+      "predictor_columns": [
+        "type",
+        "amount",
+        "oldbalanceOrg",
+        "hour_sin",
+        "hour_cos",
+        "part_solde",
+        "nb_entrees_anterieures"
+      ],
+      "label_column": "isFraud",
+      "raw_step_predictor": false,
+      "raw_account_predictor": false,
+      "fit_steps": [
+        1,
+        144
+      ],
+      "threshold_steps": [
+        145,
+        216
+      ],
+      "validation_steps": [
+        217,
+        288
+      ],
+      "fit_rows": 1509597,
+      "fit_frauds": 1632,
+      "threshold_rows": 1288139,
+      "threshold_frauds": 805,
+      "ratio_undefined_rows": {
+        "fit": 496617,
+        "threshold": 425860,
+        "validation": 385132
+      },
+      "ratio_above_one_rows": {
+        "fit": 458071,
+        "threshold": 395077,
+        "validation": 353734
+      },
+      "history_nonzero_rows": {
+        "fit": 827867,
+        "threshold": 736208,
+        "validation": 657610
+      },
+      "threshold": 0.34892220435021837,
+      "threshold_f1": 0.890032154340836,
+      "fit_build_seconds": 0.03791700000874698,
+      "threshold_build_seconds": 0.033443375024944544,
+      "validation_build_seconds": 0.03539970889687538,
+      "fit_seconds": 6.519959834171459,
+      "threshold_seconds": 0.23449225001968443,
+      "predict_seconds": 0.10793616715818644,
+      "total_seconds": 9.256463625002652,
+      "fit_rss_bytes": 2054160384,
+      "end_rss_bytes": 2177957888,
+      "serialized_bytes": 118033,
+      "random_seed": 42,
+      "model_parameters": {
+        "iterations": 100,
+        "learning_rate": 0.1,
+        "depth": 6,
+        "loss_function": "Logloss",
+        "thread_count": 4,
+        "random_seed": 42,
+        "verbose": false,
+        "allow_writing_files": false,
+        "task_type": "CPU",
+        "cat_features": [
+          "type"
+        ]
+      },
+      "versions": {
+        "python": "3.11.15",
+        "polars": "1.44.2",
+        "numpy": "2.4.6",
+        "scikit_learn": "1.9.1",
+        "xgboost": "3.2.0",
+        "catboost": "1.2.10"
+      },
+      "read_seconds": 0.19905291707254946,
+      "history_seconds": 1.8633316659834236,
+      "history_rss_after_bytes": 1060372480
+    },
+    {
+      "transactions": 1227741,
+      "frauds": 738,
+      "prevalence": 0.0006011039787707668,
+      "alerts": 670,
+      "tp": 633,
+      "fp": 37,
+      "fn": 105,
+      "tn": 1226966,
+      "precision": 0.9447761194029851,
+      "recall": 0.8577235772357723,
+      "f1": 0.8991477272727273,
+      "experiment": "H_ratio_recipient_history",
+      "model": "catboost",
+      "fold": 3,
+      "source_columns": [
+        "step",
+        "type",
+        "amount",
+        "oldbalanceOrg",
+        "nameDest",
+        "isFraud"
+      ],
+      "history_source_columns": [
+        "step",
+        "nameDest"
+      ],
+      "predictor_columns": [
+        "type",
+        "amount",
+        "oldbalanceOrg",
+        "hour_sin",
+        "hour_cos",
+        "part_solde",
+        "nb_entrees_anterieures"
+      ],
+      "label_column": "isFraud",
+      "raw_step_predictor": false,
+      "raw_account_predictor": false,
+      "fit_steps": [
+        1,
+        216
+      ],
+      "threshold_steps": [
+        217,
+        288
+      ],
+      "validation_steps": [
+        289,
+        360
+      ],
+      "fit_rows": 2797736,
+      "fit_frauds": 2437,
+      "threshold_rows": 1160580,
+      "threshold_frauds": 842,
+      "ratio_undefined_rows": {
+        "fit": 922477,
+        "threshold": 385132,
+        "validation": 417946
+      },
+      "ratio_above_one_rows": {
+        "fit": 853148,
+        "threshold": 353734,
+        "validation": 393340
+      },
+      "history_nonzero_rows": {
+        "fit": 1564075,
+        "threshold": 657610,
+        "validation": 704381
+      },
+      "threshold": 0.42337527039415207,
+      "threshold_f1": 0.882202304737516,
+      "fit_build_seconds": 0.0630166670307517,
+      "threshold_build_seconds": 0.033596707973629236,
+      "validation_build_seconds": 0.03670070809312165,
+      "fit_seconds": 12.894427791005,
+      "threshold_seconds": 0.2134683751501143,
+      "predict_seconds": 0.11185562494210899,
+      "total_seconds": 15.725869791116565,
+      "fit_rss_bytes": 2466152448,
+      "end_rss_bytes": 2631286784,
+      "serialized_bytes": 119137,
+      "random_seed": 42,
+      "model_parameters": {
+        "iterations": 100,
+        "learning_rate": 0.1,
+        "depth": 6,
+        "loss_function": "Logloss",
+        "thread_count": 4,
+        "random_seed": 42,
+        "verbose": false,
+        "allow_writing_files": false,
+        "task_type": "CPU",
+        "cat_features": [
+          "type"
+        ]
+      },
+      "versions": {
+        "python": "3.11.15",
+        "polars": "1.44.2",
+        "numpy": "2.4.6",
+        "scikit_learn": "1.9.1",
+        "xgboost": "3.2.0",
+        "catboost": "1.2.10"
+      },
+      "read_seconds": 0.20254112500697374,
+      "history_seconds": 1.9249051250517368,
+      "history_rss_after_bytes": 1007435776
+    },
+    {
+      "transactions": 822359,
+      "frauds": 840,
+      "prevalence": 0.0010214517017506954,
+      "alerts": 738,
+      "tp": 713,
+      "fp": 25,
+      "fn": 127,
+      "tn": 821494,
+      "precision": 0.9661246612466124,
+      "recall": 0.8488095238095238,
+      "f1": 0.9036755386565273,
+      "experiment": "H_ratio_recipient_history",
+      "model": "catboost",
+      "fold": 4,
+      "source_columns": [
+        "step",
+        "type",
+        "amount",
+        "oldbalanceOrg",
+        "nameDest",
+        "isFraud"
+      ],
+      "history_source_columns": [
+        "step",
+        "nameDest"
+      ],
+      "predictor_columns": [
+        "type",
+        "amount",
+        "oldbalanceOrg",
+        "hour_sin",
+        "hour_cos",
+        "part_solde",
+        "nb_entrees_anterieures"
+      ],
+      "label_column": "isFraud",
+      "raw_step_predictor": false,
+      "raw_account_predictor": false,
+      "fit_steps": [
+        1,
+        288
+      ],
+      "threshold_steps": [
+        289,
+        360
+      ],
+      "validation_steps": [
+        361,
+        432
+      ],
+      "fit_rows": 3958316,
+      "fit_frauds": 3279,
+      "threshold_rows": 1227741,
+      "threshold_frauds": 738,
+      "ratio_undefined_rows": {
+        "fit": 1307609,
+        "threshold": 417946,
+        "validation": 276649
+      },
+      "ratio_above_one_rows": {
+        "fit": 1206882,
+        "threshold": 393340,
+        "validation": 259950
+      },
+      "history_nonzero_rows": {
+        "fit": 2221685,
+        "threshold": 704381,
+        "validation": 470688
+      },
+      "threshold": 0.38522623639170966,
+      "threshold_f1": 0.9004267425320057,
+      "fit_build_seconds": 0.1078818750102073,
+      "threshold_build_seconds": 0.05376316700130701,
+      "validation_build_seconds": 0.037748292088508606,
+      "fit_seconds": 20.893177249934524,
+      "threshold_seconds": 0.2524941249284893,
+      "predict_seconds": 0.08782666712068021,
+      "total_seconds": 24.625742999836802,
+      "fit_rss_bytes": 1502363648,
+      "end_rss_bytes": 1688944640,
+      "serialized_bytes": 119761,
+      "random_seed": 42,
+      "model_parameters": {
+        "iterations": 100,
+        "learning_rate": 0.1,
+        "depth": 6,
+        "loss_function": "Logloss",
+        "thread_count": 4,
+        "random_seed": 42,
+        "verbose": false,
+        "allow_writing_files": false,
+        "task_type": "CPU",
+        "cat_features": [
+          "type"
+        ]
+      },
+      "versions": {
+        "python": "3.11.15",
+        "polars": "1.44.2",
+        "numpy": "2.4.6",
+        "scikit_learn": "1.9.1",
+        "xgboost": "3.2.0",
+        "catboost": "1.2.10"
+      },
+      "read_seconds": 0.5934402500279248,
+      "history_seconds": 2.288578708888963,
+      "history_rss_after_bytes": 829865984
+    },
+    {
+      "transactions": 55620,
+      "frauds": 764,
+      "prevalence": 0.01373606616325063,
+      "alerts": 678,
+      "tp": 671,
+      "fp": 7,
+      "fn": 93,
+      "tn": 54849,
+      "precision": 0.9896755162241888,
+      "recall": 0.8782722513089005,
+      "f1": 0.9306518723994452,
+      "experiment": "H_ratio_recipient_history",
+      "model": "catboost",
+      "fold": 5,
+      "source_columns": [
+        "step",
+        "type",
+        "amount",
+        "oldbalanceOrg",
+        "nameDest",
+        "isFraud"
+      ],
+      "history_source_columns": [
+        "step",
+        "nameDest"
+      ],
+      "predictor_columns": [
+        "type",
+        "amount",
+        "oldbalanceOrg",
+        "hour_sin",
+        "hour_cos",
+        "part_solde",
+        "nb_entrees_anterieures"
+      ],
+      "label_column": "isFraud",
+      "raw_step_predictor": false,
+      "raw_account_predictor": false,
+      "fit_steps": [
+        1,
+        360
+      ],
+      "threshold_steps": [
+        361,
+        432
+      ],
+      "validation_steps": [
+        433,
+        504
+      ],
+      "fit_rows": 5186057,
+      "fit_frauds": 4017,
+      "threshold_rows": 822359,
+      "threshold_frauds": 840,
+      "ratio_undefined_rows": {
+        "fit": 1725555,
+        "threshold": 276649,
+        "validation": 15813
+      },
+      "ratio_above_one_rows": {
+        "fit": 1600222,
+        "threshold": 259950,
+        "validation": 17519
+      },
+      "history_nonzero_rows": {
+        "fit": 2926066,
+        "threshold": 470688,
+        "validation": 30274
+      },
+      "threshold": 0.19981278434058297,
+      "threshold_f1": 0.8879256965944272,
+      "fit_build_seconds": 0.11807987513020635,
+      "threshold_build_seconds": 0.039965041913092136,
+      "validation_build_seconds": 0.008333583129569888,
+      "fit_seconds": 28.229298874968663,
+      "threshold_seconds": 0.15520224999636412,
+      "predict_seconds": 0.005719791864976287,
+      "total_seconds": 31.793844749918208,
+      "fit_rss_bytes": 1382891520,
+      "end_rss_bytes": 1715372032,
+      "serialized_bytes": 120673,
+      "random_seed": 42,
+      "model_parameters": {
+        "iterations": 100,
+        "learning_rate": 0.1,
+        "depth": 6,
+        "loss_function": "Logloss",
+        "thread_count": 4,
+        "random_seed": 42,
+        "verbose": false,
+        "allow_writing_files": false,
+        "task_type": "CPU",
+        "cat_features": [
+          "type"
+        ]
+      },
+      "versions": {
+        "python": "3.11.15",
+        "polars": "1.44.2",
+        "numpy": "2.4.6",
+        "scikit_learn": "1.9.1",
+        "xgboost": "3.2.0",
+        "catboost": "1.2.10"
+      },
+      "read_seconds": 0.8566364999860525,
+      "history_seconds": 2.0984175000339746,
+      "history_rss_after_bytes": 688226304
+    }
+  ],
+  "rows": [
+    {
+      "transactions": 1288139,
+      "frauds": 805,
+      "prevalence": 0.0006249325577441564,
+      "alerts": 744,
+      "tp": 659,
+      "fp": 85,
+      "fn": 146,
+      "tn": 1287249,
+      "precision": 0.885752688172043,
+      "recall": 0.8186335403726708,
+      "f1": 0.8508715300193673,
+      "experiment": "H_limited_tuning",
+      "config": "cat_depth4",
+      "model": "catboost",
+      "fold": 1,
+      "parameter_changes": {
+        "depth": 4
+      },
+      "source_columns": [
+        "step",
+        "type",
+        "amount",
+        "oldbalanceOrg",
+        "nameDest",
+        "isFraud"
+      ],
+      "history_source_columns": [
+        "step",
+        "nameDest"
+      ],
+      "predictor_columns": [
+        "type",
+        "amount",
+        "oldbalanceOrg",
+        "hour_sin",
+        "hour_cos",
+        "part_solde",
+        "nb_entrees_anterieures"
+      ],
+      "label_column": "isFraud",
+      "raw_step_predictor": false,
+      "raw_account_predictor": false,
+      "fit_steps": [
+        1,
+        72
+      ],
+      "threshold_steps": [
+        73,
+        144
+      ],
+      "validation_steps": [
+        145,
+        216
+      ],
+      "fit_rows": 1030563,
+      "fit_frauds": 890,
+      "threshold_rows": 479034,
+      "threshold_frauds": 742,
+      "fit_metrics": {
+        "transactions": 1030563,
+        "frauds": 890,
+        "prevalence": 0.0008636056213933549,
+        "alerts": 799,
+        "tp": 706,
+        "fp": 93,
+        "fn": 184,
+        "tn": 1029580,
+        "precision": 0.8836045056320401,
+        "recall": 0.7932584269662921,
+        "f1": 0.8359976317347543
+      },
+      "ratio_undefined_rows": {
+        "fit": 336776,
+        "threshold": 159841,
+        "validation": 425860
+      },
+      "ratio_above_one_rows": {
+        "fit": 308576,
+        "threshold": 149495,
+        "validation": 395077
+      },
+      "history_nonzero_rows": {
+        "fit": 556672,
+        "threshold": 271195,
+        "validation": 736208
+      },
+      "threshold": 0.2806696534555697,
+      "threshold_f1": 0.8901569186875892,
+      "fit_build_seconds": 0.02524275006726384,
+      "threshold_build_seconds": 0.015005124965682626,
+      "validation_build_seconds": 0.03307895897887647,
+      "fit_seconds": 3.544172374997288,
+      "threshold_seconds": 0.07005745801143348,
+      "fit_predict_seconds": 0.0796342920511961,
+      "predict_seconds": 0.10351262497715652,
+      "total_seconds": 7.351519375108182,
+      "fit_rss_bytes": 1650393088,
+      "end_rss_bytes": 1808023552,
+      "serialized_bytes": 42088,
+      "random_seed": 42,
+      "model_parameters": {
+        "iterations": 100,
+        "learning_rate": 0.1,
+        "depth": 4,
+        "loss_function": "Logloss",
+        "thread_count": 4,
+        "random_seed": 42,
+        "verbose": false,
+        "allow_writing_files": false,
+        "task_type": "CPU",
+        "cat_features": [
+          "type"
+        ]
+      },
+      "versions": {
+        "python": "3.11.15",
+        "polars": "1.44.2",
+        "numpy": "2.4.6",
+        "scikit_learn": "1.9.1",
+        "xgboost": "3.2.0",
+        "catboost": "1.2.10"
+      },
+      "read_seconds": 1.150455042021349,
+      "history_seconds": 2.130666583077982,
+      "history_rss_after_bytes": 757563392,
+      "peak_rss_bytes": 1958756352
+    },
+    {
+      "transactions": 1160580,
+      "frauds": 842,
+      "prevalence": 0.0007254993193058643,
+      "alerts": 703,
+      "tp": 668,
+      "fp": 35,
+      "fn": 174,
+      "tn": 1159703,
+      "precision": 0.9502133712660028,
+      "recall": 0.7933491686460807,
+      "f1": 0.8647249190938512,
+      "experiment": "H_limited_tuning",
+      "config": "cat_depth4",
+      "model": "catboost",
+      "fold": 2,
+      "parameter_changes": {
+        "depth": 4
+      },
+      "source_columns": [
+        "step",
+        "type",
+        "amount",
+        "oldbalanceOrg",
+        "nameDest",
+        "isFraud"
+      ],
+      "history_source_columns": [
+        "step",
+        "nameDest"
+      ],
+      "predictor_columns": [
+        "type",
+        "amount",
+        "oldbalanceOrg",
+        "hour_sin",
+        "hour_cos",
+        "part_solde",
+        "nb_entrees_anterieures"
+      ],
+      "label_column": "isFraud",
+      "raw_step_predictor": false,
+      "raw_account_predictor": false,
+      "fit_steps": [
+        1,
+        144
+      ],
+      "threshold_steps": [
+        145,
+        216
+      ],
+      "validation_steps": [
+        217,
+        288
+      ],
+      "fit_rows": 1509597,
+      "fit_frauds": 1632,
+      "threshold_rows": 1288139,
+      "threshold_frauds": 805,
+      "fit_metrics": {
+        "transactions": 1509597,
+        "frauds": 1632,
+        "prevalence": 0.001081083229497674,
+        "alerts": 1392,
+        "tp": 1313,
+        "fp": 79,
+        "fn": 319,
+        "tn": 1507886,
+        "precision": 0.9432471264367817,
+        "recall": 0.8045343137254902,
+        "f1": 0.8683862433862434
+      },
+      "ratio_undefined_rows": {
+        "fit": 496617,
+        "threshold": 425860,
+        "validation": 385132
+      },
+      "ratio_above_one_rows": {
+        "fit": 458071,
+        "threshold": 395077,
+        "validation": 353734
+      },
+      "history_nonzero_rows": {
+        "fit": 827867,
+        "threshold": 736208,
+        "validation": 657610
+      },
+      "threshold": 0.3881441673460643,
+      "threshold_f1": 0.8746701846965699,
+      "fit_build_seconds": 0.03563366713933647,
+      "threshold_build_seconds": 0.030939833959564567,
+      "validation_build_seconds": 0.031411541160196066,
+      "fit_seconds": 5.223591167014092,
+      "threshold_seconds": 0.2016469999216497,
+      "fit_predict_seconds": 0.12674325006082654,
+      "predict_seconds": 0.09669479192234576,
+      "total_seconds": 8.048382958164439,
+      "fit_rss_bytes": 2274099200,
+      "end_rss_bytes": 2400878592,
+      "serialized_bytes": 41760,
+      "random_seed": 42,
+      "model_parameters": {
+        "iterations": 100,
+        "learning_rate": 0.1,
+        "depth": 4,
+        "loss_function": "Logloss",
+        "thread_count": 4,
+        "random_seed": 42,
+        "verbose": false,
+        "allow_writing_files": false,
+        "task_type": "CPU",
+        "cat_features": [
+          "type"
+        ]
+      },
+      "versions": {
+        "python": "3.11.15",
+        "polars": "1.44.2",
+        "numpy": "2.4.6",
+        "scikit_learn": "1.9.1",
+        "xgboost": "3.2.0",
+        "catboost": "1.2.10"
+      },
+      "read_seconds": 0.18355016689747572,
+      "history_seconds": 1.9006457079667598,
+      "history_rss_after_bytes": 1370882048,
+      "peak_rss_bytes": 2272919552
+    },
+    {
+      "transactions": 1227741,
+      "frauds": 738,
+      "prevalence": 0.0006011039787707668,
+      "alerts": 652,
+      "tp": 616,
+      "fp": 36,
+      "fn": 122,
+      "tn": 1226967,
+      "precision": 0.9447852760736196,
+      "recall": 0.8346883468834688,
+      "f1": 0.8863309352517985,
+      "experiment": "H_limited_tuning",
+      "config": "cat_depth4",
+      "model": "catboost",
+      "fold": 3,
+      "parameter_changes": {
+        "depth": 4
+      },
+      "source_columns": [
+        "step",
+        "type",
+        "amount",
+        "oldbalanceOrg",
+        "nameDest",
+        "isFraud"
+      ],
+      "history_source_columns": [
+        "step",
+        "nameDest"
+      ],
+      "predictor_columns": [
+        "type",
+        "amount",
+        "oldbalanceOrg",
+        "hour_sin",
+        "hour_cos",
+        "part_solde",
+        "nb_entrees_anterieures"
+      ],
+      "label_column": "isFraud",
+      "raw_step_predictor": false,
+      "raw_account_predictor": false,
+      "fit_steps": [
+        1,
+        216
+      ],
+      "threshold_steps": [
+        217,
+        288
+      ],
+      "validation_steps": [
+        289,
+        360
+      ],
+      "fit_rows": 2797736,
+      "fit_frauds": 2437,
+      "threshold_rows": 1160580,
+      "threshold_frauds": 842,
+      "fit_metrics": {
+        "transactions": 2797736,
+        "frauds": 2437,
+        "prevalence": 0.0008710614582648255,
+        "alerts": 2112,
+        "tp": 1975,
+        "fp": 137,
+        "fn": 462,
+        "tn": 2795162,
+        "precision": 0.9351325757575758,
+        "recall": 0.8104226508001642,
+        "f1": 0.8683227082875358
+      },
+      "ratio_undefined_rows": {
+        "fit": 922477,
+        "threshold": 385132,
+        "validation": 417946
+      },
+      "ratio_above_one_rows": {
+        "fit": 853148,
+        "threshold": 353734,
+        "validation": 393340
+      },
+      "history_nonzero_rows": {
+        "fit": 1564075,
+        "threshold": 657610,
+        "validation": 704381
+      },
+      "threshold": 0.3540631441090472,
+      "threshold_f1": 0.8686084142394822,
+      "fit_build_seconds": 0.062172000063583255,
+      "threshold_build_seconds": 0.0298312078230083,
+      "validation_build_seconds": 0.037394167156890035,
+      "fit_seconds": 10.118009624769911,
+      "threshold_seconds": 0.18984820786863565,
+      "fit_predict_seconds": 0.2425913328770548,
+      "predict_seconds": 0.10542137501761317,
+      "total_seconds": 13.087249957956374,
+      "fit_rss_bytes": 2583707648,
+      "end_rss_bytes": 2847506432,
+      "serialized_bytes": 41592,
+      "random_seed": 42,
+      "model_parameters": {
+        "iterations": 100,
+        "learning_rate": 0.1,
+        "depth": 4,
+        "loss_function": "Logloss",
+        "thread_count": 4,
+        "random_seed": 42,
+        "verbose": false,
+        "allow_writing_files": false,
+        "task_type": "CPU",
+        "cat_features": [
+          "type"
+        ]
+      },
+      "versions": {
+        "python": "3.11.15",
+        "polars": "1.44.2",
+        "numpy": "2.4.6",
+        "scikit_learn": "1.9.1",
+        "xgboost": "3.2.0",
+        "catboost": "1.2.10"
+      },
+      "read_seconds": 0.20586220896802843,
+      "history_seconds": 1.8646471670363098,
+      "history_rss_after_bytes": 1136869376,
+      "peak_rss_bytes": 2584346624
+    },
+    {
+      "transactions": 822359,
+      "frauds": 840,
+      "prevalence": 0.0010214517017506954,
+      "alerts": 738,
+      "tp": 704,
+      "fp": 34,
+      "fn": 136,
+      "tn": 821485,
+      "precision": 0.9539295392953929,
+      "recall": 0.8380952380952381,
+      "f1": 0.8922686945500634,
+      "experiment": "H_limited_tuning",
+      "config": "cat_depth4",
+      "model": "catboost",
+      "fold": 4,
+      "parameter_changes": {
+        "depth": 4
+      },
+      "source_columns": [
+        "step",
+        "type",
+        "amount",
+        "oldbalanceOrg",
+        "nameDest",
+        "isFraud"
+      ],
+      "history_source_columns": [
+        "step",
+        "nameDest"
+      ],
+      "predictor_columns": [
+        "type",
+        "amount",
+        "oldbalanceOrg",
+        "hour_sin",
+        "hour_cos",
+        "part_solde",
+        "nb_entrees_anterieures"
+      ],
+      "label_column": "isFraud",
+      "raw_step_predictor": false,
+      "raw_account_predictor": false,
+      "fit_steps": [
+        1,
+        288
+      ],
+      "threshold_steps": [
+        289,
+        360
+      ],
+      "validation_steps": [
+        361,
+        432
+      ],
+      "fit_rows": 3958316,
+      "fit_frauds": 3279,
+      "threshold_rows": 1227741,
+      "threshold_frauds": 738,
+      "fit_metrics": {
+        "transactions": 3958316,
+        "frauds": 3279,
+        "prevalence": 0.0008283825748121171,
+        "alerts": 2922,
+        "tp": 2694,
+        "fp": 228,
+        "fn": 585,
+        "tn": 3954809,
+        "precision": 0.9219712525667351,
+        "recall": 0.8215919487648673,
+        "f1": 0.868892114175133
+      },
+      "ratio_undefined_rows": {
+        "fit": 1307609,
+        "threshold": 417946,
+        "validation": 276649
+      },
+      "ratio_above_one_rows": {
+        "fit": 1206882,
+        "threshold": 393340,
+        "validation": 259950
+      },
+      "history_nonzero_rows": {
+        "fit": 2221685,
+        "threshold": 704381,
+        "validation": 470688
+      },
+      "threshold": 0.2713422881059296,
+      "threshold_f1": 0.8888888888888888,
+      "fit_build_seconds": 0.08806779212318361,
+      "threshold_build_seconds": 0.03299320908263326,
+      "validation_build_seconds": 0.028058749856427312,
+      "fit_seconds": 14.529793499968946,
+      "threshold_seconds": 0.1928743328899145,
+      "fit_predict_seconds": 0.3359540000092238,
+      "predict_seconds": 0.07366025005467236,
+      "total_seconds": 17.60466649988666,
+      "fit_rss_bytes": 2943582208,
+      "end_rss_bytes": 3194781696,
+      "serialized_bytes": 41752,
+      "random_seed": 42,
+      "model_parameters": {
+        "iterations": 100,
+        "learning_rate": 0.1,
+        "depth": 4,
+        "loss_function": "Logloss",
+        "thread_count": 4,
+        "random_seed": 42,
+        "verbose": false,
+        "allow_writing_files": false,
+        "task_type": "CPU",
+        "cat_features": [
+          "type"
+        ]
+      },
+      "versions": {
+        "python": "3.11.15",
+        "polars": "1.44.2",
+        "numpy": "2.4.6",
+        "scikit_learn": "1.9.1",
+        "xgboost": "3.2.0",
+        "catboost": "1.2.10"
+      },
+      "read_seconds": 0.187939333030954,
+      "history_seconds": 1.8894830420613289,
+      "history_rss_after_bytes": 1034698752,
+      "peak_rss_bytes": 3040641024
+    },
+    {
+      "transactions": 55620,
+      "frauds": 764,
+      "prevalence": 0.01373606616325063,
+      "alerts": 648,
+      "tp": 643,
+      "fp": 5,
+      "fn": 121,
+      "tn": 54851,
+      "precision": 0.9922839506172839,
+      "recall": 0.8416230366492147,
+      "f1": 0.9107648725212465,
+      "experiment": "H_limited_tuning",
+      "config": "cat_depth4",
+      "model": "catboost",
+      "fold": 5,
+      "parameter_changes": {
+        "depth": 4
+      },
+      "source_columns": [
+        "step",
+        "type",
+        "amount",
+        "oldbalanceOrg",
+        "nameDest",
+        "isFraud"
+      ],
+      "history_source_columns": [
+        "step",
+        "nameDest"
+      ],
+      "predictor_columns": [
+        "type",
+        "amount",
+        "oldbalanceOrg",
+        "hour_sin",
+        "hour_cos",
+        "part_solde",
+        "nb_entrees_anterieures"
+      ],
+      "label_column": "isFraud",
+      "raw_step_predictor": false,
+      "raw_account_predictor": false,
+      "fit_steps": [
+        1,
+        360
+      ],
+      "threshold_steps": [
+        361,
+        432
+      ],
+      "validation_steps": [
+        433,
+        504
+      ],
+      "fit_rows": 5186057,
+      "fit_frauds": 4017,
+      "threshold_rows": 822359,
+      "threshold_frauds": 840,
+      "fit_metrics": {
+        "transactions": 5186057,
+        "frauds": 4017,
+        "prevalence": 0.00077457690881531,
+        "alerts": 3613,
+        "tp": 3184,
+        "fp": 429,
+        "fn": 833,
+        "tn": 5181611,
+        "precision": 0.8812621090506504,
+        "recall": 0.7926313169031616,
+        "f1": 0.8346002621231979
+      },
+      "ratio_undefined_rows": {
+        "fit": 1725555,
+        "threshold": 276649,
+        "validation": 15813
+      },
+      "ratio_above_one_rows": {
+        "fit": 1600222,
+        "threshold": 259950,
+        "validation": 17519
+      },
+      "history_nonzero_rows": {
+        "fit": 2926066,
+        "threshold": 470688,
+        "validation": 30274
+      },
+      "threshold": 0.26223471473976956,
+      "threshold_f1": 0.8694550063371356,
+      "fit_build_seconds": 0.11453000013716519,
+      "threshold_build_seconds": 0.02407149993814528,
+      "validation_build_seconds": 0.00925383297726512,
+      "fit_seconds": 19.639871124876663,
+      "threshold_seconds": 0.1285236249677837,
+      "fit_predict_seconds": 0.43363195890560746,
+      "predict_seconds": 0.005823458079248667,
+      "total_seconds": 22.97257316694595,
+      "fit_rss_bytes": 3110305792,
+      "end_rss_bytes": 3476652032,
+      "serialized_bytes": 41984,
+      "random_seed": 42,
+      "model_parameters": {
+        "iterations": 100,
+        "learning_rate": 0.1,
+        "depth": 4,
+        "loss_function": "Logloss",
+        "thread_count": 4,
+        "random_seed": 42,
+        "verbose": false,
+        "allow_writing_files": false,
+        "task_type": "CPU",
+        "cat_features": [
+          "type"
+        ]
+      },
+      "versions": {
+        "python": "3.11.15",
+        "polars": "1.44.2",
+        "numpy": "2.4.6",
+        "scikit_learn": "1.9.1",
+        "xgboost": "3.2.0",
+        "catboost": "1.2.10"
+      },
+      "read_seconds": 0.5340175000019372,
+      "history_seconds": 1.8188080419786274,
+      "history_rss_after_bytes": 1239433216,
+      "peak_rss_bytes": 3485646848
+    },
+    {
+      "transactions": 1288139,
+      "frauds": 805,
+      "prevalence": 0.0006249325577441564,
+      "alerts": 764,
+      "tp": 685,
+      "fp": 79,
+      "fn": 120,
+      "tn": 1287255,
+      "precision": 0.8965968586387435,
+      "recall": 0.8509316770186336,
+      "f1": 0.8731676226896112,
+      "experiment": "H_limited_tuning",
+      "config": "cat_l2leaf10",
+      "model": "catboost",
+      "fold": 1,
+      "parameter_changes": {
+        "l2_leaf_reg": 10
+      },
+      "source_columns": [
+        "step",
+        "type",
+        "amount",
+        "oldbalanceOrg",
+        "nameDest",
+        "isFraud"
+      ],
+      "history_source_columns": [
+        "step",
+        "nameDest"
+      ],
+      "predictor_columns": [
+        "type",
+        "amount",
+        "oldbalanceOrg",
+        "hour_sin",
+        "hour_cos",
+        "part_solde",
+        "nb_entrees_anterieures"
+      ],
+      "label_column": "isFraud",
+      "raw_step_predictor": false,
+      "raw_account_predictor": false,
+      "fit_steps": [
+        1,
+        72
+      ],
+      "threshold_steps": [
+        73,
+        144
+      ],
+      "validation_steps": [
+        145,
+        216
+      ],
+      "fit_rows": 1030563,
+      "fit_frauds": 890,
+      "threshold_rows": 479034,
+      "threshold_frauds": 742,
+      "fit_metrics": {
+        "transactions": 1030563,
+        "frauds": 890,
+        "prevalence": 0.0008636056213933549,
+        "alerts": 807,
+        "tp": 723,
+        "fp": 84,
+        "fn": 167,
+        "tn": 1029589,
+        "precision": 0.895910780669145,
+        "recall": 0.8123595505617978,
+        "f1": 0.8520919269298762
+      },
+      "ratio_undefined_rows": {
+        "fit": 336776,
+        "threshold": 159841,
+        "validation": 425860
+      },
+      "ratio_above_one_rows": {
+        "fit": 308576,
+        "threshold": 149495,
+        "validation": 395077
+      },
+      "history_nonzero_rows": {
+        "fit": 556672,
+        "threshold": 271195,
+        "validation": 736208
+      },
+      "threshold": 0.2811382122003179,
+      "threshold_f1": 0.8962131837307152,
+      "fit_build_seconds": 0.025070999981835485,
+      "threshold_build_seconds": 0.016391125041991472,
+      "validation_build_seconds": 0.03969137487001717,
+      "fit_seconds": 4.883952917065471,
+      "threshold_seconds": 0.08025212516076863,
+      "fit_predict_seconds": 0.09421612485311925,
+      "predict_seconds": 0.12534429179504514,
+      "total_seconds": 8.098670291947201,
+      "fit_rss_bytes": 2060877824,
+      "end_rss_bytes": 2248605696,
+      "serialized_bytes": 116505,
+      "random_seed": 42,
+      "model_parameters": {
+        "iterations": 100,
+        "learning_rate": 0.1,
+        "depth": 6,
+        "loss_function": "Logloss",
+        "thread_count": 4,
+        "random_seed": 42,
+        "verbose": false,
+        "allow_writing_files": false,
+        "task_type": "CPU",
+        "cat_features": [
+          "type"
+        ],
+        "l2_leaf_reg": 10
+      },
+      "versions": {
+        "python": "3.11.15",
+        "polars": "1.44.2",
+        "numpy": "2.4.6",
+        "scikit_learn": "1.9.1",
+        "xgboost": "3.2.0",
+        "catboost": "1.2.10"
+      },
+      "read_seconds": 0.7874111670535058,
+      "history_seconds": 1.8525462499819696,
+      "history_rss_after_bytes": 1380204544,
+      "peak_rss_bytes": 2234728448
+    },
+    {
+      "transactions": 1160580,
+      "frauds": 842,
+      "prevalence": 0.0007254993193058643,
+      "alerts": 743,
+      "tp": 692,
+      "fp": 51,
+      "fn": 150,
+      "tn": 1159687,
+      "precision": 0.9313593539703903,
+      "recall": 0.8218527315914489,
+      "f1": 0.873186119873817,
+      "experiment": "H_limited_tuning",
+      "config": "cat_l2leaf10",
+      "model": "catboost",
+      "fold": 2,
+      "parameter_changes": {
+        "l2_leaf_reg": 10
+      },
+      "source_columns": [
+        "step",
+        "type",
+        "amount",
+        "oldbalanceOrg",
+        "nameDest",
+        "isFraud"
+      ],
+      "history_source_columns": [
+        "step",
+        "nameDest"
+      ],
+      "predictor_columns": [
+        "type",
+        "amount",
+        "oldbalanceOrg",
+        "hour_sin",
+        "hour_cos",
+        "part_solde",
+        "nb_entrees_anterieures"
+      ],
+      "label_column": "isFraud",
+      "raw_step_predictor": false,
+      "raw_account_predictor": false,
+      "fit_steps": [
+        1,
+        144
+      ],
+      "threshold_steps": [
+        145,
+        216
+      ],
+      "validation_steps": [
+        217,
+        288
+      ],
+      "fit_rows": 1509597,
+      "fit_frauds": 1632,
+      "threshold_rows": 1288139,
+      "threshold_frauds": 805,
+      "fit_metrics": {
+        "transactions": 1509597,
+        "frauds": 1632,
+        "prevalence": 0.001081083229497674,
+        "alerts": 1466,
+        "tp": 1362,
+        "fp": 104,
+        "fn": 270,
+        "tn": 1507861,
+        "precision": 0.9290586630286494,
+        "recall": 0.8345588235294118,
+        "f1": 0.8792769528728211
+      },
+      "ratio_undefined_rows": {
+        "fit": 496617,
+        "threshold": 425860,
+        "validation": 385132
+      },
+      "ratio_above_one_rows": {
+        "fit": 458071,
+        "threshold": 395077,
+        "validation": 353734
+      },
+      "history_nonzero_rows": {
+        "fit": 827867,
+        "threshold": 736208,
+        "validation": 657610
+      },
+      "threshold": 0.3450527946341482,
+      "threshold_f1": 0.8870238863783085,
+      "fit_build_seconds": 0.03851766721345484,
+      "threshold_build_seconds": 0.03479770803824067,
+      "validation_build_seconds": 0.032817750005051494,
+      "fit_seconds": 6.476467750035226,
+      "threshold_seconds": 0.22691083303652704,
+      "fit_predict_seconds": 0.13766612485051155,
+      "predict_seconds": 0.1030444169882685,
+      "total_seconds": 9.396913832984865,
+      "fit_rss_bytes": 2084225024,
+      "end_rss_bytes": 2308407296,
+      "serialized_bytes": 117001,
+      "random_seed": 42,
+      "model_parameters": {
+        "iterations": 100,
+        "learning_rate": 0.1,
+        "depth": 6,
+        "loss_function": "Logloss",
+        "thread_count": 4,
+        "random_seed": 42,
+        "verbose": false,
+        "allow_writing_files": false,
+        "task_type": "CPU",
+        "cat_features": [
+          "type"
+        ],
+        "l2_leaf_reg": 10
+      },
+      "versions": {
+        "python": "3.11.15",
+        "polars": "1.44.2",
+        "numpy": "2.4.6",
+        "scikit_learn": "1.9.1",
+        "xgboost": "3.2.0",
+        "catboost": "1.2.10"
+      },
+      "read_seconds": 0.20779304206371307,
+      "history_seconds": 1.9098132078070194,
+      "history_rss_after_bytes": 1181892608,
+      "peak_rss_bytes": 2197733376
+    },
+    {
+      "transactions": 1227741,
+      "frauds": 738,
+      "prevalence": 0.0006011039787707668,
+      "alerts": 670,
+      "tp": 632,
+      "fp": 38,
+      "fn": 106,
+      "tn": 1226965,
+      "precision": 0.9432835820895522,
+      "recall": 0.8563685636856369,
+      "f1": 0.8977272727272727,
+      "experiment": "H_limited_tuning",
+      "config": "cat_l2leaf10",
+      "model": "catboost",
+      "fold": 3,
+      "parameter_changes": {
+        "l2_leaf_reg": 10
+      },
+      "source_columns": [
+        "step",
+        "type",
+        "amount",
+        "oldbalanceOrg",
+        "nameDest",
+        "isFraud"
+      ],
+      "history_source_columns": [
+        "step",
+        "nameDest"
+      ],
+      "predictor_columns": [
+        "type",
+        "amount",
+        "oldbalanceOrg",
+        "hour_sin",
+        "hour_cos",
+        "part_solde",
+        "nb_entrees_anterieures"
+      ],
+      "label_column": "isFraud",
+      "raw_step_predictor": false,
+      "raw_account_predictor": false,
+      "fit_steps": [
+        1,
+        216
+      ],
+      "threshold_steps": [
+        217,
+        288
+      ],
+      "validation_steps": [
+        289,
+        360
+      ],
+      "fit_rows": 2797736,
+      "fit_frauds": 2437,
+      "threshold_rows": 1160580,
+      "threshold_frauds": 842,
+      "fit_metrics": {
+        "transactions": 2797736,
+        "frauds": 2437,
+        "prevalence": 0.0008710614582648255,
+        "alerts": 2136,
+        "tp": 2012,
+        "fp": 124,
+        "fn": 425,
+        "tn": 2795175,
+        "precision": 0.9419475655430711,
+        "recall": 0.8256052523594584,
+        "f1": 0.8799475180406735
+      },
+      "ratio_undefined_rows": {
+        "fit": 922477,
+        "threshold": 385132,
+        "validation": 417946
+      },
+      "ratio_above_one_rows": {
+        "fit": 853148,
+        "threshold": 353734,
+        "validation": 393340
+      },
+      "history_nonzero_rows": {
+        "fit": 1564075,
+        "threshold": 657610,
+        "validation": 704381
+      },
+      "threshold": 0.38195431165411603,
+      "threshold_f1": 0.8789237668161435,
+      "fit_build_seconds": 0.061569666024297476,
+      "threshold_build_seconds": 0.03090966702438891,
+      "validation_build_seconds": 0.035004416946321726,
+      "fit_seconds": 12.484935584012419,
+      "threshold_seconds": 0.2124545411206782,
+      "fit_predict_seconds": 0.2550511248409748,
+      "predict_seconds": 0.10939204203896224,
+      "total_seconds": 15.438734041992575,
+      "fit_rss_bytes": 2854944768,
+      "end_rss_bytes": 3113566208,
+      "serialized_bytes": 119177,
+      "random_seed": 42,
+      "model_parameters": {
+        "iterations": 100,
+        "learning_rate": 0.1,
+        "depth": 6,
+        "loss_function": "Logloss",
+        "thread_count": 4,
+        "random_seed": 42,
+        "verbose": false,
+        "allow_writing_files": false,
+        "task_type": "CPU",
+        "cat_features": [
+          "type"
+        ],
+        "l2_leaf_reg": 10
+      },
+      "versions": {
+        "python": "3.11.15",
+        "polars": "1.44.2",
+        "numpy": "2.4.6",
+        "scikit_learn": "1.9.1",
+        "xgboost": "3.2.0",
+        "catboost": "1.2.10"
+      },
+      "read_seconds": 0.194656667066738,
+      "history_seconds": 1.8172726661432534,
+      "history_rss_after_bytes": 1384611840,
+      "peak_rss_bytes": 3002105856
+    },
+    {
+      "transactions": 822359,
+      "frauds": 840,
+      "prevalence": 0.0010214517017506954,
+      "alerts": 736,
+      "tp": 712,
+      "fp": 24,
+      "fn": 128,
+      "tn": 821495,
+      "precision": 0.967391304347826,
+      "recall": 0.8476190476190476,
+      "f1": 0.9035532994923858,
+      "experiment": "H_limited_tuning",
+      "config": "cat_l2leaf10",
+      "model": "catboost",
+      "fold": 4,
+      "parameter_changes": {
+        "l2_leaf_reg": 10
+      },
+      "source_columns": [
+        "step",
+        "type",
+        "amount",
+        "oldbalanceOrg",
+        "nameDest",
+        "isFraud"
+      ],
+      "history_source_columns": [
+        "step",
+        "nameDest"
+      ],
+      "predictor_columns": [
+        "type",
+        "amount",
+        "oldbalanceOrg",
+        "hour_sin",
+        "hour_cos",
+        "part_solde",
+        "nb_entrees_anterieures"
+      ],
+      "label_column": "isFraud",
+      "raw_step_predictor": false,
+      "raw_account_predictor": false,
+      "fit_steps": [
+        1,
+        288
+      ],
+      "threshold_steps": [
+        289,
+        360
+      ],
+      "validation_steps": [
+        361,
+        432
+      ],
+      "fit_rows": 3958316,
+      "fit_frauds": 3279,
+      "threshold_rows": 1227741,
+      "threshold_frauds": 738,
+      "fit_metrics": {
+        "transactions": 3958316,
+        "frauds": 3279,
+        "prevalence": 0.0008283825748121171,
+        "alerts": 2867,
+        "tp": 2698,
+        "fp": 169,
+        "fn": 581,
+        "tn": 3954868,
+        "precision": 0.9410533658876875,
+        "recall": 0.8228118328758768,
+        "f1": 0.8779694109990237
+      },
+      "ratio_undefined_rows": {
+        "fit": 1307609,
+        "threshold": 417946,
+        "validation": 276649
+      },
+      "ratio_above_one_rows": {
+        "fit": 1206882,
+        "threshold": 393340,
+        "validation": 259950
+      },
+      "history_nonzero_rows": {
+        "fit": 2221685,
+        "threshold": 704381,
+        "validation": 470688
+      },
+      "threshold": 0.3678340467376659,
+      "threshold_f1": 0.8953323903818954,
+      "fit_build_seconds": 0.0864795830566436,
+      "threshold_build_seconds": 0.0344303750898689,
+      "validation_build_seconds": 0.03061225009150803,
+      "fit_seconds": 19.31695729191415,
+      "threshold_seconds": 0.2212756669614464,
+      "fit_predict_seconds": 0.40833312505856156,
+      "predict_seconds": 0.08295095898211002,
+      "total_seconds": 22.488299750024453,
+      "fit_rss_bytes": 1916993536,
+      "end_rss_bytes": 2377203712,
+      "serialized_bytes": 119777,
+      "random_seed": 42,
+      "model_parameters": {
+        "iterations": 100,
+        "learning_rate": 0.1,
+        "depth": 6,
+        "loss_function": "Logloss",
+        "thread_count": 4,
+        "random_seed": 42,
+        "verbose": false,
+        "allow_writing_files": false,
+        "task_type": "CPU",
+        "cat_features": [
+          "type"
+        ],
+        "l2_leaf_reg": 10
+      },
+      "versions": {
+        "python": "3.11.15",
+        "polars": "1.44.2",
+        "numpy": "2.4.6",
+        "scikit_learn": "1.9.1",
+        "xgboost": "3.2.0",
+        "catboost": "1.2.10"
+      },
+      "read_seconds": 0.19403412495739758,
+      "history_seconds": 1.848136416869238,
+      "history_rss_after_bytes": 1136885760,
+      "peak_rss_bytes": 3091677184
+    },
+    {
+      "transactions": 55620,
+      "frauds": 764,
+      "prevalence": 0.01373606616325063,
+      "alerts": 660,
+      "tp": 657,
+      "fp": 3,
+      "fn": 107,
+      "tn": 54853,
+      "precision": 0.9954545454545455,
+      "recall": 0.8599476439790575,
+      "f1": 0.922752808988764,
+      "experiment": "H_limited_tuning",
+      "config": "cat_l2leaf10",
+      "model": "catboost",
+      "fold": 5,
+      "parameter_changes": {
+        "l2_leaf_reg": 10
+      },
+      "source_columns": [
+        "step",
+        "type",
+        "amount",
+        "oldbalanceOrg",
+        "nameDest",
+        "isFraud"
+      ],
+      "history_source_columns": [
+        "step",
+        "nameDest"
+      ],
+      "predictor_columns": [
+        "type",
+        "amount",
+        "oldbalanceOrg",
+        "hour_sin",
+        "hour_cos",
+        "part_solde",
+        "nb_entrees_anterieures"
+      ],
+      "label_column": "isFraud",
+      "raw_step_predictor": false,
+      "raw_account_predictor": false,
+      "fit_steps": [
+        1,
+        360
+      ],
+      "threshold_steps": [
+        361,
+        432
+      ],
+      "validation_steps": [
+        433,
+        504
+      ],
+      "fit_rows": 5186057,
+      "fit_frauds": 4017,
+      "threshold_rows": 822359,
+      "threshold_frauds": 840,
+      "fit_metrics": {
+        "transactions": 5186057,
+        "frauds": 4017,
+        "prevalence": 0.00077457690881531,
+        "alerts": 3660,
+        "tp": 3273,
+        "fp": 387,
+        "fn": 744,
+        "tn": 5181653,
+        "precision": 0.8942622950819672,
+        "recall": 0.8147871545929798,
+        "f1": 0.8526768268855022
+      },
+      "ratio_undefined_rows": {
+        "fit": 1725555,
+        "threshold": 276649,
+        "validation": 15813
+      },
+      "ratio_above_one_rows": {
+        "fit": 1600222,
+        "threshold": 259950,
+        "validation": 17519
+      },
+      "history_nonzero_rows": {
+        "fit": 2926066,
+        "threshold": 470688,
+        "validation": 30274
+      },
+      "threshold": 0.2867689412311529,
+      "threshold_f1": 0.8836915297092288,
+      "fit_build_seconds": 0.11789037520065904,
+      "threshold_build_seconds": 0.026421000016853213,
+      "validation_build_seconds": 0.008631458040326834,
+      "fit_seconds": 25.30914349993691,
+      "threshold_seconds": 0.14500862499698997,
+      "fit_predict_seconds": 0.5285400000866503,
+      "predict_seconds": 0.005981040885671973,
+      "total_seconds": 29.585022374987602,
+      "fit_rss_bytes": 2664562688,
+      "end_rss_bytes": 3261022208,
+      "serialized_bytes": 120705,
+      "random_seed": 42,
+      "model_parameters": {
+        "iterations": 100,
+        "learning_rate": 0.1,
+        "depth": 6,
+        "loss_function": "Logloss",
+        "thread_count": 4,
+        "random_seed": 42,
+        "verbose": false,
+        "allow_writing_files": false,
+        "task_type": "CPU",
+        "cat_features": [
+          "type"
+        ],
+        "l2_leaf_reg": 10
+      },
+      "versions": {
+        "python": "3.11.15",
+        "polars": "1.44.2",
+        "numpy": "2.4.6",
+        "scikit_learn": "1.9.1",
+        "xgboost": "3.2.0",
+        "catboost": "1.2.10"
+      },
+      "read_seconds": 1.0667550000362098,
+      "history_seconds": 2.0965787081513554,
+      "history_rss_after_bytes": 836730880,
+      "peak_rss_bytes": 3038674944
+    },
+    {
+      "transactions": 1288139,
+      "frauds": 805,
+      "prevalence": 0.0006249325577441564,
+      "alerts": 740,
+      "tp": 690,
+      "fp": 50,
+      "fn": 115,
+      "tn": 1287284,
+      "precision": 0.9324324324324325,
+      "recall": 0.8571428571428571,
+      "f1": 0.8932038834951457,
+      "experiment": "H_limited_tuning",
+      "config": "cat_slow200",
+      "model": "catboost",
+      "fold": 1,
+      "parameter_changes": {
+        "learning_rate": 0.05,
+        "iterations": 200
+      },
+      "source_columns": [
+        "step",
+        "type",
+        "amount",
+        "oldbalanceOrg",
+        "nameDest",
+        "isFraud"
+      ],
+      "history_source_columns": [
+        "step",
+        "nameDest"
+      ],
+      "predictor_columns": [
+        "type",
+        "amount",
+        "oldbalanceOrg",
+        "hour_sin",
+        "hour_cos",
+        "part_solde",
+        "nb_entrees_anterieures"
+      ],
+      "label_column": "isFraud",
+      "raw_step_predictor": false,
+      "raw_account_predictor": false,
+      "fit_steps": [
+        1,
+        72
+      ],
+      "threshold_steps": [
+        73,
+        144
+      ],
+      "validation_steps": [
+        145,
+        216
+      ],
+      "fit_rows": 1030563,
+      "fit_frauds": 890,
+      "threshold_rows": 479034,
+      "threshold_frauds": 742,
+      "fit_metrics": {
+        "transactions": 1030563,
+        "frauds": 890,
+        "prevalence": 0.0008636056213933549,
+        "alerts": 810,
+        "tp": 754,
+        "fp": 56,
+        "fn": 136,
+        "tn": 1029617,
+        "precision": 0.9308641975308642,
+        "recall": 0.8471910112359551,
+        "f1": 0.8870588235294118
+      },
+      "ratio_undefined_rows": {
+        "fit": 336776,
+        "threshold": 159841,
+        "validation": 425860
+      },
+      "ratio_above_one_rows": {
+        "fit": 308576,
+        "threshold": 149495,
+        "validation": 395077
+      },
+      "history_nonzero_rows": {
+        "fit": 556672,
+        "threshold": 271195,
+        "validation": 736208
+      },
+      "threshold": 0.3535091096615023,
+      "threshold_f1": 0.9104895104895104,
+      "fit_build_seconds": 0.025919416919350624,
+      "threshold_build_seconds": 0.016300125047564507,
+      "validation_build_seconds": 0.04131937515921891,
+      "fit_seconds": 28.28662820905447,
+      "threshold_seconds": 0.10206383396871388,
+      "fit_predict_seconds": 0.12649874994531274,
+      "predict_seconds": 0.15235400013625622,
+      "total_seconds": 31.934756916947663,
+      "fit_rss_bytes": 2475048960,
+      "end_rss_bytes": 2606579712,
+      "serialized_bytes": 255905,
+      "random_seed": 42,
+      "model_parameters": {
+        "iterations": 200,
+        "learning_rate": 0.05,
+        "depth": 6,
+        "loss_function": "Logloss",
+        "thread_count": 4,
+        "random_seed": 42,
+        "verbose": false,
+        "allow_writing_files": false,
+        "task_type": "CPU",
+        "cat_features": [
+          "type"
+        ]
+      },
+      "versions": {
+        "python": "3.11.15",
+        "polars": "1.44.2",
+        "numpy": "2.4.6",
+        "scikit_learn": "1.9.1",
+        "xgboost": "3.2.0",
+        "catboost": "1.2.10"
+      },
+      "read_seconds": 0.9122675829567015,
+      "history_seconds": 2.062640167074278,
+      "history_rss_after_bytes": 908279808,
+      "peak_rss_bytes": 2606874624
+    },
+    {
+      "transactions": 1160580,
+      "frauds": 842,
+      "prevalence": 0.0007254993193058643,
+      "alerts": 743,
+      "tp": 707,
+      "fp": 36,
+      "fn": 135,
+      "tn": 1159702,
+      "precision": 0.9515477792732167,
+      "recall": 0.8396674584323041,
+      "f1": 0.8921135646687697,
+      "experiment": "H_limited_tuning",
+      "config": "cat_slow200",
+      "model": "catboost",
+      "fold": 2,
+      "parameter_changes": {
+        "learning_rate": 0.05,
+        "iterations": 200
+      },
+      "source_columns": [
+        "step",
+        "type",
+        "amount",
+        "oldbalanceOrg",
+        "nameDest",
+        "isFraud"
+      ],
+      "history_source_columns": [
+        "step",
+        "nameDest"
+      ],
+      "predictor_columns": [
+        "type",
+        "amount",
+        "oldbalanceOrg",
+        "hour_sin",
+        "hour_cos",
+        "part_solde",
+        "nb_entrees_anterieures"
+      ],
+      "label_column": "isFraud",
+      "raw_step_predictor": false,
+      "raw_account_predictor": false,
+      "fit_steps": [
+        1,
+        144
+      ],
+      "threshold_steps": [
+        145,
+        216
+      ],
+      "validation_steps": [
+        217,
+        288
+      ],
+      "fit_rows": 1509597,
+      "fit_frauds": 1632,
+      "threshold_rows": 1288139,
+      "threshold_frauds": 805,
+      "fit_metrics": {
+        "transactions": 1509597,
+        "frauds": 1632,
+        "prevalence": 0.001081083229497674,
+        "alerts": 1451,
+        "tp": 1387,
+        "fp": 64,
+        "fn": 245,
+        "tn": 1507901,
+        "precision": 0.9558924879393522,
+        "recall": 0.8498774509803921,
+        "f1": 0.899772948426857
+      },
+      "ratio_undefined_rows": {
+        "fit": 496617,
+        "threshold": 425860,
+        "validation": 385132
+      },
+      "ratio_above_one_rows": {
+        "fit": 458071,
+        "threshold": 395077,
+        "validation": 353734
+      },
+      "history_nonzero_rows": {
+        "fit": 827867,
+        "threshold": 736208,
+        "validation": 657610
+      },
+      "threshold": 0.44776503958334846,
+      "threshold_f1": 0.8979057591623036,
+      "fit_build_seconds": 0.03459924994967878,
+      "threshold_build_seconds": 0.07333120796829462,
+      "validation_build_seconds": 0.03852499998174608,
+      "fit_seconds": 42.811095874989405,
+      "threshold_seconds": 0.28763733291998506,
+      "fit_predict_seconds": 0.1822874171193689,
+      "predict_seconds": 0.1370517909526825,
+      "total_seconds": 46.602298458106816,
+      "fit_rss_bytes": 2322546688,
+      "end_rss_bytes": 2391212032,
+      "serialized_bytes": 261761,
+      "random_seed": 42,
+      "model_parameters": {
+        "iterations": 200,
+        "learning_rate": 0.05,
+        "depth": 6,
+        "loss_function": "Logloss",
+        "thread_count": 4,
+        "random_seed": 42,
+        "verbose": false,
+        "allow_writing_files": false,
+        "task_type": "CPU",
+        "cat_features": [
+          "type"
+        ]
+      },
+      "versions": {
+        "python": "3.11.15",
+        "polars": "1.44.2",
+        "numpy": "2.4.6",
+        "scikit_learn": "1.9.1",
+        "xgboost": "3.2.0",
+        "catboost": "1.2.10"
+      },
+      "read_seconds": 0.8460424169898033,
+      "history_seconds": 1.9703772920183837,
+      "history_rss_after_bytes": 1142259712,
+      "peak_rss_bytes": 2487779328
+    },
+    {
+      "transactions": 1227741,
+      "frauds": 738,
+      "prevalence": 0.0006011039787707668,
+      "alerts": 687,
+      "tp": 644,
+      "fp": 43,
+      "fn": 94,
+      "tn": 1226960,
+      "precision": 0.9374090247452693,
+      "recall": 0.8726287262872628,
+      "f1": 0.903859649122807,
+      "experiment": "H_limited_tuning",
+      "config": "cat_slow200",
+      "model": "catboost",
+      "fold": 3,
+      "parameter_changes": {
+        "learning_rate": 0.05,
+        "iterations": 200
+      },
+      "source_columns": [
+        "step",
+        "type",
+        "amount",
+        "oldbalanceOrg",
+        "nameDest",
+        "isFraud"
+      ],
+      "history_source_columns": [
+        "step",
+        "nameDest"
+      ],
+      "predictor_columns": [
+        "type",
+        "amount",
+        "oldbalanceOrg",
+        "hour_sin",
+        "hour_cos",
+        "part_solde",
+        "nb_entrees_anterieures"
+      ],
+      "label_column": "isFraud",
+      "raw_step_predictor": false,
+      "raw_account_predictor": false,
+      "fit_steps": [
+        1,
+        216
+      ],
+      "threshold_steps": [
+        217,
+        288
+      ],
+      "validation_steps": [
+        289,
+        360
+      ],
+      "fit_rows": 2797736,
+      "fit_frauds": 2437,
+      "threshold_rows": 1160580,
+      "threshold_frauds": 842,
+      "fit_metrics": {
+        "transactions": 2797736,
+        "frauds": 2437,
+        "prevalence": 0.0008710614582648255,
+        "alerts": 2164,
+        "tp": 2064,
+        "fp": 100,
+        "fn": 373,
+        "tn": 2795199,
+        "precision": 0.9537892791127541,
+        "recall": 0.8469429626590069,
+        "f1": 0.897196261682243
+      },
+      "ratio_undefined_rows": {
+        "fit": 922477,
+        "threshold": 385132,
+        "validation": 417946
+      },
+      "ratio_above_one_rows": {
+        "fit": 853148,
+        "threshold": 353734,
+        "validation": 393340
+      },
+      "history_nonzero_rows": {
+        "fit": 1564075,
+        "threshold": 657610,
+        "validation": 704381
+      },
+      "threshold": 0.453776874373835,
+      "threshold_f1": 0.8908629441624365,
+      "fit_build_seconds": 0.07398149999789894,
+      "threshold_build_seconds": 0.061968249967321754,
+      "validation_build_seconds": 0.0460223329719156,
+      "fit_seconds": 87.73971812496893,
+      "threshold_seconds": 0.25505875004455447,
+      "fit_predict_seconds": 0.33659054106101394,
+      "predict_seconds": 0.15614720899611712,
+      "total_seconds": 91.81315716705285,
+      "fit_rss_bytes": 2622947328,
+      "end_rss_bytes": 2955542528,
+      "serialized_bytes": 271465,
+      "random_seed": 42,
+      "model_parameters": {
+        "iterations": 200,
+        "learning_rate": 0.05,
+        "depth": 6,
+        "loss_function": "Logloss",
+        "thread_count": 4,
+        "random_seed": 42,
+        "verbose": false,
+        "allow_writing_files": false,
+        "task_type": "CPU",
+        "cat_features": [
+          "type"
+        ]
+      },
+      "versions": {
+        "python": "3.11.15",
+        "polars": "1.44.2",
+        "numpy": "2.4.6",
+        "scikit_learn": "1.9.1",
+        "xgboost": "3.2.0",
+        "catboost": "1.2.10"
+      },
+      "read_seconds": 0.844385958975181,
+      "history_seconds": 2.0345745000522584,
+      "history_rss_after_bytes": 1136099328,
+      "peak_rss_bytes": 3250601984
+    },
+    {
+      "transactions": 822359,
+      "frauds": 840,
+      "prevalence": 0.0010214517017506954,
+      "alerts": 728,
+      "tp": 710,
+      "fp": 18,
+      "fn": 130,
+      "tn": 821501,
+      "precision": 0.9752747252747253,
+      "recall": 0.8452380952380952,
+      "f1": 0.9056122448979592,
+      "experiment": "H_limited_tuning",
+      "config": "cat_slow200",
+      "model": "catboost",
+      "fold": 4,
+      "parameter_changes": {
+        "learning_rate": 0.05,
+        "iterations": 200
+      },
+      "source_columns": [
+        "step",
+        "type",
+        "amount",
+        "oldbalanceOrg",
+        "nameDest",
+        "isFraud"
+      ],
+      "history_source_columns": [
+        "step",
+        "nameDest"
+      ],
+      "predictor_columns": [
+        "type",
+        "amount",
+        "oldbalanceOrg",
+        "hour_sin",
+        "hour_cos",
+        "part_solde",
+        "nb_entrees_anterieures"
+      ],
+      "label_column": "isFraud",
+      "raw_step_predictor": false,
+      "raw_account_predictor": false,
+      "fit_steps": [
+        1,
+        288
+      ],
+      "threshold_steps": [
+        289,
+        360
+      ],
+      "validation_steps": [
+        361,
+        432
+      ],
+      "fit_rows": 3958316,
+      "fit_frauds": 3279,
+      "threshold_rows": 1227741,
+      "threshold_frauds": 738,
+      "fit_metrics": {
+        "transactions": 3958316,
+        "frauds": 3279,
+        "prevalence": 0.0008283825748121171,
+        "alerts": 2820,
+        "tp": 2717,
+        "fp": 103,
+        "fn": 562,
+        "tn": 3954934,
+        "precision": 0.9634751773049646,
+        "recall": 0.8286062824031717,
+        "f1": 0.8909657320872274
+      },
+      "ratio_undefined_rows": {
+        "fit": 1307609,
+        "threshold": 417946,
+        "validation": 276649
+      },
+      "ratio_above_one_rows": {
+        "fit": 1206882,
+        "threshold": 393340,
+        "validation": 259950
+      },
+      "history_nonzero_rows": {
+        "fit": 2221685,
+        "threshold": 704381,
+        "validation": 470688
+      },
+      "threshold": 0.5588950326556574,
+      "threshold_f1": 0.9067431850789096,
+      "fit_build_seconds": 0.09014504100196064,
+      "threshold_build_seconds": 0.06344129191711545,
+      "validation_build_seconds": 0.025790416868403554,
+      "fit_seconds": 129.0367522498127,
+      "threshold_seconds": 0.282169375102967,
+      "fit_predict_seconds": 0.4815120839048177,
+      "predict_seconds": 0.10352812497876585,
+      "total_seconds": 133.13890966703184,
+      "fit_rss_bytes": 4498374656,
+      "end_rss_bytes": 4473110528,
+      "serialized_bytes": 267213,
+      "random_seed": 42,
+      "model_parameters": {
+        "iterations": 200,
+        "learning_rate": 0.05,
+        "depth": 6,
+        "loss_function": "Logloss",
+        "thread_count": 4,
+        "random_seed": 42,
+        "verbose": false,
+        "allow_writing_files": false,
+        "task_type": "CPU",
+        "cat_features": [
+          "type"
+        ]
+      },
+      "versions": {
+        "python": "3.11.15",
+        "polars": "1.44.2",
+        "numpy": "2.4.6",
+        "scikit_learn": "1.9.1",
+        "xgboost": "3.2.0",
+        "catboost": "1.2.10"
+      },
+      "read_seconds": 0.840931000187993,
+      "history_seconds": 1.9596213339827955,
+      "history_rss_after_bytes": 1272365056,
+      "peak_rss_bytes": 4519280640
+    },
+    {
+      "transactions": 55620,
+      "frauds": 764,
+      "prevalence": 0.01373606616325063,
+      "alerts": 676,
+      "tp": 672,
+      "fp": 4,
+      "fn": 92,
+      "tn": 54852,
+      "precision": 0.9940828402366864,
+      "recall": 0.8795811518324608,
+      "f1": 0.9333333333333333,
+      "experiment": "H_limited_tuning",
+      "config": "cat_slow200",
+      "model": "catboost",
+      "fold": 5,
+      "parameter_changes": {
+        "learning_rate": 0.05,
+        "iterations": 200
+      },
+      "source_columns": [
+        "step",
+        "type",
+        "amount",
+        "oldbalanceOrg",
+        "nameDest",
+        "isFraud"
+      ],
+      "history_source_columns": [
+        "step",
+        "nameDest"
+      ],
+      "predictor_columns": [
+        "type",
+        "amount",
+        "oldbalanceOrg",
+        "hour_sin",
+        "hour_cos",
+        "part_solde",
+        "nb_entrees_anterieures"
+      ],
+      "label_column": "isFraud",
+      "raw_step_predictor": false,
+      "raw_account_predictor": false,
+      "fit_steps": [
+        1,
+        360
+      ],
+      "threshold_steps": [
+        361,
+        432
+      ],
+      "validation_steps": [
+        433,
+        504
+      ],
+      "fit_rows": 5186057,
+      "fit_frauds": 4017,
+      "threshold_rows": 822359,
+      "threshold_frauds": 840,
+      "fit_metrics": {
+        "transactions": 5186057,
+        "frauds": 4017,
+        "prevalence": 0.00077457690881531,
+        "alerts": 3715,
+        "tp": 3356,
+        "fp": 359,
+        "fn": 661,
+        "tn": 5181681,
+        "precision": 0.9033647375504711,
+        "recall": 0.8354493403037092,
+        "f1": 0.868080703569581
+      },
+      "ratio_undefined_rows": {
+        "fit": 1725555,
+        "threshold": 276649,
+        "validation": 15813
+      },
+      "ratio_above_one_rows": {
+        "fit": 1600222,
+        "threshold": 259950,
+        "validation": 17519
+      },
+      "history_nonzero_rows": {
+        "fit": 2926066,
+        "threshold": 470688,
+        "validation": 30274
+      },
+      "threshold": 0.3123179923852385,
+      "threshold_f1": 0.8898678414096917,
+      "fit_build_seconds": 0.11203662492334843,
+      "threshold_build_seconds": 0.04174404218792915,
+      "validation_build_seconds": 0.007898750016465783,
+      "fit_seconds": 165.13063566712663,
+      "threshold_seconds": 0.21331320912577212,
+      "fit_predict_seconds": 0.7337194168940187,
+      "predict_seconds": 0.007682375144213438,
+      "total_seconds": 169.19457787508145,
+      "fit_rss_bytes": 2610987008,
+      "end_rss_bytes": 2669182976,
+      "serialized_bytes": 268897,
+      "random_seed": 42,
+      "model_parameters": {
+        "iterations": 200,
+        "learning_rate": 0.05,
+        "depth": 6,
+        "loss_function": "Logloss",
+        "thread_count": 4,
+        "random_seed": 42,
+        "verbose": false,
+        "allow_writing_files": false,
+        "task_type": "CPU",
+        "cat_features": [
+          "type"
+        ]
+      },
+      "versions": {
+        "python": "3.11.15",
+        "polars": "1.44.2",
+        "numpy": "2.4.6",
+        "scikit_learn": "1.9.1",
+        "xgboost": "3.2.0",
+        "catboost": "1.2.10"
+      },
+      "read_seconds": 0.9027877910993993,
+      "history_seconds": 1.7953773750923574,
+      "history_rss_after_bytes": 1416871936,
+      "peak_rss_bytes": 5781749760
+    }
+  ],
+  "summary": [
+    {
+      "config": "H",
+      "precision_mean": 0.9518743775720032,
+      "recall_mean": 0.8492600923206203,
+      "f1_mean": 0.8976162764440446,
+      "f1_min": 0.8724072910119421,
+      "f1_std": 0.02238078088861116,
+      "tp_total": 3385,
+      "fp_total": 173,
+      "fn_total": 604,
+      "tn_total": 4550277,
+      "alerts_total": 3558,
+      "fit_seconds_median": 12.894427791005,
+      "serialized_bytes_median": 119137
+    },
+    {
+      "config": "cat_depth4",
+      "precision_mean": 0.9453929650848685,
+      "recall_mean": 0.8252778661293346,
+      "f1_mean": 0.8809921902872654,
+      "f1_min": 0.8508715300193673,
+      "f1_std": 0.023526329083842747,
+      "tp_total": 3290,
+      "fp_total": 195,
+      "fn_total": 699,
+      "tn_total": 4550255,
+      "alerts_total": 3485,
+      "fit_seconds_median": 10.118009624769911,
+      "serialized_bytes_median": 41760,
+      "peak_rss_bytes": 3485646848,
+      "total_seconds_total": 69.0643919580616
+    },
+    {
+      "config": "cat_l2leaf10",
+      "precision_mean": 0.9468171289002115,
+      "recall_mean": 0.8473439327787649,
+      "f1_mean": 0.8940774247543701,
+      "f1_min": 0.8731676226896112,
+      "f1_std": 0.02120765012481114,
+      "tp_total": 3378,
+      "fp_total": 195,
+      "fn_total": 611,
+      "tn_total": 4550255,
+      "alerts_total": 3573,
+      "fit_seconds_median": 12.484935584012419,
+      "serialized_bytes_median": 119177,
+      "peak_rss_bytes": 3091677184,
+      "total_seconds_total": 85.0076402919367
+    },
+    {
+      "config": "cat_slow200",
+      "precision_mean": 0.958149360392466,
+      "recall_mean": 0.858851657786596,
+      "f1_mean": 0.905624535103603,
+      "f1_min": 0.8921135646687697,
+      "f1_std": 0.016641149159387147,
+      "tp_total": 3423,
+      "fp_total": 151,
+      "fn_total": 566,
+      "tn_total": 4550299,
+      "alerts_total": 3574,
+      "fit_seconds_median": 87.73971812496893,
+      "serialized_bytes_median": 267213,
+      "peak_rss_bytes": 5781749760,
+      "total_seconds_total": 472.6837000842206
+    }
+  ],
+  "selection_pending": "La sélection entre familles est documentée séparément"
+}

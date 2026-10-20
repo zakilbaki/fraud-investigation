@@ -19,7 +19,7 @@ Trois configurations supplémentaires par modèle donnent **30 ajustements walk-
 
 La sélection inclut les deux références H et les variantes complètes. Appliquer la règle de la section 7 au F1 moyen non arrondi : candidats à moins de 0,005 du meilleur, puis F1 minimum, écart-type descriptif si minima à moins de 0,005, temps médian d'ajustement, taille sérialisée et simplicité selon les tolérances de la section 7. Entre variantes d'une même famille indiscernables au dernier niveau, l'ordre de simplicité fixé est `depth4`, H, `lambda10` ou `l2leaf10`, puis `slow200` ; entre familles, conserver l'ordre XGBoost puis CatBoost de la section 7. Ultime égalité : code de configuration. Ne sélectionner aucun candidat incomplet. Mesurer aussi précision, rappel, F1 et prévalence sur l'apprentissage au seuil choisi sur la réserve. Un écart apprentissage/validation est un signal descriptif, pas une preuve de surapprentissage. Les validations ont déjà servi à plusieurs choix et leurs apprentissages se recouvrent ; la sélection reste exploratoire.
 
-**État après le premier passage :** les [quinze ajustements XGBoost](ML_TUNE_H_XGBOOST.md) sont terminés et vérifiés. La sélection globale reste ouverte ; les variantes CatBoost fixées ci-dessus n'ont pas été exécutées et attendent la discussion avec l'utilisateur.
+**État après les deux passages :** les [quinze ajustements XGBoost](ML_TUNE_H_XGBOOST.md) et les [quinze ajustements CatBoost](ML_TUNE_H_CATBOOST.md) sont terminés et vérifiés. La [sélection proposée](ML_TUNE_H_SELECTION.md) applique la règle ci-dessus aux deux références H et aux six variantes complètes. Elle reste à discuter avant tout modèle final ou score du test 505 à 743.
 
 ## Lot 4.4 : expériences E, F et G, plan fixé avant les scores
 
