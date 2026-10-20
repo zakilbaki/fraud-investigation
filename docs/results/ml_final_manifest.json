@@ -1,0 +1,74 @@
+{
+  "status": "frozen_before_test",
+  "model_config": "cat_slow200",
+  "csv_sha256": "16910f90577b0d981bf8ff289714510bb89bc71bff7d3f220f024e287e4eea6b",
+  "pipeline_sha256": "e5482a4bc5d731246a7834cbf37dc53bb48066a2a6cef681694db1d95a2446ff",
+  "artifact_location": "data/ml_final_catboost/pipeline.joblib (local, hors Git)",
+  "source_columns": [
+    "step",
+    "type",
+    "amount",
+    "oldbalanceOrg",
+    "nameDest",
+    "isFraud"
+  ],
+  "predictor_columns": [
+    "type",
+    "amount",
+    "oldbalanceOrg",
+    "hour_sin",
+    "hour_cos",
+    "part_solde",
+    "nb_entrees_anterieures"
+  ],
+  "model_parameters": {
+    "iterations": 200,
+    "learning_rate": 0.05,
+    "depth": 6,
+    "loss_function": "Logloss",
+    "thread_count": 4,
+    "random_seed": 42,
+    "verbose": false,
+    "allow_writing_files": false,
+    "task_type": "CPU",
+    "cat_features": [
+      "type"
+    ]
+  },
+  "versions": {
+    "python": "3.11.15",
+    "polars": "1.44.2",
+    "numpy": "2.4.6",
+    "scikit_learn": "1.9.1",
+    "xgboost": "3.2.0",
+    "catboost": "1.2.10"
+  },
+  "fit_steps": [
+    1,
+    360
+  ],
+  "threshold_steps": [
+    361,
+    432
+  ],
+  "selection_only_steps": [
+    433,
+    504
+  ],
+  "test_steps": [
+    505,
+    743
+  ],
+  "fit_rows": 5186057,
+  "fit_frauds": 4017,
+  "threshold_rows": 822359,
+  "threshold_frauds": 840,
+  "threshold_rule": "F1 maximal, scores identiques group\u00e9s, seuil le plus haut \u00e0 \u00e9galit\u00e9",
+  "threshold": 0.3123179923852385,
+  "threshold_f1": 0.8898678414096917,
+  "ratio_zero_balance": "NaN",
+  "ratio_above_one": "unclipped",
+  "recipient_history": "nameDest count at steps strictly less than current step",
+  "reload_scores_equal": true,
+  "test_evaluated": false
+}

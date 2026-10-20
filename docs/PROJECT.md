@@ -233,3 +233,7 @@ La règle préannoncée propose `cat_slow200` car son F1 moyen dépasse XGBoost 
 ### Lot 4.5 : décision avant le test
 
 Le responsable a retenu `cat_slow200` avec les sept entrées de H. La [fiche de gel préalable](ML_FINAL_FREEZE.md) fixe les paramètres, les périodes 1–360 pour l'ajustement, 361–432 pour le seuil, 505–743 pour le test, ainsi que les diagnostics descriptifs. Les steps 433–504 ne réajustent rien. Le pipeline et son seuil doivent être sauvegardés, rechargés et vérifiés avant toute mesure du test. Aucun score test n'est encore publié à ce stade.
+
+### Lot 4.5 : pipeline et seuil gelés avant le test
+
+Le pipeline CatBoost a été reconstruit uniquement sur les **5 186 057** transactions des steps 1–360, dont **4 017** fraudes. Le seuil F1 maximal choisi sur les **822 359** transactions des steps 361–432, dont **840** fraudes, est **0,3123179923852385**. Il est identique au seuil publié de la cinquième fenêtre `cat_slow200`. Le modèle local `data/ml_final_catboost/pipeline.joblib` a été sauvegardé puis rechargé ; tous les scores de la réserve sont identiques avant et après. Son empreinte SHA-256, les paramètres, versions, colonnes et bornes figurent dans le [manifeste publié](results/ml_final_manifest.json). Le fichier du modèle reste hors Git. Aucun score du test 505–743 n'a été calculé à cette étape.
