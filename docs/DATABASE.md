@@ -35,6 +35,8 @@ Les bases existantes sont ouvertes en lecture seule au moyen d'URI SQLite dont l
 
 Les index `transactions_orig_step_id` et `transactions_dest_step_id` portent sur le compte, le `step` décroissant et l'identifiant. L'index unique de `transaction_id` sert à la recherche directe. Les résultats sont triés par `step` décroissant, puis par identifiant croissant pour obtenir un ordre reproductible. Le second critère départage seulement les lignes d'un même `step` ; il ne représente pas leur chronologie réelle. Un compte présent dans les deux rôles sur une même transaction n'apparaît qu'une fois.
 
+Pour le scoring local, `get_scoring_transaction` ne lit que les colonnes nécessaires au modèle et à la vérification de provenance. `count_prior_receipts` exécute `COUNT(*) WHERE name_dest = ? AND step < ?`, sans `LIMIT` et sans labels. Il compte chaque réception, y compris si plusieurs transactions ont le même step antérieur. Les opérations du step courant sont toutes exclues. Sur la base importée, `EXPLAIN QUERY PLAN` signale l'index couvrant `transactions_dest_step_id` pour cette requête ; son coût exact dépend encore du nombre de lignes antérieures du destinataire. Voir la [documentation API](API.md).
+
 ## Import complet vérifié
 
 Le CSV dont le SHA-256 est `16910f90577b0d981bf8ff289714510bb89bc71bff7d3f220f024e287e4eea6b` a produit 6 362 620 transactions, 9 073 900 comptes distincts et 6 362 620 labels. Les tables d'enquête sont restées vides. Une seconde exécution a renvoyé `already_imported` avec les mêmes effectifs.

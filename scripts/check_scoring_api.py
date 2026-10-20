@@ -29,7 +29,8 @@ def main():
     )
     with closing(open_readonly(paths.database)) as connection:
         selected = [connection.execute(
-            f"""SELECT transaction_id, source_line_number FROM transactions
+            f"""SELECT transaction_id, source_line_number, step, type, amount,
+                       oldbalance_org, name_dest FROM transactions
                 WHERE {clause} ORDER BY source_line_number LIMIT 1"""
         ).fetchone() for clause in clauses]
     if any(row is None for row in selected):
@@ -45,6 +46,9 @@ def main():
     times = {name: [] for name in ("read_and_history_ms", "features_ms", "prediction_ms")}
     for selected_row in selected:
         row = by_line[selected_row["source_line_number"]]
+        assert (selected_row["step"], selected_row["type"], float(selected_row["amount"]),
+                float(selected_row["oldbalance_org"]), selected_row["name_dest"]) == (
+                    row["step"], row["type"], row["amount"], row["oldbalanceOrg"], row["nameDest"])
         step, dest = row["step"], row["nameDest"]
         prior = (pl.scan_csv(csv_path).filter((pl.col("step") < step)
                  & (pl.col("nameDest") == dest)).select(pl.len()).collect().item())

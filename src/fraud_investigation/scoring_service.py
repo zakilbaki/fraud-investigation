@@ -50,6 +50,12 @@ class ScoreService:
     def load(self) -> None:
         """Charger une seule fois, sans entraînement ni fichier d'évaluation."""
         try:
+            if not self.paths.manifest.is_file():
+                raise ArtifactError("Manifeste du modèle absent")
+            if not self.paths.model.is_file():
+                raise ArtifactError("Modèle local absent")
+            if not self.paths.database.is_file():
+                raise ArtifactError("Base applicative absente")
             manifest = json.loads(self.paths.manifest.read_text())
             if sha256(self.paths.model) != manifest["pipeline_sha256"]:
                 raise ArtifactError("Empreinte du modèle incompatible avec le manifeste")

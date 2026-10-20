@@ -28,6 +28,16 @@ MODEL_COLUMNS = ("type", "amount", "oldbalanceOrg", "hour_sin", "hour_cos",
                  "part_solde", "nb_entrees_anterieures")
 
 
+def verify_or_publish_manifest(manifest, path):
+    """Dans un clone neuf, préserver le manifeste déjà publié et l'exiger identique."""
+    path = Path(path)
+    if path.exists():
+        if json.loads(path.read_text()) != manifest:
+            raise AssertionError("Reconstruction différente du manifeste final publié")
+    else:
+        path.write_text(json.dumps(manifest, indent=2) + "\n")
+
+
 def sha256(path):
     with Path(path).open("rb") as file:
         return hashlib.file_digest(file, "sha256").hexdigest()
@@ -52,8 +62,8 @@ def freeze(csv_path, output_dir):
     model_path = output_dir / "pipeline.joblib"
     local_path = output_dir / "freeze_local.json"
     public_path = Path("docs/results/ml_final_manifest.json")
-    if model_path.exists() or local_path.exists() or public_path.exists():
-        raise FileExistsError("Un gel existe déjà ; aucun remplacement automatique")
+    if model_path.exists() or local_path.exists():
+        raise FileExistsError("Un modèle local existe déjà ; aucun remplacement automatique")
     assert sha256(csv_path) == CSV_SHA256
     prior_result = json.loads(Path("docs/results/ml_tune_h_catboost.json").read_text())
     reference = next(r for r in prior_result["rows"]
@@ -117,6 +127,6 @@ def freeze(csv_path, output_dir):
                 "ratio_zero_balance": "NaN", "ratio_above_one": "unclipped",
                 "recipient_history": "nameDest count at steps strictly less than current step",
                 "reload_scores_equal": True, "test_evaluated": False}
+    verify_or_publish_manifest(manifest, public_path)
     local_path.write_text(json.dumps({**manifest, "fit_seconds": fit_seconds}, indent=2) + "\n")
-    public_path.write_text(json.dumps(manifest, indent=2) + "\n")
     return manifest

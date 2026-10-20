@@ -110,7 +110,9 @@ class ScoringApiTests(unittest.TestCase):
                 self.assertEqual(client.post("/score", json={"transaction_id": 123}).status_code, 422)
         with TestClient(create_app(ScoringPaths(self.database, self.model.with_name("missing.joblib"),
                                                 self.manifest))) as client:
-            self.assertEqual(client.get("/health").status_code, 503)
+            health = client.get("/health")
+            self.assertEqual(health.status_code, 503)
+            self.assertEqual(health.json()["detail"], "Modèle local absent")
             self.assertEqual(client.post("/score", json={"transaction_id": "00" * 16}).status_code, 503)
 
     def test_incompatible_artifact(self):
@@ -118,7 +120,9 @@ class ScoringApiTests(unittest.TestCase):
         manifest["pipeline_sha256"] = "ff" * 32
         self.manifest.write_text(json.dumps(manifest))
         with TestClient(create_app(self.paths)) as client:
-            self.assertEqual(client.get("/health").status_code, 503)
+            health = client.get("/health")
+            self.assertEqual(health.status_code, 503)
+            self.assertIn("incompatible", health.json()["detail"])
             self.assertEqual(client.post("/score", json={"transaction_id": "00" * 16}).status_code, 503)
 
     def test_incompatible_transaction_data(self):

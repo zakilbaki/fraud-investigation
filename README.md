@@ -233,4 +233,17 @@ Le gel et l'évaluation refusent de remplacer les artefacts existants. Pour une 
 
 L'[analyse exploratoire du seuil CASH_OUT](docs/ML_CASHOUT_THRESHOLD_EXPLORATORY.md) conserve le pipeline final. Elle choisit un seuil sur 361–432, puis compare les scores locaux déjà sauvegardés du test. Les commandes génériques, depuis la racine du dépôt avec ces artefacts présents, sont `python scripts/run_ml_cashout_threshold.py reserve`, `python scripts/run_ml_cashout_threshold.py test` et `python scripts/report_ml_cashout_threshold.py`. Les deux premières refusent de remplacer leurs résultats ; utiliser un espace de travail propre pour une réexécution indépendante. Cette variante ne modifie pas la politique finale publiée.
 
+## API locale de scoring
+
+L'[API du lot 5.0](docs/API.md) prend l'identifiant d'une transaction déjà présente dans la base applicative et renvoie son score de suspicion et sa décision selon le **seuil global final**. Elle utilise le modèle local gelé et ne lit pas les labels. FastAPI et Uvicorn sont dans `uv.lock` ; `httpx` sert aux tests. Après `uv sync --locked`, avec la base et le modèle locaux disponibles :
+
+```sh
+uv run --locked python scripts/serve_api.py \
+  --database data/app/fraud.sqlite \
+  --model data/ml_final_catboost/pipeline.joblib \
+  --manifest docs/results/ml_final_manifest.json
+```
+
+Le serveur écoute `127.0.0.1:8000`. `GET /health` indique la disponibilité du modèle ; `POST /score` attend `{"transaction_id":"<identifiant hexadécimal de 32 caractères>"}`. La [documentation API](docs/API.md) donne les réponses, erreurs, limites et la procédure de vérification locale `python scripts/check_scoring_api.py`. Le modèle n'est ni téléchargé ni réentraîné au démarrage : s'il manque, le [parcours de gel](docs/ML_FINAL_FREEZE.md) se relance explicitement avec `uv run --locked python scripts/freeze_ml_final.py`, à partir du CSV audité. Le script vérifie l'identité avec le [manifeste déjà publié](docs/results/ml_final_manifest.json) et refuse de remplacer un modèle local existant. Cette reconstruction n'a pas été exécutée pour le lot 5.0. La commande `uv sync --locked` a réussi localement avec un cache temporaire ; Linux et Windows n'ont pas été testés.
+
 La procédure vise une installation reproductible sur toute machine où les prérequis sont disponibles. Les exécutions effectivement vérifiées ont eu lieu sur macOS Apple Silicon avec Python 3.11.15, `uv` 0.13.1 et Polars 1.44.2. Linux et Windows n'ont pas été testés ; leur compatibilité reste à vérifier. Le téléchargement public, l'audit et l'import complet ont réussi le 16 octobre 2026 sur cette machine. Les effectifs mesurés et les contrôles de cohérence sont conservés dans les documents liés en tête de page. Le notebook EDA a été réexécuté intégralement lors de la clôture du lot 4.0. Pour le lot 4.2, `uv run --locked` a réussi avec un cache temporaire explicitement accessible dans l'environnement restreint ; la commande avec le cache par défaut n'a pas été revérifiée.

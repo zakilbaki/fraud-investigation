@@ -27,8 +27,8 @@ def create_app(paths: ScoringPaths | None = None) -> FastAPI:
         try:
             service.load()
             app.state.load_error = None
-        except ArtifactError:
-            app.state.load_error = "Modèle ou base indisponible ou incompatible"
+        except ArtifactError as exc:
+            app.state.load_error = str(exc)
         app.state.service = service
         yield
 

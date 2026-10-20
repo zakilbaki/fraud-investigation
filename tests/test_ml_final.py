@@ -1,10 +1,14 @@
 """Frontières temporelles et diagnostics du gel final sur données synthétiques."""
 
 import unittest
+import tempfile
+from pathlib import Path
+
+import json
 
 import numpy as np
 
-from fraud_investigation.ml_final import MODEL_COLUMNS
+from fraud_investigation.ml_final import MODEL_COLUMNS, verify_or_publish_manifest
 from fraud_investigation.ml_final_test import amount_bucket, stepwise_history, subgroup
 
 
@@ -57,6 +61,17 @@ class FinalTest(unittest.TestCase):
                                          "hour_cos", "part_solde", "nb_entrees_anterieures"))
         self.assertNotIn("isFraud", MODEL_COLUMNS)
         self.assertNotIn("nameDest", MODEL_COLUMNS)
+
+    def test_reconstruction_preserves_published_manifest(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "manifest.json"
+            verify_or_publish_manifest({"hash": "expected"}, path)
+            original = path.read_bytes()
+            verify_or_publish_manifest({"hash": "expected"}, path)
+            self.assertEqual(path.read_bytes(), original)
+            with self.assertRaises(AssertionError):
+                verify_or_publish_manifest({"hash": "different"}, path)
+            self.assertEqual(json.loads(path.read_text()), {"hash": "expected"})
 
 
 if __name__ == "__main__":
