@@ -4,6 +4,19 @@
 
 Permettre à des agents d'examiner une transaction PaySim, de consulter des faits locaux, d'appeler ultérieurement un modèle ML et de produire un rapport qui distingue observations, calculs et limites. Le projet sert aussi de support pour expliquer les choix techniques en entretien. Une autre personne doit pouvoir cloner le dépôt GitHub et reproduire l'installation et les données dérivées à partir des prérequis documentés, sans accès aux dossiers ou comptes personnels du développeur.
 
+## État du lot 5.1 : outils locaux d'enquête
+
+Le serveur FastAPI principal regroupe maintenant consultation, historique borné,
+scoring final et suivi des dossiers. Les consultations restent accessibles si
+le modèle est absent ; `/score` et `/health` signalent alors son indisponibilité.
+L'API de consultation autonome reste disponible pour un usage sans chargement ML.
+Les réponses destinées aux agents excluent les soldes après transaction et les
+labels. Les dossiers et événements sont sauvegardés dans SQLite avec une
+idempotence persistante. Les événements soumis par un appelant sont marqués
+non vérifiés. Aucune intégration Copilot Studio, aucun LLM, tunnel, rapport
+automatique ou décision de blocage n'est inclus. Voir [API.md](API.md) et
+[DATABASE.md](DATABASE.md).
+
 ## Périmètre et contraintes
 
 - Exécution locale avec un budget supplémentaire de 0 €. Le MacBook Air M4 est la machine de développement et de test, pas un prérequis du projet.

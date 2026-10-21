@@ -142,6 +142,7 @@ def get_account_transactions(
     account_id: str,
     before_step: int,
     limit: int = 50,
+    min_step: int | None = None,
 ) -> list[dict[str, object]]:
     """Lister les transactions d'un compte avant un step, sans ordre intra-step temporel."""
     if not account_id:
@@ -150,12 +151,15 @@ def get_account_transactions(
         raise ValueError("before_step doit être un entier positif")
     if isinstance(limit, bool) or not isinstance(limit, int) or not 1 <= limit <= 500:
         raise ValueError("limit doit être compris entre 1 et 500")
+    if min_step is not None and (isinstance(min_step, bool) or not isinstance(min_step, int)
+                                 or not 1 <= min_step <= before_step):
+        raise ValueError("min_step doit être un entier positif inférieur ou égal à before_step")
     rows = connection.execute(
         f"""SELECT {TRANSACTION_FIELDS}
             FROM transactions
-            WHERE (name_orig = ? OR name_dest = ?) AND step < ?
+            WHERE (name_orig = ? OR name_dest = ?) AND step < ? AND step >= ?
             ORDER BY step DESC, transaction_id ASC
             LIMIT ?""",
-        (account_id, account_id, before_step, limit),
+        (account_id, account_id, before_step, min_step or 1, limit),
     ).fetchall()
     return [_transaction_dict(row) for row in rows]

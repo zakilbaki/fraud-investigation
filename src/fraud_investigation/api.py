@@ -11,11 +11,28 @@ from pydantic import BaseModel, ConfigDict
 from fraud_investigation.scoring_service import (
     ArtifactError, ScoreService, ScoringDataError, ScoringPaths,
 )
+from fraud_investigation.transaction_api import transaction_router
+from fraud_investigation.case_api import case_router
 
 
 class ScoreRequest(BaseModel):
     model_config = ConfigDict(extra="forbid")
     transaction_id: str
+
+
+class ScoreResponse(BaseModel):
+    transaction_id: str
+    suspicion_score: float
+    threshold: float
+    alert: bool
+    model_version: str
+    policy_version: str
+
+
+class HealthResponse(BaseModel):
+    status: str
+    model_available: bool
+    model_version: str
 
 
 def create_app(paths: ScoringPaths | None = None) -> FastAPI:
@@ -33,8 +50,10 @@ def create_app(paths: ScoringPaths | None = None) -> FastAPI:
         yield
 
     app = FastAPI(title="Fraud Investigation, API locale", lifespan=lifespan)
+    app.include_router(transaction_router(configured.database))
+    app.include_router(case_router(configured.database))
 
-    @app.get("/health")
+    @app.get("/health", response_model=HealthResponse)
     def health():
         service = app.state.service
         if app.state.load_error:
@@ -42,7 +61,7 @@ def create_app(paths: ScoringPaths | None = None) -> FastAPI:
         return {"status": "ready", "model_available": True,
                 "model_version": service.model_version}
 
-    @app.post("/score")
+    @app.post("/score", response_model=ScoreResponse)
     def score(request: ScoreRequest):
         if app.state.load_error:
             raise HTTPException(status_code=503, detail=app.state.load_error)
