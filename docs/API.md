@@ -1,4 +1,38 @@
-# Lot 5.0 : API locale de scoring d'une transaction connue
+# API locales des transactions
+
+## Consultation locale d'une transaction, lot backend initial
+
+Une API de lecture indépendante du modèle ML expose `GET /transactions/{transaction_id}`.
+Elle utilise le contrat de [DATABASE.md](DATABASE.md) et ouvre uniquement la base
+applicative SQLite en lecture seule. L'identifiant est une chaîne de 32 caractères
+hexadécimaux. La réponse contient les douze champs de `transactions` documentés
+dans ce contrat, dont les montants décimaux sous forme de chaînes et la provenance
+de la ligne. Elle ne contient aucun label d'évaluation.
+
+Depuis la racine du dépôt, après l'import PaySim :
+
+```sh
+uv run --locked python scripts/serve_transaction_api.py --database data/app/fraud.sqlite
+curl http://127.0.0.1:8000/transactions/d83a6871a919fd644c774f3e65fbe41b
+```
+
+L'identifiant de cet exemple appartient au CSV PaySim audité indiqué dans le README.
+Le serveur écoute seulement `127.0.0.1`. Un identifiant mal formé donne HTTP 400,
+un identifiant valide mais absent HTTP 404 avec `Transaction introuvable`, et une
+base absente ou illisible HTTP 503. Les réponses 200 reflètent la base locale :
+elles ne prouvent pas une fraude et ne déclenchent aucune action sur un compte.
+Les tests logiciels utilisent une base synthétique temporaire. Cette API ne donne
+pas encore d'historique, de recherche liée ni de rapport. Elle ne rend pas le
+serveur local directement accessible depuis Copilot Studio ; cette connexion
+requiert une vérification séparée des capacités disponibles.
+
+Vérification ciblée :
+
+```sh
+python -m unittest tests.test_transaction_api -v
+```
+
+## Lot 5.0 : API locale de scoring d'une transaction connue
 
 L'API prend l'identifiant hexadécimal d'une transaction déjà importée dans `data/app/fraud.sqlite`. Elle retourne un **score de suspicion** et une alerte selon le seuil global final **0,3123179923852385**. Le modèle est le CatBoost `cat_slow200` gelé. La [variante CASH_OUT](ML_CASHOUT_THRESHOLD_EXPLORATORY.md) reste exploratoire et n'est pas utilisée ici. Un score inférieur au seuil ne certifie pas que la transaction est légitime. La calibration du score comme probabilité n'a pas été évaluée.
 
