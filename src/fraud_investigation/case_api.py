@@ -6,7 +6,7 @@ import sqlite3
 from pathlib import Path
 from typing import Callable, Literal
 
-from fastapi import APIRouter, Header, HTTPException, Query
+from fastapi import APIRouter, Header, HTTPException, Query, Response
 from pydantic import BaseModel, ConfigDict, Field, model_validator
 
 from fraud_investigation.case_service import (
@@ -17,6 +17,9 @@ from fraud_investigation.evidence_service import (
     RunInProgress, execute_and_record, get_run, list_runs,
 )
 from fraud_investigation.scoring_service import ScoreService
+from fraud_investigation.report_service import (
+    ReportNotFound, generate_report, get_report, list_reports,
+)
 
 
 class CaseCreate(BaseModel):
@@ -104,6 +107,24 @@ class RunListResponse(BaseModel):
     runs: list[RunResponse]
 
 
+class ReportResponse(BaseModel):
+    report_id: str
+    case_id: str
+    version: int
+    generated_at: str
+    evidence_refs: list[str]
+    event_refs: list[str]
+    body: dict[str, object]
+    markdown: str
+
+
+class ReportListResponse(BaseModel):
+    case_id: str
+    limit: int
+    truncated: bool
+    reports: list[dict[str, object]]
+
+
 def case_router(database_path: Path | str,
                 score_provider: Callable[[], ScoreService | None] | None = None) -> APIRouter:
     router = APIRouter()
@@ -188,6 +209,43 @@ def case_router(database_path: Path | str,
             return get_run(database_path, case_id, run_id)
         except LookupError:
             raise HTTPException(404, "Résultat introuvable") from None
+        except (FileNotFoundError, sqlite3.Error):
+            raise HTTPException(503, "Base applicative indisponible") from None
+
+    @router.post("/cases/{case_id}/reports", status_code=201, response_model=ReportResponse)
+    def new_report(case_id: str):
+        try:
+            return generate_report(database_path, case_id)
+        except CaseNotFound:
+            raise HTTPException(404, "Dossier introuvable") from None
+        except (FileNotFoundError, sqlite3.Error):
+            raise HTTPException(503, "Base applicative indisponible") from None
+
+    @router.get("/cases/{case_id}/reports", response_model=ReportListResponse)
+    def read_reports(case_id: str, limit: int = Query(50, ge=1, le=100)):
+        try:
+            return list_reports(database_path, case_id, limit)
+        except CaseNotFound:
+            raise HTTPException(404, "Dossier introuvable") from None
+        except (FileNotFoundError, sqlite3.Error):
+            raise HTTPException(503, "Base applicative indisponible") from None
+
+    @router.get("/cases/{case_id}/reports/{version}", response_model=ReportResponse)
+    def read_report(case_id: str, version: int):
+        try:
+            return get_report(database_path, case_id, version)
+        except ReportNotFound:
+            raise HTTPException(404, "Rapport introuvable") from None
+        except (FileNotFoundError, sqlite3.Error):
+            raise HTTPException(503, "Base applicative indisponible") from None
+
+    @router.get("/cases/{case_id}/reports/{version}/markdown", response_class=Response)
+    def read_report_markdown(case_id: str, version: int):
+        try:
+            report = get_report(database_path, case_id, version)
+            return Response(report["markdown"], media_type="text/markdown; charset=utf-8")
+        except ReportNotFound:
+            raise HTTPException(404, "Rapport introuvable") from None
         except (FileNotFoundError, sqlite3.Error):
             raise HTTPException(503, "Base applicative indisponible") from None
 

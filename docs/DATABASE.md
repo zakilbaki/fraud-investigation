@@ -52,6 +52,16 @@ ligne reste `running` et est présentée comme incomplète, sans faux résultat.
 La même clé ne relance pas cette exécution ; une nouvelle clé est nécessaire.
 La création de cette table garde les dossiers et événements existants.
 
+Le rapport du lot 5.2 ajoute `investigation_reports` sans modifier les tables
+précédentes. `report_id` est sa clé primaire ; `(case_id, version)` est unique.
+Chaque ligne conserve la date UTC, le corps JSON, sa représentation Markdown,
+les identifiants exacts des vérifications utilisées et les références des
+événements déclarés. La génération lit les lignes déjà enregistrées puis insère
+une nouvelle version dans une transaction courte. Elle n'appelle aucun outil
+ML et ne met jamais à jour une ancienne version. La première génération crée
+la table et l'index du dossier si nécessaire ; les lectures avant cette première
+génération renvoient une liste vide ou un rapport introuvable.
+
 Les cinq champs monétaires (`amount` et les soldes) sont conservés en `TEXT` avec leur écriture décimale d'origine. L'import vérifie avec `Decimal` qu'ils sont numériques, finis et non négatifs, sans arrondi ni conversion en virgule flottante. Les montants zéro sont gardés. Les labels sont vérifiés dans `{0, 1}` mais ne sont jamais écrits dans `fraud.sqlite`.
 
 Le fichier d'évaluation contient une table `labels` avec `source_line_number`, `transaction_id`, `isFraud` et `isFlaggedFraud`. Une vérification compare les identifiants et les numéros de ligne des deux fichiers dans les deux sens.

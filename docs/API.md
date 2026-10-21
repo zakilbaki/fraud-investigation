@@ -40,6 +40,59 @@ simulée. Un appelant peut toujours ajouter un événement `tool_result`, mais
 celui-ci garde `verification=caller_supplied` et ne devient pas un résultat
 de cette route.
 
+## Lot 5.2 : rapports JSON et Markdown versionnés
+
+`POST /cases/{case_id}/reports` produit une nouvelle version sans paramètre
+libre. Le backend lit les vérifications déjà enregistrées, sans les réexécuter.
+`GET /cases/{case_id}/reports?limit=50` liste les versions par numéro
+décroissant avec `truncated`. `GET /cases/{case_id}/reports/{version}` renvoie
+le JSON enregistré. `GET /cases/{case_id}/reports/{version}/markdown` renvoie
+la même version en `text/markdown`. Un numéro de version déjà créé n'est
+jamais remplacé. Une nouvelle génération, même sans nouveau résultat, crée
+la version suivante.
+
+Le rapport contient `report_id`, `case_id`, `version`, `generated_at`,
+`evidence_refs`, `event_refs`, `body` et `markdown`. Dans `body`, `provenance`
+et chaque élément de `facts`, `score` et `histories` portent `evidence_ref`.
+`checks` énumère les outils exécutés avec leurs références ; `errors`,
+`incomplete`, `missing` et `limits` expliquent les lacunes. `comments` et
+`caller_submitted_results` sont séparés des faits et restent marqués
+`caller_supplied`. Si le score ou un historique manque, le rapport le dit
+explicitement. Une alerte signifie seulement que le score dépasse le seuil.
+Le score n'est pas présenté comme une probabilité calibrée ni comme une
+explication des causes de la transaction.
+
+Extrait de rapport **entièrement synthétique** après une consultation exécutée
+et une tentative de scoring sans modèle :
+
+```json
+{
+  "case_id": "11111111111111111111111111111111",
+  "transaction_id": "00000000000000000000000000000002",
+  "provenance": {
+    "source_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+    "source_line_number": 2,
+    "evidence_ref": "33333333333333333333333333333333"
+  },
+  "facts": [
+    {"name": "amount", "value": "10.00", "evidence_ref": "33333333333333333333333333333333"}
+  ],
+  "score": null,
+  "errors": [
+    {"evidence_ref": "44444444444444444444444444444444", "operation": "score", "status": "unavailable", "error": {"code": "tool_unavailable", "message": "Outil ou base indisponible"}}
+  ],
+  "missing": ["score ML indisponible ou non exécuté"]
+}
+```
+
+Cet extrait omet volontairement les autres champs du rapport complet ; les
+identifiants, dates et données sont illustratifs. Les tests utilisent une base
+synthétique. Un test de mise en forme du score utilise un scoreur **simulé**
+nommé `simulated_test_model` ; il ne mesure pas le CatBoost. Le pipeline final
+reste celui du lot 5.0, avec son seuil inchangé. L'API principale charge cet
+artefact local quand il est disponible ; le serveur de consultation seul
+enregistre une indisponibilité pour une vérification de scoring.
+
 ## Lot 5.1 : point d'entrée commun et contrats des outils
 
 Le serveur principal lancé par `scripts/serve_api.py` expose toutes les routes
@@ -59,6 +112,10 @@ Les descriptions OpenAPI générées sont consultables à `/openapi.json` et `/d
 | `GET /cases/{case_id}` | Consulter un dossier | Identifiant du dossier | Statut, transaction, dates UTC |
 | `POST /cases/{case_id}/events` | Ajouter un commentaire ou résultat déclaré | Type, origine, contenu JSON, références, clé d'idempotence | Événement et provenance déclarée |
 | `GET /cases/{case_id}/events` | Lire les événements | Dossier, `limit` de 1 à 100 | Liste ordonnée, limite, `truncated` |
+| `POST /cases/{case_id}/runs` | Exécuter une vérification autorisée | Opération fermée, bornes éventuelles, clé d'idempotence | Résultat ou erreur conservé, `run_id` |
+| `GET /cases/{case_id}/runs` | Consulter les vérifications | Dossier, `limit` de 1 à 100 | Liste, `truncated` |
+| `POST /cases/{case_id}/reports` | Générer une version de rapport | Dossier | JSON, Markdown et références conservées |
+| `GET /cases/{case_id}/reports/{version}` | Consulter une version | Dossier, numéro de version | Rapport enregistré |
 | `GET /health` | Vérifier le modèle du serveur principal | Aucune | Santé du modèle ou erreur 503 |
 
 Les deux routes d'écriture utilisent une clé d'idempotence persistante fournie

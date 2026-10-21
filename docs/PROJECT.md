@@ -19,11 +19,14 @@ automatique ou décision de blocage n'est inclus. Voir [API.md](API.md) et
 
 ## Lot 5.2 : preuves exécutées par le backend
 
-Une première étape du lot 5.2 ajoute les vérifications exécutées et conservées
+Le lot 5.2 ajoute les vérifications exécutées et conservées
 par le backend. Le futur agent choisit parmi quatre opérations fermées ; les
 paramètres, résultats, erreurs et états incomplets sont enregistrés sous un
 identifiant stable. Le scoring indisponible reste une erreur enregistrée, sans
-score de substitution. Le rapport structuré est traité séparément dans ce lot.
+score de substitution. Le backend génère des rapports JSON et Markdown
+déterministes à partir de ces résultats, avec références par fait et versions
+immuables. Les déclarations de l'appelant restent séparées. Aucun scénario
+automatique, LLM, tunnel ou accès Copilot Studio n'est ajouté.
 
 ## Périmètre et contraintes
 

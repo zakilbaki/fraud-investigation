@@ -241,6 +241,9 @@ consultation seule reste possible avec `scripts/serve_transaction_api.py`, sans
 modèle ML. Les routes, contrats, exemples et limites sont dans [docs/API.md](docs/API.md).
 Le lot 5.2 ajoute `POST /cases/{case_id}/runs` et les lectures de résultats,
 pour conserver les vérifications réellement exécutées par le backend.
+Il ajoute aussi `POST /cases/{case_id}/reports`, la consultation des versions
+JSON et leur lecture Markdown. Chaque génération crée une nouvelle version
+fondée sur les résultats déjà conservés.
 
 L'[API du lot 5.0](docs/API.md) prend l'identifiant d'une transaction déjà présente dans la base applicative et renvoie son score de suspicion et sa décision selon le **seuil global final**. Elle utilise le modèle local gelé et ne lit pas les labels. FastAPI et Uvicorn sont dans `uv.lock` ; `httpx` sert aux tests. Après `uv sync --locked`, avec la base et le modèle locaux disponibles :
 

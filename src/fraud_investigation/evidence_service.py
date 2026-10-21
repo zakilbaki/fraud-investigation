@@ -164,6 +164,10 @@ def execute_and_record(
 
 def get_run(path: Path | str, case_id: str, run_id: str) -> dict[str, object]:
     with closing(_connect(path)) as connection:
+        if connection.execute(
+            "SELECT 1 FROM sqlite_master WHERE type = 'table' AND name = 'investigation_tool_runs'"
+        ).fetchone() is None:
+            raise LookupError
         row = connection.execute(
             "SELECT * FROM investigation_tool_runs WHERE case_id = ? AND run_id = ?",
             (case_id, run_id),
@@ -179,6 +183,10 @@ def list_runs(path: Path | str, case_id: str, limit: int = 100) -> dict[str, obj
             "SELECT 1 FROM investigation_cases WHERE case_id = ?", (case_id,)
         ).fetchone() is None:
             raise CaseNotFound
+        if connection.execute(
+            "SELECT 1 FROM sqlite_master WHERE type = 'table' AND name = 'investigation_tool_runs'"
+        ).fetchone() is None:
+            return {"case_id": case_id, "limit": limit, "truncated": False, "runs": []}
         rows = connection.execute(
             "SELECT * FROM investigation_tool_runs WHERE case_id = ? "
             "ORDER BY started_at, run_id LIMIT ?", (case_id, limit + 1),
