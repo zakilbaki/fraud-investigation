@@ -72,6 +72,16 @@ name_orig, oldbalance_org, newbalance_orig, name_dest,
 oldbalance_dest, newbalance_dest
 """
 
+PUBLIC_TRANSACTION_KEYS = (
+    "transaction_id", "source_sha256", "source_line_number", "step", "type",
+    "amount", "name_orig", "oldbalance_org", "name_dest", "oldbalance_dest",
+)
+
+
+def public_transaction(transaction: dict[str, object]) -> dict[str, object]:
+    """Ne conserver que les faits disponibles avant exécution de la transaction."""
+    return {key: transaction[key] for key in PUBLIC_TRANSACTION_KEYS}
+
 
 def readonly_sqlite_uri(path: Path | str) -> str:
     """Encoder le chemin du fichier avant d'ajouter le mode URI SQLite."""

@@ -40,6 +40,18 @@ dans `details_json` une enveloppe JSON avec `origin`, `verification`, `content`
 et `references`. Les événements fournis par un appelant portent toujours
 `verification=caller_supplied`, même si leur type est `tool_result`.
 
+Au lot 5.2, une seconde migration non destructive ajoute
+`investigation_tool_runs`, indexée par dossier, date de début et identifiant.
+Chaque ligne conserve l'opération choisie parmi quatre noms fermés, sa version,
+les paramètres bornés, un identifiant stable, les dates UTC, le résultat ou
+l'erreur et son état. `(case_id, idempotency_key)` est unique. La réservation
+`running` est commise avant l'exécution de l'outil ; le résultat est écrit dans
+une autre transaction courte. Aucun verrou d'écriture SQLite n'est maintenu
+pendant le calcul ML. Si le processus s'arrête entre ces deux écritures, la
+ligne reste `running` et est présentée comme incomplète, sans faux résultat.
+La même clé ne relance pas cette exécution ; une nouvelle clé est nécessaire.
+La création de cette table garde les dossiers et événements existants.
+
 Les cinq champs monétaires (`amount` et les soldes) sont conservés en `TEXT` avec leur écriture décimale d'origine. L'import vérifie avec `Decimal` qu'ils sont numériques, finis et non négatifs, sans arrondi ni conversion en virgule flottante. Les montants zéro sont gardés. Les labels sont vérifiés dans `{0, 1}` mais ne sont jamais écrits dans `fraud.sqlite`.
 
 Le fichier d'évaluation contient une table `labels` avec `source_line_number`, `transaction_id`, `isFraud` et `isFlaggedFraud`. Une vérification compare les identifiants et les numéros de ligne des deux fichiers dans les deux sens.

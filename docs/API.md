@@ -1,5 +1,45 @@
 # API locales des transactions
 
+## Lot 5.2 : exécuter et conserver une vérification
+
+`POST /cases/{case_id}/runs` accepte `Idempotency-Key` et une opération parmi
+`transaction`, `score`, `sender_history`, `recipient_history`. La demande ne
+contient ni identifiant de transaction, ni compte, ni step, ni chemin de fichier :
+ils sont déduits du dossier et de la transaction qu'il référence. Pour les
+historiques seulement, `limit` vaut 50 par défaut et reste entre 1 et 100,
+`lookback_steps` vaut 168 par défaut et reste entre 1 et 168. Le résultat
+respecte le contrat de consultation du lot 5.1. Le scoring réutilise le
+CatBoost gelé et le seuil global, sans nouvel entraînement.
+
+La réponse conserve `run_id`, `case_id`, `operation`, `tool_version`,
+`parameters`, `started_at`, `finished_at`, `status`, `result`, `error`,
+`verification` et `incomplete`. `verification=backend_executed` veut dire
+que le backend a exécuté ou tenté l'outil et enregistré l'issue. Ce statut
+n'établit aucune fraude. Un score indisponible porte `status=unavailable`,
+`result=null` et une erreur structurée ; il ne devient jamais zéro.
+`GET /cases/{case_id}/runs/{run_id}` retrouve un résultat stable.
+`GET /cases/{case_id}/runs?limit=100` renvoie au plus 100 résultats et
+`truncated`. Une répétition terminée avec la même clé et le même contenu
+restitue le même résultat. Un contenu différent donne 409. Une ligne `running`
+signale une exécution en cours ou interrompue et n'est pas relancée avec la
+même clé ; une nouvelle clé permet une autre tentative. Le calcul s'effectue
+hors de toute transaction d'écriture SQLite.
+
+Exemple **synthétique** :
+
+```http
+POST /cases/11111111111111111111111111111111/runs
+Idempotency-Key: lookup-1
+Content-Type: application/json
+
+{"operation":"transaction"}
+```
+
+La réponse 201 inclut un `run_id` stable et le résultat de la transaction
+simulée. Un appelant peut toujours ajouter un événement `tool_result`, mais
+celui-ci garde `verification=caller_supplied` et ne devient pas un résultat
+de cette route.
+
 ## Lot 5.1 : point d'entrée commun et contrats des outils
 
 Le serveur principal lancé par `scripts/serve_api.py` expose toutes les routes

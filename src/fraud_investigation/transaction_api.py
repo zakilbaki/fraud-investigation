@@ -9,7 +9,9 @@ from pathlib import Path
 from fastapi import APIRouter, FastAPI, HTTPException, Query
 from pydantic import BaseModel
 
-from fraud_investigation.database import get_account_transactions, get_transaction, open_readonly
+from fraud_investigation.database import (
+    get_account_transactions, get_transaction, open_readonly, public_transaction,
+)
 from fraud_investigation.case_api import case_router
 
 
@@ -52,7 +54,7 @@ def transaction_router(database_path: Path | str) -> APIRouter:
 
         if transaction is None:
             raise HTTPException(status_code=404, detail="Transaction introuvable")
-        return transaction
+        return public_transaction(transaction)
 
     @router.get("/accounts/{account_id}/transactions", response_model=AccountHistoryResponse)
     def read_account_history(
@@ -77,7 +79,7 @@ def transaction_router(database_path: Path | str) -> APIRouter:
             "lookback_steps": lookback_steps,
             "limit": limit,
             "truncated": len(rows) > limit,
-            "transactions": rows[:limit],
+            "transactions": [public_transaction(row) for row in rows[:limit]],
         }
 
     return router

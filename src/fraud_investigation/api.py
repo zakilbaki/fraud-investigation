@@ -51,7 +51,8 @@ def create_app(paths: ScoringPaths | None = None) -> FastAPI:
 
     app = FastAPI(title="Fraud Investigation, API locale", lifespan=lifespan)
     app.include_router(transaction_router(configured.database))
-    app.include_router(case_router(configured.database))
+    app.include_router(case_router(configured.database,
+                                   lambda: getattr(app.state, "service", None)))
 
     @app.get("/health", response_model=HealthResponse)
     def health():

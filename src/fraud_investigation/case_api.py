@@ -4,15 +4,19 @@ from __future__ import annotations
 
 import sqlite3
 from pathlib import Path
-from typing import Literal
+from typing import Callable, Literal
 
 from fastapi import APIRouter, Header, HTTPException, Query
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, model_validator
 
 from fraud_investigation.case_service import (
     CaseNotFound, IdempotencyConflict, TransactionNotFound,
     add_event, create_case, get_case, get_events,
 )
+from fraud_investigation.evidence_service import (
+    RunInProgress, execute_and_record, get_run, list_runs,
+)
+from fraud_investigation.scoring_service import ScoreService
 
 
 class CaseCreate(BaseModel):
@@ -58,7 +62,50 @@ class EventListResponse(BaseModel):
     events: list[EventResponse]
 
 
-def case_router(database_path: Path | str) -> APIRouter:
+class RunRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    operation: Literal["transaction", "score", "sender_history", "recipient_history"]
+    limit: int | None = Field(default=None, ge=1, le=100)
+    lookback_steps: int | None = Field(default=None, ge=1, le=168)
+
+    @model_validator(mode="after")
+    def history_only_parameters(self):
+        if self.operation in ("transaction", "score") and (
+            self.limit is not None or self.lookback_steps is not None
+        ):
+            raise ValueError("Les bornes ne concernent que l'historique")
+        return self
+
+    def parameters(self) -> dict[str, int]:
+        if self.operation.endswith("_history"):
+            return {"limit": self.limit or 50, "lookback_steps": self.lookback_steps or 168}
+        return {}
+
+
+class RunResponse(BaseModel):
+    run_id: str
+    case_id: str
+    operation: str
+    tool_version: str
+    parameters: dict[str, int]
+    started_at: str
+    finished_at: str | None
+    status: Literal["running", "succeeded", "unavailable", "failed"]
+    result: dict[str, object] | None
+    error: dict[str, object] | None
+    verification: Literal["backend_executed", "pending"]
+    incomplete: bool
+
+
+class RunListResponse(BaseModel):
+    case_id: str
+    limit: int
+    truncated: bool
+    runs: list[RunResponse]
+
+
+def case_router(database_path: Path | str,
+                score_provider: Callable[[], ScoreService | None] | None = None) -> APIRouter:
     router = APIRouter()
 
     @router.post("/cases", status_code=201, response_model=CreatedCaseResponse)
@@ -106,6 +153,41 @@ def case_router(database_path: Path | str) -> APIRouter:
             return get_events(database_path, case_id, limit)
         except CaseNotFound:
             raise HTTPException(404, "Dossier introuvable") from None
+        except (FileNotFoundError, sqlite3.Error):
+            raise HTTPException(503, "Base applicative indisponible") from None
+
+    @router.post("/cases/{case_id}/runs", status_code=201, response_model=RunResponse)
+    def new_run(case_id: str, request: RunRequest,
+                idempotency_key: str = Header(..., alias="Idempotency-Key",
+                                              min_length=1, max_length=128)):
+        try:
+            scorer = score_provider() if score_provider else None
+            return execute_and_record(database_path, case_id, idempotency_key,
+                                      request.operation, request.parameters(), scorer)
+        except CaseNotFound:
+            raise HTTPException(404, "Dossier introuvable") from None
+        except IdempotencyConflict:
+            raise HTTPException(409, "Clé d'idempotence déjà utilisée avec un autre contenu") from None
+        except RunInProgress:
+            raise HTTPException(409, "Exécution en cours ou interrompue ; consulter les résultats") from None
+        except (FileNotFoundError, sqlite3.Error):
+            raise HTTPException(503, "Base applicative indisponible") from None
+
+    @router.get("/cases/{case_id}/runs", response_model=RunListResponse)
+    def read_runs(case_id: str, limit: int = Query(100, ge=1, le=100)):
+        try:
+            return list_runs(database_path, case_id, limit)
+        except CaseNotFound:
+            raise HTTPException(404, "Dossier introuvable") from None
+        except (FileNotFoundError, sqlite3.Error):
+            raise HTTPException(503, "Base applicative indisponible") from None
+
+    @router.get("/cases/{case_id}/runs/{run_id}", response_model=RunResponse)
+    def read_run(case_id: str, run_id: str):
+        try:
+            return get_run(database_path, case_id, run_id)
+        except LookupError:
+            raise HTTPException(404, "Résultat introuvable") from None
         except (FileNotFoundError, sqlite3.Error):
             raise HTTPException(503, "Base applicative indisponible") from None
 

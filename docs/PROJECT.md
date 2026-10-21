@@ -17,6 +17,14 @@ non vérifiés. Aucune intégration Copilot Studio, aucun LLM, tunnel, rapport
 automatique ou décision de blocage n'est inclus. Voir [API.md](API.md) et
 [DATABASE.md](DATABASE.md).
 
+## Lot 5.2 : preuves exécutées par le backend
+
+Une première étape du lot 5.2 ajoute les vérifications exécutées et conservées
+par le backend. Le futur agent choisit parmi quatre opérations fermées ; les
+paramètres, résultats, erreurs et états incomplets sont enregistrés sous un
+identifiant stable. Le scoring indisponible reste une erreur enregistrée, sans
+score de substitution. Le rapport structuré est traité séparément dans ce lot.
+
 ## Périmètre et contraintes
 
 - Exécution locale avec un budget supplémentaire de 0 €. Le MacBook Air M4 est la machine de développement et de test, pas un prérequis du projet.
