@@ -4,6 +4,14 @@
 
 Permettre à des agents d'examiner une transaction PaySim, de consulter des faits locaux, d'appeler ultérieurement un modèle ML et de produire un rapport qui distingue observations, calculs et limites. Le projet sert aussi de support pour expliquer les choix techniques en entretien. Une autre personne doit pouvoir cloner le dépôt GitHub et reproduire l'installation et les données dérivées à partir des prérequis documentés, sans accès aux dossiers ou comptes personnels du développeur.
 
+## Préparation du premier outil REST Copilot Studio
+
+Une passerelle locale dédiée protège uniquement la recherche d'une transaction
+par une clé d'API fournie dans l'environnement. Un export Swagger v2 en anglais
+est préparé pour l'import REST, avec hôte HTTPS à renseigner après création
+d'un tunnel. Aucun secret, tunnel ou paramètre du compte Copilot Studio n'est
+créé ici. Voir [COPILOT_REST.md](COPILOT_REST.md).
+
 ## État du lot 5.1 : outils locaux d'enquête
 
 Le serveur FastAPI principal regroupe maintenant consultation, historique borné,

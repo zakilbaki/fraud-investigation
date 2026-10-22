@@ -235,6 +235,11 @@ L'[analyse exploratoire du seuil CASH_OUT](docs/ML_CASHOUT_THRESHOLD_EXPLORATORY
 
 ## API locale de scoring
 
+Pour préparer uniquement le premier outil REST Copilot Studio,
+`GET /transactions/{transaction_id}`, voir
+[docs/COPILOT_REST.md](docs/COPILOT_REST.md). La passerelle dédiée impose une
+clé d'API et l'export Swagger v2 reçoit l'URL HTTPS réelle quand elle existe.
+
 Pour le lot 5.1, le point d'entrée commun est `scripts/serve_api.py` : il expose
 aussi la recherche de transaction, l'historique borné et les dossiers. La
 consultation seule reste possible avec `scripts/serve_transaction_api.py`, sans

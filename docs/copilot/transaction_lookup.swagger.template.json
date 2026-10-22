@@ -1,0 +1,89 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Fraud Investigation Transaction Lookup",
+    "version": "1.0.0",
+    "description": "Retrieve an existing synthetic PaySim transaction by its stable identifier. The response contains pre-transaction facts and source provenance. It does not determine whether fraud occurred."
+  },
+  "host": "replace-this-host.invalid",
+  "basePath": "/",
+  "schemes": ["https"],
+  "produces": ["application/json"],
+  "securityDefinitions": {
+    "ApiKeyAuth": {
+      "type": "apiKey",
+      "in": "header",
+      "name": "X-API-Key",
+      "description": "API key for the Fraud Investigation lookup service. Enter the key only in the Copilot Studio connection, never in this specification."
+    }
+  },
+  "paths": {
+    "/transactions/{transaction_id}": {
+      "get": {
+        "operationId": "getTransactionById",
+        "summary": "Get an existing transaction by ID",
+        "description": "Retrieve pre-transaction facts and source provenance for one transaction. Use this tool only when the user provides a transaction ID. A missing transaction is reported as not found; a returned transaction is not proof of fraud.",
+        "security": [{"ApiKeyAuth": []}],
+        "parameters": [
+          {
+            "name": "transaction_id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "pattern": "^[0-9a-fA-F]{32}$",
+            "description": "Stable transaction identifier: exactly 32 hexadecimal characters."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The transaction was found. Monetary values are exact decimal strings; balances are values before this transaction.",
+            "schema": {"$ref": "#/definitions/Transaction"}
+          },
+          "400": {
+            "description": "The transaction ID is not exactly 32 hexadecimal characters.",
+            "schema": {"$ref": "#/definitions/Error"}
+          },
+          "401": {
+            "description": "The API key is missing or incorrect.",
+            "schema": {"$ref": "#/definitions/Error"}
+          },
+          "404": {
+            "description": "No transaction exists for this valid ID.",
+            "schema": {"$ref": "#/definitions/Error"}
+          },
+          "503": {
+            "description": "The local application database is unavailable.",
+            "schema": {"$ref": "#/definitions/Error"}
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Transaction": {
+      "type": "object",
+      "description": "Pre-transaction facts and traceable source information. Fraud labels and post-transaction balances are excluded.",
+      "required": ["transaction_id", "source_sha256", "source_line_number", "step", "type", "amount", "name_orig", "oldbalance_org", "name_dest", "oldbalance_dest"],
+      "properties": {
+        "transaction_id": {"type": "string", "description": "Stable 32-character hexadecimal transaction identifier."},
+        "source_sha256": {"type": "string", "description": "SHA-256 fingerprint of the source CSV, encoded as 64 hexadecimal characters."},
+        "source_line_number": {"type": "integer", "format": "int64", "description": "Physical line number in the source CSV. It does not establish event order within a step."},
+        "step": {"type": "integer", "format": "int64", "description": "PaySim simulated time step. Transactions within the same step have no reliable ordering."},
+        "type": {"type": "string", "description": "Transaction type recorded by PaySim."},
+        "amount": {"type": "string", "description": "Original exact decimal amount as a string, without a currency assumption."},
+        "name_orig": {"type": "string", "description": "Observed source account identifier."},
+        "oldbalance_org": {"type": "string", "description": "Source account balance before the transaction, as an exact decimal string."},
+        "name_dest": {"type": "string", "description": "Observed destination account identifier."},
+        "oldbalance_dest": {"type": "string", "description": "Destination account balance before the transaction, as an exact decimal string."}
+      }
+    },
+    "Error": {
+      "type": "object",
+      "description": "A lookup or authentication error without internal implementation details.",
+      "required": ["detail"],
+      "properties": {
+        "detail": {"type": "string", "description": "Human-readable error message."}
+      }
+    }
+  }
+}

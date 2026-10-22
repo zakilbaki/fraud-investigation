@@ -1,5 +1,12 @@
 # API locales des transactions
 
+## Connexion REST minimale pour Copilot Studio
+
+Une passerelle distincte expose uniquement la recherche de transaction avec
+une clé d'API dans l'en-tête `X-API-Key`. Son lancement local, le Swagger v2
+en anglais et la génération du fichier à importer après obtention d'une URL
+HTTPS réelle sont documentés dans [COPILOT_REST.md](COPILOT_REST.md).
+
 ## Lot 5.2 : exécuter et conserver une vérification
 
 `POST /cases/{case_id}/runs` accepte `Idempotency-Key` et une opération parmi
