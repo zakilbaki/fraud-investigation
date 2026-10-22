@@ -1,0 +1,490 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Fraud Investigation Account History",
+    "version": "1.0.0",
+    "description": "Retrieve bounded account activity either from a transaction anchor or from an explicit account ID and cutoff step. Includes both incoming and outgoing transactions, never labels or post-transaction balances. Does not assess or prove fraud."
+  },
+  "host": "replace-this-host.invalid",
+  "basePath": "/",
+  "schemes": [
+    "https"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "securityDefinitions": {
+    "ApiKeyAuth": {
+      "type": "apiKey",
+      "in": "header",
+      "name": "X-API-Key",
+      "description": "Shared gateway API key. Enter the secret only in the connection form, never in this specification."
+    }
+  },
+  "paths": {
+    "/transactions/{transaction_id}/sender-history": {
+      "get": {
+        "operationId": "getSenderHistoryByTransactionId",
+        "summary": "Get sender account history from a transaction",
+        "description": "Use to investigate the sender of a known transaction. Submit its transaction ID; the backend derives the sender account and fixes before_step to the anchor transaction step. The agent cannot override the derived account or cutoff. Return only strictly earlier activity in both account roles, bounded to 168 steps and 100 rows. The list is not the ML recipient receipt count. Do not infer chronology within a step, fraud, a financial chain or a saved investigation report from this result.",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "transaction_id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "pattern": "^[0-9a-fA-F]{32}$",
+            "description": "Stable transaction identifier: exactly 32 hexadecimal characters."
+          },
+          {
+            "name": "lookback_steps",
+            "in": "query",
+            "type": "integer",
+            "format": "int32",
+            "minimum": 1,
+            "maximum": 168,
+            "default": 168,
+            "required": false,
+            "description": "Look back at most this many simulated hourly steps, from 1 to 168. Default 168. The lower bound is max(1, before_step - lookback_steps), inclusive."
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "type": "integer",
+            "format": "int32",
+            "minimum": 1,
+            "maximum": 100,
+            "default": 50,
+            "required": false,
+            "description": "Maximum number of transactions returned, from 1 to 100. Default 50. If more match inside the window, truncated is true; this is not complete lifetime history."
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Malformed transaction or account identifier.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "401": {
+            "description": "API key missing or invalid.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "404": {
+            "description": "Anchor transaction or explicitly requested account does not exist in the application database.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "422": {
+            "description": "A required cutoff is missing or a bound is outside the permitted range.",
+            "schema": {
+              "$ref": "#/definitions/ValidationError"
+            }
+          },
+          "503": {
+            "description": "Application database unavailable.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "200": {
+            "description": "Bounded earlier activity of the derived account, including both sender and recipient roles. Empty history is a successful result, not a missing account.",
+            "schema": {
+              "$ref": "#/definitions/TransactionHistory"
+            }
+          }
+        }
+      }
+    },
+    "/transactions/{transaction_id}/recipient-history": {
+      "get": {
+        "operationId": "getRecipientHistoryByTransactionId",
+        "summary": "Get recipient account history from a transaction",
+        "description": "Use to investigate the recipient of a known transaction. Submit its transaction ID; the backend derives the recipient account and fixes before_step to the anchor transaction step. The agent cannot override the derived account or cutoff. Return only strictly earlier activity in both account roles, bounded to 168 steps and 100 rows. The list is not the ML recipient receipt count. Do not infer chronology within a step, fraud, a financial chain or a saved investigation report from this result.",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "transaction_id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "pattern": "^[0-9a-fA-F]{32}$",
+            "description": "Stable transaction identifier: exactly 32 hexadecimal characters."
+          },
+          {
+            "name": "lookback_steps",
+            "in": "query",
+            "type": "integer",
+            "format": "int32",
+            "minimum": 1,
+            "maximum": 168,
+            "default": 168,
+            "required": false,
+            "description": "Look back at most this many simulated hourly steps, from 1 to 168. Default 168. The lower bound is max(1, before_step - lookback_steps), inclusive."
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "type": "integer",
+            "format": "int32",
+            "minimum": 1,
+            "maximum": 100,
+            "default": 50,
+            "required": false,
+            "description": "Maximum number of transactions returned, from 1 to 100. Default 50. If more match inside the window, truncated is true; this is not complete lifetime history."
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Malformed transaction or account identifier.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "401": {
+            "description": "API key missing or invalid.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "404": {
+            "description": "Anchor transaction or explicitly requested account does not exist in the application database.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "422": {
+            "description": "A required cutoff is missing or a bound is outside the permitted range.",
+            "schema": {
+              "$ref": "#/definitions/ValidationError"
+            }
+          },
+          "503": {
+            "description": "Application database unavailable.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "200": {
+            "description": "Bounded earlier activity of the derived account, including both sender and recipient roles. Empty history is a successful result, not a missing account.",
+            "schema": {
+              "$ref": "#/definitions/TransactionHistory"
+            }
+          }
+        }
+      }
+    },
+    "/accounts/{account_id}/transactions": {
+      "get": {
+        "operationId": "getAccountHistory",
+        "summary": "Get account history by account ID and cutoff step",
+        "description": "Use when a user provides an observed account identifier and a simulated cutoff step. Ask for a missing cutoff rather than inventing a date. Search both incoming and outgoing activity within max(1, before_step - lookback_steps) <= step < before_step. The upper bound is excluded. Maximum 168 steps and 100 rows. Unknown account returns 404; a known account without matching activity returns an empty list. Do not claim this is complete lifetime history or proof of fraud.",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "account_id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128,
+            "description": "Exact observed PaySim account identifier, such as nameOrig or nameDest. This is not a human customer name."
+          },
+          {
+            "name": "before_step",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int32",
+            "minimum": 1,
+            "maximum": 1000000,
+            "description": "Required exclusive upper bound in simulated PaySim steps. For steps 10 through 20 inclusive, use before_step=21 and lookback_steps=11. PaySim has no verified civil dates here."
+          },
+          {
+            "name": "lookback_steps",
+            "in": "query",
+            "type": "integer",
+            "format": "int32",
+            "minimum": 1,
+            "maximum": 168,
+            "default": 168,
+            "required": false,
+            "description": "Look back at most this many simulated hourly steps, from 1 to 168. Default 168. The lower bound is max(1, before_step - lookback_steps), inclusive."
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "type": "integer",
+            "format": "int32",
+            "minimum": 1,
+            "maximum": 100,
+            "default": 50,
+            "required": false,
+            "description": "Maximum number of transactions returned, from 1 to 100. Default 50. If more match inside the window, truncated is true; this is not complete lifetime history."
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Malformed transaction or account identifier.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "401": {
+            "description": "API key missing or invalid.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "404": {
+            "description": "Anchor transaction or explicitly requested account does not exist in the application database.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "422": {
+            "description": "A required cutoff is missing or a bound is outside the permitted range.",
+            "schema": {
+              "$ref": "#/definitions/ValidationError"
+            }
+          },
+          "503": {
+            "description": "Application database unavailable.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "200": {
+            "description": "Bounded activity of the requested existing account in either role, with explicit bounds and truncation.",
+            "schema": {
+              "$ref": "#/definitions/History"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Transaction": {
+      "type": "object",
+      "description": "Pre-transaction facts and traceable source information. Fraud labels and post-transaction balances are excluded.",
+      "required": [
+        "transaction_id",
+        "source_sha256",
+        "source_line_number",
+        "step",
+        "type",
+        "amount",
+        "name_orig",
+        "oldbalance_org",
+        "name_dest",
+        "oldbalance_dest"
+      ],
+      "properties": {
+        "transaction_id": {
+          "type": "string",
+          "description": "Stable 32-character hexadecimal transaction identifier."
+        },
+        "source_sha256": {
+          "type": "string",
+          "description": "SHA-256 fingerprint of the source CSV, encoded as 64 hexadecimal characters."
+        },
+        "source_line_number": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Physical line number in the source CSV. It does not establish event order within a step."
+        },
+        "step": {
+          "type": "integer",
+          "format": "int64",
+          "description": "PaySim simulated time step. Transactions within the same step have no reliable ordering."
+        },
+        "type": {
+          "type": "string",
+          "description": "Transaction type recorded by PaySim."
+        },
+        "amount": {
+          "type": "string",
+          "description": "Original exact decimal amount as a string, without a currency assumption."
+        },
+        "name_orig": {
+          "type": "string",
+          "description": "Observed source account identifier."
+        },
+        "oldbalance_org": {
+          "type": "string",
+          "description": "Source account balance before the transaction, as an exact decimal string."
+        },
+        "name_dest": {
+          "type": "string",
+          "description": "Observed destination account identifier."
+        },
+        "oldbalance_dest": {
+          "type": "string",
+          "description": "Destination account balance before the transaction, as an exact decimal string."
+        }
+      }
+    },
+    "History": {
+      "type": "object",
+      "description": "A bounded list of observed transactions for one account.",
+      "required": [
+        "account_id",
+        "before_step",
+        "min_step",
+        "lookback_steps",
+        "limit",
+        "returned_count",
+        "truncated",
+        "transactions"
+      ],
+      "properties": {
+        "account_id": {
+          "type": "string",
+          "description": "Exact account whose activity was searched in both sender and recipient roles."
+        },
+        "before_step": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Exclusive upper step bound. Anchored tools derive it from the transaction; all returned steps are strictly smaller."
+        },
+        "min_step": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Effective inclusive lower step bound, max(1, before_step - lookback_steps)."
+        },
+        "lookback_steps": {
+          "type": "integer",
+          "description": "Requested lookback window, at most 168 simulated hourly steps."
+        },
+        "limit": {
+          "type": "integer",
+          "description": "Requested maximum number of rows, at most 100."
+        },
+        "returned_count": {
+          "type": "integer",
+          "description": "Number of transactions actually present in this response, not the total matching count."
+        },
+        "truncated": {
+          "type": "boolean",
+          "description": "True when at least one additional transaction matches inside the requested window. Does not describe data outside the window."
+        },
+        "transactions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Transaction"
+          },
+          "description": "Pre-transaction facts and provenance, ordered by step descending then stable ID ascending. A self-transfer appears once. ID order within a step is not event chronology."
+        }
+      }
+    },
+    "TransactionHistory": {
+      "type": "object",
+      "description": "Account history derived from an anchor transaction.",
+      "required": [
+        "account_id",
+        "before_step",
+        "min_step",
+        "lookback_steps",
+        "limit",
+        "returned_count",
+        "truncated",
+        "transactions",
+        "anchor_transaction_id",
+        "account_role"
+      ],
+      "properties": {
+        "account_id": {
+          "type": "string",
+          "description": "Exact account whose activity was searched in both sender and recipient roles."
+        },
+        "before_step": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Exclusive upper step bound. Anchored tools derive it from the transaction; all returned steps are strictly smaller."
+        },
+        "min_step": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Effective inclusive lower step bound, max(1, before_step - lookback_steps)."
+        },
+        "lookback_steps": {
+          "type": "integer",
+          "description": "Requested lookback window, at most 168 simulated hourly steps."
+        },
+        "limit": {
+          "type": "integer",
+          "description": "Requested maximum number of rows, at most 100."
+        },
+        "returned_count": {
+          "type": "integer",
+          "description": "Number of transactions actually present in this response, not the total matching count."
+        },
+        "truncated": {
+          "type": "boolean",
+          "description": "True when at least one additional transaction matches inside the requested window. Does not describe data outside the window."
+        },
+        "transactions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Transaction"
+          },
+          "description": "Pre-transaction facts and provenance, ordered by step descending then stable ID ascending. A self-transfer appears once. ID order within a step is not event chronology."
+        },
+        "anchor_transaction_id": {
+          "type": "string",
+          "description": "Canonical transaction identifier used to derive the account and exclusive cutoff."
+        },
+        "account_role": {
+          "type": "string",
+          "enum": [
+            "sender",
+            "recipient"
+          ],
+          "description": "The role used to select the account from the anchor transaction. The history itself includes both roles."
+        }
+      }
+    },
+    "Error": {
+      "type": "object",
+      "description": "Authentication, identifier, lookup or database error without internal details.",
+      "required": [
+        "detail"
+      ],
+      "properties": {
+        "detail": {
+          "type": "string",
+          "description": "Human-readable error message."
+        }
+      }
+    },
+    "ValidationError": {
+      "type": "object",
+      "description": "Standard request parameter validation failure.",
+      "required": [
+        "detail"
+      ],
+      "properties": {
+        "detail": {
+          "description": "Structured validation details for a missing parameter or invalid bounds."
+        }
+      }
+    }
+  }
+}

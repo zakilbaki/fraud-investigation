@@ -1,4 +1,4 @@
-"""Authenticated transaction lookup and frozen scoring for Copilot Studio."""
+"""Authenticated transaction lookup, frozen scoring and bounded account histories."""
 
 from __future__ import annotations
 
@@ -13,6 +13,7 @@ from fastapi import Depends, FastAPI, Header, HTTPException
 
 from fraud_investigation.api import ScoreRequest, ScoreResponse
 from fraud_investigation.database import get_transaction, open_readonly, public_transaction
+from fraud_investigation.history_api import history_router
 from fraud_investigation.scoring_service import (
     ArtifactError, ScoreService, ScoringDataError, ScoringPaths,
 )
@@ -30,7 +31,7 @@ def create_copilot_app(
     model_path: Path | str = ScoringPaths().model,
     manifest_path: Path | str = ScoringPaths().manifest,
 ) -> FastAPI:
-    """Expose two protected tools while keeping lookup independent of model availability."""
+    """Expose a closed set of protected tools with model-independent fact/history access."""
     configured_key = api_key if api_key is not None else os.environ.get(API_KEY_ENV)
     if not configured_key or len(configured_key) < 32 or not configured_key.strip():
         raise RuntimeError(f"{API_KEY_ENV} must contain at least 32 characters")
@@ -65,6 +66,7 @@ def create_copilot_app(
         docs_url=None,
         redoc_url=None,
     )
+    app.include_router(history_router(database_path))
 
     @app.get("/transactions/{transaction_id}", response_model=TransactionResponse)
     def read_transaction(transaction_id: str):

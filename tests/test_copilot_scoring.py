@@ -92,8 +92,11 @@ class CopilotScoringTests(unittest.TestCase):
             self.assertTrue(np.isnan(x["part_solde"].iloc[0]))
             self.assertEqual(client.get(f"/transactions/{self.transaction_id}",
                                         headers=self.headers).status_code, 200)
-            self.assertEqual({r.path for r in app.routes},
-                             {"/transactions/{transaction_id}", "/score"})
+            self.assertEqual(set(app.openapi()["paths"]),
+                             {"/transactions/{transaction_id}", "/score",
+                              "/transactions/{transaction_id}/sender-history",
+                              "/transactions/{transaction_id}/recipient-history",
+                              "/accounts/{account_id}/transactions"})
         self.assertEqual(sha256(self.model), json.loads(self.manifest.read_text())["pipeline_sha256"])
 
     def test_invalid_missing_and_extra_inputs(self):

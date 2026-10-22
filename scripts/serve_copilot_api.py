@@ -1,4 +1,4 @@
-"""Serve authenticated lookup and frozen scoring on loopback for an HTTPS tunnel."""
+"""Serve authenticated lookup, scoring and bounded histories on loopback."""
 
 import argparse
 from pathlib import Path

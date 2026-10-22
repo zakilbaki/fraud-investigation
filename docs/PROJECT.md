@@ -1,5 +1,27 @@
 # Cadrage du prototype Fraud Investigation
 
+## Copilot account-history tools, 23 October 2026
+
+Three protected read-only tools support both entry modes requested by the owner:
+sender/recipient history anchored to a transaction, and direct account history
+with a required cutoff. Python derives the anchored account and step; all paths
+search both account roles within a maximum 168-step window and return at most
+100 public transactions with explicit truncation and source provenance. Existing
+SQL helpers and indexes are reused without a schema change. Histories work
+without a model and do not create cases, saved evidence runs or reports.
+
+An English history-only Swagger v2 template exposes three operations; the exporter
+adds `--tool history` while preserving existing lookup/scoring exports. Eight
+new synthetic tests bring the suite to 82 passing tests. An actual temporary
+loopback server compared 16 history responses against independent SQL for four
+development anchors through step 212, without labels or model predictions.
+Model/manifest hashes were unchanged. The existing server/tunnel was not stopped.
+
+Lookup and scoring have now been manually demonstrated together in Copilot
+Studio. History integration remains a manual step. See
+[COPILOT_REST.md](COPILOT_REST.md) for contracts, examples and interview notes.
+
+
 ## Copilot scoring gateway addition, 23 October 2026
 
 The protected gateway supports transaction lookup and `POST /score` using the

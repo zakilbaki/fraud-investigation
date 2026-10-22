@@ -10,11 +10,18 @@ TEMPLATE = Path(__file__).resolve().parents[1] / "docs/copilot/transaction_looku
 DEFAULT_OUTPUT = Path("data/copilot/transaction_lookup.swagger.json")
 SCORING_TEMPLATE = TEMPLATE.with_name("transaction_scoring.swagger.template.json")
 SCORING_OUTPUT = Path("data/copilot/transaction_scoring.swagger.json")
+HISTORY_TEMPLATE = TEMPLATE.with_name("account_history.swagger.template.json")
+HISTORY_OUTPUT = Path("data/copilot/account_history.swagger.json")
+TOOL_FILES = {
+    "lookup": (TEMPLATE, DEFAULT_OUTPUT),
+    "scoring": (SCORING_TEMPLATE, SCORING_OUTPUT),
+    "history": (HISTORY_TEMPLATE, HISTORY_OUTPUT),
+}
 
 
 def export(base_url: str, output: Path, *, tool: str = "lookup") -> Path:
-    if tool not in ("lookup", "scoring"):
-        raise ValueError("Tool must be lookup or scoring")
+    if tool not in TOOL_FILES:
+        raise ValueError("Tool must be lookup, scoring or history")
     parsed = urlsplit(base_url)
     try:
         port = parsed.port
@@ -27,7 +34,7 @@ def export(base_url: str, output: Path, *, tool: str = "lookup") -> Path:
         raise ValueError("Provide an actual root HTTPS URL without a path or query parameters")
     if port is not None and not 1 <= port <= 65535:
         raise ValueError("Invalid HTTPS port")
-    template = TEMPLATE if tool == "lookup" else SCORING_TEMPLATE
+    template = TOOL_FILES[tool][0]
     specification = json.loads(template.read_text(encoding="utf-8"))
     specification["host"] = parsed.netloc
     output.parent.mkdir(parents=True, exist_ok=True)
@@ -39,11 +46,11 @@ def export(base_url: str, output: Path, *, tool: str = "lookup") -> Path:
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--base-url", required=True, help="Actual public HTTPS tunnel URL")
-    parser.add_argument("--tool", choices=("lookup", "scoring"), default="lookup")
+    parser.add_argument("--tool", choices=tuple(TOOL_FILES), default="lookup")
     parser.add_argument("--output", type=Path)
     arguments = parser.parse_args()
     try:
-        output = arguments.output or (DEFAULT_OUTPUT if arguments.tool == "lookup" else SCORING_OUTPUT)
+        output = arguments.output or TOOL_FILES[arguments.tool][1]
         print(export(arguments.base_url, output, tool=arguments.tool))
     except ValueError as exc:
         parser.error(str(exc))

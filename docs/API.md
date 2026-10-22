@@ -2,10 +2,16 @@
 
 ## Authenticated Copilot Studio gateway
 
-The dedicated gateway now exposes authenticated transaction lookup and frozen
-scoring only: `GET /transactions/{transaction_id}` and `POST /score`.
-Both require `X-API-Key`. Cases, histories and reports remain on the separate
-local investigation API. Startup, English Swagger v2 exports and manual
+The dedicated gateway exposes authenticated lookup, frozen scoring and bounded
+histories: `GET /transactions/{transaction_id}`, `POST /score`,
+`GET /transactions/{transaction_id}/sender-history`,
+`GET /transactions/{transaction_id}/recipient-history`, and
+`GET /accounts/{account_id}/transactions`. All require `X-API-Key`.
+The anchored routes derive accounts and cutoff from the transaction; the direct
+account route requires `before_step`. Both account roles are searched, limited
+to 100 rows and 168 steps. The gateway returns 404 for an unknown explicit
+account, whereas the original local history route below retains its empty-list
+behavior. Cases and reports remain on the separate local investigation API. Startup, English Swagger v2 exports and manual
 connection steps are documented in [COPILOT_REST.md](COPILOT_REST.md).
 The scoring route reuses the existing service and does not persist a tool run;
 case-linked evidence still uses the `/cases/{case_id}/runs` contract below.
