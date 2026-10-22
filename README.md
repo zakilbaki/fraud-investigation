@@ -1,16 +1,63 @@
 # Fraud Investigation
 
-Prototype local d'enquête sur les transactions synthétiques PaySim. Le [cadrage](docs/PROJECT.md), l'[audit du CSV](docs/DATA_AUDIT.md) et le [schéma SQLite](docs/DATABASE.md) décrivent les choix et les limites.
+An AI engineering portfolio prototype combining **fraud detection, a Python investigation backend, and a Microsoft Copilot Studio agent** on synthetic PaySim transactions.
 
-## Prérequis
+The project covers the full path from reproducible data ingestion and temporal model evaluation to authenticated API access, recorded tool executions, and evidence-linked investigation reports.
 
-- Git, Python 3.11 et [`uv`](https://docs.astral.sh/uv/getting-started/installation/) disponibles dans le terminal. Le projet accepte Python 3.11 à 3.13 selon `pyproject.toml` ; seule la version 3.11 a été vérifiée.
-- Pour les commandes de téléchargement ci-dessous : un terminal compatible avec `sh` et `curl`. Une connexion à Internet et plusieurs Go d'espace libre sont nécessaires pour le CSV, les deux bases et les fichiers temporaires d'import.
-- Aucun compte du développeur ni service payant n'est requis. L'accès public au téléchargement Kaggle peut évoluer ; si la commande échoue, récupérer le jeu depuis sa [page officielle](https://www.kaggle.com/datasets/ealaxi/paysim1), puis placer son archive dans `data/raw/paysim1.zip`. Ne jamais enregistrer d'identifiants ou de jetons dans le dépôt.
+## Results at a glance
 
-Les commandes suivantes partent de la racine du dépôt et utilisent des chemins relatifs à celle-ci.
+| Item | Result |
+| --- | --- |
+| Dataset | 6,362,620 synthetic transactions; 8,213 labeled frauds |
+| Model selection | 13 candidates evaluated on five temporal validation windows |
+| Selected pipeline | CatBoost, 200 iterations, learning rate 0.05, depth 6 |
+| Temporal test | 298,584 transactions, including 2,592 frauds |
+| Test precision / recall / F1 | **98.69% / 84.49% / 0.9104** |
+| Test confusion matrix | TP 2,190; FP 29; FN 402; TN 295,963 |
+
+These are results on **synthetic data**, not validated banking production performance. The analyst inspected the future test labels during EDA; test scores were excluded from subsequent model tuning and threshold selection. Balance-related features can exploit simulator-specific patterns. See the [model card](docs/ML_MODEL_CARD.md) and [final report](docs/ML_FINAL_REPORT.md).
+
+## Architecture and current capabilities
+
+```text
+Copilot Studio agent
+    -> authenticated REST tool -> HTTPS tunnel for demonstrations
+        -> restricted transaction-lookup gateway -> application SQLite database
+
+Local investigation API
+    -> frozen CatBoost scoring pipeline
+    -> bounded, strictly historical account queries
+    -> investigation cases and recorded tool executions
+    -> versioned JSON / Markdown reports with evidence references
+
+Offline evaluation labels -> separate SQLite file, unavailable to agent tools
+```
+
+**Implemented:** application/label separation, source provenance, idempotent import, temporal ML validation, a frozen model and threshold, local scoring and investigation APIs, persisted evidence, and deterministic reports.
+
+**Manually tested in Copilot Studio:** authenticated lookup of a known transaction through the HTTPS gateway, and a custom user-facing response for an unknown transaction. The other backend tools are implemented but are not yet connected to the agent. Multi-agent delegation is a planned next step.
+
+The project targets a zero-additional-cost learning setup. Copilot Studio requires an eligible organizational account and appropriate permissions or trial access; a personal Microsoft account is insufficient. The Python backend can be used independently of Copilot Studio.
+
+## Documentation
+
+- [Project scope and implementation history](docs/PROJECT.md)
+- [Data audit](docs/DATA_AUDIT.md), [database design](docs/DATABASE.md), [EDA](docs/EDA.md)
+- [ML protocol](docs/ML_PROTOCOL.md), [initial benchmark](docs/ML_BENCHMARK.md), [feature experiments](docs/ML_FEATURE_RATIO_RECIPIENT_HISTORY.md)
+- [Model selection](docs/ML_TUNE_H_SELECTION.md), [model card](docs/ML_MODEL_CARD.md), [final test](docs/ML_FINAL_REPORT.md)
+- [API contracts and investigation workflow](docs/API.md), [Copilot Studio REST setup](docs/COPILOT_REST.md)
+
+## Prerequisites
+
+- Git, Python 3.11, and [uv](https://docs.astral.sh/uv/getting-started/installation/). The package accepts Python 3.11–3.13; the verified environment uses Python 3.11 on macOS Apple Silicon. Linux and Windows remain untested.
+- A shell with `curl` for the download commands, Internet access, and several GB of free space for the CSV, databases, model artifacts, and temporary files.
+- No developer-specific account is needed for the local backend. Kaggle's public download availability can change; if necessary, download PaySim manually from the [dataset page](https://www.kaggle.com/datasets/ealaxi/paysim1).
+
+Run the commands below from the repository root. Raw data, databases, labels, model artifacts, environments, credentials, and individual predictions are excluded from Git.
 
 ## Installation
+
+The committed `uv.lock` pins resolved dependencies. The local `.venv/` environment is ignored by Git. Install uv using its [official instructions](https://docs.astral.sh/uv/getting-started/installation/) if needed.
 
 ```sh
 git clone https://github.com/zakilbaki/fraud-investigation.git
@@ -19,9 +66,9 @@ uv sync --locked --python 3.11
 uv run --locked python -c 'import fraud_investigation, polars as pl; print(fraud_investigation.__name__, pl.__version__)'
 ```
 
-`uv.lock` est versionné pour figer la résolution des dépendances. L'environnement `.venv/` reste local et exclu de Git. Si `uv` manque, utiliser la [procédure officielle adaptée à sa plateforme](https://docs.astral.sh/uv/getting-started/installation/) avant `uv sync`.
+## Download PaySim
 
-## Récupération de PaySim
+The audited CSV is **493,534,783 bytes** with SHA-256 `16910f90577b0d981bf8ff289714510bb89bc71bff7d3f220f024e287e4eea6b`. Verify both before importing. If the distributed source changes, audit and document that version rather than attributing the old fingerprint to it. Keep the original CSV unchanged under `data/raw/`.
 
 ```sh
 mkdir -p data/raw
@@ -31,9 +78,9 @@ uv run --locked python -m zipfile -e data/raw/paysim1.zip data/raw/
 uv run --locked python -c 'import hashlib, pathlib; p = pathlib.Path("data/raw/PS_20174392719_1491204439457_log.csv"); h = hashlib.file_digest(p.open("rb"), "sha256"); print(p.stat().st_size, h.hexdigest())'
 ```
 
-Pour le fichier audité le 16 octobre 2026, la taille attendue est `493534783` octets et le SHA-256 est `16910f90577b0d981bf8ff289714510bb89bc71bff7d3f220f024e287e4eea6b`. Comparer ces valeurs avant l'import. Si Kaggle distribue une autre version, ne pas lui attribuer cette empreinte : effectuer un nouvel audit et documenter sa provenance. Le CSV brut est conservé sans modification dans `data/raw/`, exclu de Git.
+## Validate and import the data
 
-## Vérifications et génération des bases
+The offline audit may read labels. The importer writes transactions to `data/app/fraud.sqlite` and labels to the separate `data/evaluation/labels.sqlite`. Reimporting the same audited source returns `already_imported` without duplicates or deleting investigations. Agent tools must open only the application database.
 
 ```sh
 uv run --locked python scripts/audit_paysim.py data/raw/PS_20174392719_1491204439457_log.csv --output data/audit.json
@@ -41,11 +88,9 @@ uv run --locked python -m unittest discover -s tests -v
 uv run --locked python scripts/import_paysim.py data/raw/PS_20174392719_1491204439457_log.csv --database data/app/fraud.sqlite --labels data/evaluation/labels.sqlite --expected-sha256 16910f90577b0d981bf8ff289714510bb89bc71bff7d3f220f024e287e4eea6b
 ```
 
-L'audit lit les labels hors ligne. L'import crée la base applicative `data/app/fraud.sqlite` sans labels et une base distincte `data/evaluation/labels.sqlite`, réservée à l'évaluation. Réexécuter l'import du même CSV doit retourner `already_imported` sans créer de doublons. Les futurs outils d'enquête devront aussi limiter explicitement l'accès à la seule base applicative. Les fichiers générés dans `data/` ne sont pas publiés.
+## Query from Python
 
-## Consultation depuis Python
-
-Depuis la racine du dépôt, après génération des bases :
+`get_transaction` returns `None` for an unknown ID. Account history includes only steps strictly below `before_step`. Its deterministic output order is not evidence of chronology within a step. The scripts accept explicit paths and can run from outside the repository.
 
 ```sh
 uv run --locked python - <<'PY'
@@ -62,21 +107,17 @@ with open_readonly("data/app/fraud.sqlite") as database:
 PY
 ```
 
-La transaction d'exemple correspond au CSV et à l'empreinte ci-dessus. `get_transaction` renvoie `None` pour un identifiant inconnu. L'historique ne contient que des `step` strictement antérieurs à la borne et son ordre de restitution est déterministe ; l'ordre des lignes au sein d'un même `step` n'est pas une chronologie réelle. Les scripts acceptent des chemins de fichiers en arguments et peuvent être invoqués depuis un autre dossier avec des chemins explicites.
+## Reproduce exploratory analysis
 
-## Reproduire l'analyse exploratoire
-
-Après l'installation et le téléchargement du CSV ci-dessus, lancer depuis la racine du dépôt :
+The runner executes notebook code cells in a fresh namespace, checks the source fingerprint and assertions, and regenerates SVGs under `docs/figures/`. The [EDA report](docs/EDA.md) embeds PNG exports for GitHub; the runner does not regenerate those PNGs. This is offline analysis with labels, not model training.
 
 ```sh
 uv run --locked python scripts/run_eda_notebook.py
 ```
 
-Cette commande réexécute les cellules Python de [notebooks/eda_paysim.ipynb](notebooks/eda_paysim.ipynb) dans un espace de variables neuf. Elle vérifie l'empreinte du CSV et les contrôles du notebook, puis régénère les figures SVG dans [docs/figures/](docs/figures/). Le [rapport EDA](docs/EDA.md) présente les tableaux, les interprétations et les figures PNG publiées pour la lecture ; les PNG sont des exports des SVG et ne sont pas régénérés par cette commande. Cette commande EDA n'entraîne aucun modèle. Les labels sont lus uniquement pour cette analyse hors ligne.
+## Reproduce the initial ML benchmark
 
-## Reproduire la première comparaison ML
-
-Après `uv sync --locked` et l'installation du CSV audité, exécuter depuis la racine du dépôt :
+Training and model selection use only steps 1–504. Each window has separate fitting, threshold-selection, and outer-validation portions. Intermediate results and logs are local under `data/ml_benchmark/`; completed windows are resumed. Runs are bounded by the documented time and memory budgets. Additional feasible candidates can be requested with `--models mlp knn`. The kernel SVM was stopped during feasibility assessment without a comparable score. See the [benchmark](docs/ML_BENCHMARK.md).
 
 ```sh
 uv run --locked python -m unittest tests.test_ml_benchmark -v
@@ -84,21 +125,17 @@ uv run --locked python scripts/run_ml_benchmark_all.py
 uv run --locked python scripts/report_ml_benchmark.py
 ```
 
-Chaque processus lit seulement les steps 1 à 504. Pour chaque modèle et fenêtre, il apprend sur la première portion du train, choisit le seuil sur sa réserve interne et évalue ensuite la validation extérieure. Le test 505 à 743 reste réservé. Les résultats intermédiaires et journaux sont dans `data/ml_benchmark/`, hors de Git ; une interruption se reprend en relançant la même commande. L'orchestrateur arrête une fenêtre dépassant 30 minutes ou dont la mémoire résidente dépasse 75 % de la RAM physique, puis conserve l'incident dans son état local. Le [rapport de comparaison](docs/ML_BENCHMARK.md), le [protocole](docs/ML_PROTOCOL.md) et les figures dans `docs/figures/` décrivent les résultats publiés. Les onze candidats obligatoires du protocole sont exécutés par défaut ; les candidats supplémentaires faisables peuvent être demandés avec `--models mlp knn`. Le SVM à noyau a été interrompu lors du contrôle de coût sans score comparable.
+## Inspect the initial ML diagnostics
 
-## Relire les premiers diagnostics ML
-
-Après la comparaison, cette commande audite les agrégats publiés et régénère la figure des cinq modèles commentés dans [docs/ML_DIAGNOSTICS.md](docs/ML_DIAGNOSTICS.md), sans réentraîner ni lire le test final :
+This audits the published aggregates and regenerates the figure in [ML_DIAGNOSTICS.md](docs/ML_DIAGNOSTICS.md), without training or a new test evaluation. Individual benchmark predictions were not retained; later diagnostics may replay only frozen configurations and must keep individual predictions outside Git.
 
 ```sh
 uv run --locked python scripts/diagnose_ml_results.py
 ```
 
-Les prédictions transaction par transaction n'ont pas été conservées pendant le lot 4.2. Les étapes suivantes de diagnostic devront rejouer uniquement les configurations figées nécessaires et garder ces prédictions hors de Git.
+## Experiment A: simulated hour
 
-## Reproduire l'expérience A du lot 4.3
-
-Après le benchmark de référence et avec le même CSV audité, exécuter depuis la racine du dépôt :
+Adds sine/cosine hour encoding to the original `type + amount` reference. The five shortlisted models each use five windows. Thresholds are selected internally; the final test is excluded. The [report](docs/ML_FEATURE_HOUR.md) and aggregates compare against the existing reference, without retraining it.
 
 ```sh
 uv run --locked python -m unittest tests.test_ml_feature_hour tests.test_ml_benchmark -v
@@ -106,11 +143,9 @@ uv run --locked python scripts/run_ml_feature_hour_all.py
 uv run --locked python scripts/report_ml_feature_hour.py
 ```
 
-L'expérience ajoute seulement l'heure simulée codée en sinus et cosinus aux cinq modèles présélectionnés. Les 25 ajustements sont enregistrés dans `data/ml_feature_hour/`, exclu de Git, et une interruption reprend les fenêtres déjà terminées. Le script de rapport compare ces résultats aux 25 lignes correspondantes de `docs/results/ml_benchmark.json` et produit [le rapport détaillé](docs/ML_FEATURE_HOUR.md), [les résultats agrégés](docs/results/ml_feature_hour.json) et deux figures. Chaque seuil est choisi dans la réserve interne de sa fenêtre. Le test 505 à 743 n'est pas lu. Les expériences B et C ne font pas partie de cette commande.
+## Experiment B: sender starting balance
 
-## Reproduire l'expérience B du lot 4.3
-
-Après le benchmark de référence et avec le même CSV audité, exécuter depuis la racine du dépôt :
+Adds only `oldbalanceOrg` to `type + amount`. XGBoost, CatBoost, Extra Trees, and Random Forest complete five windows. Three historical KNN windows remain separately documented without a five-window average. KNN was retired for prediction/storage cost. See the [report](docs/ML_FEATURE_BALANCE_ORG.md). Balance availability in this simulator does not establish real-time availability in an actual application.
 
 ```sh
 uv run --locked python -m unittest tests.test_ml_feature_balance_org tests.test_ml_benchmark -v
@@ -118,11 +153,9 @@ uv run --locked python scripts/run_ml_feature_balance_org_all.py
 uv run --locked python scripts/report_ml_feature_balance_org.py
 ```
 
-B ajoute uniquement `oldbalanceOrg` à la référence `type + amount`. La commande exécute les **quatre modèles encore retenus** sur les cinq fenêtres : XGBoost, CatBoost, Extra Trees et Random Forest. Trois fenêtres KNN achevées avant son retrait restent conservées dans le [rapport B](docs/ML_FEATURE_BALANCE_ORG.md), sans moyenne sur cinq fenêtres. Les résultats intermédiaires et journaux restent dans `data/ml_feature_balance_org/`, hors de Git ; la commande reprend les fenêtres terminées. Les [agrégats structurés](docs/results/ml_feature_balance_org.json) et trois figures comparent les quatre modèles complets à la référence, sans réexécuter celle-ci. Le test final et l'expérience C ne sont pas lancés par ces commandes. La présence du solde dans PaySim ne prouve pas qu'il serait effectivement disponible avant une transaction réelle.
+## Experiment C: recipient starting balance
 
-## Reproduire l'expérience C du lot 4.3
-
-Après le benchmark de référence et avec le même CSV audité, exécuter depuis la racine du dépôt :
+Adds only `oldbalanceDest` to `type + amount` for the same four models. Results resume under `data/ml_feature_balance_dest/` and are compared to the verified reference. See the [report](docs/ML_FEATURE_BALANCE_DEST.md). Recorded zero balances can represent unavailable merchant information; they are not automatically empty accounts.
 
 ```sh
 uv run --locked python -m unittest tests.test_ml_feature_balance_dest tests.test_ml_benchmark -v
@@ -130,11 +163,9 @@ uv run --locked python scripts/run_ml_feature_balance_dest_all.py
 uv run --locked python scripts/report_ml_feature_balance_dest.py
 ```
 
-C ajoute uniquement `oldbalanceDest` à `type + amount` pour XGBoost, CatBoost, Extra Trees et Random Forest, sur les cinq fenêtres. Les résultats intermédiaires et journaux restent dans `data/ml_feature_balance_dest/`, hors de Git. La commande reprend les fenêtres déjà terminées. Le [rapport C](docs/ML_FEATURE_BALANCE_DEST.md), les [agrégats](docs/results/ml_feature_balance_dest.json) et trois figures comparent C à la référence vérifiée, sans relancer les autres expériences ni le test final. Les quatre ajouts référence, A, B et C restent séparés.
+## Experiment D: sender balance and simulated hour
 
-## Reproduire l'expérience D du lot 4.3
-
-Après l'installation et le téléchargement du même CSV audité, exécuter depuis la racine du dépôt. Les résultats agrégés déjà publiés de la référence, de A, B et C servent à la comparaison ; il n'est pas nécessaire de les réentraîner :
+Combines B with the cyclic hour from A. The [report](docs/ML_FEATURE_BALANCE_ORG_HOUR.md) compares four models against B without retraining B. Intermediate results remain local and the final test is excluded.
 
 ```sh
 uv run --locked python -m unittest tests.test_ml_feature_balance_org_hour tests.test_ml_feature_hour tests.test_ml_feature_balance_org tests.test_ml_benchmark -v
@@ -142,11 +173,9 @@ uv run --locked python scripts/run_ml_feature_balance_org_hour_all.py
 uv run --locked python scripts/report_ml_feature_balance_org_hour.py
 ```
 
-D conserve les colonnes de B, `type + amount + oldbalanceOrg`, et ajoute seulement l'heure cyclique de A pour XGBoost, CatBoost, Extra Trees et Random Forest. Chaque seuil est choisi dans la réserve interne de sa fenêtre. Les résultats intermédiaires et journaux restent dans `data/ml_feature_balance_org_hour/`, hors de Git ; la commande reprend les fenêtres terminées. Le [rapport D](docs/ML_FEATURE_BALANCE_ORG_HOUR.md), les [agrégats](docs/results/ml_feature_balance_org_hour.json) et trois figures comparent D aux vingt résultats B publiés, sans réentraîner B ni consulter le test final.
+## Experiment E: balance share
 
-## Reproduire l'expérience E du lot 4.4
-
-Avec le CSV audité et les agrégats D déjà publiés, lancer depuis la racine du dépôt :
+Adds only `part_solde` to D for XGBoost and CatBoost: `amount / oldbalanceOrg` for a positive starting balance, otherwise missing. Ratios above one are not clipped. See the [report](docs/ML_FEATURE_BALANCE_SHARE.md). The ratio makes an existing relationship explicit and can exploit simulator artifacts.
 
 ```sh
 uv run --locked python -m unittest tests.test_ml_feature_balance_share -v
@@ -154,33 +183,27 @@ uv run --locked python scripts/run_ml_feature_balance_share_all.py
 uv run --locked python scripts/report_ml_feature_balance_share.py
 ```
 
-E ajoute seulement `part_solde` à D pour XGBoost et CatBoost. Le ratio vaut `amount / oldbalanceOrg` quand le solde est positif et reste manquant sinon. Les fichiers intermédiaires sont dans `data/ml_feature_balance_share/`, hors de Git ; la commande reprend les fenêtres terminées. Les [résultats E](docs/ML_FEATURE_BALANCE_SHARE.md) comparent les cinq validations de chaque modèle aux agrégats D, sans consulter le test final. F et G ne sont pas lancées par ces commandes.
+## Sender history coverage F
 
-## Mesurer la couverture de l'historique F avant entraînement
-
-Avec le même CSV audité, depuis la racine du dépôt :
+Reads only `step` and `nameOrig` through step 504, without labels. The [coverage report](docs/ML_SENDER_HISTORY_COVERAGE.md) explains why F was set aside without training: only 0.1391% of transactions have a previous sender occurrence at an earlier step.
 
 ```sh
 uv run --locked python -m unittest tests.test_ml_sender_history -v
 uv run --locked python scripts/inspect_ml_sender_history.py
 ```
 
-Le script lit seulement `step` et `nameOrig` jusqu'au step 504. Il produit des [agrégats de couverture](docs/results/ml_sender_history_coverage.json) sans identifiants ni labels ; le [rapport F préalable](docs/ML_SENDER_HISTORY_COVERAGE.md) explique leur lecture. Ces commandes n'entraînent aucun modèle F et ne lancent pas G.
+## Recipient history coverage G
 
-## Mesurer la couverture de l'historique G avant entraînement
-
-Avec le même CSV audité, depuis la racine du dépôt :
+Reads only `step` and `nameDest` through step 504, without labels or model scores. It produces the [coverage report](docs/ML_RECIPIENT_HISTORY_COVERAGE.md), figure, and aggregates. Coverage is 56.5140%, which supports feasibility but does not establish predictive usefulness.
 
 ```sh
 uv run --locked python -m unittest tests.test_ml_recipient_history -v
 uv run --locked python scripts/inspect_ml_recipient_history.py
 ```
 
-Le script lit seulement `step` et `nameDest` jusqu'au step 504 pour produire les [agrégats G](docs/results/ml_recipient_history_coverage.json), la [figure](docs/figures/ml_recipient_history_distribution.png) et le [rapport de couverture](docs/ML_RECIPIENT_HISTORY_COVERAGE.md). Il ne lit aucun label, ne calcule aucun score et n'entraîne aucun modèle. F est mis de côté, avec son diagnostic conservé.
+## Experiment G: recipient history
 
-## Reproduire l'expérience G du lot 4.4
-
-Avec le même CSV audité et les résultats D publiés, depuis la racine du dépôt :
+Adds only the count of earlier receptions by the same `nameDest` to D. The counter excludes the current step and future steps. The [report](docs/ML_FEATURE_RECIPIENT_HISTORY.md) reuses D as reference. E’s ratio is not included.
 
 ```sh
 uv run --locked python -m unittest tests.test_ml_recipient_history tests.test_ml_feature_recipient_history -v
@@ -188,11 +211,9 @@ uv run --locked python scripts/run_ml_feature_recipient_history_all.py
 uv run --locked python scripts/report_ml_feature_recipient_history.py
 ```
 
-G ajoute à D uniquement le nombre de réceptions du même `nameDest` aux steps strictement antérieurs. Les résultats intermédiaires et journaux restent dans `data/ml_feature_recipient_history/`, hors de Git ; l'orchestrateur reprend les fenêtres déjà terminées. Le [rapport G](docs/ML_FEATURE_RECIPIENT_HISTORY.md), les [agrégats](docs/results/ml_feature_recipient_history.json) et trois figures comparent G à D sans réentraîner D ni lire les steps du test final pour l'évaluation. F reste sans entraînement et le ratio de E n'est pas ajouté.
+## Experiment H: balance share and recipient history
 
-## Reproduire l'expérience H du lot 4.4
-
-Avec le même CSV audité et les résultats E et G publiés, depuis la racine du dépôt :
+Combines E with G’s strictly historical recipient counter for XGBoost and CatBoost. The [report](docs/ML_FEATURE_RATIO_RECIPIENT_HISTORY.md) compares H with E and G, reusing their published results. Intermediate files are under `data/ml_feature_ratio_recipient_history/`, outside Git.
 
 ```sh
 uv run --locked python -m unittest tests.test_ml_feature_ratio_recipient_history tests.test_ml_feature_balance_share tests.test_ml_recipient_history -v
@@ -200,11 +221,9 @@ uv run --locked python scripts/run_ml_feature_ratio_recipient_history_all.py
 uv run --locked python scripts/report_ml_feature_ratio_recipient_history.py
 ```
 
-H combine uniquement les entrées de E avec le compteur destinataire strictement antérieur de G, pour XGBoost et CatBoost. Les journaux et résultats intermédiaires restent dans `data/ml_feature_ratio_recipient_history/`, hors de Git ; l'orchestrateur reprend les fenêtres achevées. Le [rapport H](docs/ML_FEATURE_RATIO_RECIPIENT_HISTORY.md), les [agrégats](docs/results/ml_feature_ratio_recipient_history.json) et trois figures comparent H à E et G sans les réentraîner. Le test final n'est pas évalué.
+## Limited hyperparameter tuning of H
 
-## Reproduire les réglages limités de H
-
-Le réglage limité de H est figé dans le [protocole](docs/ML_PROTOCOL.md). Les trois variantes XGBoost ont été exécutées avant les trois variantes CatBoost, après discussion. Pour reproduire les trente ajustements avec le CSV audité et les résultats H déjà présents :
+Three predefined XGBoost variants were evaluated first, followed by three CatBoost variants. See the [XGBoost report](docs/ML_TUNE_H_XGBOOST.md), [CatBoost report](docs/ML_TUNE_H_CATBOOST.md), and [selection record](docs/ML_TUNE_H_SELECTION.md). The selected configuration is `cat_slow200`. These commands reproduce development experiments; they must not be used to adapt the frozen pipeline to the final test.
 
 ```sh
 uv run --locked python -m unittest discover -s tests
@@ -215,42 +234,21 @@ uv run --locked python scripts/report_ml_tune_h_catboost.py
 uv run --locked python scripts/report_ml_tune_h_selection.py
 ```
 
-Les rapports [XGBoost](docs/ML_TUNE_H_XGBOOST.md), [CatBoost](docs/ML_TUNE_H_CATBOOST.md) et de [sélection proposée](docs/ML_TUNE_H_SELECTION.md) donnent les scores et coûts par fenêtre et les comparaisons. Les résultats structurés sont dans `docs/results/` ; les fichiers intermédiaires restent dans `data/ml_tune_h/`, hors Git. La sélection attend discussion et le test final reste réservé. Pour ce passage, les commandes ont été exécutées avec le Python local ; les lignes `uv run --locked` ci-dessus sont des commandes génériques non revérifiées ici.
+## Frozen model and final evaluation
 
-## Portabilité et historique de vérification
-
-Le pipeline final choisi est documenté dans la [décision préalable](docs/ML_FINAL_FREEZE.md) et son [manifeste de gel](docs/results/ml_final_manifest.json). Le modèle binaire et les prédictions individuelles restent dans `data/ml_final_catboost/`, hors Git. Sur le CSV audité, depuis la racine du dépôt et avec les dépendances installées, la procédure est :
+The [freeze decision](docs/ML_FINAL_FREEZE.md) and [manifest](docs/results/ml_final_manifest.json) were published before final scoring. The binary model and individual predictions stay in `data/ml_final_catboost/`. Freezing/evaluation refuse to overwrite artifacts; reproduce independently in a clean workspace. The CASH_OUT threshold follow-up is explicitly exploratory and does not replace the final policy. Its commands are `python scripts/run_ml_cashout_threshold.py reserve`, `python scripts/run_ml_cashout_threshold.py test`, and `python scripts/report_ml_cashout_threshold.py`.
 
 ```sh
 python -m unittest discover -s tests
 python scripts/freeze_ml_final.py
-# Publier et vérifier le manifeste avant toute évaluation.
+# Publish and verify the manifest before any evaluation.
 python scripts/evaluate_ml_final.py
 python scripts/report_ml_final.py
 ```
 
-Le gel et l'évaluation refusent de remplacer les artefacts existants. Pour une réexécution indépendante, utiliser un nouvel espace de travail et conserver la trace des tentatives antérieures. Le [rapport final](docs/ML_FINAL_REPORT.md), la [fiche du modèle](docs/ML_MODEL_CARD.md), les [agrégats](docs/results/ml_final_test.json) et quatre figures sont publiés. Ces commandes ont réussi ici avec `.venv/bin/python` sur macOS Apple Silicon ; la commande générique `uv run --locked` n'a pas été vérifiée pour ce lot.
+## Local scoring and investigation API
 
-L'[analyse exploratoire du seuil CASH_OUT](docs/ML_CASHOUT_THRESHOLD_EXPLORATORY.md) conserve le pipeline final. Elle choisit un seuil sur 361–432, puis compare les scores locaux déjà sauvegardés du test. Les commandes génériques, depuis la racine du dépôt avec ces artefacts présents, sont `python scripts/run_ml_cashout_threshold.py reserve`, `python scripts/run_ml_cashout_threshold.py test` et `python scripts/report_ml_cashout_threshold.py`. Les deux premières refusent de remplacer leurs résultats ; utiliser un espace de travail propre pour une réexécution indépendante. Cette variante ne modifie pas la politique finale publiée.
-
-## API locale de scoring
-
-Pour préparer uniquement le premier outil REST Copilot Studio,
-`GET /transactions/{transaction_id}`, voir
-[docs/COPILOT_REST.md](docs/COPILOT_REST.md). La passerelle dédiée impose une
-clé d'API et l'export Swagger v2 reçoit l'URL HTTPS réelle quand elle existe.
-
-Pour le lot 5.1, le point d'entrée commun est `scripts/serve_api.py` : il expose
-aussi la recherche de transaction, l'historique borné et les dossiers. La
-consultation seule reste possible avec `scripts/serve_transaction_api.py`, sans
-modèle ML. Les routes, contrats, exemples et limites sont dans [docs/API.md](docs/API.md).
-Le lot 5.2 ajoute `POST /cases/{case_id}/runs` et les lectures de résultats,
-pour conserver les vérifications réellement exécutées par le backend.
-Il ajoute aussi `POST /cases/{case_id}/reports`, la consultation des versions
-JSON et leur lecture Markdown. Chaque génération crée une nouvelle version
-fondée sur les résultats déjà conservés.
-
-L'[API du lot 5.0](docs/API.md) prend l'identifiant d'une transaction déjà présente dans la base applicative et renvoie son score de suspicion et sa décision selon le **seuil global final**. Elle utilise le modèle local gelé et ne lit pas les labels. FastAPI et Uvicorn sont dans `uv.lock` ; `httpx` sert aux tests. Après `uv sync --locked`, avec la base et le modèle locaux disponibles :
+The common entry point exposes lookup, bounded histories, scoring, cases, recorded checks, and versioned reports. The standalone lookup server remains available without ML. A missing model keeps fact lookup available and makes scoring unavailable. For the protected Copilot gateway and Swagger export, follow [COPILOT_REST.md](docs/COPILOT_REST.md). The common API listens on `127.0.0.1:8000`; `POST /score` expects a 32-character hexadecimal `transaction_id`. The model is neither downloaded nor retrained automatically. The explicit reconstruction procedure is `uv run --locked python scripts/freeze_ml_final.py`; it checks the published manifest and refuses to overwrite local artifacts. Raw data and model artifacts are not distributed with this repository.
 
 ```sh
 uv run --locked python scripts/serve_api.py \
@@ -259,6 +257,8 @@ uv run --locked python scripts/serve_api.py \
   --manifest docs/results/ml_final_manifest.json
 ```
 
-Le serveur écoute `127.0.0.1:8000`. `GET /health` indique la disponibilité du modèle ; `POST /score` attend `{"transaction_id":"<identifiant hexadécimal de 32 caractères>"}`. La [documentation API](docs/API.md) donne les réponses, erreurs, limites et la procédure de vérification locale `python scripts/check_scoring_api.py`. Le modèle n'est ni téléchargé ni réentraîné au démarrage : s'il manque, le [parcours de gel](docs/ML_FINAL_FREEZE.md) se relance explicitement avec `uv run --locked python scripts/freeze_ml_final.py`, à partir du CSV audité. Le script vérifie l'identité avec le [manifeste déjà publié](docs/results/ml_final_manifest.json) et refuse de remplacer un modèle local existant. Cette reconstruction n'a pas été exécutée pour le lot 5.0. La commande `uv sync --locked` a réussi localement avec un cache temporaire ; Linux et Windows n'ont pas été testés.
+## Verification status
 
-La procédure vise une installation reproductible sur toute machine où les prérequis sont disponibles. Les exécutions effectivement vérifiées ont eu lieu sur macOS Apple Silicon avec Python 3.11.15, `uv` 0.13.1 et Polars 1.44.2. Linux et Windows n'ont pas été testés ; leur compatibilité reste à vérifier. Le téléchargement public, l'audit et l'import complet ont réussi le 16 octobre 2026 sur cette machine. Les effectifs mesurés et les contrôles de cohérence sont conservés dans les documents liés en tête de page. Le notebook EDA a été réexécuté intégralement lors de la clôture du lot 4.0. Pour le lot 4.2, `uv run --locked` a réussi avec un cache temporaire explicitement accessible dans l'environnement restreint ; la commande avec le cache par défaut n'a pas été revérifiée.
+The project has been exercised on macOS Apple Silicon with Python 3.11. Local `uv sync --locked` and `uv run --locked` checks succeeded for the API setup using an accessible temporary cache. Historical ML reports retain their original verification limits: those individual runs used the local Python environment, and the generic uv commands were not rechecked in every experiment. Linux and Windows have not been verified. Model reconstruction is documented but was not rerun for the API delivery.
+
+Copilot Studio connectivity was manually demonstrated using a temporary HTTPS tunnel and an API-key-protected, read-only lookup gateway. This is a development demonstration, not a production deployment or a guarantee of real-time performance. Stop the tunnel after testing, keep the key outside Git, and regenerate the Swagger export when the tunnel hostname changes.
