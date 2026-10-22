@@ -1,5 +1,22 @@
 # Cadrage du prototype Fraud Investigation
 
+## Copilot scoring gateway addition, 23 October 2026
+
+The protected gateway supports transaction lookup and `POST /score` using the
+existing frozen CatBoost pipeline and global threshold. An English scoring-only
+Swagger v2 template and exporter option add `scoreTransactionById` without
+changing the lookup specification. The model is loaded once; unavailable ML
+keeps lookup accessible and makes scoring return 503. No other local API route
+is exposed by this gateway.
+
+Verification: 74 tests pass. An actual loopback HTTP server reproduced all six
+response fields of the frozen service on four development transactions, up to
+step 212, without labels or final-test evaluation. Model and manifest hashes
+were unchanged. The existing demonstration server and tunnel were not stopped.
+Copilot Studio scoring import and agent use await manual validation. Instructions
+and interview notes are in [COPILOT_REST.md](COPILOT_REST.md).
+
+
 ## Objectif
 
 Permettre à des agents d'examiner une transaction PaySim, de consulter des faits locaux, d'appeler ultérieurement un modèle ML et de produire un rapport qui distingue observations, calculs et limites. Le projet sert aussi de support pour expliquer les choix techniques en entretien. Une autre personne doit pouvoir cloner le dépôt GitHub et reproduire l'installation et les données dérivées à partir des prérequis documentés, sans accès aux dossiers ou comptes personnels du développeur.

@@ -1,0 +1,179 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Fraud Investigation Transaction Scoring",
+    "version": "1.0.0",
+    "description": "Calculate the frozen CatBoost suspicion score for an existing synthetic PaySim transaction. Returns the fixed threshold, alert decision and model/policy versions. The score is not a calibrated fraud probability or proof of fraud."
+  },
+  "host": "replace-this-host.invalid",
+  "basePath": "/",
+  "schemes": [
+    "https"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "securityDefinitions": {
+    "ApiKeyAuth": {
+      "type": "apiKey",
+      "in": "header",
+      "name": "X-API-Key",
+      "description": "API key for the Fraud Investigation REST tools. Enter the secret only in the Copilot Studio connection, never in this specification."
+    }
+  },
+  "paths": {
+    "/score": {
+      "post": {
+        "operationId": "scoreTransactionById",
+        "summary": "Score an existing transaction by ID",
+        "description": "Use when a user asks for the suspicion score or risk assessment of a known transaction. Submit only its stable transaction ID. The backend computes the features, including strictly earlier recipient history, and uses the frozen CatBoost model and fixed global threshold. Never invent or change a score or threshold. An alert supports investigation and does not confirm fraud. This operation does not create a case or a persisted evidence record.",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "description": "Request containing only the stable transaction identifier. Do not supply labels, balances, model parameters or a threshold.",
+            "schema": {
+              "$ref": "#/definitions/ScoreRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Frozen model score and decision; alert is true when suspicion_score is greater than or equal to threshold.",
+            "schema": {
+              "$ref": "#/definitions/Score"
+            }
+          },
+          "400": {
+            "description": "Malformed transaction identifier: exactly 32 hexadecimal characters are required.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "401": {
+            "description": "API key missing or invalid.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "404": {
+            "description": "No transaction exists for this valid ID.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "422": {
+            "description": "Invalid request body or transaction data incompatible with the frozen pipeline.",
+            "schema": {
+              "$ref": "#/definitions/ValidationError"
+            }
+          },
+          "500": {
+            "description": "Prediction could not be completed. No substitute score is returned.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "503": {
+            "description": "Frozen model, its manifest, or the application database is unavailable or incompatible.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "ScoreRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "A lookup identifier only; features are computed by the backend.",
+      "required": [
+        "transaction_id"
+      ],
+      "properties": {
+        "transaction_id": {
+          "type": "string",
+          "description": "Stable transaction identifier: exactly 32 hexadecimal characters."
+        }
+      }
+    },
+    "Score": {
+      "type": "object",
+      "description": "Score and alert decision returned by the frozen local pipeline.",
+      "required": [
+        "transaction_id",
+        "suspicion_score",
+        "threshold",
+        "alert",
+        "model_version",
+        "policy_version"
+      ],
+      "properties": {
+        "transaction_id": {
+          "type": "string",
+          "description": "Stable 32-character hexadecimal identifier of the scored transaction."
+        },
+        "suspicion_score": {
+          "type": "number",
+          "format": "double",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Raw CatBoost suspicion score between zero and one. Not a calibrated fraud probability."
+        },
+        "threshold": {
+          "type": "number",
+          "format": "double",
+          "description": "Frozen global decision threshold, 0.3123179923852385. The agent must not modify it."
+        },
+        "alert": {
+          "type": "boolean",
+          "description": "True exactly when suspicion_score is greater than or equal to threshold. Does not establish fraud."
+        },
+        "model_version": {
+          "type": "string",
+          "description": "Frozen model configuration and artifact fingerprint prefix used for this score."
+        },
+        "policy_version": {
+          "type": "string",
+          "description": "Decision policy identifier, final_global_f1_v1."
+        }
+      }
+    },
+    "Error": {
+      "type": "object",
+      "description": "An authentication, lookup, model or prediction error without internal details.",
+      "required": [
+        "detail"
+      ],
+      "properties": {
+        "detail": {
+          "type": "string",
+          "description": "Human-readable error message."
+        }
+      }
+    },
+    "ValidationError": {
+      "type": "object",
+      "description": "A request-validation error or a transaction-data compatibility error.",
+      "required": [
+        "detail"
+      ],
+      "properties": {
+        "detail": {
+          "description": "Human-readable data error or the standard structured request-validation details."
+        }
+      }
+    }
+  },
+  "consumes": [
+    "application/json"
+  ]
+}

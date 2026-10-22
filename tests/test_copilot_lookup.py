@@ -61,7 +61,9 @@ class CopilotLookupTests(unittest.TestCase):
             self.assertEqual(client.get("/transactions/" + "f" * 32,
                                         headers={"X-API-Key": self.key}).status_code, 404)
             self.assertEqual(client.get("/cases").status_code, 404)
-            self.assertEqual(client.get("/score").status_code, 404)
+            self.assertEqual(client.get("/score").status_code, 405)
+            self.assertEqual({route.path for route in app.routes},
+                             {"/transactions/{transaction_id}", "/score"})
             self.assertEqual(client.get("/openapi.json").status_code, 404)
         with TestClient(create_copilot_app(self.database.with_name("missing.sqlite"),
                                            api_key=self.key)) as client:

@@ -1,11 +1,14 @@
 # API locales des transactions
 
-## Connexion REST minimale pour Copilot Studio
+## Authenticated Copilot Studio gateway
 
-Une passerelle distincte expose uniquement la recherche de transaction avec
-une clé d'API dans l'en-tête `X-API-Key`. Son lancement local, le Swagger v2
-en anglais et la génération du fichier à importer après obtention d'une URL
-HTTPS réelle sont documentés dans [COPILOT_REST.md](COPILOT_REST.md).
+The dedicated gateway now exposes authenticated transaction lookup and frozen
+scoring only: `GET /transactions/{transaction_id}` and `POST /score`.
+Both require `X-API-Key`. Cases, histories and reports remain on the separate
+local investigation API. Startup, English Swagger v2 exports and manual
+connection steps are documented in [COPILOT_REST.md](COPILOT_REST.md).
+The scoring route reuses the existing service and does not persist a tool run;
+case-linked evidence still uses the `/cases/{case_id}/runs` contract below.
 
 ## Lot 5.2 : exécuter et conserver une vérification
 
