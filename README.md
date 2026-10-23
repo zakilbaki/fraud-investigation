@@ -2,6 +2,12 @@
 
 An AI engineering portfolio project combining **Microsoft Copilot Studio agents, machine learning and evidence-based investigation** on 6.3 million synthetic PaySim transactions.
 
+## Demo
+
+Transaction lookup, recipient history and frozen CatBoost scoring in Copilot Studio, followed by an explanation of the alert decision. Recorded with synthetic PaySim data; pauses are shortened and playback is accelerated.
+
+![Copilot Studio demonstration: transaction lookup, recipient history, ML score and interpretation](docs/assets/demo.gif)
+
 ## Investigation workflow
 
 An analyst supplies a transaction ID. An **orchestrator** coordinates the investigation and an **investigator** examines the transaction using backend tools. The workflow retrieves the facts, calculates a suspicion score, checks account histories and produces a report with references to the evidence behind its findings.
@@ -53,7 +59,7 @@ flowchart TD
 
 Each recorded check has a stable execution ID. Report facts cite those IDs. Histories exclude the current step and respect response limits; unavailable tools remain visible in the report. Evaluation labels are inaccessible to investigation tools.
 
-The diagram defines the complete agent architecture. Authenticated lookup and frozen scoring are connected in Copilot Studio. Three protected history tools are ready for connection: sender/recipient history by transaction ID, and direct account history with a specified cutoff. Agent delegation and case/report integration remain to be completed.
+The diagram defines the complete agent architecture. Authenticated lookup, frozen scoring and account-history tools are connected in Copilot Studio. The demo shows transaction lookup, recipient history and scoring; sender history has also been checked manually. Direct account history is available with a specified cutoff. Agent delegation and case/report integration remain to be completed.
 
 ## Machine learning results
 
