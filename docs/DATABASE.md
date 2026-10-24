@@ -91,3 +91,17 @@ Pour le scoring local, `get_scoring_transaction` ne lit que les colonnes nécess
 Le CSV dont le SHA-256 est `16910f90577b0d981bf8ff289714510bb89bc71bff7d3f220f024e287e4eea6b` a produit 6 362 620 transactions, 9 073 900 comptes distincts et 6 362 620 labels. Les tables d'enquête sont restées vides. Une seconde exécution a renvoyé `already_imported` avec les mêmes effectifs.
 
 `PRAGMA foreign_key_check` et `PRAGMA quick_check` n'ont signalé aucune erreur. La jointure des identifiants et numéros de ligne entre la base applicative et le fichier de labels a trouvé zéro absence dans les deux sens. La base applicative ne contient aucune colonne `isFraud` ou `isFlaggedFraud`. Les index des deux rôles et l'index unique de transaction sont présents ; `EXPLAIN QUERY PLAN` utilise les deux index par compte avec la borne `step < ?`.
+
+
+## Case lookup index, 24 October 2026
+
+Case-creation writes install the non-unique index
+`investigation_cases_transaction_created` on `(transaction_id, created_at DESC,
+case_id DESC)` with `CREATE INDEX IF NOT EXISTS`. It supports exact transaction
+case lookup and deterministic newest-created-first ordering; multiple cases for
+the same transaction remain valid. It consumes additional storage and is
+maintained on case inserts. A synthetic `EXPLAIN QUERY PLAN` check confirms its
+use without a temporary sort. No real-dataset timing improvement is claimed.
+The new search service uses a read-only connection and explicit read snapshot;
+it works before the index or report table exists and never migrates schema
+while reading. The real application database was not modified during validation.

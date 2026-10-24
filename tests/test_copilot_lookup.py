@@ -60,7 +60,7 @@ class CopilotLookupTests(unittest.TestCase):
             self.assertEqual(client.get("/transactions/invalid", headers={"X-API-Key": self.key}).status_code, 400)
             self.assertEqual(client.get("/transactions/" + "f" * 32,
                                         headers={"X-API-Key": self.key}).status_code, 404)
-            self.assertEqual(client.get("/cases").status_code, 405)
+            self.assertEqual(client.get("/cases").status_code, 401)
             self.assertEqual(client.get("/score").status_code, 405)
             self.assertEqual(set(app.openapi()["paths"]),
                              {"/transactions/{transaction_id}", "/score",

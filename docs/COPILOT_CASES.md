@@ -2,7 +2,7 @@
 
 ## Implemented and verified scope
 
-The protected loopback gateway adds eight case, evidence and report operations.
+The protected loopback gateway adds nine case, evidence and report operations.
 They reuse the local services; no second agent, model training or automatic
 Copilot configuration is included. Existing lookup/scoring/history operations
 remain available. The frozen model, feature definitions and threshold are unchanged.
@@ -15,6 +15,7 @@ locally, but still require manual import and acceptance testing in Copilot Studi
 
 | Operation ID | Route | Purpose |
 | --- | --- | --- |
+| `findInvestigationCasesByTransactionId` | `GET /cases?transaction_id=...` | Rediscover cases without knowing a case ID |
 | `createInvestigationCase` | `POST /cases` | Save a case for one known transaction |
 | `getInvestigationCase` | `GET /cases/{case_id}` | Retrieve the returned case ID |
 | `executeRecordedCheck` | `POST /cases/{case_id}/runs` | Execute and retain one permitted check |
@@ -49,6 +50,62 @@ Caller-submitted event routes, arbitrary SQL, report deletion and case deletion
 are not exposed by this gateway. The shared key is prototype access control,
 not user-specific ownership or tenant isolation. Anyone authorized by that key
 can access the exposed cases if they possess their IDs.
+
+## Rediscovering cases by transaction ID
+
+`GET /cases?transaction_id=<32-hex-ID>&limit=10` requires the API key but no
+idempotency key. IDs are normalized to lowercase. `limit` defaults to 10 and
+must be 1–100. The response contains `transaction_id`, `limit`, `returned_count`,
+`truncated` and `cases`. Each case contains its ordinary metadata plus
+`latest_report`: null, or the saved report ID, highest version and generation time.
+The report body remains available through the existing report-reading tool.
+
+Known transaction with no case: HTTP 200 and `cases: []`. Unknown transaction:
+404. Missing/malformed input: 422. Failed database query: 503, never an empty
+success. Search is a consistent read-only snapshot and does not create cases,
+execute checks, initialize report tables, update status or regenerate a report.
+
+Cases are ordered by **creation timestamp descending**, with case ID descending
+as a stable tie breaker, not by the case's `updated_at` field or latest evidence.
+Multiple cases are allowed; none is automatically selected. Inspect runs/report
+before reusing a case. Report presence does not establish that checks succeeded
+or that its snapshot includes later runs or the current model. The current case
+status remains independent of report generation. There is no continuation page
+for a truncated list yet; raise the limit up to 100 or obtain a case ID explicitly.
+
+An index on `(transaction_id, created_at DESC, case_id DESC)` is installed during
+case-creation writes, including retry calls. It adds storage and index maintenance
+on case creation. Read-only search works on legacy databases before the index
+exists; it does not perform a hidden schema migration. A synthetic EXPLAIN QUERY
+PLAN check confirms index use without a temporary sort once installed. No speed
+improvement on the real dataset is claimed.
+
+The **search → create/resume** orchestration remains to be configured in Copilot.
+These are separate requests: two callers can both observe an empty search and
+create different cases with different keys. This change does not add a unique
+active-case rule or atomic find-or-create. Old results and report versions are
+preserved; the agent must distinguish retrieval, completion and deliberate reanalysis.
+
+## Case-search verification, 24 October 2026
+
+95 tests pass on macOS Apple Silicon with Python 3.11, including six new search
+tests: known/unknown transactions, multiple cases and stable ordering, report
+metadata and legacy schemas, authentication/validation, database errors and
+read-only behavior, reopening persistence, truncation and index query-plan use.
+An actual temporary HTTP server additionally verified the search/create/report/
+rediscovery path on synthetic data, including 401/404/422 and truncation. No
+real database writes, label access, model predictions or running-server changes
+were performed. Linux, Windows and Copilot import are not verified for this change.
+
+Interview questions:
+
+1. **Why search by transaction rather than asking for a case ID?** The transaction
+   is the user's known reference; the backend returns persistent case references
+   across conversations.
+2. **Why distinguish zero results from a failed search?** Only a successful empty
+   search establishes absence. Creating a case after a query failure risks duplicates.
+3. **Does a saved report prove completeness?** No. It is a versioned snapshot;
+   failed or missing checks and subsequent runs must be inspected separately.
 
 ## Requests, retries and recorded failures
 
@@ -104,7 +161,7 @@ Import `data/copilot/investigation_cases.swagger.json`, not the versioned
 Existing lookup, scoring and history files do not need reimporting for this addition.
 
 1. In **Fraud Investigator → Tools → Add a tool → REST API**, import this file.
-2. Name the connector **Investigation Cases** and select its eight operations.
+2. Name the connector **Investigation Cases** and select its nine operations.
 3. Configure API-key authentication: **Header**, `X-API-Key`, with the existing
    server key stored only in the connection form.
 4. For this local shared-access prototype, select **Additional details →
@@ -116,14 +173,21 @@ Existing lookup, scoring and history files do not need reimporting for this addi
    This is a different access model: users of the tool use the maker's backend
    access. Do not disable organization policy if that option is unavailable.
 
-UI and permissions must be checked in the actual environment. Import, eight-tool
+UI and permissions must be checked in the actual environment. Import, nine-tool
 binding and real Copilot writes have not been performed automatically.
 
 ## Agent instruction addition after tools are connected
 
 ```text
-For a saved investigation, create one case per selected transaction. Reuse the
-returned case_id for all checks and the report. Never invent case or run IDs.
+Before a saved investigation, search cases by the exact transaction ID using
+findInvestigationCasesByTransactionId. Only a successful empty search permits
+creating a new case. A search error is not absence. If cases exist, inspect their
+recorded checks and latest report to decide whether to retrieve or resume.
+Multiple cases may exist; explain which case is chosen and ask for clarification
+when the choice is ambiguous. Do not infer completeness from report presence
+or case status alone. Reuse the selected case_id for all checks and the report.
+Never invent case or run IDs. An explicitly requested new investigation may
+create a separate case; do not silently overwrite prior investigations.
 Choose one idempotency key per logical request; preserve it unchanged on retries.
 Run transaction, score and the relevant histories through executeRecordedCheck,
 not the unrecorded lookup/score/history tools when evidence must be retained.

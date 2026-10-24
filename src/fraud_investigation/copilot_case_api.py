@@ -10,13 +10,15 @@ import sqlite3
 from typing import Annotated, Callable
 
 from fastapi import APIRouter, Header, HTTPException, Path as PathParameter, Query
+from pydantic import BaseModel
 
 from fraud_investigation.case_api import (
     CaseCreate, CaseResponse, CreatedCaseResponse, ReportListResponse,
     ReportResponse, RunListResponse, RunRequest, RunResponse,
 )
 from fraud_investigation.case_service import (
-    CaseNotFound, IdempotencyConflict, TransactionNotFound, create_case, get_case,
+    CaseNotFound, IdempotencyConflict, TransactionNotFound, create_case,
+    find_cases_by_transaction, get_case,
 )
 from fraud_investigation.evidence_service import (
     RunInProgress, execute_and_record, get_run, list_runs,
@@ -29,6 +31,24 @@ from fraud_investigation.scoring_service import ScoreService
 
 Identifier = Annotated[str, PathParameter(pattern=r"^[0-9a-f]{32}$")]
 RequestKey = Annotated[str, Header(alias="Idempotency-Key", min_length=1, max_length=128)]
+
+
+class LatestReportReference(BaseModel):
+    report_id: str
+    version: int
+    generated_at: str
+
+
+class CaseSearchItem(CaseResponse):
+    latest_report: LatestReportReference | None
+
+
+class CaseSearchResponse(BaseModel):
+    transaction_id: str
+    limit: int
+    returned_count: int
+    truncated: bool
+    cases: list[CaseSearchItem]
 
 
 @contextmanager
@@ -54,6 +74,15 @@ def case_errors():
 def copilot_case_router(database_path: Path | str,
                         score_provider: Callable[[], ScoreService | None]) -> APIRouter:
     router = APIRouter()
+
+    @router.get("/cases", response_model=CaseSearchResponse,
+                operation_id="findInvestigationCasesByTransactionId")
+    def find_cases(
+        transaction_id: Annotated[str, Query(pattern=r"^[0-9a-fA-F]{32}$")],
+        limit: int = Query(10, ge=1, le=100),
+    ):
+        with case_errors():
+            return find_cases_by_transaction(database_path, transaction_id, limit)
 
     @router.post("/cases", status_code=201, response_model=CreatedCaseResponse,
                  operation_id="createInvestigationCase")

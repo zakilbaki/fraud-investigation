@@ -2,7 +2,7 @@
 
 ## Gateway and tools
 
-`scripts/serve_copilot_api.py` exposes five direct operations plus eight case/evidence/report operations on loopback.
+`scripts/serve_copilot_api.py` exposes five direct operations plus nine case/evidence/report operations on loopback.
 See [Saved investigations](COPILOT_CASES.md) for the new contracts and import steps.
 
 Direct operations:

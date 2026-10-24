@@ -320,3 +320,14 @@ The gateway now exposes the eight selected case/check/report operations in
 including report generation; the existing full local API retains unkeyed
 report generation. New reports are English; saved historical snapshots are
 not rewritten. Authenticated event submission is not exposed through the gateway.
+
+
+### Case discovery by transaction ID
+
+The protected gateway also exposes `GET /cases?transaction_id=...&limit=10`.
+It requires `X-API-Key`, not an idempotency key. Known transactions with no case
+return 200 with an empty `cases` list; unknown transactions return 404; invalid
+input returns 422; database failure returns 503. Results include latest-report
+metadata and truncation, with no case auto-selection or writes. Full contracts
+and the separate search/create concurrency limitation are in
+[COPILOT_CASES.md](COPILOT_CASES.md#rediscovering-cases-by-transaction-id).

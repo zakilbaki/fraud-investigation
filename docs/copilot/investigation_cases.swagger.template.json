@@ -90,6 +90,68 @@
             }
           }
         }
+      },
+      "get": {
+        "operationId": "findInvestigationCasesByTransactionId",
+        "summary": "Find investigation cases by transaction ID",
+        "description": "Before starting a saved investigation, search using the exact transaction ID. A successful empty list permits case creation; a failed search does not. Multiple cases are allowed and no case is auto-selected. If cases exist, inspect recorded checks and the latest report to decide whether to retrieve or resume. Report presence or case status alone does not establish completeness or freshness. This read does not execute checks or prevent concurrent duplicate case creation.",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "transaction_id",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "pattern": "^[0-9a-fA-F]{32}$",
+            "description": "Exact transaction ID from the user or conversation. No case ID is required."
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "default": 10,
+            "minimum": 1,
+            "maximum": 100,
+            "description": "Maximum matching cases to return; inspect truncated."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Known transaction; bounded matching cases, possibly an empty list. No writes performed.",
+            "schema": {
+              "$ref": "#/definitions/CaseSearchResponse"
+            }
+          },
+          "401": {
+            "description": "API key missing or invalid.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "404": {
+            "description": "The transaction itself does not exist. This does not mean a known transaction has no cases.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "422": {
+            "description": "Missing or invalid transaction ID or limit.",
+            "schema": {
+              "$ref": "#/definitions/ValidationError"
+            }
+          },
+          "503": {
+            "description": "Database unavailable or query failed. Never interpret this as an empty search result.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
       }
     },
     "/cases/{case_id}": {
@@ -1212,6 +1274,112 @@
         "truncated",
         "reports"
       ]
+    },
+    "LatestReportReference": {
+      "type": "object",
+      "description": "Metadata of the highest saved report version. It does not prove checks are complete, successful, current or produced with the current model.",
+      "required": [
+        "report_id",
+        "version",
+        "generated_at"
+      ],
+      "properties": {
+        "report_id": {
+          "type": "string",
+          "description": "Saved report ID.",
+          "pattern": "^[0-9a-f]{32}$"
+        },
+        "version": {
+          "type": "integer",
+          "description": "Saved immutable report version.",
+          "minimum": 1
+        },
+        "generated_at": {
+          "type": "string",
+          "description": "UTC snapshot time."
+        }
+      }
+    },
+    "CaseSearchItem": {
+      "type": "object",
+      "description": "One matching case. Ordering is creation time, then case ID, both descending; no automatic selection.",
+      "properties": {
+        "case_id": {
+          "type": "string",
+          "description": "Backend-generated case ID. Keep and reuse this value; never invent it.",
+          "pattern": "^[0-9a-f]{32}$"
+        },
+        "transaction_id": {
+          "type": "string",
+          "description": "Transaction under investigation.",
+          "pattern": "^[0-9a-f]{32}$"
+        },
+        "status": {
+          "type": "string",
+          "description": "Case lifecycle state. Recording checks does not automatically close a case.",
+          "enum": [
+            "open",
+            "in_progress",
+            "closed"
+          ]
+        },
+        "created_at": {
+          "type": "string",
+          "description": "UTC creation timestamp."
+        },
+        "updated_at": {
+          "type": "string",
+          "description": "UTC case-update timestamp."
+        },
+        "latest_report": {
+          "$ref": "#/definitions/LatestReportReference",
+          "x-nullable": true
+        }
+      },
+      "required": [
+        "case_id",
+        "transaction_id",
+        "status",
+        "created_at",
+        "updated_at",
+        "latest_report"
+      ]
+    },
+    "CaseSearchResponse": {
+      "type": "object",
+      "description": "Bounded read-only case search for one known transaction. An empty successful response means no case was found, not an error.",
+      "required": [
+        "transaction_id",
+        "limit",
+        "returned_count",
+        "truncated",
+        "cases"
+      ],
+      "properties": {
+        "transaction_id": {
+          "type": "string",
+          "description": "Normalized lowercase transaction ID."
+        },
+        "limit": {
+          "type": "integer",
+          "description": "Maximum cases requested, default 10, maximum 100."
+        },
+        "returned_count": {
+          "type": "integer",
+          "description": "Number of cases included in this response."
+        },
+        "truncated": {
+          "type": "boolean",
+          "description": "More cases exist beyond this response. This list is incomplete when true."
+        },
+        "cases": {
+          "type": "array",
+          "description": "Matching cases ordered by creation time descending, with case ID as deterministic tie breaker. Inspect their recorded runs and latest report before deciding to reuse or resume.",
+          "items": {
+            "$ref": "#/definitions/CaseSearchItem"
+          }
+        }
+      }
     }
   },
   "consumes": [

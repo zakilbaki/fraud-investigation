@@ -1,5 +1,21 @@
 # Cadrage du prototype Fraud Investigation
 
+## Case discovery by transaction, 24 October 2026
+
+The protected gateway adds `GET /cases?transaction_id=...`, operation
+`findInvestigationCasesByTransactionId`. It returns a bounded newest-created-first
+list of cases and latest-report references, without writes or predictions. Known
+transactions with no case return an empty success; unknown transactions return
+404 and database failures return 503. Search never silently chooses or creates
+a case. The ninth case operation is included in the updated English Swagger.
+
+95 tests pass, including six new search tests. A separate actual HTTP smoke test
+uses only synthetic storage. An index created by case-creation writes supports
+transaction/order lookup; legacy searches remain read-only without migration.
+Multiple cases remain allowed; search followed by creation is not an atomic
+find-or-create. Copilot import and search/reuse/resume topic configuration remain
+manual next steps. See [COPILOT_CASES.md](COPILOT_CASES.md).
+
 ## Saved investigation gateway, 24 October 2026
 
 The protected gateway exposes eight additional operations for case creation,

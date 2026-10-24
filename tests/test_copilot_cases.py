@@ -213,7 +213,7 @@ class CopilotCasesTests(unittest.TestCase):
                 self.assertTrue(op['description'])
                 if method=='post':
                     self.assertTrue(any(x['name']=='Idempotency-Key' and x['required'] for x in op['parameters']))
-        self.assertEqual(len(ids),8);self.assertEqual(len(set(ids)),8)
+        self.assertEqual(len(ids),9);self.assertEqual(len(set(ids)),9)
         def walk(value):
             if isinstance(value,dict):
                 if '$ref' in value:self.assertIn(value['$ref'].split('/')[-1],spec['definitions'])
