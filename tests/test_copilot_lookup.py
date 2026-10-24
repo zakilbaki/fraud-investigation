@@ -60,13 +60,16 @@ class CopilotLookupTests(unittest.TestCase):
             self.assertEqual(client.get("/transactions/invalid", headers={"X-API-Key": self.key}).status_code, 400)
             self.assertEqual(client.get("/transactions/" + "f" * 32,
                                         headers={"X-API-Key": self.key}).status_code, 404)
-            self.assertEqual(client.get("/cases").status_code, 404)
+            self.assertEqual(client.get("/cases").status_code, 405)
             self.assertEqual(client.get("/score").status_code, 405)
             self.assertEqual(set(app.openapi()["paths"]),
                              {"/transactions/{transaction_id}", "/score",
                               "/transactions/{transaction_id}/sender-history",
                               "/transactions/{transaction_id}/recipient-history",
-                              "/accounts/{account_id}/transactions"})
+                              "/accounts/{account_id}/transactions",
+                              "/cases", "/cases/{case_id}", "/cases/{case_id}/runs",
+                              "/cases/{case_id}/runs/{run_id}", "/cases/{case_id}/reports",
+                              "/cases/{case_id}/reports/{version}"})
             self.assertEqual(client.get("/openapi.json").status_code, 404)
         with TestClient(create_copilot_app(self.database.with_name("missing.sqlite"),
                                            api_key=self.key)) as client:

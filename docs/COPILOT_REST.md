@@ -2,7 +2,10 @@
 
 ## Gateway and tools
 
-`scripts/serve_copilot_api.py` exposes five authenticated operations on loopback:
+`scripts/serve_copilot_api.py` exposes five direct operations plus eight case/evidence/report operations on loopback.
+See [Saved investigations](COPILOT_CASES.md) for the new contracts and import steps.
+
+Direct operations:
 
 | Operation | Purpose | Copilot tool |
 | --- | --- | --- |
@@ -12,13 +15,13 @@
 | `GET /transactions/{transaction_id}/recipient-history` | Derive the recipient and cutoff from a transaction | `getRecipientHistoryByTransactionId` |
 | `GET /accounts/{account_id}/transactions` | Query an explicit account with a required cutoff | `getAccountHistory` |
 
-The gateway does not expose cases, reports, arbitrary SQL, `/docs`, `/openapi.json` or a public health route. Scoring's exact prior-recipient receipt count is separate from these bounded account histories and is unchanged.
+The gateway now exposes the closed case/evidence/report interface, but not caller event submission, arbitrary SQL, `/docs`, `/openapi.json` or a public health route. Scoring's exact prior-recipient receipt count is separate from these bounded account histories and is unchanged.
 
-Lookup and scoring have been manually demonstrated together in Copilot Studio. The three history operations and their English specification are prepared and verified locally; their Copilot import and use remain manual integration steps. The full backend investigation tools are documented in [API.md](API.md).
+Lookup and scoring have been manually demonstrated together in Copilot Studio. The three history operations have also been manually exercised by the owner. The new case tools still require manual Copilot import. The full backend investigation tools are documented in [API.md](API.md).
 
 ## Authentication and startup
 
-All five operations require `X-API-Key`. The server compares it with `FRAUD_INVESTIGATION_API_KEY` using a constant-time comparison. A missing, empty or shorter-than-32-character secret prevents startup; an absent/wrong request key returns 401. The secret is not stored in Git or OpenAPI. This shared key does not establish individual user identity.
+All operations require `X-API-Key`. The server compares it with `FRAUD_INVESTIGATION_API_KEY` using a constant-time comparison. A missing, empty or shorter-than-32-character secret prevents startup; an absent/wrong request key returns 401. The secret is not stored in Git or OpenAPI. This shared key does not establish individual user identity.
 
 From the repository root, with the application database and frozen model available:
 
@@ -46,7 +49,7 @@ The same saved transformer constructs H's seven features. Prior-recipient counts
 
 Scoring errors are 400 for a malformed ID, 401 for authentication failure, 404 for an absent transaction, 422 for an invalid request or incompatible transaction data, 503 for unavailable/incompatible model/database and 500 for unexpected prediction failure. No substitute score or internal traceback is returned. A failed request must not be described as a low-risk transaction.
 
-This direct scoring route does not create a case or persist a tool-evidence record. Recorded investigation scoring remains a separate operation on the full backend: `POST /cases/{id}/runs` with `operation=score`.
+This direct scoring route does not create a case or persist a tool-evidence record. Recorded investigation scoring is available on the protected gateway: `POST /cases/{id}/runs` with `operation=score`.
 
 ## History by transaction or by account
 
@@ -209,3 +212,9 @@ Lookup and scoring were subsequently confirmed manually in Copilot Studio. The h
 1. **Why reuse the scoring service?** It keeps feature construction, artifact checks and the decision threshold identical to the evaluated pipeline.
 2. **Why a separate Swagger file?** It adds one focused tool while preserving the existing lookup definition and connection.
 3. **Why keep lookup available when the model is missing?** Recorded facts remain useful, while an explicit 503 prevents fabricated scores.
+
+## Case tools and connection troubleshooting
+
+See [COPILOT_CASES.md](COPILOT_CASES.md) for the fourth export (`--tool cases`),
+protected writes, retry keys, English versioned reports and the demonstrated
+maker-versus-end-user credential issue.

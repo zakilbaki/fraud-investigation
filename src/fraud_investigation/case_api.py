@@ -76,7 +76,7 @@ class RunRequest(BaseModel):
         if self.operation in ("transaction", "score") and (
             self.limit is not None or self.lookback_steps is not None
         ):
-            raise ValueError("Les bornes ne concernent que l'historique")
+            raise ValueError("Bounds apply only to history checks")
         return self
 
     def parameters(self) -> dict[str, int]:

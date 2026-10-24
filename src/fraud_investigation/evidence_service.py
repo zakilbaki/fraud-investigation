@@ -139,13 +139,13 @@ def execute_and_record(
     try:
         result = _execute(path, transaction_id, operation, parameters, scorer)
     except (ArtifactError, FileNotFoundError, sqlite3.Error):
-        status, error = "unavailable", {"code": "tool_unavailable", "message": "Outil ou base indisponible"}
+        status, error = "unavailable", {"code": "tool_unavailable", "message": "Tool or database unavailable"}
     except ScoringDataError:
-        status, error = "failed", {"code": "invalid_scoring_data", "message": "Données incompatibles avec le modèle"}
+        status, error = "failed", {"code": "invalid_scoring_data", "message": "Transaction data incompatible with the model"}
     except (LookupError, ValueError):
-        status, error = "failed", {"code": "tool_failed", "message": "Vérification impossible"}
+        status, error = "failed", {"code": "tool_failed", "message": "Check could not be completed"}
     except Exception:
-        status, error = "failed", {"code": "tool_failed", "message": "Vérification impossible"}
+        status, error = "failed", {"code": "tool_failed", "message": "Check could not be completed"}
 
     with closing(_connect(path)) as connection:
         connection.execute("BEGIN IMMEDIATE")

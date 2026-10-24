@@ -1,4 +1,4 @@
-"""Serve authenticated lookup, scoring and bounded histories on loopback."""
+"""Serve authenticated investigation tools and saved reports on loopback."""
 
 import argparse
 from pathlib import Path

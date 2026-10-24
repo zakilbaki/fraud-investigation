@@ -12,16 +12,19 @@ SCORING_TEMPLATE = TEMPLATE.with_name("transaction_scoring.swagger.template.json
 SCORING_OUTPUT = Path("data/copilot/transaction_scoring.swagger.json")
 HISTORY_TEMPLATE = TEMPLATE.with_name("account_history.swagger.template.json")
 HISTORY_OUTPUT = Path("data/copilot/account_history.swagger.json")
+CASES_TEMPLATE = TEMPLATE.with_name("investigation_cases.swagger.template.json")
+CASES_OUTPUT = Path("data/copilot/investigation_cases.swagger.json")
 TOOL_FILES = {
     "lookup": (TEMPLATE, DEFAULT_OUTPUT),
     "scoring": (SCORING_TEMPLATE, SCORING_OUTPUT),
     "history": (HISTORY_TEMPLATE, HISTORY_OUTPUT),
+    "cases": (CASES_TEMPLATE, CASES_OUTPUT),
 }
 
 
 def export(base_url: str, output: Path, *, tool: str = "lookup") -> Path:
     if tool not in TOOL_FILES:
-        raise ValueError("Tool must be lookup, scoring or history")
+        raise ValueError("Tool must be lookup, scoring, history or cases")
     parsed = urlsplit(base_url)
     try:
         port = parsed.port

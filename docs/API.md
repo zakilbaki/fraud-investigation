@@ -311,3 +311,12 @@ Remplacer la valeur entre chevrons par un identifiant déjà présent dans la ba
 - `uv lock --check`, `uv sync --locked` et `uv run --locked` ont réussi ici avec un cache temporaire. Linux et Windows n'ont pas été testés. Une alerte de dépréciation de `TestClient` concernant `httpx` apparaît, sans échec des tests.
 
 La procédure de cohérence locale, sans label, est `python scripts/check_scoring_api.py`. Elle ne publie ni identifiants, ni scores individuels. Le script de service n'ouvre pas le CSV et le script de vérification n'ouvre pas la base de labels. Aucun réentraînement ou nouveau score global du test n'a été effectué.
+
+
+## Protected Copilot case interface, 24 October 2026
+
+The gateway now exposes the eight selected case/check/report operations in
+[COPILOT_CASES.md](COPILOT_CASES.md). Every POST requires an Idempotency-Key,
+including report generation; the existing full local API retains unkeyed
+report generation. New reports are English; saved historical snapshots are
+not rewritten. Authenticated event submission is not exposed through the gateway.

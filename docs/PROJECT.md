@@ -1,5 +1,22 @@
 # Cadrage du prototype Fraud Investigation
 
+## Saved investigation gateway, 24 October 2026
+
+The protected gateway exposes eight additional operations for case creation,
+recorded checks and versioned reports, reusing the existing local services.
+Every write requires a stable retry key. Report snapshots and retry responses
+are atomic; old reports remain unchanged. New report presentation is English.
+The four check types derive their transaction/accounts from the case. Event
+submission and arbitrary SQL remain unexposed. All routes require the shared key.
+
+89 tests pass, including seven gateway lifecycle tests and a separate actual HTTP
+workflow on synthetic data with an explicitly synthetic scorer. No real database
+writes, labels, model changes or new test evaluation were performed. Original
+lookup/scoring/history tools, interactive selection and error explanations have
+been manually tested by the owner. New case-tool import and agent acceptance
+remain pending. The existing agent remains the investigator; a separate
+coordinator has not been created. See [COPILOT_CASES.md](COPILOT_CASES.md).
+
 ## Copilot account-history tools, 23 October 2026
 
 Three protected read-only tools support both entry modes requested by the owner:

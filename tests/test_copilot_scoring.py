@@ -96,7 +96,10 @@ class CopilotScoringTests(unittest.TestCase):
                              {"/transactions/{transaction_id}", "/score",
                               "/transactions/{transaction_id}/sender-history",
                               "/transactions/{transaction_id}/recipient-history",
-                              "/accounts/{account_id}/transactions"})
+                              "/accounts/{account_id}/transactions",
+                              "/cases", "/cases/{case_id}", "/cases/{case_id}/runs",
+                              "/cases/{case_id}/runs/{run_id}", "/cases/{case_id}/reports",
+                              "/cases/{case_id}/reports/{version}"})
         self.assertEqual(sha256(self.model), json.loads(self.manifest.read_text())["pipeline_sha256"])
 
     def test_invalid_missing_and_extra_inputs(self):

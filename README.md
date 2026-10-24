@@ -59,7 +59,7 @@ flowchart TD
 
 Each recorded check has a stable execution ID. Report facts cite those IDs. Histories exclude the current step and respect response limits; unavailable tools remain visible in the report. Evaluation labels are inaccessible to investigation tools.
 
-The diagram defines the complete agent architecture. Authenticated lookup, frozen scoring and account-history tools are connected in Copilot Studio. The demo shows transaction lookup, recipient history and scoring; sender history has also been checked manually. Direct account history is available with a specified cutoff. Agent delegation and case/report integration remain to be completed.
+The diagram defines the complete agent architecture. Authenticated lookup, frozen scoring and account-history tools are connected in Copilot Studio. The demo shows transaction lookup, recipient history and scoring; sender history has also been checked manually. Direct account history is available with a specified cutoff. Protected case/check/report tools and an English Swagger export are ready for manual connection. Case/report integration in Copilot Studio and agent delegation remain to be completed.
 
 ## Machine learning results
 

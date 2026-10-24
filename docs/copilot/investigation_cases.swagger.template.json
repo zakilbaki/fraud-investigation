@@ -1,0 +1,1220 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Fraud Investigation Cases and Evidence",
+    "version": "1.0.0",
+    "description": "Create investigation cases, execute and persist backend checks, and save versioned evidence-linked reports on synthetic PaySim data. All operations require an API key. This shared access is for the local prototype, not per-user authorization."
+  },
+  "host": "replace-this-host.invalid",
+  "basePath": "/",
+  "schemes": [
+    "https"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "securityDefinitions": {
+    "ApiKeyAuth": {
+      "type": "apiKey",
+      "in": "header",
+      "name": "X-API-Key",
+      "description": "API key for the Fraud Investigation REST tools. Enter the secret only in the Copilot Studio connection, never in this specification."
+    }
+  },
+  "paths": {
+    "/cases": {
+      "post": {
+        "operationId": "createInvestigationCase",
+        "summary": "Create an investigation case",
+        "description": "Create one case per transaction being investigated. Reuse a returned case ID for subsequent checks. Reuse the same Idempotency-Key for a retry, not a new investigation. Creating a case is not a fraud determination.",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128,
+            "description": "Choose one stable key for this logical request and reuse it unchanged on network retries. Use a new key for a deliberate new operation. Not an API secret. Do not reuse a case-creation key for a different transaction. Report retries return the original snapshot; a new report key creates a new version."
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "description": "Validated CaseRequest request. Extra fields are rejected.",
+            "schema": {
+              "$ref": "#/definitions/CaseRequest"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Requested result.",
+            "schema": {
+              "$ref": "#/definitions/CreatedCase"
+            }
+          },
+          "401": {
+            "description": "API key missing or invalid.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "404": {
+            "description": "Transaction, case, recorded run or report not found.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "409": {
+            "description": "Idempotency conflict or run in progress; inspect the existing case and runs before retrying.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "422": {
+            "description": "Invalid identifier, bounds, body or missing idempotency header.",
+            "schema": {
+              "$ref": "#/definitions/ValidationError"
+            }
+          },
+          "503": {
+            "description": "Investigation database unavailable.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/cases/{case_id}": {
+      "get": {
+        "operationId": "getInvestigationCase",
+        "summary": "Read an investigation case",
+        "description": "Retrieve a known case by its returned ID.",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$",
+            "description": "Exact backend-generated case_id."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Requested result.",
+            "schema": {
+              "$ref": "#/definitions/Case"
+            }
+          },
+          "401": {
+            "description": "API key missing or invalid.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "404": {
+            "description": "Transaction, case, recorded run or report not found.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "409": {
+            "description": "Idempotency conflict or run in progress; inspect the existing case and runs before retrying.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "422": {
+            "description": "Invalid identifier, bounds, body or missing idempotency header.",
+            "schema": {
+              "$ref": "#/definitions/ValidationError"
+            }
+          },
+          "503": {
+            "description": "Investigation database unavailable.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/cases/{case_id}/runs": {
+      "post": {
+        "operationId": "executeRecordedCheck",
+        "summary": "Execute and record an investigation check",
+        "description": "Execute transaction lookup, frozen scoring or a bounded account history for the case transaction. Python derives account and cutoff. Do not submit facts or scores. Inspect status: failed/unavailable is a recorded failure, not successful evidence. Cite run_id. Use one key per check; retry with the same key.",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$",
+            "description": "Exact backend-generated case_id."
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128,
+            "description": "Choose one stable key for this logical request and reuse it unchanged on network retries. Use a new key for a deliberate new operation. Not an API secret. Do not reuse a case-creation key for a different transaction. Report retries return the original snapshot; a new report key creates a new version."
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "description": "Validated RunRequest request. Extra fields are rejected.",
+            "schema": {
+              "$ref": "#/definitions/RunRequest"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Operation persisted. Inspect the recorded check status; HTTP success alone does not mean the check succeeded.",
+            "schema": {
+              "$ref": "#/definitions/RecordedCheck"
+            }
+          },
+          "401": {
+            "description": "API key missing or invalid.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "404": {
+            "description": "Transaction, case, recorded run or report not found.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "409": {
+            "description": "Idempotency conflict or run in progress; inspect the existing case and runs before retrying.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "422": {
+            "description": "Invalid identifier, bounds, body or missing idempotency header.",
+            "schema": {
+              "$ref": "#/definitions/ValidationError"
+            }
+          },
+          "503": {
+            "description": "Investigation database unavailable.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "get": {
+        "operationId": "listRecordedChecks",
+        "summary": "List recorded investigation checks",
+        "description": "Inspect recorded successes, errors and incomplete runs for a known case. Responses are capped; truncated indicates missing records.",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$",
+            "description": "Exact backend-generated case_id."
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100,
+            "default": 50,
+            "description": "Maximum returned records. Inspect truncated; do not claim the list is complete if true."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Requested result.",
+            "schema": {
+              "$ref": "#/definitions/CheckList"
+            }
+          },
+          "401": {
+            "description": "API key missing or invalid.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "404": {
+            "description": "Transaction, case, recorded run or report not found.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "409": {
+            "description": "Idempotency conflict or run in progress; inspect the existing case and runs before retrying.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "422": {
+            "description": "Invalid identifier, bounds, body or missing idempotency header.",
+            "schema": {
+              "$ref": "#/definitions/ValidationError"
+            }
+          },
+          "503": {
+            "description": "Investigation database unavailable.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/cases/{case_id}/runs/{run_id}": {
+      "get": {
+        "operationId": "getRecordedCheck",
+        "summary": "Read a recorded investigation check",
+        "description": "Retrieve the exact saved evidence result or error cited by a run ID belonging to this case.",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$",
+            "description": "Exact backend-generated case_id."
+          },
+          {
+            "name": "run_id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$",
+            "description": "Exact backend-generated run_id."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operation persisted. Inspect the recorded check status; HTTP success alone does not mean the check succeeded.",
+            "schema": {
+              "$ref": "#/definitions/RecordedCheck"
+            }
+          },
+          "401": {
+            "description": "API key missing or invalid.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "404": {
+            "description": "Transaction, case, recorded run or report not found.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "409": {
+            "description": "Idempotency conflict or run in progress; inspect the existing case and runs before retrying.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "422": {
+            "description": "Invalid identifier, bounds, body or missing idempotency header.",
+            "schema": {
+              "$ref": "#/definitions/ValidationError"
+            }
+          },
+          "503": {
+            "description": "Investigation database unavailable.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/cases/{case_id}/reports": {
+      "post": {
+        "operationId": "generateInvestigationReport",
+        "summary": "Generate and save an investigation report",
+        "description": "Generate an English deterministic report from stored checks. No new investigation or model call is performed. Missing and failed checks remain visible. Reuse the same key to retrieve the original snapshot on retries; use a new key for a deliberate new version after additional checks. Only claim saved after this operation succeeds.",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$",
+            "description": "Exact backend-generated case_id."
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128,
+            "description": "Choose one stable key for this logical request and reuse it unchanged on network retries. Use a new key for a deliberate new operation. Not an API secret. Do not reuse a case-creation key for a different transaction. Report retries return the original snapshot; a new report key creates a new version."
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Requested result.",
+            "schema": {
+              "$ref": "#/definitions/Report"
+            }
+          },
+          "401": {
+            "description": "API key missing or invalid.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "404": {
+            "description": "Transaction, case, recorded run or report not found.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "409": {
+            "description": "Idempotency conflict or run in progress; inspect the existing case and runs before retrying.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "422": {
+            "description": "Invalid identifier, bounds, body or missing idempotency header.",
+            "schema": {
+              "$ref": "#/definitions/ValidationError"
+            }
+          },
+          "503": {
+            "description": "Investigation database unavailable.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "get": {
+        "operationId": "listInvestigationReports",
+        "summary": "List saved investigation reports",
+        "description": "List saved report versions, newest first; truncated marks an incomplete list.",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$",
+            "description": "Exact backend-generated case_id."
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100,
+            "default": 50,
+            "description": "Maximum returned records. Inspect truncated; do not claim the list is complete if true."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Requested result.",
+            "schema": {
+              "$ref": "#/definitions/ReportList"
+            }
+          },
+          "401": {
+            "description": "API key missing or invalid.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "404": {
+            "description": "Transaction, case, recorded run or report not found.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "409": {
+            "description": "Idempotency conflict or run in progress; inspect the existing case and runs before retrying.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "422": {
+            "description": "Invalid identifier, bounds, body or missing idempotency header.",
+            "schema": {
+              "$ref": "#/definitions/ValidationError"
+            }
+          },
+          "503": {
+            "description": "Investigation database unavailable.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/cases/{case_id}/reports/{version}": {
+      "get": {
+        "operationId": "getInvestigationReport",
+        "summary": "Read a saved investigation report",
+        "description": "Retrieve an immutable saved report version without regenerating it.",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$",
+            "description": "Exact backend-generated case_id."
+          },
+          {
+            "name": "version",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "minimum": 1,
+            "description": "Positive version returned by report generation or listing."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Requested result.",
+            "schema": {
+              "$ref": "#/definitions/Report"
+            }
+          },
+          "401": {
+            "description": "API key missing or invalid.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "404": {
+            "description": "Transaction, case, recorded run or report not found.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "409": {
+            "description": "Idempotency conflict or run in progress; inspect the existing case and runs before retrying.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "422": {
+            "description": "Invalid identifier, bounds, body or missing idempotency header.",
+            "schema": {
+              "$ref": "#/definitions/ValidationError"
+            }
+          },
+          "503": {
+            "description": "Investigation database unavailable.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Score": {
+      "type": "object",
+      "description": "Score and alert decision returned by the frozen local pipeline.",
+      "required": [
+        "transaction_id",
+        "suspicion_score",
+        "threshold",
+        "alert",
+        "model_version",
+        "policy_version"
+      ],
+      "properties": {
+        "transaction_id": {
+          "type": "string",
+          "description": "Stable 32-character hexadecimal identifier of the scored transaction."
+        },
+        "suspicion_score": {
+          "type": "number",
+          "format": "double",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Raw CatBoost suspicion score between zero and one. Not a calibrated fraud probability."
+        },
+        "threshold": {
+          "type": "number",
+          "format": "double",
+          "description": "Frozen global decision threshold, 0.3123179923852385. The agent must not modify it."
+        },
+        "alert": {
+          "type": "boolean",
+          "description": "True exactly when suspicion_score is greater than or equal to threshold. Does not establish fraud."
+        },
+        "model_version": {
+          "type": "string",
+          "description": "Frozen model configuration and artifact fingerprint prefix used for this score."
+        },
+        "policy_version": {
+          "type": "string",
+          "description": "Decision policy identifier, final_global_f1_v1."
+        }
+      }
+    },
+    "Error": {
+      "type": "object",
+      "description": "An authentication, lookup, model or prediction error without internal details.",
+      "required": [
+        "detail"
+      ],
+      "properties": {
+        "detail": {
+          "type": "string",
+          "description": "Human-readable error message."
+        }
+      }
+    },
+    "ValidationError": {
+      "type": "object",
+      "description": "A request-validation error or a transaction-data compatibility error.",
+      "required": [
+        "detail"
+      ],
+      "properties": {
+        "detail": {
+          "description": "Human-readable data error or the standard structured request-validation details."
+        }
+      }
+    },
+    "Transaction": {
+      "type": "object",
+      "description": "Pre-transaction facts and traceable source information. Fraud labels and post-transaction balances are excluded.",
+      "required": [
+        "transaction_id",
+        "source_sha256",
+        "source_line_number",
+        "step",
+        "type",
+        "amount",
+        "name_orig",
+        "oldbalance_org",
+        "name_dest",
+        "oldbalance_dest"
+      ],
+      "properties": {
+        "transaction_id": {
+          "type": "string",
+          "description": "Stable 32-character hexadecimal transaction identifier."
+        },
+        "source_sha256": {
+          "type": "string",
+          "description": "SHA-256 fingerprint of the source CSV, encoded as 64 hexadecimal characters."
+        },
+        "source_line_number": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Physical line number in the source CSV. It does not establish event order within a step."
+        },
+        "step": {
+          "type": "integer",
+          "format": "int64",
+          "description": "PaySim simulated time step. Transactions within the same step have no reliable ordering."
+        },
+        "type": {
+          "type": "string",
+          "description": "Transaction type recorded by PaySim."
+        },
+        "amount": {
+          "type": "string",
+          "description": "Original exact decimal amount as a string, without a currency assumption."
+        },
+        "name_orig": {
+          "type": "string",
+          "description": "Observed source account identifier."
+        },
+        "oldbalance_org": {
+          "type": "string",
+          "description": "Source account balance before the transaction, as an exact decimal string."
+        },
+        "name_dest": {
+          "type": "string",
+          "description": "Observed destination account identifier."
+        },
+        "oldbalance_dest": {
+          "type": "string",
+          "description": "Destination account balance before the transaction, as an exact decimal string."
+        }
+      }
+    },
+    "CaseRequest": {
+      "type": "object",
+      "description": "Create a case for one known transaction.",
+      "properties": {
+        "transaction_id": {
+          "type": "string",
+          "description": "Exact known transaction ID.",
+          "pattern": "^[0-9a-fA-F]{32}$"
+        }
+      },
+      "required": [
+        "transaction_id"
+      ],
+      "additionalProperties": false
+    },
+    "Case": {
+      "type": "object",
+      "description": "Persisted investigation case.",
+      "properties": {
+        "case_id": {
+          "type": "string",
+          "description": "Backend-generated case ID. Keep and reuse this value; never invent it.",
+          "pattern": "^[0-9a-f]{32}$"
+        },
+        "transaction_id": {
+          "type": "string",
+          "description": "Transaction under investigation.",
+          "pattern": "^[0-9a-f]{32}$"
+        },
+        "status": {
+          "type": "string",
+          "description": "Case lifecycle state. Recording checks does not automatically close a case.",
+          "enum": [
+            "open",
+            "in_progress",
+            "closed"
+          ]
+        },
+        "created_at": {
+          "type": "string",
+          "description": "UTC creation timestamp."
+        },
+        "updated_at": {
+          "type": "string",
+          "description": "UTC case-update timestamp."
+        }
+      },
+      "required": [
+        "case_id",
+        "transaction_id",
+        "status",
+        "created_at",
+        "updated_at"
+      ]
+    },
+    "CreatedCase": {
+      "type": "object",
+      "description": "Case and first backend event, atomically persisted.",
+      "properties": {
+        "case_id": {
+          "type": "string",
+          "description": "Backend-generated case ID. Keep and reuse this value; never invent it.",
+          "pattern": "^[0-9a-f]{32}$"
+        },
+        "transaction_id": {
+          "type": "string",
+          "description": "Transaction under investigation.",
+          "pattern": "^[0-9a-f]{32}$"
+        },
+        "status": {
+          "type": "string",
+          "description": "Case lifecycle state. Recording checks does not automatically close a case.",
+          "enum": [
+            "open",
+            "in_progress",
+            "closed"
+          ]
+        },
+        "created_at": {
+          "type": "string",
+          "description": "UTC creation timestamp."
+        },
+        "updated_at": {
+          "type": "string",
+          "description": "UTC case-update timestamp."
+        },
+        "first_event_id": {
+          "type": "string",
+          "description": "Creation-event ID.",
+          "pattern": "^[0-9a-f]{32}$"
+        }
+      },
+      "required": [
+        "case_id",
+        "transaction_id",
+        "status",
+        "created_at",
+        "updated_at",
+        "first_event_id"
+      ]
+    },
+    "CheckParameters": {
+      "type": "object",
+      "description": "Effective history bounds; empty for transaction or score.",
+      "properties": {
+        "limit": {
+          "type": "integer",
+          "description": "Maximum rows for history operations only; default 50.",
+          "minimum": 1,
+          "maximum": 100
+        },
+        "lookback_steps": {
+          "type": "integer",
+          "description": "Strictly earlier simulated steps searched for history operations only; default 168.",
+          "minimum": 1,
+          "maximum": 168
+        }
+      }
+    },
+    "RunRequest": {
+      "type": "object",
+      "description": "Ask Python to execute a check against the case transaction. Do not submit results or account IDs.",
+      "properties": {
+        "operation": {
+          "type": "string",
+          "description": "Check to execute and record.",
+          "enum": [
+            "transaction",
+            "score",
+            "sender_history",
+            "recipient_history"
+          ]
+        },
+        "limit": {
+          "type": "integer",
+          "description": "Maximum rows for history operations only; default 50.",
+          "minimum": 1,
+          "maximum": 100
+        },
+        "lookback_steps": {
+          "type": "integer",
+          "description": "Strictly earlier simulated steps searched for history operations only; default 168.",
+          "minimum": 1,
+          "maximum": 168
+        }
+      },
+      "required": [
+        "operation"
+      ],
+      "additionalProperties": false
+    },
+    "CheckResult": {
+      "type": "object",
+      "description": "Operation-specific result. Only fields applicable to this check are returned; absent/null when the check failed.",
+      "properties": {
+        "transaction_id": {
+          "type": "string",
+          "description": "Stable 32-character hexadecimal identifier of the scored transaction."
+        },
+        "source_sha256": {
+          "type": "string",
+          "description": "SHA-256 fingerprint of the source CSV, encoded as 64 hexadecimal characters."
+        },
+        "source_line_number": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Physical line number in the source CSV. It does not establish event order within a step."
+        },
+        "step": {
+          "type": "integer",
+          "format": "int64",
+          "description": "PaySim simulated time step. Transactions within the same step have no reliable ordering."
+        },
+        "type": {
+          "type": "string",
+          "description": "Transaction type recorded by PaySim."
+        },
+        "amount": {
+          "type": "string",
+          "description": "Original exact decimal amount as a string, without a currency assumption."
+        },
+        "name_orig": {
+          "type": "string",
+          "description": "Observed source account identifier."
+        },
+        "oldbalance_org": {
+          "type": "string",
+          "description": "Source account balance before the transaction, as an exact decimal string."
+        },
+        "name_dest": {
+          "type": "string",
+          "description": "Observed destination account identifier."
+        },
+        "oldbalance_dest": {
+          "type": "string",
+          "description": "Destination account balance before the transaction, as an exact decimal string."
+        },
+        "suspicion_score": {
+          "type": "number",
+          "format": "double",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Raw CatBoost suspicion score between zero and one. Not a calibrated fraud probability."
+        },
+        "threshold": {
+          "type": "number",
+          "format": "double",
+          "description": "Frozen global decision threshold, 0.3123179923852385. The agent must not modify it."
+        },
+        "alert": {
+          "type": "boolean",
+          "description": "True exactly when suspicion_score is greater than or equal to threshold. Does not establish fraud."
+        },
+        "model_version": {
+          "type": "string",
+          "description": "Frozen model configuration and artifact fingerprint prefix used for this score."
+        },
+        "policy_version": {
+          "type": "string",
+          "description": "Decision policy identifier, final_global_f1_v1."
+        },
+        "account_id": {
+          "type": "string",
+          "description": "Account derived from the case transaction for a history check."
+        },
+        "before_step": {
+          "type": "integer",
+          "description": "Exclusive cutoff derived from the case transaction; same-step activity is excluded."
+        },
+        "limit": {
+          "type": "integer",
+          "description": "Maximum rows for history operations only; default 50.",
+          "minimum": 1,
+          "maximum": 100
+        },
+        "lookback_steps": {
+          "type": "integer",
+          "description": "Strictly earlier simulated steps searched for history operations only; default 168.",
+          "minimum": 1,
+          "maximum": 168
+        },
+        "truncated": {
+          "type": "boolean",
+          "description": "Whether more history exists inside the searched window."
+        },
+        "transactions": {
+          "type": "array",
+          "description": "Earlier transactions involving the account in either role.",
+          "items": {
+            "$ref": "#/definitions/Transaction"
+          }
+        }
+      }
+    },
+    "CheckError": {
+      "type": "object",
+      "description": "Sanitized recorded tool error, not an HTTP error.",
+      "properties": {
+        "code": {
+          "type": "string",
+          "description": "Stable error category."
+        },
+        "message": {
+          "type": "string",
+          "description": "Human-readable failure explanation."
+        }
+      },
+      "required": [
+        "code",
+        "message"
+      ]
+    },
+    "RecordedCheck": {
+      "type": "object",
+      "description": "Persisted check outcome including failures.",
+      "properties": {
+        "run_id": {
+          "type": "string",
+          "description": "Backend-generated stable execution ID; cite this as an evidence reference.",
+          "pattern": "^[0-9a-f]{32}$"
+        },
+        "case_id": {
+          "type": "string",
+          "description": "Owning case ID.",
+          "pattern": "^[0-9a-f]{32}$"
+        },
+        "operation": {
+          "type": "string",
+          "description": "Executed check.",
+          "enum": [
+            "transaction",
+            "score",
+            "sender_history",
+            "recipient_history"
+          ]
+        },
+        "tool_version": {
+          "type": "string",
+          "description": "Backend tool version."
+        },
+        "parameters": {
+          "$ref": "#/definitions/CheckParameters"
+        },
+        "started_at": {
+          "type": "string",
+          "description": "UTC start timestamp."
+        },
+        "finished_at": {
+          "type": "string",
+          "description": "UTC completion timestamp, or null if incomplete.",
+          "x-nullable": true
+        },
+        "status": {
+          "type": "string",
+          "description": "Inspect this field even on HTTP 201. unavailable/failed means the check did not succeed.",
+          "enum": [
+            "running",
+            "succeeded",
+            "unavailable",
+            "failed"
+          ]
+        },
+        "result": {
+          "$ref": "#/definitions/CheckResult",
+          "x-nullable": true
+        },
+        "error": {
+          "$ref": "#/definitions/CheckError",
+          "x-nullable": true
+        },
+        "verification": {
+          "type": "string",
+          "description": "Execution provenance, not proof of fraud.",
+          "enum": [
+            "backend_executed",
+            "pending"
+          ]
+        },
+        "incomplete": {
+          "type": "boolean",
+          "description": "True when a run remains in progress or was interrupted."
+        }
+      },
+      "required": [
+        "run_id",
+        "case_id",
+        "operation",
+        "tool_version",
+        "parameters",
+        "started_at",
+        "finished_at",
+        "status",
+        "result",
+        "error",
+        "verification",
+        "incomplete"
+      ]
+    },
+    "CheckList": {
+      "type": "object",
+      "description": "Bounded list of recorded runs.",
+      "properties": {
+        "case_id": {
+          "type": "string",
+          "description": "Owning case.",
+          "pattern": "^[0-9a-f]{32}$"
+        },
+        "limit": {
+          "type": "integer",
+          "description": "Requested maximum rows."
+        },
+        "truncated": {
+          "type": "boolean",
+          "description": "Additional runs exist beyond this response."
+        },
+        "runs": {
+          "type": "array",
+          "description": "Recorded checks; inspect every status.",
+          "items": {
+            "$ref": "#/definitions/RecordedCheck"
+          }
+        }
+      },
+      "required": [
+        "case_id",
+        "limit",
+        "truncated",
+        "runs"
+      ]
+    },
+    "Report": {
+      "type": "object",
+      "description": "Versioned deterministic report generated from stored evidence; no model or tool is rerun.",
+      "properties": {
+        "report_id": {
+          "type": "string",
+          "description": "Saved report ID.",
+          "pattern": "^[0-9a-f]{32}$"
+        },
+        "case_id": {
+          "type": "string",
+          "description": "Owning case.",
+          "pattern": "^[0-9a-f]{32}$"
+        },
+        "version": {
+          "type": "integer",
+          "description": "Saved immutable report version.",
+          "minimum": 1
+        },
+        "generated_at": {
+          "type": "string",
+          "description": "UTC snapshot time."
+        },
+        "evidence_refs": {
+          "type": "array",
+          "description": "Backend run IDs cited by this snapshot.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "event_refs": {
+          "type": "array",
+          "description": "Caller-declaration IDs, if any, kept separate from executed evidence.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "body": {
+          "type": "object",
+          "description": "Structured facts, score, histories, recorded failures, missing checks and evidence references. Treat caller declarations as unverified.",
+          "additionalProperties": true
+        },
+        "markdown": {
+          "type": "string",
+          "description": "Full saved report in English. Cite its case ID, version and run references. Missing checks remain explicit; a report does not establish fraud."
+        }
+      },
+      "required": [
+        "report_id",
+        "case_id",
+        "version",
+        "generated_at",
+        "evidence_refs",
+        "event_refs",
+        "body",
+        "markdown"
+      ]
+    },
+    "ReportSummary": {
+      "type": "object",
+      "description": "Saved report metadata.",
+      "properties": {
+        "report_id": {
+          "type": "string",
+          "description": "Saved report ID.",
+          "pattern": "^[0-9a-f]{32}$"
+        },
+        "version": {
+          "type": "integer",
+          "description": "Saved immutable report version.",
+          "minimum": 1
+        },
+        "generated_at": {
+          "type": "string",
+          "description": "UTC snapshot time."
+        },
+        "evidence_refs": {
+          "type": "array",
+          "description": "Backend run IDs cited by this snapshot.",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "report_id",
+        "version",
+        "generated_at",
+        "evidence_refs"
+      ]
+    },
+    "ReportList": {
+      "type": "object",
+      "description": "Bounded saved-version list.",
+      "properties": {
+        "case_id": {
+          "type": "string",
+          "description": "Owning case.",
+          "pattern": "^[0-9a-f]{32}$"
+        },
+        "limit": {
+          "type": "integer",
+          "description": "Requested maximum rows."
+        },
+        "truncated": {
+          "type": "boolean",
+          "description": "More saved versions exist."
+        },
+        "reports": {
+          "type": "array",
+          "description": "Saved reports, newest first.",
+          "items": {
+            "$ref": "#/definitions/ReportSummary"
+          }
+        }
+      },
+      "required": [
+        "case_id",
+        "limit",
+        "truncated",
+        "reports"
+      ]
+    }
+  },
+  "consumes": [
+    "application/json"
+  ]
+}

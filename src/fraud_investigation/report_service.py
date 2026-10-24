@@ -1,4 +1,4 @@
-"""Rapports déterministes fondés sur des résultats backend conservés."""
+"""Deterministic reports grounded in persisted backend tool results."""
 
 from __future__ import annotations
 
@@ -7,7 +7,9 @@ import uuid
 from contextlib import closing
 from pathlib import Path
 
-from fraud_investigation.case_service import CaseNotFound, _connect, _event, _utc
+from fraud_investigation.case_service import (
+    MIGRATION, CaseNotFound, _cached, _connect, _digest, _event, _remember, _utc,
+)
 from fraud_investigation.evidence_service import RUN_INDEX, RUN_TABLE, _row
 
 
@@ -62,9 +64,9 @@ def _make_body(case_id: str, transaction_id: str,
     if score_run is not None:
         score = {**score_run["result"], "evidence_ref": score_run["run_id"],
                  "interpretation": (
-                     "Score au moins égal au seuil, alerte de suspicion ; aucune fraude confirmée."
+                     "Score at or above the threshold; suspicion alert, not confirmed fraud."
                      if score_run["result"]["alert"] else
-                     "Score sous le seuil ; la légitimité n'est pas confirmée."
+                     "Score below threshold; legitimacy is not established."
                  )}
 
     histories = []
@@ -87,22 +89,22 @@ def _make_body(case_id: str, transaction_id: str,
     incomplete = [{"evidence_ref": run["run_id"], "operation": run["operation"],
                    "status": run["status"]} for run in runs if run["incomplete"]]
     missing = []
-    for operation, label in (("transaction", "faits de la transaction"),
-                             ("score", "score ML"),
-                             ("sender_history", "historique de l'émetteur"),
-                             ("recipient_history", "historique du destinataire")):
+    for operation, label in (("transaction", "transaction facts"),
+                             ("score", "ML score"),
+                             ("sender_history", "sender history"),
+                             ("recipient_history", "recipient history")):
         if operation not in successful:
-            missing.append(label + " indisponible ou non exécuté")
+            missing.append(label + " unavailable or not executed")
 
     limits = [{"evidence_ref": h["evidence_ref"],
-               "description": "Historique borné à " + str(h["lookback_steps"])
-               + " steps et " + str(h["returned_count"]) + " ligne(s) rendue(s)"
-               + (" ; résultats tronqués" if h["truncated"] else "")}
+               "description": "History bounded to " + str(h["lookback_steps"])
+               + " steps and " + str(h["returned_count"]) + " returned row(s)"
+               + ("; results truncated" if h["truncated"] else "")}
               for h in histories]
     if score is not None:
         limits.append({"evidence_ref": score["evidence_ref"],
-                       "description": "Score de suspicion non calibré comme probabilité ; "
-                                      "l'alerte est un dépassement du seuil, pas une preuve de fraude"})
+                       "description": "Suspicion score is not a calibrated probability; "
+                                      "an alert is a threshold crossing, not proof of fraud"})
 
     comments = []
     caller_results = []
@@ -125,54 +127,54 @@ def _make_body(case_id: str, transaction_id: str,
 
 
 def _markdown(body: dict[str, object]) -> str:
-    lines = ["# Rapport d'enquête", "", f"Dossier : `{body['case_id']}`",
-             f"Transaction : `{body['transaction_id']}`", "", "## Faits vérifiés"]
+    lines = ["# Investigation report", "", f"Case: `{body['case_id']}`",
+             f"Transaction: `{body['transaction_id']}`", "", "## Recorded facts"]
     if body["provenance"] is None:
-        lines.append("- Provenance : non disponible dans les résultats exécutés.")
+        lines.append("- Provenance: unavailable in recorded results.")
     else:
         p = body["provenance"]
-        lines.append(f"- Provenance : SHA-256 `{p['source_sha256']}`, ligne {p['source_line_number']} "
-                     f"[résultat `{p['evidence_ref']}`].")
+        lines.append(f"- Provenance: SHA-256 `{p['source_sha256']}`, source line {p['source_line_number']} "
+                     f"[run `{p['evidence_ref']}`].")
     for fact in body["facts"]:
-        lines.append(f"- {fact['name']} : {fact['value']} [résultat `{fact['evidence_ref']}`].")
-    lines.extend(["", "## Score ML"])
+        lines.append(f"- {fact['name']} : {fact['value']} [run `{fact['evidence_ref']}`].")
+    lines.extend(["", "## ML score"])
     if body["score"] is None:
-        lines.append("- Score indisponible ou non exécuté.")
+        lines.append("- Score unavailable or not executed.")
     else:
         score = body["score"]
-        lines.append(f"- Score {score['suspicion_score']}, seuil {score['threshold']}, "
-                     f"alerte {str(score['alert']).lower()} [résultat `{score['evidence_ref']}`].")
-        lines.append(f"- Modèle `{score['model_version']}`, politique `{score['policy_version']}` "
-                     f"[résultat `{score['evidence_ref']}`].")
-        lines.append(f"- {score['interpretation']} [résultat `{score['evidence_ref']}`].")
-    lines.extend(["", "## Historiques"])
+        lines.append(f"- Score {score['suspicion_score']}, threshold {score['threshold']}, "
+                     f"alert {str(score['alert']).lower()} [run `{score['evidence_ref']}`].")
+        lines.append(f"- Model `{score['model_version']}`, policy `{score['policy_version']}` "
+                     f"[run `{score['evidence_ref']}`].")
+        lines.append(f"- {score['interpretation']} [run `{score['evidence_ref']}`].")
+    lines.extend(["", "## Account histories"])
     if not body["histories"]:
-        lines.append("- Aucun historique enregistré.")
+        lines.append("- No recorded history.")
     for history in body["histories"]:
-        lines.append(f"- {history['operation']} : compte `{history['account_id']}`, "
-                     f"{history['returned_count']} ligne(s), before_step={history['before_step']}, "
-                     f"fenêtre={history['lookback_steps']}, troncature={str(history['truncated']).lower()} "
-                     f"[résultat `{history['evidence_ref']}`].")
-    lines.extend(["", "## Vérifications et limites"])
+        lines.append(f"- {history['operation']} : account `{history['account_id']}`, "
+                     f"{history['returned_count']} row(s), before_step={history['before_step']}, "
+                     f"lookback_steps={history['lookback_steps']}, truncated={str(history['truncated']).lower()} "
+                     f"[run `{history['evidence_ref']}`].")
+    lines.extend(["", "## Checks and limitations"])
     for check in body["checks"]:
-        lines.append(f"- `{check['operation']}` : {check['status']} [résultat `{check['run_id']}`].")
+        lines.append(f"- `{check['operation']}` : {check['status']} [run `{check['run_id']}`].")
     for limit in body["limits"]:
-        lines.append(f"- {limit['description']} [résultat `{limit['evidence_ref']}`].")
-    lines.extend(["", "## Erreurs et informations manquantes"])
+        lines.append(f"- {limit['description']} [run `{limit['evidence_ref']}`].")
+    lines.extend(["", "## Errors and missing information"])
     for error in body["errors"]:
         lines.append(f"- {error['operation']} : {error['error']['message']} "
-                     f"[résultat `{error['evidence_ref']}`].")
+                     f"[run `{error['evidence_ref']}`].")
     for pending in body["incomplete"]:
-        lines.append(f"- {pending['operation']} : exécution en cours ou interrompue "
-                     f"[résultat `{pending['evidence_ref']}`].")
+        lines.append(f"- {pending['operation']} : run in progress or interrupted "
+                     f"[run `{pending['evidence_ref']}`].")
     for missing in body["missing"]:
         lines.append(f"- {missing}.")
-    lines.extend(["", "## Déclarations de l'appelant, non vérifiées"])
+    lines.extend(["", "## Caller declarations, unverified"])
     for event in body["comments"] + body["caller_submitted_results"]:
-        lines.append(f"- {event['event_type']} par {event['origin']} [événement `{event['event_id']}`] :")
+        lines.append(f"- {event['event_type']} by {event['origin']} [event `{event['event_id']}`] :")
         lines.append("    " + json.dumps(event["content"], ensure_ascii=False, sort_keys=True))
     if not body["comments"] and not body["caller_submitted_results"]:
-        lines.append("- Aucune déclaration de l'appelant.")
+        lines.append("- No caller declarations.")
     return "\n".join(lines) + "\n"
 
 
@@ -184,9 +186,17 @@ def _report(row) -> dict[str, object]:
             "body": json.loads(row["body_json"]), "markdown": row["markdown"]}
 
 
-def generate_report(path: Path | str, case_id: str) -> dict[str, object]:
+def generate_report(path: Path | str, case_id: str, *, key: str | None = None) -> dict[str, object]:
+    """Persist a snapshot; an optional retry key reuses that exact snapshot."""
     with closing(_connect(path)) as connection:
         connection.execute("BEGIN IMMEDIATE")
+        operation, digest = f"generate_report:{case_id}", _digest({"case_id": case_id})
+        if key is not None:
+            connection.execute(MIGRATION)
+            cached = _cached(connection, operation, key, digest)
+            if cached is not None:
+                connection.commit()
+                return cached
         connection.execute(RUN_TABLE)
         connection.execute(RUN_INDEX)
         connection.execute(REPORT_TABLE)
@@ -223,8 +233,11 @@ def generate_report(path: Path | str, case_id: str) -> dict[str, object]:
         row = connection.execute(
             "SELECT * FROM investigation_reports WHERE report_id = ?", (report_id,)
         ).fetchone()
+        result = _report(row)
+        if key is not None:
+            _remember(connection, operation, key, digest, result)
         connection.commit()
-        return _report(row)
+        return result
 
 
 def get_report(path: Path | str, case_id: str, version: int) -> dict[str, object]:

@@ -71,11 +71,11 @@ class ReportApiTests(unittest.TestCase):
             self.assertNotIn("newbalance_orig", [fact["name"] for fact in body["facts"]])
             self.assertNotIn("isFraud", report1["markdown"])
             self.assertEqual(body["errors"][0]["evidence_ref"], unavailable["run_id"])
-            self.assertIn("score ML indisponible ou non exécuté", body["missing"])
+            self.assertIn("ML score unavailable or not executed", body["missing"])
             self.assertEqual(body["comments"][0]["event_id"], comment["event_id"])
             self.assertEqual(body["caller_submitted_results"][0]["event_id"], claimed["event_id"])
             self.assertNotIn("fraude prouvée", str(body["facts"]))
-            self.assertIn("Déclarations de l'appelant, non vérifiées", report1["markdown"])
+            self.assertIn("Caller declarations, unverified", report1["markdown"])
             self.assertEqual(client.get(f"/cases/{case_id}/reports/1/markdown").status_code, 200)
             self.assertEqual(client.get(f"/cases/{case_id}/reports/1/markdown").text,
                              report1["markdown"])
@@ -109,10 +109,10 @@ class ReportApiTests(unittest.TestCase):
             self.assertEqual(score["evidence_ref"], score_run["run_id"])
             self.assertEqual(score["threshold"], FINAL_THRESHOLD)
             self.assertEqual(score["model_version"], "simulated_test_model")
-            self.assertIn("aucune fraude confirmée", score["interpretation"])
-            self.assertIn("non calibré", str(report["body"]["limits"]))
+            self.assertIn("not confirmed fraud", score["interpretation"])
+            self.assertIn("not a calibrated", str(report["body"]["limits"]))
             self.assertIn("simulated_test_model", report["markdown"])
-            self.assertIn("faits de la transaction indisponible ou non exécuté",
+            self.assertIn("transaction facts unavailable or not executed",
                           report["body"]["missing"])
 
     def test_incomplete_run_is_not_presented_as_a_fact(self):
@@ -130,7 +130,7 @@ class ReportApiTests(unittest.TestCase):
             self.assertEqual(report["body"]["facts"], [])
             self.assertIsNone(report["body"]["provenance"])
             self.assertEqual(len(report["body"]["incomplete"]), 1)
-            self.assertIn("exécution en cours ou interrompue", report["markdown"])
+            self.assertIn("run in progress or interrupted", report["markdown"])
 
 
 if __name__ == "__main__":
