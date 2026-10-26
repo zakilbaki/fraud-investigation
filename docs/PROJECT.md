@@ -1,5 +1,22 @@
 # Cadrage du prototype Fraud Investigation
 
+## Copilot flows and acceptance update, 26 October 2026
+
+The configured deployment currently uses one Fraud Investigator agent. A separate
+coordinator remains planned. The owner has manually demonstrated saved case/check/
+report operations, cross-conversation recovery, interactive selection and rejection
+of fabricated evidence. Five direct-tool agent flows are published in the owner's
+environment; they are not exported as deployable definitions in this repository.
+
+Local connector failure handling through Try/Catch/Respond preserved partial
+successes in combined lookup and scoring requests. Correct response Run after
+settings are essential: Catch succeeded or skipped. The latest combined history
+test returned expected anchored histories, but no usable direct-account payload;
+that flow's response binding remains unresolved. Default numeric input selection
+also needs checking. Case/report flow wrappers and separate-agent delegation are
+not implemented. This is a documentation-only update based on supplied manual
+observations, not a new backend or ML evaluation. See [COPILOT_FLOWS.md](COPILOT_FLOWS.md).
+
 ## Case discovery by transaction, 24 October 2026
 
 The protected gateway adds `GET /cases?transaction_id=...`, operation

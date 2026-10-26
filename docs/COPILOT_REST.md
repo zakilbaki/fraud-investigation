@@ -17,7 +17,7 @@ Direct operations:
 
 The gateway now exposes the closed case/evidence/report interface, but not caller event submission, arbitrary SQL, `/docs`, `/openapi.json` or a public health route. Scoring's exact prior-recipient receipt count is separate from these bounded account histories and is unchanged.
 
-Lookup and scoring have been manually demonstrated together in Copilot Studio. The three history operations have also been manually exercised by the owner. The new case tools still require manual Copilot import. The full backend investigation tools are documented in [API.md](API.md).
+The owner has connected case/check/report tools and manually exercised saved investigations. Direct tools are now wrapped by five published agent flows. Lookup and scoring preserve partial successes in demonstrated combined requests; anchored histories returned expected results. The latest direct-account flow test returned no usable payload and is not accepted end to end. See [current flow configuration and acceptance status](COPILOT_FLOWS.md). Historical verification counts below refer to the backend implementation stages, not a new cloud evaluation. The full backend tools are documented in [API.md](API.md).
 
 ## Authentication and startup
 

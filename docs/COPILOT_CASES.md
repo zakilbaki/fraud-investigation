@@ -7,9 +7,17 @@ They reuse the local services; no second agent, model training or automatic
 Copilot configuration is included. Existing lookup/scoring/history operations
 remain available. The frozen model, feature definitions and threshold are unchanged.
 
-The owner has manually verified the five original tools, interactive transaction
-selection and an error-explanation prompt. These new case tools have been verified
-locally, but still require manual import and acceptance testing in Copilot Studio.
+The owner subsequently connected these case tools in Copilot Studio and supplied
+manual demonstrations of case creation, four recorded checks, saved report generation,
+and retrieval by transaction ID in a new conversation. The agent also rejected
+fabricated evidence and unsupported case closure. These observations do not certify
+every retry, concurrency or no-write property of cloud orchestration.
+
+The five original direct operations now have published agent flows; the latest
+direct-account history flow still lacks a usable response payload. Case/report
+operations have not yet been wrapped in those flows. See the
+[current flow and acceptance record](COPILOT_FLOWS.md). Historical backend checks
+below remain separate from these owner-supplied cloud observations.
 
 ## Tools
 
@@ -80,8 +88,9 @@ exists; it does not perform a hidden schema migration. A synthetic EXPLAIN QUERY
 PLAN check confirms index use without a temporary sort once installed. No speed
 improvement on the real dataset is claimed.
 
-The **search → create/resume** orchestration remains to be configured in Copilot.
-These are separate requests: two callers can both observe an empty search and
+Search/create and saved-investigation recovery were manually demonstrated in
+Copilot; a deterministic search/resume workflow is not supplied in this repository.
+These remain separate requests: two callers can both observe an empty search and
 create different cases with different keys. This change does not add a unique
 active-case rule or atomic find-or-create. Old results and report versions are
 preserved; the agent must distinguish retrieval, completion and deliberate reanalysis.
