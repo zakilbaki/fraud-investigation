@@ -248,3 +248,20 @@ to the environment's existing license/credits.
    successfully saved, but the underlying model was unavailable. Both facts matter.
 3. **Why reuse a report key?** A network retry should return the original snapshot.
    A deliberate update gets a new key and a new version; old reports stay intact.
+
+## Connector response compatibility, 21 November 2026
+
+The Power Platform runtime rejected `error: null` even after importing an inline
+`x-nullable` schema and testing a new action. The protected gateway now omits
+absent `error`, `result` and `finished_at` fields on check creation, reading and
+listing, and absent `latest_report` on case searches. The Swagger makes these
+fields optional and retains their types when present. Consumers must inspect
+`status` and `incomplete`; a missing result is not an empty successful result.
+Stored evidence, the local case API and saved report snapshots are unchanged.
+
+Deploy both changes: restart the gateway process and import a freshly exported
+cases Swagger with the current tunnel host. Importing only the Swagger or only
+restarting the server does not align the response contract. Synthetic tests cover
+success, unavailable and interrupted checks, read/list parity, unchanged stored
+nulls and searches with/without reports. Cloud acceptance must still be verified
+with the isolated read action, followed by list and agent tests.

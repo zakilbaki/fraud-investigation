@@ -915,7 +915,7 @@
     },
     "CheckResult": {
       "type": "object",
-      "description": "Operation-specific result. Only fields applicable to this check are returned; absent/null when the check failed.",
+      "description": "Operation-specific result, omitted when the check has no result. Only applicable fields are returned.",
       "properties": {
         "transaction_id": {
           "type": "string",
@@ -1071,8 +1071,7 @@
         },
         "finished_at": {
           "type": "string",
-          "description": "UTC completion timestamp, or null if incomplete.",
-          "x-nullable": true
+          "description": "Omitted when unavailable. When present, contains finished at."
         },
         "status": {
           "type": "string",
@@ -1086,11 +1085,11 @@
         },
         "result": {
           "$ref": "#/definitions/CheckResult",
-          "x-nullable": true
+          "description": "Omitted when unavailable. When present, contains result."
         },
         "error": {
           "$ref": "#/definitions/CheckError",
-          "x-nullable": true
+          "description": "Omitted when unavailable. When present, contains error."
         },
         "verification": {
           "type": "string",
@@ -1112,10 +1111,7 @@
         "tool_version",
         "parameters",
         "started_at",
-        "finished_at",
         "status",
-        "result",
-        "error",
         "verification",
         "incomplete"
       ]
@@ -1333,7 +1329,7 @@
         },
         "latest_report": {
           "$ref": "#/definitions/LatestReportReference",
-          "x-nullable": true
+          "description": "Omitted when unavailable. When present, contains latest report."
         }
       },
       "required": [
@@ -1341,8 +1337,7 @@
         "transaction_id",
         "status",
         "created_at",
-        "updated_at",
-        "latest_report"
+        "updated_at"
       ]
     },
     "CaseSearchResponse": {

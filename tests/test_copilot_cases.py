@@ -93,7 +93,7 @@ class CopilotCasesTests(unittest.TestCase):
             checks={op:self.check(client,case,op).json() for op in
                     ['transaction','score','sender_history','recipient_history']}
             self.assertEqual(checks['score']['status'],'unavailable')
-            self.assertIsNone(checks['score']['result'])
+            self.assertNotIn('result', checks['score'])
             for op in ['sender_history','recipient_history']:
                 self.assertEqual(checks[op]['status'],'succeeded')
                 self.assertTrue(all(t['step']<3 for t in checks[op]['result']['transactions']))
@@ -198,6 +198,39 @@ class CopilotCasesTests(unittest.TestCase):
             report=client.post(f'/cases/{case}/reports',headers=self.headers('atomic')).json()
             self.assertEqual(report['version'],1)
             self.assertEqual(client.post(f'/cases/{case}/reports',headers=self.headers('atomic')).json(),report)
+
+    def test_connector_omits_absent_fields_without_changing_stored_evidence(self):
+        from fraud_investigation.evidence_service import get_run
+        with TestClient(self.app()) as client:
+            case = self.create(client)['case_id']
+            success = self.check(client, case, 'transaction').json()
+            failure = self.check(client, case, 'score').json()
+            self.assertNotIn('error', success)
+            self.assertIsInstance(success['result'], dict)
+            self.assertNotIn('result', failure)
+            self.assertIsInstance(failure['error'], dict)
+            def stop():
+                raise RuntimeError('synthetic interruption')
+            with self.assertRaises(RuntimeError):
+                execute_and_record(self.database, case, 'pending', 'transaction', {}, after_claim=stop)
+            rows = client.get(f'/cases/{case}/runs', headers=self.auth).json()['runs']
+            pending = next(row for row in rows if row['status'] == 'running')
+            for field in ('result', 'error', 'finished_at'):
+                self.assertNotIn(field, pending)
+            for row in rows:
+                read = client.get(f"/cases/{case}/runs/{row['run_id']}", headers=self.auth)
+                self.assertEqual(read.status_code, 200)
+                self.assertEqual(read.json(), row)
+            self.assertIsNone(get_run(self.database, case, success['run_id'])['error'])
+            self.assertIsNone(get_run(self.database, case, failure['run_id'])['result'])
+            search = client.get('/cases', params={'transaction_id': self.tx}, headers=self.auth).json()
+            self.assertNotIn('latest_report', search['cases'][0])
+        spec = json.loads(CASES_TEMPLATE.read_text())
+        for name, fields in [('RecordedCheck', ('error', 'result', 'finished_at')),
+                             ('CaseSearchItem', ('latest_report',))]:
+            for field in fields:
+                self.assertNotIn(field, spec['definitions'][name]['required'])
+                self.assertNotIn('x-nullable', spec['definitions'][name]['properties'][field])
 
     def test_swagger_describes_exact_protected_route_surface_and_valid_references(self):
         p=self.root/'cases.swagger.json';export('https://demo.example.org',p,tool='cases')

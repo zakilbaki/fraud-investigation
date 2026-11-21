@@ -66,7 +66,7 @@ class CaseSearchTests(unittest.TestCase):
             self.assertNotIn(other['case_id'],[c['case_id'] for c in result['cases']])
             self.assertEqual(result['cases'][0]['latest_report'],{
                 k:report2[k] for k in ('report_id','version','generated_at')})
-            self.assertTrue(all(c['latest_report'] is None for c in result['cases'][1:]))
+            self.assertTrue(all('latest_report' not in c for c in result['cases'][1:]))
             # A saved partial report does not change the case to closed or imply completeness.
             self.assertEqual(result['cases'][0]['status'],'open')
             self.assertTrue(report2['body']['missing'])
@@ -140,7 +140,7 @@ class CaseSearchTests(unittest.TestCase):
             before=self.digest()
             result=self.search(client).json()
             self.assertEqual(result['cases'][0]['case_id'],case)
-            self.assertIsNone(result['cases'][0]['latest_report'])
+            self.assertNotIn('latest_report', result['cases'][0])
             self.assertEqual(self.digest(),before)
 
     def test_export_search_contract_and_no_write_side_effects(self):

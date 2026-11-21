@@ -76,6 +76,7 @@ def copilot_case_router(database_path: Path | str,
     router = APIRouter()
 
     @router.get("/cases", response_model=CaseSearchResponse,
+                response_model_exclude_none=True,
                 operation_id="findInvestigationCasesByTransactionId")
     def find_cases(
         transaction_id: Annotated[str, Query(pattern=r"^[0-9a-fA-F]{32}$")],
@@ -97,6 +98,7 @@ def copilot_case_router(database_path: Path | str,
             return get_case(database_path, case_id)
 
     @router.post("/cases/{case_id}/runs", status_code=201, response_model=RunResponse,
+                 response_model_exclude_none=True,
                  operation_id="executeRecordedCheck")
     def new_run(case_id: Identifier, request: RunRequest, idempotency_key: RequestKey):
         with case_errors():
@@ -104,12 +106,14 @@ def copilot_case_router(database_path: Path | str,
                                       request.operation, request.parameters(), score_provider())
 
     @router.get("/cases/{case_id}/runs", response_model=RunListResponse,
+                response_model_exclude_none=True,
                 operation_id="listRecordedChecks")
     def read_runs(case_id: Identifier, limit: int = Query(50, ge=1, le=100)):
         with case_errors():
             return list_runs(database_path, case_id, limit)
 
     @router.get("/cases/{case_id}/runs/{run_id}", response_model=RunResponse,
+                response_model_exclude_none=True,
                 operation_id="getRecordedCheck")
     def read_run(case_id: Identifier, run_id: Identifier):
         with case_errors():
