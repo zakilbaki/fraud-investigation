@@ -1,0 +1,31 @@
+Scoring Interpretation
+Document ID: SCO
+Version: 1.0.0
+Date: 2026-11-24
+Owner: Fraud Investigation prototype maintainer
+Status: Demonstration baseline prepared for testing; cloud acceptance pending.
+Authority: Internal prototype procedure, not a banking regulation or legal advice.
+Scope: Synthetic PaySim investigation prototype only.
+
+SCO-01 | Meaning of a suspicion score [Verified model limitation]
+The model returns a suspicion score. Its calibration as a fraud probability has not been established. Do not express a score of 0.8 as an 80% probability of fraud. An alert is a threshold comparison, not confirmed fraud. A non-alert is not proof of legitimacy and does not authorize closing a case or abandoning a requested investigation.
+
+SCO-02 | Frozen policy [Verified technical contract]
+The prototype's frozen threshold is 0.3123179923852385. The decision rule is alert = (suspicion_score >= threshold), including equality. Model configuration: cat_slow200. Policy identifier: final_global_f1_v1. The deployed score response includes model_version; use the actual returned version instead of guessing a fingerprint from the model configuration.
+The Policy Agent must not change the threshold, re-score a transaction or invent an alternative decision policy. A request to lower the threshold is outside this procedure and requires a separate model-governance change, not a conversational override.
+
+SCO-03 | Evidence needed to discuss a score [Internal demo policy]
+For a saved scoring result, request the case/transaction association, run ID, operation, status, result payload and model/policy versions. For a direct score, use its transaction ID and returned fields but do not invent a saved run ID.
+A successful transport or a completed flow is not enough. An unavailable, failed or running scoring check supplies no successful score. Do not replace a missing score with zero, false, or a remembered value. If an older report is used as explicitly permitted historical evidence, identify its version and avoid calling it a successful direct read.
+
+SCO-04 | Model scope and data limits [Verified model limitation]
+The model was trained and evaluated on simulated PaySim data. Its features use transaction type, amount, pre-transaction origin balance, simulated time features, a balance ratio and prior recipient receipts. Runtime tools do not expose ground-truth fraud labels for investigative decisions.
+Aggregate evaluation performance does not establish that an individual transaction is fraudulent or legitimate. No real-world deployment performance, calibrated confidence or generalization guarantee is established here. Customer identity, occupation, jurisdiction, sanctions status, motive and real-world currency are not supplied by the exposed transaction tools.
+
+SCO-05 | Relationship to the investigation procedure [Internal demo policy]
+For a full recorded investigation, a low score does not waive the checks in INV-01. For score-only requests, do not expand the task into a full investigation. Describe an alert as a reason for attention within the requested scope, not authority to freeze funds, notify a regulator or make an adverse decision.
+If supplied score, threshold and alert are inconsistent, identify the inconsistency and request the actual evidence through the coordinator/investigator. Do not silently repair the record or claim an API call occurred.
+
+Provenance
+Technical and model references: repository docs/ML_MODEL_CARD.md; docs/ML_FINAL_FREEZE.md; docs/results/ml_final_manifest.json; src/fraud_investigation/scoring_service.py. Checked at a41390d.
+The procedural requirements in SCO-03 and SCO-05 are internal demo choices. No public authority endorses this model or its numeric threshold.

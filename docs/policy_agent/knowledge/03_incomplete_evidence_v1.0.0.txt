@@ -1,0 +1,35 @@
+Incomplete Evidence and Technical Failures
+Document ID: EVD
+Version: 1.0.0
+Date: 2026-11-24
+Owner: Fraud Investigation prototype maintainer
+Status: Demonstration baseline prepared for testing; cloud acceptance pending.
+Authority: Internal prototype procedure, not a banking regulation or legal advice.
+Scope: Synthetic PaySim investigation prototype only.
+
+EVD-01 | Separate three levels of success [Verified contract and internal handling rule]
+HTTP 200/201 means a request or record operation completed at the API level. A completed flow may have returned a caught error. A recorded check succeeds only when its actual status and result support success.
+Read status: succeeded, failed, unavailable or running. Also inspect incomplete and the applicable result/error fields. Since the connector compatibility correction, error, result and finished_at can be omitted when absent. Missing error alone is not proof of success; missing result is not an empty successful result.
+
+EVD-02 | Interpret empty and truncated histories [Internal demo policy]
+A successful empty history means no matching rows in the stated window, not lifetime inactivity. Report the account, bounds, returned count and truncation. Missing payload or Done:true without history fields does not establish zero rows.
+truncated=true means the returned rows do not exhaust the queried window. State that limitation before drawing conclusions. Increasing limit up to 100 is possible when authorized and useful; there is no implemented pagination guarantee. Changing the window changes the question and must be disclosed. A step-1 anchor can legitimately have no strictly earlier steps.
+
+EVD-03 | Distinguish absence from failure [Internal demo policy]
+A confirmed backend not-found response establishes absence for the requested identifier in that service. Authentication errors, tunnel failures, timeouts, connector schema errors and unknown failures do not establish absence. Preserve independent successful results and list each failure separately.
+For recorded operations, obtain the run status and error information if available. For a response validation failure, an API log with HTTP 200 does not show that the connector accepted the payload. Do not reconstruct missing evidence from conversational expectations.
+
+EVD-04 | Retry without duplicate writes [Verified contract and internal handling rule]
+Use one idempotency key per logical write; preserve it and the same content on technical retries. A new key can create new records. A reused key with changed content produces a conflict. A running/interrupted run may also produce a conflict and must be inspected, not blindly retried with fresh keys.
+A timeout after a write leaves the outcome uncertain. Recommend reconciliation with stored records and the original key. The Policy Agent offers guidance only; it does not perform retries. Reanalysis intentionally creating new runs is a distinct authorized task.
+
+EVD-05 | Version and reference discipline [Internal demo policy]
+Use the exact requested report version. Do not substitute latest without saying so and obtaining clarification where needed. Verify required evidence references for the requested analysis. A saved report is a snapshot and may not include later checks. A report can exist even when some checks failed.
+A missing successful result, interrupted run or truncated history must be recorded as a limitation. A partial report may be prepared when requested, but it cannot be presented as a complete full investigation under INV-01. A referenced run belonging to a different case is not acceptable evidence for the requested case.
+
+EVD-06 | Procedural next step [Internal demo policy]
+State what is known, what is unavailable, why it matters and the next bounded action for the investigator or a human. Do not assert that a missing mandatory check has been completed. Do not erase a successful result merely because another operation failed. Refer to HND for human handoff criteria.
+
+Provenance
+Technical references: repository docs/COPILOT_CASES.md (including the 21 November compatibility correction); src/fraud_investigation/copilot_case_api.py; src/fraud_investigation/evidence_service.py; src/fraud_investigation/report_service.py. Checked at a41390d.
+Handling and presentation rules are internal demonstration policy, not external reporting law.

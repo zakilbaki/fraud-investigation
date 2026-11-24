@@ -1,0 +1,37 @@
+Investigation Procedure
+Document ID: INV
+Version: 1.0.0
+Date: 2026-11-24
+Owner: Fraud Investigation prototype maintainer
+Status: Demonstration baseline prepared for testing; cloud acceptance pending.
+Authority: Internal prototype procedure, not a banking regulation or legal advice.
+Scope: Synthetic PaySim investigation prototype only.
+
+INV-01 | Select the requested scope [Internal demo policy]
+A lookup-only request requires transaction facts, not scoring or persistent writes.
+A score-only request requires the returned score, threshold, alert, model and policy versions; it does not require a saved case.
+A history-only request requires the requested account context, searched bounds, returned rows or count, and truncation status.
+A saved-case consultation requires only the requested stored records.
+A full recorded investigation requires the four recorded check types transaction, score, sender_history and recipient_history, followed by an evidence-linked report when generation is authorized. This four-check baseline is our demo convention, not an AUSTRAC requirement. Mark incomplete checks explicitly; do not make up results to satisfy the baseline.
+Ask for the intended scope when it materially changes whether records will be written. A procedural question is not authorization to execute that procedure.
+
+INV-02 | Find or reuse a case [Internal demo policy and technical capability]
+For an authorized recorded investigation, first search by the exact transaction ID. A successful empty search permits creation under this demo policy. A failed or truncated search does not prove that no case exists. Reuse the matching case where unambiguous; if several cases are plausible, request selection. Verify the case-to-transaction association before using its evidence.
+The API technically permits multiple cases for a transaction. The search-before-create restriction is an agent workflow policy, not a database uniqueness guarantee. A two-request search/create sequence is not atomic.
+
+INV-03 | Establish the evidence scope [Internal demo policy]
+Record the transaction ID, case ID where applicable, requested operations, requested history bounds and intended report version. For reanalysis, identify which newly returned run IDs must appear in the report. For retrieval, do not silently execute new checks. For a technical retry, preserve the original idempotency key and identical request content.
+An older successful run is saved evidence, not proof that a newly requested check was executed. A report containing older and newer runs is not inherently wrong; verify the required references rather than rejecting all historical evidence.
+
+INV-04 | History bounds [Verified technical contract]
+History uses max(1, before_step - lookback_steps) <= step < before_step. The anchor step is excluded. Anchored sender/recipient tools derive the account and cutoff from the transaction. Direct account history requires an explicit account ID and cutoff.
+lookback_steps is 1 through 168, default 168. limit is 1 through 100, default 50. Defaults apply only when unspecified; preserve valid explicit values. These are tool bounds, not legal thresholds. Ask for the direct-account cutoff if unknown.
+Both anchored histories include incoming and outgoing transactions involving the selected account. Sender and recipient describe the account's role in the anchor transaction, not a filter on the direction of every history row. Do not infer a reliable order within a step or convert simulated steps to unsupported calendar dates.
+
+INV-05 | Required procedural response [Internal demo policy]
+When asked what to do, return the requested scope, applicable checks, inputs needed, available versus missing capabilities and the relevant policy citations. When discussing a specific case based only on supplied text, label it supplied context, not independently verified evidence. The Policy Agent does not inspect the database.
+A completed report is not a fraud verdict or a case-closure event. Apply SCO for scoring, EVD for incomplete evidence, and HND for human handoff.
+
+Provenance
+Internal choices: INV-01, INV-02 workflow restriction, INV-03 and INV-05 were authored for this demonstration.
+Technical references: repository docs/COPILOT_CASES.md; docs/COPILOT_FLOWS.md; src/fraud_investigation/history_api.py; src/fraud_investigation/evidence_service.py; src/fraud_investigation/copilot_case_api.py. Checked against code at a41390d. Historical status paragraphs in older docs are not the authority for current deployment status.

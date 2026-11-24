@@ -1,0 +1,25 @@
+{
+  "corpus_version": "1.0.0",
+  "date": "2026-11-24",
+  "language": "en",
+  "technical_baseline": "a41390d",
+  "cloud_acceptance": "not_run",
+  "knowledge_files": [
+    {
+      "file": "knowledge/01_investigation_procedure_v1.0.0.txt",
+      "sha256": "53dd680df51321743d9e79749e4bfa983f5c12ae4c402e505feb288153ba6a79"
+    },
+    {
+      "file": "knowledge/02_scoring_interpretation_v1.0.0.txt",
+      "sha256": "d96538226dc196a182572865868b217b28fe04ee0426aeecc55d0ac1ea442146"
+    },
+    {
+      "file": "knowledge/03_incomplete_evidence_v1.0.0.txt",
+      "sha256": "6dc6f45180cbcf4f93b8aef0bbf6dcd4571203d18d1ae14214f6a09b2e66fad9"
+    },
+    {
+      "file": "knowledge/04_human_handoff_v1.0.0.txt",
+      "sha256": "14cd9d78fe853da5658b683e6edcfa1ec67fca29ce8065227c5a3a9713fbfed0"
+    }
+  ]
+}

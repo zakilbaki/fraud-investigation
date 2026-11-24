@@ -1,5 +1,31 @@
 # Cadrage du prototype Fraud Investigation
 
+## Policy Agent knowledge baseline, 24 November 2026
+
+The owner selected a document-grounded Investigation Policy Agent instead of the
+proposed Evidence Reviewer. [The English corpus](policy_agent/README.md) contains
+four versioned internal demonstration procedures, separately labeled technical
+constraints, and one short attributed AUSTRAC educational reference. It does not
+claim to implement a real institution's compliance policy. Configuration text
+and 20 manual acceptance scenarios are separate from uploadable knowledge.
+
+This lot creates documentation only. It does not configure the live agent, add
+flows, change permissions, execute investigations or alter the model. Corpus
+structure, rule references and hashes were checked; retrieval, grounding and
+multi-agent delegation remain untested. The intended division is Coordinator
+for routing, Policy Agent for cited procedures, and the existing Investigator
+for tool-backed facts and authorized writes. A reviewer dispatcher is no longer
+a prerequisite. The earlier 21 November personal checkpoint describes the
+superseded Reviewer proposal.
+
+Owner-supplied acceptance results from 21 November reported successful direct
+account history, case/check/report reads and writes, and repeated writes with
+stable keys and no duplicate records. A new-action test reproduced the nullable
+connector failure; omitting absent optional fields in a41390d resolved the tested
+cloud path. The dated October status sections below are historical, not current
+cloud acceptance claims. No comprehensive production reliability claim is made.
+
+
 ## Copilot flows and acceptance update, 26 October 2026
 
 The configured deployment currently uses one Fraud Investigator agent. A separate
