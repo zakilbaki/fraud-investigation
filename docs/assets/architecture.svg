@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="890" viewBox="0 0 1120 890" role="img" aria-labelledby="title desc">
+<title id="title">Multi-agent investigation with traceable evidence</title><desc id="desc">Specialist delegation, authenticated tools, and versioned investigation records.</desc>
+<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8" fill="#64748b"/></marker></defs>
+<rect width="1120" height="890" fill="#f8fafc"/>
+<g font-family="Arial, Helvetica, sans-serif">
+<text x="40" y="42" font-size="13" fill="#0f766e" font-weight="700">FRAUD INVESTIGATION / ARCHITECTURE</text>
+<text x="40" y="84" font-size="29" fill="#0f172a" font-weight="700">Multi-agent investigation with traceable evidence</text>
+<text x="40" y="116" font-size="16" fill="#475569" font-weight="400">Specialist delegation, authenticated tools, and versioned investigation records.</text>
+<rect x="410" y="155" width="300" height="70" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="410" y="167" width="4" height="46" fill="#335d9e" rx="2"/>
+<text x="427" y="182" font-size="17" fill="#0f172a" font-weight="700">Analyst request</text>
+<text x="427" y="205" font-size="13" fill="#475569" font-weight="400">Transaction, account, or case</text>
+<path d="M560,225 L560,250" fill="none" stroke="#64748b" stroke-width="1.8"/>
+<polygon points="560.0,250.0 556.0,242.0 564.0,242.0" fill="#64748b"/>
+<rect x="410" y="250" width="300" height="84" rx="12" fill="#efedf8" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="410" y="262" width="4" height="60" fill="#6860a5" rx="2"/>
+<text x="427" y="277" font-size="17" fill="#0f172a" font-weight="700">Coordinator</text>
+<text x="427" y="300" font-size="13" fill="#475569" font-weight="400">Routes requests and combines evidence</text>
+<rect x="40" y="370" width="620" height="215" rx="16" fill="#f1f5f9" stroke="#dde5ed" stroke-width="1"/>
+<text x="60" y="398" font-size="12" fill="#475569" font-weight="700">TOOL-BACKED INVESTIGATION</text>
+<rect x="690" y="370" width="390" height="215" rx="16" fill="#f1f5f9" stroke="#dde5ed" stroke-width="1"/>
+<text x="710" y="398" font-size="12" fill="#475569" font-weight="700">DOCUMENT-GROUNDED PROCEDURES</text>
+<rect x="65" y="423" width="255" height="84" rx="12" fill="#efedf8" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="65" y="435" width="4" height="60" fill="#6860a5" rx="2"/>
+<text x="82" y="450" font-size="17" fill="#0f172a" font-weight="700">Fraud Investigator</text>
+<text x="82" y="473" font-size="13" fill="#475569" font-weight="400">Calls configured agent flows</text>
+<rect x="365" y="423" width="270" height="84" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="365" y="435" width="4" height="60" fill="#335d9e" rx="2"/>
+<text x="382" y="450" font-size="17" fill="#0f172a" font-weight="700">Protected gateway</text>
+<text x="382" y="473" font-size="13" fill="#475569" font-weight="400">Shared-key authentication</text>
+<path d="M450,334 L450,351 L300,351 L300,423" fill="none" stroke="#64748b" stroke-width="1.8"/>
+<polygon points="300.0,423.0 296.0,415.0 304.0,415.0" fill="#64748b"/>
+<text x="205" y="345" font-size="12" fill="#475569" font-weight="400">delegate</text>
+<path d="M670,334 L670,351 L1035,351 L1035,423" fill="none" stroke="#64748b" stroke-width="1.8"/>
+<polygon points="1035.0,423.0 1031.0,415.0 1039.0,415.0" fill="#64748b"/>
+<text x="785" y="345" font-size="12" fill="#475569" font-weight="400">delegate</text>
+<path d="M320,465 L365,465" fill="none" stroke="#64748b" stroke-width="1.8"/>
+<polygon points="365.0,465.0 357.0,469.0 357.0,461.0" fill="#64748b"/>
+<text x="325" y="450" font-size="12" fill="#475569" font-weight="400">flows</text>
+<rect x="715" y="423" width="340" height="84" rx="12" fill="#efedf8" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="715" y="435" width="4" height="60" fill="#6860a5" rx="2"/>
+<text x="732" y="450" font-size="17" fill="#0f172a" font-weight="700">Investigation Policy Agent</text>
+<text x="732" y="473" font-size="13" fill="#475569" font-weight="400">Retrieves versioned procedures</text>
+<text x="715" y="546" font-size="13" fill="#475569" font-weight="400">Rule citations accompany procedural guidance.</text>
+<rect x="40" y="615" width="1040" height="190" rx="16" fill="#f1f5f9" stroke="#dde5ed" stroke-width="1"/>
+<text x="60" y="643" font-size="12" fill="#475569" font-weight="700">PYTHON BACKEND / PERSISTENT EVIDENCE</text>
+<rect x="60" y="670" width="290" height="84" rx="12" fill="#eaf5f2" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="60" y="682" width="4" height="60" fill="#0f766e" rx="2"/>
+<text x="77" y="697" font-size="17" fill="#0f172a" font-weight="700">Transaction service</text>
+<text x="77" y="720" font-size="13" fill="#475569" font-weight="400">Read facts and prior account activity</text>
+<rect x="415" y="670" width="290" height="84" rx="12" fill="#efedf8" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="415" y="682" width="4" height="60" fill="#6860a5" rx="2"/>
+<text x="432" y="697" font-size="17" fill="#0f172a" font-weight="700">Scoring service</text>
+<text x="432" y="720" font-size="13" fill="#475569" font-weight="400">Frozen CatBoost and global threshold</text>
+<rect x="770" y="670" width="290" height="84" rx="12" fill="#eaf5f2" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="770" y="682" width="4" height="60" fill="#0f766e" rx="2"/>
+<text x="787" y="697" font-size="17" fill="#0f172a" font-weight="700">Investigation service</text>
+<text x="787" y="720" font-size="13" fill="#475569" font-weight="400">Cases, saved checks, report versions</text>
+<path d="M500,507 L500,650 L205,650 L205,670" fill="none" stroke="#64748b" stroke-width="1.8"/>
+<polygon points="205.0,670.0 201.0,662.0 209.0,662.0" fill="#64748b"/>
+<path d="M500,650 L560,650 L560,670" fill="none" stroke="#64748b" stroke-width="1.8"/>
+<polygon points="560.0,670.0 556.0,662.0 564.0,662.0" fill="#64748b"/>
+<path d="M560,650 L915,650 L915,670" fill="none" stroke="#64748b" stroke-width="1.8"/>
+<polygon points="915.0,670.0 911.0,662.0 919.0,662.0" fill="#64748b"/>
+<line x1="40" y1="835" x2="1080" y2="835" stroke="#dbe3ec"/>
+<text x="40" y="862" font-size="12" fill="#475569" font-weight="400">Solid arrows: request / data flow. Saved checks are explicit operations; direct lookups do not persist evidence.</text>
+</g></svg>

@@ -1,21 +1,41 @@
-# Fiche du modèle CatBoost PaySim, lot 4.5
+# PaySim CatBoost model card
 
-## Usage visé
+## Task
 
-Prototype pédagogique de classement de transactions PaySim pour investigation. Le score déclenche une alerte selon un seuil fixé ; sa calibration comme probabilité fiable n'a pas été évaluée. Aucun déploiement ou usage réel n'est validé.
+Rank synthetic PaySim transactions for investigation and produce an alert decision at a frozen threshold. The score is not presented as a calibrated real-world probability.
 
-## Entrées et état nécessaire
+## Feature contract
 
-`type`, `amount`, `oldbalanceOrg`, heure cyclique simulée, ratio montant/solde et nombre de réceptions antérieures du destinataire. Les sept colonnes finales et leur ordre sont dans le [manifeste](results/ml_final_manifest.json). Pour une prédiction, l'application devrait disposer des transactions précédentes par `nameDest` et mettre à jour ce compteur après avoir prédit tout le step. Un nouveau destinataire reçoit zéro. Le solde nul donne un ratio manquant. Aucun label, identifiant brut ou solde après transaction n'entre dans le modèle.
+The seven ordered model inputs are `type`, `amount`, `oldbalanceOrg`, `hour_sin`, `hour_cos`, `part_solde`, and `nb_entrees_anterieures`.
 
-## Ajustement et seuil
+Simulated hour is `(step - 1) % 24`. The amount/balance ratio is missing when the initial balance is zero and is not capped at one. Recipient history counts transactions at strictly earlier steps. An unseen recipient has a zero count. Every transaction in a step is predicted before that step updates the history.
 
-CatBoost CPU, 200 itérations, pas 0,05, profondeur 6, graine 42. Ajustement sur steps 1–360 ; seuil F1 maximal **0.312317992385** sur 361–432, avec scores égaux groupés et seuil le plus haut à égalité. Aucun ajustement sur 433–504. Pipeline local sauvegardé et rechargé avant le test ; empreintes et versions dans le manifeste.
+Raw identifiers, labels, and post-transaction balances are excluded from model inputs. The [manifest](results/ml_final_manifest.json) records input order, model identity, and dependency versions.
 
-## Mesure réservée
+## Fitting and threshold
 
-Sur steps 505–743 : 298584 transactions, 2592 fraudes, 2219 alertes, 2190 TP, 29 FP, 402 FN et 295963 TN. Précision 0.9869, rappel 0.8449, F1 0.9104. Voir le [rapport final](ML_FINAL_REPORT.md) pour les dénominateurs et diagnostics.
+CatBoost CPU: 200 iterations, learning rate 0.05, depth 6, and random seed 42. Training uses steps 1–360. One F1-maximizing threshold, **0.312317992385**, is selected on steps 361–432. Equal scores are grouped; ties between optimal thresholds select the highest threshold. Steps 433–504 are not used to refit the final model or threshold.
 
-## Limites
+The pipeline is serialized, reloaded, and checked before final evaluation.
 
-PaySim est un simulateur. Le ratio montant/solde et les dernières périodes portent des signatures artificielles possibles. L'heure ne correspond pas à un calendrier civil connu. Les validations temporelles ont été réutilisées pour les choix ; les labels du futur test avaient été examinés pendant l'EDA. La disponibilité et la qualité en temps réel des soldes et historiques ne sont pas démontrées. Le test a une période entièrement frauduleuse. Aucun résultat ne garantit une généralisation réelle.
+## Recorded final test
+
+| Quantity | Value |
+| --- | ---: |
+| Steps | 505–743 |
+| Transactions | 298,584 |
+| Frauds | 2,592 |
+| Alerts | 2,219 |
+| True positives / false positives | 2,190 / 29 |
+| False negatives / true negatives | 402 / 295,963 |
+| Precision | 0.9869 |
+| Recall | 0.8449 |
+| F1 | 0.9104 |
+
+See the [final report](ML_FINAL_REPORT.md) for denominators and subgroup diagnostics.
+
+## Interpretation
+
+PaySim is synthetic. Amount/balance relationships and late-period composition can reflect simulator-specific signatures. Simulated hours do not identify a known civil calendar. Development folds were reused for model selection, and the future test labels had been examined during exploratory analysis.
+
+The final segment contains only frauds. Real-time availability and quality of balances and account histories were not established by this experiment. These results therefore describe the recorded simulator test and do not establish real-world fraud-detection performance.

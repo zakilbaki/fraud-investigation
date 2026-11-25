@@ -1,0 +1,11 @@
+flowchart TD
+    A["Analyst request"] --> C["Coordinator"]
+    C --> I["Fraud Investigator"]
+    C --> P["Policy Agent"]
+    P --> K[("Versioned procedures")]
+    I --> F["Agent flows"]
+    F --> G["Authenticated gateway"]
+    G --> API["FastAPI services"]
+    API --> T[("Transactions and accounts")]
+    API --> M["Frozen CatBoost model"]
+    API --> E[("Cases, checks and reports")]

@@ -1,82 +1,112 @@
 # Agentic Fraud Investigation
 
-An AI engineering portfolio project combining **Microsoft Copilot Studio agents, machine learning and evidence-based investigation** on 6.3 million synthetic PaySim transactions.
+A multi-agent investigation system built with **Microsoft Copilot Studio**, combining specialist delegation, tool-backed transaction evidence, and document-grounded policy guidance.
 
-## Demo
+A Coordinator routes analyst requests to a **Fraud Investigator** and an **Investigation Policy Agent**, then combines their responses. The Investigator calls authenticated Python APIs for transaction lookup, account history, ML scoring, and saved case operations. The Policy Agent retrieves versioned procedures with rule citations.
 
-Transaction lookup, recipient history and frozen CatBoost scoring in Copilot Studio, followed by an explanation of the alert decision. Recorded with synthetic PaySim data; pauses are shortened and playback is accelerated.
+## Agent responsibilities
 
-![Copilot Studio demonstration: transaction lookup, recipient history, ML score and interpretation](docs/assets/demo.gif)
+| Agent | Role | Evidence source |
+| --- | --- | --- |
+| Coordinator | Select specialists, transfer identifiers and scope, synthesize their responses | Specialist responses and conversation context |
+| Fraud Investigator | Retrieve operational evidence and perform explicitly requested investigation operations | Authenticated flows, transaction services, model scores, saved checks |
+| Investigation Policy Agent | Explain procedures and human-handoff criteria with citations | Versioned investigation, scoring, evidence, and handoff documents |
 
-## Investigation workflow
+Separating execution from procedure lets the system answer a policy question without accessing transactions, or combine both specialists for a mixed investigation request.
 
-An analyst supplies a transaction ID, an account-history request or a procedural question. The **Fraud Investigation Coordinator** routes work to **Fraud Investigator** for tool-backed evidence and **Investigation Policy Agent** for cited prototype procedures, then synthesizes the results in English. Requests retain their original scope: a direct score does not automatically create a saved investigation.
+## How the agents collaborate
 
-## Current integration architecture
+For a request such as **“Score this transaction and explain which investigation steps apply”**, the Coordinator follows a documented evidence-to-procedure workflow:
 
-```mermaid
-flowchart TD
-    U[Analyst] --> C[Fraud Investigation Coordinator]
-    C --> I[Fraud Investigator]
-    C --> P[Investigation Policy Agent]
-    P --> K[Four versioned English procedure documents]
-    I --> F[Agent flows: Try / Catch / Respond]
-    F --> G[Authenticated HTTPS gateway]
-    G --> B[Python: FastAPI + Pydantic]
-    B --> M[Frozen CatBoost pipeline]
-    B --> D[(SQLite transactions and accounts)]
-    B --> E[(Cases, recorded checks and report versions)]
-    I --> C
-    P --> C
-    C --> A[Evidence, cited procedure and explicit limitations]
+1. Pass the transaction identifier and requested scope to the Fraud Investigator.
+2. Retrieve the score through the authenticated scoring tool, including the threshold, alert flag, model version, and policy version.
+3. Transfer that evidence, or its explicit failure state, to the Investigation Policy Agent for the applicable procedure and rule citations.
+4. Synthesize the operational findings and cited guidance while preserving missing evidence and the analyst's requested scope.
+
+This request does not authorize a saved case. Case creation, recorded checks, and report generation are separate, explicitly requested operations. The [routing reference](docs/coordinator/evaluation/routing-reference.csv) makes these delegation and tool-use boundaries inspectable.
+
+## Demonstration
+
+Transaction lookup, recipient history, frozen model scoring, and alert interpretation in Copilot Studio. The recording uses synthetic PaySim data, with shortened pauses and accelerated playback.
+
+![Transaction investigation in Copilot Studio](docs/assets/demo.gif)
+
+## System architecture
+
+![Technical architecture](docs/assets/architecture.svg)
+
+[Diagram source](docs/visuals/visual_spec.json)
+
+The coordinator routes requests by scope. The investigator calls bounded tools; the policy agent retrieves procedural guidance. Direct lookup and scoring do not create a case automatically.
+
+| Contract | Implementation |
+| --- | --- |
+| Historical evidence | Account activity at steps strictly earlier than the requested cutoff |
+| Label isolation | Evaluation labels stored separately from the application database |
+| Recorded checks | Stable execution IDs attached to saved cases |
+| Report provenance | Versioned JSON/Markdown snapshots referencing recorded checks |
+| Tool access | Validated HTTP operations rather than arbitrary SQL |
+| Model identity | Frozen manifest and pipeline fingerprint |
+
+[API contracts](docs/API.md) · [Gateway](docs/COPILOT_REST.md) · [Saved investigations](docs/COPILOT_CASES.md)
+
+## Agent orchestration and evaluation
+
+The coordinator configuration preserves identifiers, request scope, and returned evidence across handoffs. Missing inputs trigger clarification. Technical failures remain distinct from successful lookups with no matching records. Saved investigation writes require an explicit request and stable retry keys.
+
+The repository includes **20 independent evaluation scenarios**: five policy questions, five operational requests, five mixed requests, and five clarification or capability-boundary requests. Routing references identify required, optional, and forbidden agents. Answer correctness, task completion, and trace-level routing are evaluated separately; the scenario count is not a measured pass rate.
+
+[Coordinator instructions and evaluation suite](docs/coordinator/README.md) · [Policy knowledge](docs/policy_agent/README.md) · [Agent flows](docs/COPILOT_FLOWS.md)
+
+## Fraud-scoring tool: recorded result
+
+A frozen CatBoost model was evaluated on **298,584 synthetic PaySim transactions**, including **2,592 frauds**, from steps 505–743.
+
+| Precision | Recall | F1 | Detected frauds | False alerts |
+| ---: | ---: | ---: | ---: | ---: |
+| 98.69% | 84.49% | 0.9104 | 2,190 | 29 |
+
+The threshold, **0.312318**, was selected before final testing. These are results on synthetic transactions; the score supports investigation and does not establish that a real transaction is fraudulent.
+
+[Evaluation record](docs/results/ml_final_test.json) · [Frozen configuration](docs/results/ml_final_manifest.json) · [Detailed evaluation](docs/ML_FINAL_REPORT.md)
+
+![2,190 detected frauds. 29 false alerts.](docs/assets/recorded-test.png)
+
+## Experimental protocol
+
+Thirteen candidate models were compared over five walk-forward windows before feature experiments and tuning. The retained representation uses transaction type, amount, sender starting balance, cyclic hour, balance share, and the recipient's strictly earlier reception count.
+
+| Final stage | PaySim steps | Role |
+| --- | --- | --- |
+| Fit | 1–360 | Estimate model parameters |
+| Threshold | 361–432 | Select the F1 operating point |
+| Selection reserve | 433–504 | Compare development choices |
+| Final test | 505–743 | Evaluate the frozen policy |
+
+The final test contains 272 transactions in steps 721–743, all labeled fraudulent. The [period-level results](docs/results/ml_final_test.json) retain this simulator-specific composition.
+
+## Reproduce
+
+Requires Python 3.11–3.13 and uv.
+
+```bash
+uv sync --locked
+uv run --locked python -m unittest discover -s tests -v
 ```
 
-**Coordinator:** selects specialists, passes the requested scope and exact identifiers, and separates facts from procedural interpretation.
+Follow [Reproducing](docs/REPRODUCING.md) to download and verify PaySim, import the application and evaluation databases, and reconstruct the frozen model. Raw data and the trained binary are local artifacts.
 
-**Policy Agent:** retrieves four v1.0.0 documents covering investigation scope, scoring interpretation, incomplete evidence and human handoff. It explains procedures without operational tools.
+After those steps:
 
-**Investigator and flows:** call authenticated backend operations and return individual results or explicit errors. The backend validates inputs, enforces history bounds and stores requested case-linked evidence. Agents cannot run arbitrary SQL. Direct lookup/scoring/history calls do not persist recorded investigation checks.
+```bash
+uv run --locked python scripts/serve_api.py \
+  --database data/app/fraud.sqlite \
+  --model data/ml_final_catboost/pipeline.joblib \
+  --manifest docs/results/ml_final_manifest.json
+```
 
-[Coordinator configuration and 20-case evaluation suite](docs/coordinator/README.md) · [Policy knowledge corpus](docs/policy_agent/README.md)
+The local service exposes lookup, histories, scoring, cases, recorded checks, and reports. Copilot Studio configuration is documented separately in the [coordinator guide](docs/coordinator/README.md) and [flow guide](docs/COPILOT_FLOWS.md).
 
-### Agent tool interface
+## Technical documentation
 
-| Tool group | Responsibility | Backend operation |
-| --- | --- | --- |
-| Transaction lookup | Facts and source provenance | `GET /transactions/{id}` |
-| Direct scoring | Frozen suspicion score, threshold and alert | `POST /score` |
-| Anchored account histories | Both account roles strictly before the transaction step | `GET /transactions/{id}/sender-history`, `/recipient-history` |
-| Direct account history | Both roles with an explicit cutoff | `GET /accounts/{account_id}/transactions` |
-| Case discovery and management | Find saved investigations by transaction, create or read a case | `GET /cases?transaction_id=...`, `POST /cases`, `GET /cases/{id}` |
-| Recorded checks | Execute and retain transaction, score or history evidence | `POST /cases/{id}/runs`, run-reading routes |
-| Versioned reports | Save and retrieve factual JSON/Markdown snapshots | `POST /cases/{id}/reports`, report-reading routes |
-
-Each recorded check has a stable execution ID. Report facts cite those IDs. Histories exclude the anchor step and expose truncation; evaluation labels are inaccessible to investigation tools.
-
-### Demonstrated workflows
-
-Owner-supplied manual results demonstrate direct account history, case creation, four recorded checks, versioned report retrieval and idempotent retries returning the same identifiers without additional records in the final listings. The nullable recorded-check response mismatch was resolved by omitting absent optional fields from gateway responses.
-
-Interactive multiagent examples combine scoring evidence with procedural guidance. Policy responses distinguish a non-alert from proof of legitimacy and a successful empty history from a failed operation. Clarification examples preserve missing identifiers and cutoff requirements. These observations describe prototype behavior; chat responses alone do not prove execution traces or production reliability.
-
-The repository includes configuration references and a 20-question coordinator evaluation suite. Live agent and flow definitions remain configured in the owner's environment rather than exported as a deployable solution.
-
-[Coordinator setup and evaluation](docs/coordinator/README.md) · [Flow setup and historical acceptance record](docs/COPILOT_FLOWS.md) · [Gateway setup](docs/COPILOT_REST.md) · [Saved investigation contracts](docs/COPILOT_CASES.md)
-
-## Machine learning results
-
-**13 models compared** over five temporal walk-forward validation windows, followed by feature engineering and CatBoost tuning. The selected features combine transaction type, amount, sender balance, cyclic hour, balance share and prior recipient activity.
-
-Final temporal test: **298,584 transactions**, including **2,592 frauds**.
-
-| Precision | Recall | F1 | Frauds detected | False alerts |
-| --- | --- | --- | --- | --- |
-| **98.69%** | **84.49%** | **0.9104** | **2,190** | **29** |
-
-These results describe synthetic PaySim data. A suspicion score supports investigation rather than confirming fraud. [Evaluation and limitations](docs/ML_FINAL_REPORT.md).
-
-## Stack
-
-Python · Polars · CatBoost · FastAPI · Pydantic · SQLite · Microsoft Copilot Studio · Agent flows / Power Automate
-
-[Data analysis](docs/EDA.md) · [API contracts](docs/API.md) · [Reproduce the project](docs/REPRODUCING.md)
+[Data audit](docs/DATA_AUDIT.md) · [Exploratory analysis](docs/EDA.md) · [Model benchmark](docs/ML_BENCHMARK.md) · [Database](docs/DATABASE.md) · [Policy corpus](docs/policy_agent/README.md)

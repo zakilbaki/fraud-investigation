@@ -1,0 +1,538 @@
+{
+  "diagrams": [
+    {
+      "width": 1120,
+      "height": 890,
+      "title": "Multi-agent investigation with traceable evidence",
+      "description": "Specialist delegation, authenticated tools, and versioned investigation records.",
+      "filename": "architecture.svg",
+      "elements": [
+        {
+          "kind": "text",
+          "x": 40,
+          "y": 42,
+          "text": "FRAUD INVESTIGATION / ARCHITECTURE",
+          "font_size": 13,
+          "fill": "#0f766e",
+          "font_weight": 700
+        },
+        {
+          "kind": "text",
+          "x": 40,
+          "y": 84,
+          "text": "Multi-agent investigation with traceable evidence",
+          "font_size": 29,
+          "fill": "#0f172a",
+          "font_weight": 700
+        },
+        {
+          "kind": "text",
+          "x": 40,
+          "y": 116,
+          "text": "Specialist delegation, authenticated tools, and versioned investigation records.",
+          "font_size": 16,
+          "fill": "#475569",
+          "font_weight": 400
+        },
+        {
+          "kind": "rect",
+          "x": 410,
+          "y": 155,
+          "width": 300,
+          "height": 70,
+          "rx": 12,
+          "fill": "#ffffff",
+          "stroke": "#cbd5e1",
+          "stroke_width": 1
+        },
+        {
+          "kind": "rect",
+          "x": 410,
+          "y": 167,
+          "width": 4,
+          "height": 46,
+          "fill": "#335d9e",
+          "rx": 2
+        },
+        {
+          "kind": "text",
+          "x": 427,
+          "y": 182,
+          "text": "Analyst request",
+          "font_size": 17,
+          "fill": "#0f172a",
+          "font_weight": 700
+        },
+        {
+          "kind": "text",
+          "x": 427,
+          "y": 205,
+          "text": "Transaction, account, or case",
+          "font_size": 13,
+          "fill": "#475569",
+          "font_weight": 400
+        },
+        {
+          "kind": "path",
+          "d": "M560,225 L560,250",
+          "fill": "none",
+          "stroke": "#64748b",
+          "stroke_width": 1.8,
+          "marker_end": "url(#arrow)"
+        },
+        {
+          "kind": "rect",
+          "x": 410,
+          "y": 250,
+          "width": 300,
+          "height": 84,
+          "rx": 12,
+          "fill": "#efedf8",
+          "stroke": "#cbd5e1",
+          "stroke_width": 1
+        },
+        {
+          "kind": "rect",
+          "x": 410,
+          "y": 262,
+          "width": 4,
+          "height": 60,
+          "fill": "#6860a5",
+          "rx": 2
+        },
+        {
+          "kind": "text",
+          "x": 427,
+          "y": 277,
+          "text": "Coordinator",
+          "font_size": 17,
+          "fill": "#0f172a",
+          "font_weight": 700
+        },
+        {
+          "kind": "text",
+          "x": 427,
+          "y": 300,
+          "text": "Routes requests and combines evidence",
+          "font_size": 13,
+          "fill": "#475569",
+          "font_weight": 400
+        },
+        {
+          "kind": "rect",
+          "x": 40,
+          "y": 370,
+          "width": 620,
+          "height": 215,
+          "rx": 16,
+          "fill": "#f1f5f9",
+          "stroke": "#dde5ed",
+          "stroke_width": 1
+        },
+        {
+          "kind": "text",
+          "x": 60,
+          "y": 398,
+          "text": "TOOL-BACKED INVESTIGATION",
+          "font_size": 12,
+          "fill": "#475569",
+          "font_weight": 700
+        },
+        {
+          "kind": "rect",
+          "x": 690,
+          "y": 370,
+          "width": 390,
+          "height": 215,
+          "rx": 16,
+          "fill": "#f1f5f9",
+          "stroke": "#dde5ed",
+          "stroke_width": 1
+        },
+        {
+          "kind": "text",
+          "x": 710,
+          "y": 398,
+          "text": "DOCUMENT-GROUNDED PROCEDURES",
+          "font_size": 12,
+          "fill": "#475569",
+          "font_weight": 700
+        },
+        {
+          "kind": "rect",
+          "x": 65,
+          "y": 423,
+          "width": 255,
+          "height": 84,
+          "rx": 12,
+          "fill": "#efedf8",
+          "stroke": "#cbd5e1",
+          "stroke_width": 1
+        },
+        {
+          "kind": "rect",
+          "x": 65,
+          "y": 435,
+          "width": 4,
+          "height": 60,
+          "fill": "#6860a5",
+          "rx": 2
+        },
+        {
+          "kind": "text",
+          "x": 82,
+          "y": 450,
+          "text": "Fraud Investigator",
+          "font_size": 17,
+          "fill": "#0f172a",
+          "font_weight": 700
+        },
+        {
+          "kind": "text",
+          "x": 82,
+          "y": 473,
+          "text": "Calls configured agent flows",
+          "font_size": 13,
+          "fill": "#475569",
+          "font_weight": 400
+        },
+        {
+          "kind": "rect",
+          "x": 365,
+          "y": 423,
+          "width": 270,
+          "height": 84,
+          "rx": 12,
+          "fill": "#ffffff",
+          "stroke": "#cbd5e1",
+          "stroke_width": 1
+        },
+        {
+          "kind": "rect",
+          "x": 365,
+          "y": 435,
+          "width": 4,
+          "height": 60,
+          "fill": "#335d9e",
+          "rx": 2
+        },
+        {
+          "kind": "text",
+          "x": 382,
+          "y": 450,
+          "text": "Protected gateway",
+          "font_size": 17,
+          "fill": "#0f172a",
+          "font_weight": 700
+        },
+        {
+          "kind": "text",
+          "x": 382,
+          "y": 473,
+          "text": "Shared-key authentication",
+          "font_size": 13,
+          "fill": "#475569",
+          "font_weight": 400
+        },
+        {
+          "kind": "path",
+          "d": "M450,334 L450,351 L300,351 L300,423",
+          "fill": "none",
+          "stroke": "#64748b",
+          "stroke_width": 1.8,
+          "marker_end": "url(#arrow)"
+        },
+        {
+          "kind": "text",
+          "x": 205,
+          "y": 345,
+          "text": "delegate",
+          "font_size": 12,
+          "fill": "#475569",
+          "font_weight": 400
+        },
+        {
+          "kind": "path",
+          "d": "M670,334 L670,351 L1035,351 L1035,423",
+          "fill": "none",
+          "stroke": "#64748b",
+          "stroke_width": 1.8,
+          "marker_end": "url(#arrow)"
+        },
+        {
+          "kind": "text",
+          "x": 785,
+          "y": 345,
+          "text": "delegate",
+          "font_size": 12,
+          "fill": "#475569",
+          "font_weight": 400
+        },
+        {
+          "kind": "path",
+          "d": "M320,465 L365,465",
+          "fill": "none",
+          "stroke": "#64748b",
+          "stroke_width": 1.8,
+          "marker_end": "url(#arrow)"
+        },
+        {
+          "kind": "text",
+          "x": 325,
+          "y": 450,
+          "text": "flows",
+          "font_size": 12,
+          "fill": "#475569",
+          "font_weight": 400
+        },
+        {
+          "kind": "rect",
+          "x": 715,
+          "y": 423,
+          "width": 340,
+          "height": 84,
+          "rx": 12,
+          "fill": "#efedf8",
+          "stroke": "#cbd5e1",
+          "stroke_width": 1
+        },
+        {
+          "kind": "rect",
+          "x": 715,
+          "y": 435,
+          "width": 4,
+          "height": 60,
+          "fill": "#6860a5",
+          "rx": 2
+        },
+        {
+          "kind": "text",
+          "x": 732,
+          "y": 450,
+          "text": "Investigation Policy Agent",
+          "font_size": 17,
+          "fill": "#0f172a",
+          "font_weight": 700
+        },
+        {
+          "kind": "text",
+          "x": 732,
+          "y": 473,
+          "text": "Retrieves versioned procedures",
+          "font_size": 13,
+          "fill": "#475569",
+          "font_weight": 400
+        },
+        {
+          "kind": "text",
+          "x": 715,
+          "y": 546,
+          "text": "Rule citations accompany procedural guidance.",
+          "font_size": 13,
+          "fill": "#475569",
+          "font_weight": 400
+        },
+        {
+          "kind": "rect",
+          "x": 40,
+          "y": 615,
+          "width": 1040,
+          "height": 190,
+          "rx": 16,
+          "fill": "#f1f5f9",
+          "stroke": "#dde5ed",
+          "stroke_width": 1
+        },
+        {
+          "kind": "text",
+          "x": 60,
+          "y": 643,
+          "text": "PYTHON BACKEND / PERSISTENT EVIDENCE",
+          "font_size": 12,
+          "fill": "#475569",
+          "font_weight": 700
+        },
+        {
+          "kind": "rect",
+          "x": 60,
+          "y": 670,
+          "width": 290,
+          "height": 84,
+          "rx": 12,
+          "fill": "#eaf5f2",
+          "stroke": "#cbd5e1",
+          "stroke_width": 1
+        },
+        {
+          "kind": "rect",
+          "x": 60,
+          "y": 682,
+          "width": 4,
+          "height": 60,
+          "fill": "#0f766e",
+          "rx": 2
+        },
+        {
+          "kind": "text",
+          "x": 77,
+          "y": 697,
+          "text": "Transaction service",
+          "font_size": 17,
+          "fill": "#0f172a",
+          "font_weight": 700
+        },
+        {
+          "kind": "text",
+          "x": 77,
+          "y": 720,
+          "text": "Read facts and prior account activity",
+          "font_size": 13,
+          "fill": "#475569",
+          "font_weight": 400
+        },
+        {
+          "kind": "rect",
+          "x": 415,
+          "y": 670,
+          "width": 290,
+          "height": 84,
+          "rx": 12,
+          "fill": "#efedf8",
+          "stroke": "#cbd5e1",
+          "stroke_width": 1
+        },
+        {
+          "kind": "rect",
+          "x": 415,
+          "y": 682,
+          "width": 4,
+          "height": 60,
+          "fill": "#6860a5",
+          "rx": 2
+        },
+        {
+          "kind": "text",
+          "x": 432,
+          "y": 697,
+          "text": "Scoring service",
+          "font_size": 17,
+          "fill": "#0f172a",
+          "font_weight": 700
+        },
+        {
+          "kind": "text",
+          "x": 432,
+          "y": 720,
+          "text": "Frozen CatBoost and global threshold",
+          "font_size": 13,
+          "fill": "#475569",
+          "font_weight": 400
+        },
+        {
+          "kind": "rect",
+          "x": 770,
+          "y": 670,
+          "width": 290,
+          "height": 84,
+          "rx": 12,
+          "fill": "#eaf5f2",
+          "stroke": "#cbd5e1",
+          "stroke_width": 1
+        },
+        {
+          "kind": "rect",
+          "x": 770,
+          "y": 682,
+          "width": 4,
+          "height": 60,
+          "fill": "#0f766e",
+          "rx": 2
+        },
+        {
+          "kind": "text",
+          "x": 787,
+          "y": 697,
+          "text": "Investigation service",
+          "font_size": 17,
+          "fill": "#0f172a",
+          "font_weight": 700
+        },
+        {
+          "kind": "text",
+          "x": 787,
+          "y": 720,
+          "text": "Cases, saved checks, report versions",
+          "font_size": 13,
+          "fill": "#475569",
+          "font_weight": 400
+        },
+        {
+          "kind": "path",
+          "d": "M500,507 L500,650 L205,650 L205,670",
+          "fill": "none",
+          "stroke": "#64748b",
+          "stroke_width": 1.8,
+          "marker_end": "url(#arrow)"
+        },
+        {
+          "kind": "path",
+          "d": "M500,650 L560,650 L560,670",
+          "fill": "none",
+          "stroke": "#64748b",
+          "stroke_width": 1.8,
+          "marker_end": "url(#arrow)"
+        },
+        {
+          "kind": "path",
+          "d": "M560,650 L915,650 L915,670",
+          "fill": "none",
+          "stroke": "#64748b",
+          "stroke_width": 1.8,
+          "marker_end": "url(#arrow)"
+        },
+        {
+          "kind": "line",
+          "x1": 40,
+          "y1": 835,
+          "x2": 1080,
+          "y2": 835,
+          "stroke": "#dbe3ec"
+        },
+        {
+          "kind": "text",
+          "x": 40,
+          "y": 862,
+          "text": "Solid arrows: request / data flow. Saved checks are explicit operations; direct lookups do not persist evidence.",
+          "font_size": 12,
+          "fill": "#475569",
+          "font_weight": 400
+        }
+      ]
+    }
+  ],
+  "plots": [
+    {
+      "kind": "confusion",
+      "filename": "recorded-test.svg",
+      "eyebrow": "PaySim / frozen final test",
+      "title": "2,190 detected frauds. 29 false alerts.",
+      "subtitle": "298,584 transactions | steps 505–743 | threshold 0.312318",
+      "matrix": [
+        [
+          295963,
+          29
+        ],
+        [
+          402,
+          2190
+        ]
+      ],
+      "labels": [
+        "Legitimate",
+        "Fraud"
+      ],
+      "footnote": "Cell shading shows the proportion within each actual class. Counts are not resampled.",
+      "source": "Source: docs/results/ml_final_test.json; synthetic PaySim transactions."
+    }
+  ]
+}

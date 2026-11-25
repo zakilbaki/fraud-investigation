@@ -38,7 +38,7 @@ build/
 *.bz2
 *.xz
 
-# Références synchronisées du projet ChatGPT
+# Synchronized local reference files
 /sources/
 /AGENTS.md
 
