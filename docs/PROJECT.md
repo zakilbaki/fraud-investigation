@@ -1,5 +1,23 @@
 # Cadrage du prototype Fraud Investigation
 
+## Coordinator configuration and evaluation assets, 25 November 2026
+
+The owner configured a Standard Fraud Investigation Coordinator connected to
+Fraud Investigator and Investigation Policy Agent. The [configuration reference](coordinator/README.md)
+documents role boundaries, context transfer, English instructions and a 20-case
+read-only evaluation suite. The four policy documents remain the procedural
+baseline; backend and model behavior are unchanged by this documentation lot.
+
+Owner-supplied examples show scoring evidence combined with procedural guidance,
+rule-level policy citations, missing-input clarification and explicit disclosure
+of unavailable evidence. Trace review is distinct from answer evaluation.
+The imported suite covers policy, operations, mixed requests and boundaries;
+its publication does not assert a universal pass rate or production reliability.
+No raw tenant-specific evaluation exports or secrets are included.
+The dated sections below preserve the implementation history and may describe
+features that were still planned at those earlier dates.
+
+
 ## Policy Agent knowledge baseline, 24 November 2026
 
 The owner selected a document-grounded Investigation Policy Agent instead of the

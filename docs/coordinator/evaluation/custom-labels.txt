@@ -1,0 +1,5 @@
+Pass: The response satisfies the essential expected outcome, preserves evidence and policy distinctions, and respects the requested scope and authority. Relevant supported additions and justified clarifications or refusals are accepted. Routing remains separately verified through execution traces.
+
+Fail: An essential outcome is missing or incorrect; evidence or citations are fabricated; scope or authority is violated; or an infrastructure failure prevents completion. Explain infrastructure failures separately from agent reasoning errors.
+
+Passing label: Pass

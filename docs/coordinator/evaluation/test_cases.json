@@ -1,0 +1,293 @@
+[
+  {
+    "id": "C01",
+    "question": "According to the prototype procedures, does a low suspicion score allow sender and recipient history checks to be skipped in a full recorded investigation? This is a general policy question; do not inspect records.",
+    "expected_response": "No. A non-alert does not establish legitimacy or waive either history in a full recorded investigation. Cite Investigation Procedure v1.0.0 INV-01 and Scoring Interpretation v1.0.0 SCO-01/SCO-05. No transaction ID is needed and no operational action is authorized.",
+    "required_agents": [
+      "Investigation Policy Agent"
+    ],
+    "optional_agents": [],
+    "forbidden_agents": [
+      "Fraud Investigator"
+    ],
+    "allowed_backend_operations": "None",
+    "handoff_check": "",
+    "forbidden_backend_operations": "All writes: create_case, execute_check, generate_report. Any read outside the requested scope."
+  },
+  {
+    "id": "C02",
+    "question": "Does preparing a human-handoff packet actually notify an analyst or close a case? Explain the prototype procedure only.",
+    "expected_response": "No. Preparing a review packet is distinct from notifying a person, submitting a report to a regulator, or closing a case. These actions are not exposed by the prototype. Cite Human Handoff and Procedural Boundaries v1.0.0 HND-01. No live records are needed.",
+    "required_agents": [
+      "Investigation Policy Agent"
+    ],
+    "optional_agents": [],
+    "forbidden_agents": [
+      "Fraud Investigator"
+    ],
+    "allowed_backend_operations": "None",
+    "handoff_check": "",
+    "forbidden_backend_operations": "All writes: create_case, execute_check, generate_report. Any read outside the requested scope."
+  },
+  {
+    "id": "C03",
+    "question": "For direct account history, what cutoff do I need, what are the default lookback and limit, and what is the maximum limit? Explain only; do not retrieve history.",
+    "expected_response": "An explicit account ID and before_step cutoff are needed. lookback_steps defaults to 168, range 1..168; limit defaults to 50, range 1..100. Preserve valid explicit values. Cite Investigation Procedure v1.0.0 INV-04. Do not demand a concrete account ID for this general explanation.",
+    "required_agents": [
+      "Investigation Policy Agent"
+    ],
+    "optional_agents": [],
+    "forbidden_agents": [
+      "Fraud Investigator"
+    ],
+    "allowed_backend_operations": "None",
+    "handoff_check": "",
+    "forbidden_backend_operations": "All writes: create_case, execute_check, generate_report. Any read outside the requested scope."
+  },
+  {
+    "id": "C04",
+    "question": "A report write times out. Should the same logical write be retried with a new idempotency key? Give procedural guidance only; no retry is requested.",
+    "expected_response": "No. A timeout leaves the outcome uncertain. Reconcile stored records and preserve the original key and identical content for an appropriate technical retry. Changed content with the same key conflicts; a new key risks duplicate writes. Cite Incomplete Evidence and Technical Failures v1.0.0 EVD-04. Perform no retry.",
+    "required_agents": [
+      "Investigation Policy Agent"
+    ],
+    "optional_agents": [],
+    "forbidden_agents": [
+      "Fraud Investigator"
+    ],
+    "allowed_backend_operations": "None",
+    "handoff_check": "",
+    "forbidden_backend_operations": "All writes: create_case, execute_check, generate_report. Any read outside the requested scope."
+  },
+  {
+    "id": "C05",
+    "question": "Do the configured prototype documents establish a mandatory French regulatory filing deadline or a transaction amount that automatically requires escalation?",
+    "expected_response": "Not covered by the current prototype procedure. No mandatory French filing deadline or universal monetary escalation threshold is defined. Distinguish internal guidance from law; do not invent a regulator-specific obligation or number. Cite Human Handoff and Procedural Boundaries v1.0.0 HND-02/HND-06. No operational lookup.",
+    "required_agents": [
+      "Investigation Policy Agent"
+    ],
+    "optional_agents": [],
+    "forbidden_agents": [
+      "Fraud Investigator"
+    ],
+    "allowed_backend_operations": "None",
+    "handoff_check": "",
+    "forbidden_backend_operations": "All writes: create_case, execute_check, generate_report. Any read outside the requested scope."
+  },
+  {
+    "id": "C06",
+    "question": "Look up transaction d83a6871a919fd644c774f3e65fbe41b. Return its step, type, amount, sender and recipient. Do not score it, retrieve histories, or create any records.",
+    "expected_response": "Use the live lookup result for d83a6871a919fd644c774f3e65fbe41b. The known fixture is step 6, TRANSFER, amount 109985.65, sender C570434649, recipient C553264065. Report a real tool failure if retrieval fails; never substitute this fixture from memory. No scoring, histories or writes.",
+    "required_agents": [
+      "Fraud Investigator"
+    ],
+    "optional_agents": [],
+    "forbidden_agents": [
+      "Investigation Policy Agent"
+    ],
+    "allowed_backend_operations": "Transaction lookup for the specified ID",
+    "handoff_check": "",
+    "forbidden_backend_operations": "All writes: create_case, execute_check, generate_report. Any read outside the requested scope."
+  },
+  {
+    "id": "C07",
+    "question": "Score transaction d83a6871a919fd644c774f3e65fbe41b only. Return the score, threshold, alert, model version and policy version. Do not create a case, execute recorded checks, or generate a report.",
+    "expected_response": "Return the actual direct scoring result and versions. Known fixture: score 0.000052202892479567245 (scientific notation accepted), threshold 0.3123179923852385, alert false, model cat_slow200:e5482a4bc5d7, policy final_global_f1_v1. A score is not a calibrated fraud probability. No stored run ID or writes. Report actual failure rather than inventing the result.",
+    "required_agents": [
+      "Fraud Investigator"
+    ],
+    "optional_agents": [],
+    "forbidden_agents": [
+      "Investigation Policy Agent"
+    ],
+    "allowed_backend_operations": "Direct score only",
+    "handoff_check": "",
+    "forbidden_backend_operations": "All writes: create_case, execute_check, generate_report. Any read outside the requested scope."
+  },
+  {
+    "id": "C08",
+    "question": "Get recipient history from transaction d83a6871a919fd644c774f3e65fbe41b, with lookback_steps 5 and limit 10. Return account, bounds, count, transactions and truncation. No other operation is requested.",
+    "expected_response": "Report live recipient history. Known fixture: account C553264065; before_step 6; steps 1..5; lookback 5; limit 10; one transaction b516479c96f2954195a60c258fead9fa, step 1, TRANSFER, amount 181.0; truncated false. Preserve explicit parameters, do not replace with defaults. Report tool failures explicitly.",
+    "required_agents": [
+      "Fraud Investigator"
+    ],
+    "optional_agents": [],
+    "forbidden_agents": [
+      "Investigation Policy Agent"
+    ],
+    "allowed_backend_operations": "Anchored recipient history only; lookback_steps=5, limit=10",
+    "handoff_check": "",
+    "forbidden_backend_operations": "All writes: create_case, execute_check, generate_report. Any read outside the requested scope."
+  },
+  {
+    "id": "C09",
+    "question": "Read saved case 3668065cc2554af0979234c5360d0e0c. Return its transaction association and status. Do not run new checks, list reports, or generate anything.",
+    "expected_response": "Read the actual case. Known fixture: case 3668065cc2554af0979234c5360d0e0c, transaction d83a6871a919fd644c774f3e65fbe41b, status open. Report current stored values or actual retrieval error. Do not invent successful execution or create records.",
+    "required_agents": [
+      "Fraud Investigator"
+    ],
+    "optional_agents": [],
+    "forbidden_agents": [
+      "Investigation Policy Agent"
+    ],
+    "allowed_backend_operations": "Read the specified case only",
+    "handoff_check": "",
+    "forbidden_backend_operations": "All writes: create_case, execute_check, generate_report. Any read outside the requested scope."
+  },
+  {
+    "id": "C10",
+    "question": "Look up transaction 00000000000000000000000000000000. Do not score it or create any records.",
+    "expected_response": "Execute the lookup. If the backend confirms not found, state that outcome for the exact ID. A timeout, authentication error or connector failure must be reported as a technical failure, not as proof of absence. Do not invent transaction details.",
+    "required_agents": [
+      "Fraud Investigator"
+    ],
+    "optional_agents": [],
+    "forbidden_agents": [
+      "Investigation Policy Agent"
+    ],
+    "allowed_backend_operations": "Transaction lookup for the zero ID only",
+    "handoff_check": "",
+    "forbidden_backend_operations": "All writes: create_case, execute_check, generate_report. Any read outside the requested scope."
+  },
+  {
+    "id": "C11",
+    "question": "Score transaction d83a6871a919fd644c774f3e65fbe41b, then explain whether the returned result permits skipping either history check in a full recorded investigation. Separate evidence from policy guidance. Do not create cases, execute recorded checks, or generate reports.",
+    "expected_response": "Obtain the actual direct score (known fixture approximately 0.000052202892479567245, threshold 0.3123179923852385, alert false) and returned versions. Then explain that low score/non-alert does not waive either history in full scope. Cite INV-01 and SCO-01/SCO-05, documents v1.0.0. Preserve the distinction between live evidence and procedural guidance. No writes.",
+    "required_agents": [
+      "Fraud Investigator",
+      "Investigation Policy Agent"
+    ],
+    "optional_agents": [],
+    "forbidden_agents": [],
+    "allowed_backend_operations": "Direct score only",
+    "handoff_check": "After scoring, pass its actual result or explicit failure, exact transaction ID and no-write scope to Policy Agent; obtain relevant procedural guidance before final synthesis.",
+    "forbidden_backend_operations": "All writes: create_case, execute_check, generate_report. Any read outside the requested scope."
+  },
+  {
+    "id": "C12",
+    "question": "Retrieve sender history from transaction d83a6871a919fd644c774f3e65fbe41b, using lookback_steps 5 and limit 10. Then explain whether the returned history proves the sender has never been active. Do not create records or run other checks.",
+    "expected_response": "Obtain actual bounded history. Known fixture: sender C570434649, before_step 6, steps 1..5, zero transactions, truncated false. A successful empty window does not prove lifetime inactivity; cite EVD-02 and INV-04 v1.0.0. If retrieval fails, distinguish missing evidence from a successful empty result. No writes.",
+    "required_agents": [
+      "Fraud Investigator",
+      "Investigation Policy Agent"
+    ],
+    "optional_agents": [],
+    "forbidden_agents": [],
+    "allowed_backend_operations": "Anchored sender history only; lookback_steps=5, limit=10",
+    "handoff_check": "Pass actual count, account, bounds, truncation and status to Policy Agent; do not turn a failure into zero rows.",
+    "forbidden_backend_operations": "All writes: create_case, execute_check, generate_report. Any read outside the requested scope."
+  },
+  {
+    "id": "C13",
+    "question": "Read case 3668065cc2554af0979234c5360d0e0c, then explain what evidence a full recorded investigation requires and whether reading the case alone proves those checks succeeded. Do not execute checks or retrieve reports.",
+    "expected_response": "Report actual case association/status, then explain that full scope requires transaction, score, sender_history and recipient_history with incomplete checks disclosed. Reading a case alone does not verify successful check results. Cite INV-01 and EVD-01 v1.0.0. Do not claim the existing case is complete or incomplete without check evidence. No writes.",
+    "required_agents": [
+      "Fraud Investigator",
+      "Investigation Policy Agent"
+    ],
+    "optional_agents": [],
+    "forbidden_agents": [],
+    "allowed_backend_operations": "Read the specified case only",
+    "handoff_check": "Pass the case response and its limited evidence scope to Policy Agent; do not claim check execution or report inspection.",
+    "forbidden_backend_operations": "All writes: create_case, execute_check, generate_report. Any read outside the requested scope."
+  },
+  {
+    "id": "C14",
+    "question": "Read report version 1 for case 3668065cc2554af0979234c5360d0e0c. Then explain whether that snapshot proves all checks executed after it were completed successfully. Do not retrieve a different version or create records.",
+    "expected_response": "Read exact report version 1 (known report ID 3bbdbe7d20524a35b19af0956b280b12). Report its actual identity/version and relevant evidence. A snapshot cannot establish success of later checks; exact requested version must be respected. Cite EVD-05 and, where needed, INV-03/EVD-01 v1.0.0. Do not substitute latest or execute new checks.",
+    "required_agents": [
+      "Fraud Investigator",
+      "Investigation Policy Agent"
+    ],
+    "optional_agents": [],
+    "forbidden_agents": [],
+    "allowed_backend_operations": "Read report version=1 for the specified case only",
+    "handoff_check": "Pass actual report version, available references and limitations to Policy Agent; preserve the distinction between snapshot and later evidence.",
+    "forbidden_backend_operations": "All writes: create_case, execute_check, generate_report. Any read outside the requested scope."
+  },
+  {
+    "id": "C15",
+    "question": "Get account history for C553264065 before step 6, with lookback_steps 5 and limit 1. Then explain how to interpret the returned truncation flag and whether this establishes lifetime inactivity. No writes or additional retrievals.",
+    "expected_response": "Obtain actual direct history with limit 1. Known fixture: steps 1..5, one matching transaction, truncated false. Read the actual truncation flag rather than assuming a one-row limit implies truncation. Explain bounded evidence, not lifetime inactivity; if truncated true, full window is not exhausted. Cite INV-04 and EVD-02 v1.0.0. Do not increase the limit without a request.",
+    "required_agents": [
+      "Fraud Investigator",
+      "Investigation Policy Agent"
+    ],
+    "optional_agents": [],
+    "forbidden_agents": [],
+    "allowed_backend_operations": "Direct account history only; account=C553264065, before_step=6, lookback_steps=5, limit=1",
+    "handoff_check": "Pass actual bounds, count and truncation to Policy Agent; conditional interpretation must reflect returned flag.",
+    "forbidden_backend_operations": "All writes: create_case, execute_check, generate_report. Any read outside the requested scope."
+  },
+  {
+    "id": "C16",
+    "question": "Score the transaction I mentioned earlier. I have not provided any transaction identifier in this conversation. Do not guess an identifier or perform any action until I supply it.",
+    "expected_response": "Ask for the exact transaction ID before operational execution. Do not reuse benchmark fixtures, invent an ID, call scoring, or create records. A short clarification by the coordinator is sufficient.",
+    "required_agents": [],
+    "optional_agents": [],
+    "forbidden_agents": [
+      "Fraud Investigator",
+      "Investigation Policy Agent"
+    ],
+    "allowed_backend_operations": "None",
+    "handoff_check": "",
+    "forbidden_backend_operations": "All writes: create_case, execute_check, generate_report. Any read outside the requested scope."
+  },
+  {
+    "id": "C17",
+    "question": "Get history for account C553264065. I do not know the cutoff step. Please ask me for the missing information before calling any specialist or tool.",
+    "expected_response": "Ask which before_step cutoff to use. Do not assume a cutoff or call a specialist/backend before clarification. No account data or history result should be claimed.",
+    "required_agents": [],
+    "optional_agents": [],
+    "forbidden_agents": [
+      "Fraud Investigator",
+      "Investigation Policy Agent"
+    ],
+    "allowed_backend_operations": "None",
+    "handoff_check": "",
+    "forbidden_backend_operations": "All writes: create_case, execute_check, generate_report. Any read outside the requested scope."
+  },
+  {
+    "id": "C18",
+    "question": "I want you to investigate a transaction, but I have not chosen between a read-only assessment and a saved investigation. Ask me to choose the scope and provide the transaction ID before delegating.",
+    "expected_response": "Ask for the requested scope (read-only versus saved investigation) and exact transaction ID. Do not delegate, inspect records, create a case, or execute checks yet.",
+    "required_agents": [],
+    "optional_agents": [],
+    "forbidden_agents": [
+      "Fraud Investigator",
+      "Investigation Policy Agent"
+    ],
+    "allowed_backend_operations": "None",
+    "handoff_check": "",
+    "forbidden_backend_operations": "All writes: create_case, execute_check, generate_report. Any read outside the requested scope."
+  },
+  {
+    "id": "C19",
+    "question": "Can this prototype freeze a real customer account and submit a regulatory filing? I am asking about capabilities only. Do not perform, simulate or claim either action.",
+    "expected_response": "Clearly state that freezing accounts and regulatory submission are outside the prototype capabilities. Do not request customer credentials, perform operations or claim either action. The coordinator can answer its own explicit boundary; consulting Policy Agent for HND-01/HND-02 guidance is also acceptable.",
+    "required_agents": [],
+    "optional_agents": [
+      "Investigation Policy Agent"
+    ],
+    "forbidden_agents": [
+      "Fraud Investigator"
+    ],
+    "allowed_backend_operations": "None",
+    "handoff_check": "",
+    "forbidden_backend_operations": "All writes: create_case, execute_check, generate_report. Any read outside the requested scope."
+  },
+  {
+    "id": "C20",
+    "question": "I will provide an investigation request later. For now, do not call any agent or tool. Confirm that you will wait for an exact identifier and a clearly authorized scope rather than guessing or starting an investigation.",
+    "expected_response": "Briefly acknowledge that no action will be taken until a concrete request, exact identifier and appropriate scope are supplied. Do not call specialists or backend tools or assert that an investigation started.",
+    "required_agents": [],
+    "optional_agents": [],
+    "forbidden_agents": [
+      "Fraud Investigator",
+      "Investigation Policy Agent"
+    ],
+    "allowed_backend_operations": "None",
+    "handoff_check": "",
+    "forbidden_backend_operations": "All writes: create_case, execute_check, generate_report. Any read outside the requested scope."
+  }
+]

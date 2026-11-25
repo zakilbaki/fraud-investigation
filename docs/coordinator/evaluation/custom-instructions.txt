@@ -1,0 +1,6 @@
+Evaluate the actual answer against the question and expected response. Judge substantive correctness, completeness, evidence handling, policy citations, and respect for the requested scope.
+Accept equivalent wording, scientific notation, and relevant supported additions. A justified refusal or clarification is correct when the request is unsupported or essential information is missing. Do not penalize length alone.
+For mixed requests, require both operational evidence and procedural guidance. Keep facts separate from policy interpretation. Reject fabricated results, unsupported completion claims, and technical failures presented as confirmed absence or successful empty results.
+No test authorizes case creation, recorded checks, or report generation. If infrastructure prevents completion, label the outcome Fail and identify the infrastructure issue separately from reasoning errors.
+Only verify agent calls when execution traces are available. Without traces, evaluate the response and state that routing is unverified. Do not infer delegation from the agent's own claims.
+Accept relevant rules supporting the claim rather than requiring every example rule ID verbatim. Explain each failure using the specific missing or incorrect requirement.

@@ -10,38 +10,34 @@ Transaction lookup, recipient history and frozen CatBoost scoring in Copilot Stu
 
 ## Investigation workflow
 
-An analyst supplies a transaction ID or an account-history request. The currently configured **Fraud Investigator** agent handles the conversation, selects backend tools, interprets their results and can retrieve saved investigations. Interactive transaction selection resolves ambiguous references. A separate coordinator/investigator pair remains planned.
+An analyst supplies a transaction ID, an account-history request or a procedural question. The **Fraud Investigation Coordinator** routes work to **Fraud Investigator** for tool-backed evidence and **Investigation Policy Agent** for cited prototype procedures, then synthesizes the results in English. Requests retain their original scope: a direct score does not automatically create a saved investigation.
 
 ## Current integration architecture
 
 ```mermaid
 flowchart TD
-    U[Analyst] --> I[Fraud Investigator: one configured agent]
-    I --> Q[Interactive transaction selection when ambiguous]
-    Q --> I
-    I --> F[Five published agent flows: direct read/scoring tools]
-    F --> T[Try: authenticated connector call]
-    T -->|Success| OK[Transaction, score or history data]
-    T -->|Failure| C[Catch: individual operation error]
-    OK --> R[Respond to the agent]
-    C --> R
-    R --> I
-    I --> K[Connected case, recorded-check and report tools]
-    T --> G[Authenticated HTTPS gateway]
-    K --> G
+    U[Analyst] --> C[Fraud Investigation Coordinator]
+    C --> I[Fraud Investigator]
+    C --> P[Investigation Policy Agent]
+    P --> K[Four versioned English procedure documents]
+    I --> F[Agent flows: Try / Catch / Respond]
+    F --> G[Authenticated HTTPS gateway]
     G --> B[Python: FastAPI + Pydantic]
     B --> M[Frozen CatBoost pipeline]
-    B --> D[(SQLite: transactions and accounts)]
+    B --> D[(SQLite transactions and accounts)]
     B --> E[(Cases, recorded checks and report versions)]
-    I --> A[Findings with evidence and explicit limitations]
-    L[(Separate evaluation labels)] -. Offline evaluation only .-> M
+    I --> C
+    P --> C
+    C --> A[Evidence, cited procedure and explicit limitations]
 ```
 
-**Agent:** chooses relevant operations, preserves available results and distinguishes facts, model alerts and hypotheses.
+**Coordinator:** selects specialists, passes the requested scope and exact identifiers, and separates facts from procedural interpretation.
 
-**Agent flows:** execute connector calls and catch individual failures before returning data to the agent. A combined lookup and a combined scoring request each retained the valid result alongside a transaction-not-found error in owner-supplied manual tests. Five flows are published; the direct-account history flow still needs its missing response payload resolved.
+**Policy Agent:** retrieves four v1.0.0 documents covering investigation scope, scoring interpretation, incomplete evidence and human handoff. It explains procedures without operational tools.
 
-**Python backend:** validates inputs, enforces history bounds, runs the frozen model and stores case-linked evidence. Agents use defined operations rather than arbitrary SQL or direct database access. Direct lookup/scoring/history calls do not persist investigation checks; saved evidence uses the separate recorded-check routes.
+**Investigator and flows:** call authenticated backend operations and return individual results or explicit errors. The backend validates inputs, enforces history bounds and stores requested case-linked evidence. Agents cannot run arbitrary SQL. Direct lookup/scoring/history calls do not persist recorded investigation checks.
+
+[Coordinator configuration and 20-case evaluation suite](docs/coordinator/README.md) · [Policy knowledge corpus](docs/policy_agent/README.md)
 
 ### Agent tool interface
 
@@ -57,13 +53,15 @@ flowchart TD
 
 Each recorded check has a stable execution ID. Report facts cite those IDs. Histories exclude the anchor step and expose truncation; evaluation labels are inaccessible to investigation tools.
 
-### Integration acceptance and remaining work
+### Demonstrated workflows
 
-Owner-supplied manual tests demonstrate case creation, four recorded checks, saved reports, recovery of a case/report in a fresh conversation, interactive selection and rejection of fabricated evidence. Backend guarantees and cloud acceptance remain distinct: chat text alone does not establish that no additional writes occurred.
+Owner-supplied manual results demonstrate direct account history, case creation, four recorded checks, versioned report retrieval and idempotent retries returning the same identifiers without additional records in the final listings. The nullable recorded-check response mismatch was resolved by omitting absent optional fields from gateway responses.
 
-Lookup and scoring flows passed combined success/failure tests. Anchored histories returned the expected bounded results in a combined test. Direct-account history returned no usable payload in that test despite publication and remains open. Flow-level error handling for case/report operations, PDF export, and separate-agent delegation are not implemented. Flow definitions are configured in the owner's environment and have not been exported as a deployable solution here.
+Interactive multiagent examples combine scoring evidence with procedural guidance. Policy responses distinguish a non-alert from proof of legitimacy and a successful empty history from a failed operation. Clarification examples preserve missing identifiers and cutoff requirements. These observations describe prototype behavior; chat responses alone do not prove execution traces or production reliability.
 
-[Flow setup, Run after rules and acceptance record](docs/COPILOT_FLOWS.md) · [Gateway setup](docs/COPILOT_REST.md) · [Saved investigation contracts](docs/COPILOT_CASES.md)
+The repository includes configuration references and a 20-question coordinator evaluation suite. Live agent and flow definitions remain configured in the owner's environment rather than exported as a deployable solution.
+
+[Coordinator setup and evaluation](docs/coordinator/README.md) · [Flow setup and historical acceptance record](docs/COPILOT_FLOWS.md) · [Gateway setup](docs/COPILOT_REST.md) · [Saved investigation contracts](docs/COPILOT_CASES.md)
 
 ## Machine learning results
 
